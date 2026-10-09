@@ -1,0 +1,812 @@
+[
+  {
+    "category": "Earrings",
+    "subcategory": "Studs",
+    "slug": "studs",
+    "image_index": 1,
+    "scene_description": "clean ivory studio, single pair front-facing on a cream velvet stand, soft shadow, copy space on the left",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: clean ivory studio, single pair front-facing on a cream velvet stand, soft shadow, copy space on the left.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Earrings",
+    "subcategory": "Studs",
+    "slug": "studs",
+    "image_index": 2,
+    "scene_description": "model wearing the studs with a silk saree, close crop from cheek to shoulder, temple bokeh",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: model wearing the studs with a silk saree, close crop from cheek to shoulder, temple bokeh.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Earrings",
+    "subcategory": "Studs",
+    "slug": "studs",
+    "image_index": 3,
+    "scene_description": "extreme macro of the stone setting, prongs and gold texture, controlled sparkle",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: extreme macro of the stone setting, prongs and gold texture, controlled sparkle.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Earrings",
+    "subcategory": "Studs",
+    "slug": "studs",
+    "image_index": 4,
+    "scene_description": "festive Diwali flat lay with jasmine, maroon silk and one diya, studs clearly separated",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: festive Diwali flat lay with jasmine, maroon silk and one diya, studs clearly separated.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Earrings",
+    "subcategory": "Studs",
+    "slug": "studs",
+    "image_index": 5,
+    "scene_description": "luxury black editorial with one earring upright and one angled, narrow gold rim light",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: luxury black editorial with one earring upright and one angled, narrow gold rim light.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Earrings",
+    "subcategory": "Hangings",
+    "slug": "hangings",
+    "image_index": 1,
+    "scene_description": "pair of long hanging earrings on ivory silk, full silhouette visible, catalogue lighting",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: pair of long hanging earrings on ivory silk, full silhouette visible, catalogue lighting.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Earrings",
+    "subcategory": "Hangings",
+    "slug": "hangings",
+    "image_index": 2,
+    "scene_description": "South Indian bride wearing the hangings with red Kanchipuram silk, face softly cropped",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: South Indian bride wearing the hangings with red Kanchipuram silk, face softly cropped.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Earrings",
+    "subcategory": "Hangings",
+    "slug": "hangings",
+    "image_index": 3,
+    "scene_description": "macro of the chain, drops and stone movement, sharp metal detail",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: macro of the chain, drops and stone movement, sharp metal detail.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Earrings",
+    "subcategory": "Hangings",
+    "slug": "hangings",
+    "image_index": 4,
+    "scene_description": "wedding trousseau flat lay with jasmine and gold hair accessories, earrings as hero",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: wedding trousseau flat lay with jasmine and gold hair accessories, earrings as hero.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Earrings",
+    "subcategory": "Hangings",
+    "slug": "hangings",
+    "image_index": 5,
+    "scene_description": "evening party editorial with maroon velvet and warm bokeh, earrings catching light",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: evening party editorial with maroon velvet and warm bokeh, earrings catching light.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Earrings",
+    "subcategory": "Drops",
+    "slug": "drops",
+    "image_index": 1,
+    "scene_description": "minimal studio shot of drop earrings suspended against warm ivory, balanced pair",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: minimal studio shot of drop earrings suspended against warm ivory, balanced pair.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Earrings",
+    "subcategory": "Drops",
+    "slug": "drops",
+    "image_index": 2,
+    "scene_description": "model in a cream blouse wearing the drops, natural movement, shallow depth of field",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: model in a cream blouse wearing the drops, natural movement, shallow depth of field.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Earrings",
+    "subcategory": "Drops",
+    "slug": "drops",
+    "image_index": 3,
+    "scene_description": "macro of the drop connection and gemstone surface, realistic reflections",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: macro of the drop connection and gemstone surface, realistic reflections.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Earrings",
+    "subcategory": "Drops",
+    "slug": "drops",
+    "image_index": 4,
+    "scene_description": "party-ready vanity scene with silk, perfume bottle kept secondary and earrings sharp",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: party-ready vanity scene with silk, perfume bottle kept secondary and earrings sharp.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Earrings",
+    "subcategory": "Drops",
+    "slug": "drops",
+    "image_index": 5,
+    "scene_description": "dark charcoal luxury campaign with one drop earring highlighted by a spotlight",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: dark charcoal luxury campaign with one drop earring highlighted by a spotlight.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Earrings",
+    "subcategory": "Jhumkas",
+    "slug": "jhumkas",
+    "image_index": 1,
+    "scene_description": "three-quarter front studio shot of a pair of gold jhumkas on cream velvet, domes and bells clear",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: three-quarter front studio shot of a pair of gold jhumkas on cream velvet, domes and bells clear.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Earrings",
+    "subcategory": "Jhumkas",
+    "slug": "jhumkas",
+    "image_index": 2,
+    "scene_description": "South Indian bride wearing jhumkas with jasmine hair flowers and red silk saree",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: South Indian bride wearing jhumkas with jasmine hair flowers and red silk saree.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Earrings",
+    "subcategory": "Jhumkas",
+    "slug": "jhumkas",
+    "image_index": 3,
+    "scene_description": "extreme macro of dome filigree, ruby accents, pearl or bead fringe, tactile detail",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: extreme macro of dome filigree, ruby accents, pearl or bead fringe, tactile detail.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Earrings",
+    "subcategory": "Jhumkas",
+    "slug": "jhumkas",
+    "image_index": 4,
+    "scene_description": "temple festival flat lay with marigold, brass diya and maroon silk, jhumkas central",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: temple festival flat lay with marigold, brass diya and maroon silk, jhumkas central.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Earrings",
+    "subcategory": "Jhumkas",
+    "slug": "jhumkas",
+    "image_index": 5,
+    "scene_description": "Chettinad heritage editorial on carved wood with warm window light and copy space",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: Chettinad heritage editorial on carved wood with warm window light and copy space.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Earrings",
+    "subcategory": "Hoops & Bali",
+    "slug": "hoops-bali",
+    "image_index": 1,
+    "scene_description": "pair of gold hoops and bali earrings arranged as a clean circle composition on ivory stone",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: pair of gold hoops and bali earrings arranged as a clean circle composition on ivory stone.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Earrings",
+    "subcategory": "Hoops & Bali",
+    "slug": "hoops-bali",
+    "image_index": 2,
+    "scene_description": "woman in a modern silk kurta wearing bali earrings, elegant everyday styling",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: woman in a modern silk kurta wearing bali earrings, elegant everyday styling.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Earrings",
+    "subcategory": "Hoops & Bali",
+    "slug": "hoops-bali",
+    "image_index": 3,
+    "scene_description": "macro of the hoop hinge, texture and polished edge, realistic gold",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: macro of the hoop hinge, texture and polished edge, realistic gold.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Earrings",
+    "subcategory": "Hoops & Bali",
+    "slug": "hoops-bali",
+    "image_index": 4,
+    "scene_description": "casual day flat lay with sunglasses and silk scarf kept subtle, earrings hero",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: casual day flat lay with sunglasses and silk scarf kept subtle, earrings hero.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Earrings",
+    "subcategory": "Hoops & Bali",
+    "slug": "hoops-bali",
+    "image_index": 5,
+    "scene_description": "minimal black-and-gold editorial with one hoop upright and one flat",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: minimal black-and-gold editorial with one hoop upright and one flat.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Rings",
+    "subcategory": "Engagement Rings",
+    "slug": "engagement-rings",
+    "image_index": 1,
+    "scene_description": "single engagement ring on ivory stone pedestal, diamond or centre stone facing camera, clean catalogue shot",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: single engagement ring on ivory stone pedestal, diamond or centre stone facing camera, clean catalogue shot.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Rings",
+    "subcategory": "Engagement Rings",
+    "slug": "engagement-rings",
+    "image_index": 2,
+    "scene_description": "natural close-up of a hand wearing the ring with soft bridal silk sleeve, no extra jewellery",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: natural close-up of a hand wearing the ring with soft bridal silk sleeve, no extra jewellery.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Rings",
+    "subcategory": "Engagement Rings",
+    "slug": "engagement-rings",
+    "image_index": 3,
+    "scene_description": "macro of centre stone, setting, prongs and band with realistic refraction",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: macro of centre stone, setting, prongs and band with realistic refraction.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Rings",
+    "subcategory": "Engagement Rings",
+    "slug": "engagement-rings",
+    "image_index": 4,
+    "scene_description": "proposal-inspired scene with open ring box, cream velvet and maroon ribbon, no text",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: proposal-inspired scene with open ring box, cream velvet and maroon ribbon, no text.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Rings",
+    "subcategory": "Engagement Rings",
+    "slug": "engagement-rings",
+    "image_index": 5,
+    "scene_description": "romantic evening editorial with candle bokeh and ring sharply focused",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: romantic evening editorial with candle bokeh and ring sharply focused.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Rings",
+    "subcategory": "Casual Rings",
+    "slug": "casual-rings",
+    "image_index": 1,
+    "scene_description": "single everyday gold ring on a cream ceramic pedestal, clean studio composition",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: single everyday gold ring on a cream ceramic pedestal, clean studio composition.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Rings",
+    "subcategory": "Casual Rings",
+    "slug": "casual-rings",
+    "image_index": 2,
+    "scene_description": "model hand with neutral manicure and casual silk sleeve, ring worn naturally",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: model hand with neutral manicure and casual silk sleeve, ring worn naturally.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Rings",
+    "subcategory": "Casual Rings",
+    "slug": "casual-rings",
+    "image_index": 3,
+    "scene_description": "macro of floral or geometric surface texture, accurate metal edges",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: macro of floral or geometric surface texture, accurate metal edges.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Rings",
+    "subcategory": "Casual Rings",
+    "slug": "casual-rings",
+    "image_index": 4,
+    "scene_description": "daywear flat lay with notebook and silk scarf, ring remains the only jewellery hero",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: daywear flat lay with notebook and silk scarf, ring remains the only jewellery hero.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Rings",
+    "subcategory": "Casual Rings",
+    "slug": "casual-rings",
+    "image_index": 5,
+    "scene_description": "modern charcoal editorial with architectural shadows and copy space",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: modern charcoal editorial with architectural shadows and copy space.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Bangle & Bracelets",
+    "subcategory": "Cuff Bracelets",
+    "slug": "cuff-bracelets",
+    "image_index": 1,
+    "scene_description": "single structured cuff bracelet upright on ivory stone, opening and profile visible",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: single structured cuff bracelet upright on ivory stone, opening and profile visible.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Bangle & Bracelets",
+    "subcategory": "Cuff Bracelets",
+    "slug": "cuff-bracelets",
+    "image_index": 2,
+    "scene_description": "man or woman wearing the cuff with a silk sleeve, close wrist crop, premium lifestyle",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: man or woman wearing the cuff with a silk sleeve, close wrist crop, premium lifestyle.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Bangle & Bracelets",
+    "subcategory": "Cuff Bracelets",
+    "slug": "cuff-bracelets",
+    "image_index": 3,
+    "scene_description": "macro of cuff texture, edges, stones and clasp or opening",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: macro of cuff texture, edges, stones and clasp or opening.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Bangle & Bracelets",
+    "subcategory": "Cuff Bracelets",
+    "slug": "cuff-bracelets",
+    "image_index": 4,
+    "scene_description": "heritage flat lay with carved wood, brass and maroon textile, cuff centered",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: heritage flat lay with carved wood, brass and maroon textile, cuff centered.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Bangle & Bracelets",
+    "subcategory": "Cuff Bracelets",
+    "slug": "cuff-bracelets",
+    "image_index": 5,
+    "scene_description": "bold black editorial with a gold rim light and large copy space",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: bold black editorial with a gold rim light and large copy space.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Bangle & Bracelets",
+    "subcategory": "Chain Bracelets",
+    "slug": "chain-bracelets",
+    "image_index": 1,
+    "scene_description": "delicate chain bracelet arranged in a graceful curve on cream silk, clasp visible",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: delicate chain bracelet arranged in a graceful curve on cream silk, clasp visible.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Bangle & Bracelets",
+    "subcategory": "Chain Bracelets",
+    "slug": "chain-bracelets",
+    "image_index": 2,
+    "scene_description": "woman wearing the bracelet with a neutral blouse, natural wrist pose",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: woman wearing the bracelet with a neutral blouse, natural wrist pose.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Bangle & Bracelets",
+    "subcategory": "Chain Bracelets",
+    "slug": "chain-bracelets",
+    "image_index": 3,
+    "scene_description": "macro of interlocking links, clasp and polished gold surface",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: macro of interlocking links, clasp and polished gold surface.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Bangle & Bracelets",
+    "subcategory": "Chain Bracelets",
+    "slug": "chain-bracelets",
+    "image_index": 4,
+    "scene_description": "casual gift flat lay with small cream jewellery box and maroon ribbon",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: casual gift flat lay with small cream jewellery box and maroon ribbon.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Bangle & Bracelets",
+    "subcategory": "Chain Bracelets",
+    "slug": "chain-bracelets",
+    "image_index": 5,
+    "scene_description": "evening party editorial with champagne-coloured bokeh, bracelet sharply focused",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: evening party editorial with champagne-coloured bokeh, bracelet sharply focused.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Bangle & Bracelets",
+    "subcategory": "Bangle Bracelets",
+    "slug": "bangle-bracelets",
+    "image_index": 1,
+    "scene_description": "hinged bangle bracelet centered on ivory velvet, front and side profile both visible",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: hinged bangle bracelet centered on ivory velvet, front and side profile both visible.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Bangle & Bracelets",
+    "subcategory": "Bangle Bracelets",
+    "slug": "bangle-bracelets",
+    "image_index": 2,
+    "scene_description": "model wearing one bangle bracelet with silk saree sleeve, close crop",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: model wearing one bangle bracelet with silk saree sleeve, close crop.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Bangle & Bracelets",
+    "subcategory": "Bangle Bracelets",
+    "slug": "bangle-bracelets",
+    "image_index": 3,
+    "scene_description": "macro of hinge, lock, engraving and stone details",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: macro of hinge, lock, engraving and stone details.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Bangle & Bracelets",
+    "subcategory": "Bangle Bracelets",
+    "slug": "bangle-bracelets",
+    "image_index": 4,
+    "scene_description": "festive flat lay with jasmine, kumkum and folded silk, bangle hero",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: festive flat lay with jasmine, kumkum and folded silk, bangle hero.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Bangle & Bracelets",
+    "subcategory": "Bangle Bracelets",
+    "slug": "bangle-bracelets",
+    "image_index": 5,
+    "scene_description": "contemporary luxury editorial on dark stone with dramatic but realistic highlights",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: contemporary luxury editorial on dark stone with dramatic but realistic highlights.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Necklace",
+    "subcategory": "Short Necklace",
+    "slug": "short-necklace",
+    "image_index": 1,
+    "scene_description": "short gold necklace laid in a neat semicircle on ivory silk, pendant or centre motif facing up",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: short gold necklace laid in a neat semicircle on ivory silk, pendant or centre motif facing up.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Necklace",
+    "subcategory": "Short Necklace",
+    "slug": "short-necklace",
+    "image_index": 2,
+    "scene_description": "South Indian bride wearing the short necklace over red silk saree, shoulders-to-waist crop",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: South Indian bride wearing the short necklace over red silk saree, shoulders-to-waist crop.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Necklace",
+    "subcategory": "Short Necklace",
+    "slug": "short-necklace",
+    "image_index": 3,
+    "scene_description": "macro of centre pendant, chain links, stones and gold texture",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: macro of centre pendant, chain links, stones and gold texture.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Necklace",
+    "subcategory": "Short Necklace",
+    "slug": "short-necklace",
+    "image_index": 4,
+    "scene_description": "traditional pooja or wedding flat lay with jasmine and maroon silk, necklace central",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: traditional pooja or wedding flat lay with jasmine and maroon silk, necklace central.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Necklace",
+    "subcategory": "Short Necklace",
+    "slug": "short-necklace",
+    "image_index": 5,
+    "scene_description": "minimal maroon-to-gold studio gradient with copy space on the left",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: minimal maroon-to-gold studio gradient with copy space on the left.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Necklace",
+    "subcategory": "Long Necklace",
+    "slug": "long-necklace",
+    "image_index": 1,
+    "scene_description": "long necklace fully arranged in an elegant vertical line on ivory silk, entire length visible",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: long necklace fully arranged in an elegant vertical line on ivory silk, entire length visible.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Necklace",
+    "subcategory": "Long Necklace",
+    "slug": "long-necklace",
+    "image_index": 2,
+    "scene_description": "bride wearing the long necklace over a Kanchipuram saree, temple hall bokeh",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: bride wearing the long necklace over a Kanchipuram saree, temple hall bokeh.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Necklace",
+    "subcategory": "Long Necklace",
+    "slug": "long-necklace",
+    "image_index": 3,
+    "scene_description": "macro of pendant or coin details, links and stone settings",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: macro of pendant or coin details, links and stone settings.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Necklace",
+    "subcategory": "Long Necklace",
+    "slug": "long-necklace",
+    "image_index": 4,
+    "scene_description": "bridal trousseau flat lay with silk, flowers and wedding accessories kept secondary",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: bridal trousseau flat lay with silk, flowers and wedding accessories kept secondary.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Necklace",
+    "subcategory": "Long Necklace",
+    "slug": "long-necklace",
+    "image_index": 5,
+    "scene_description": "heritage heirloom editorial on carved teak with warm window light and copy space",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: heritage heirloom editorial on carved teak with warm window light and copy space.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Nose Pin",
+    "subcategory": "Nose Pin",
+    "slug": "nosepin",
+    "image_index": 1,
+    "scene_description": "single gold nose pin on cream velvet, front and side angle shown through tasteful composition",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: single gold nose pin on cream velvet, front and side angle shown through tasteful composition.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Nose Pin",
+    "subcategory": "Nose Pin",
+    "slug": "nosepin",
+    "image_index": 2,
+    "scene_description": "close portrait crop of a woman wearing the nose pin with silk saree, face identity not important",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: close portrait crop of a woman wearing the nose pin with silk saree, face identity not important.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Nose Pin",
+    "subcategory": "Nose Pin",
+    "slug": "nosepin",
+    "image_index": 3,
+    "scene_description": "macro of stone setting, pin back and gold finish, anatomically accurate placement",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: macro of stone setting, pin back and gold finish, anatomically accurate placement.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Nose Pin",
+    "subcategory": "Nose Pin",
+    "slug": "nosepin",
+    "image_index": 4,
+    "scene_description": "bridal beauty flat lay with jasmine and kumkum, nose pin in a small open box",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: bridal beauty flat lay with jasmine and kumkum, nose pin in a small open box.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Nose Pin",
+    "subcategory": "Nose Pin",
+    "slug": "nosepin",
+    "image_index": 5,
+    "scene_description": "minimal dark editorial with one pinpoint of light on the nose pin and clean copy area",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: minimal dark editorial with one pinpoint of light on the nose pin and clean copy area.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Occasion",
+    "subcategory": "Casual Wear",
+    "slug": "casual-wear",
+    "image_index": 1,
+    "scene_description": "soft morning window light, neutral cotton or silk outfit, uncluttered everyday styling",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: soft morning window light, neutral cotton or silk outfit, uncluttered everyday styling.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Occasion",
+    "subcategory": "Casual Wear",
+    "slug": "casual-wear",
+    "image_index": 2,
+    "scene_description": "modern desk or caf\u00e9-inspired flat lay with only one subtle prop",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: modern desk or caf\u00e9-inspired flat lay with only one subtle prop.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Occasion",
+    "subcategory": "Casual Wear",
+    "slug": "casual-wear",
+    "image_index": 3,
+    "scene_description": "natural hand or neck crop, relaxed pose, realistic scale",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: natural hand or neck crop, relaxed pose, realistic scale.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Occasion",
+    "subcategory": "Casual Wear",
+    "slug": "casual-wear",
+    "image_index": 4,
+    "scene_description": "clean ivory background, gentle shadows, catalogue-meets-lifestyle balance",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: clean ivory background, gentle shadows, catalogue-meets-lifestyle balance.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Occasion",
+    "subcategory": "Casual Wear",
+    "slug": "casual-wear",
+    "image_index": 5,
+    "scene_description": "light contemporary editorial with muted beige and antique gold tones",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: light contemporary editorial with muted beige and antique gold tones.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Occasion",
+    "subcategory": "Party Wear",
+    "slug": "party-wear",
+    "image_index": 1,
+    "scene_description": "warm evening bokeh, deep maroon velvet and controlled sparkle",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: warm evening bokeh, deep maroon velvet and controlled sparkle.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Occasion",
+    "subcategory": "Party Wear",
+    "slug": "party-wear",
+    "image_index": 2,
+    "scene_description": "fashion-forward model crop with satin or silk outfit, product remains the hero",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: fashion-forward model crop with satin or silk outfit, product remains the hero.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Occasion",
+    "subcategory": "Party Wear",
+    "slug": "party-wear",
+    "image_index": 3,
+    "scene_description": "dark studio with a narrow spotlight and dramatic but realistic reflections",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: dark studio with a narrow spotlight and dramatic but realistic reflections.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Occasion",
+    "subcategory": "Party Wear",
+    "slug": "party-wear",
+    "image_index": 4,
+    "scene_description": "celebration flat lay with one glass-like bokeh accent, no distracting props",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: celebration flat lay with one glass-like bokeh accent, no distracting props.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Occasion",
+    "subcategory": "Party Wear",
+    "slug": "party-wear",
+    "image_index": 5,
+    "scene_description": "luxury nightlife editorial with charcoal, gold and maroon palette",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: luxury nightlife editorial with charcoal, gold and maroon palette.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Occasion",
+    "subcategory": "Traditional Wear",
+    "slug": "traditional-wear",
+    "image_index": 1,
+    "scene_description": "South Indian silk saree or cream kurta, temple-inspired warm bokeh",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: South Indian silk saree or cream kurta, temple-inspired warm bokeh.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Occasion",
+    "subcategory": "Traditional Wear",
+    "slug": "traditional-wear",
+    "image_index": 2,
+    "scene_description": "jasmine, marigold, brass diya and folded silk used as restrained props",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: jasmine, marigold, brass diya and folded silk used as restrained props.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Occasion",
+    "subcategory": "Traditional Wear",
+    "slug": "traditional-wear",
+    "image_index": 3,
+    "scene_description": "bridal or family celebration styling, respectful and culturally authentic",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: bridal or family celebration styling, respectful and culturally authentic.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Occasion",
+    "subcategory": "Traditional Wear",
+    "slug": "traditional-wear",
+    "image_index": 4,
+    "scene_description": "Chettinad or temple-architecture background with product sharply focused",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: Chettinad or temple-architecture background with product sharply focused.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Occasion",
+    "subcategory": "Traditional Wear",
+    "slug": "traditional-wear",
+    "image_index": 5,
+    "scene_description": "heritage heirloom mood on carved wood, ivory silk and antique brass",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: heritage heirloom mood on carved wood, ivory silk and antique brass.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Chains",
+    "subcategory": "Chains",
+    "slug": "chains",
+    "image_index": 1,
+    "scene_description": "gold chain arranged in a precise oval on ivory silk, clasp and link pattern visible",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: gold chain arranged in a precise oval on ivory silk, clasp and link pattern visible.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Chains",
+    "subcategory": "Chains",
+    "slug": "chains",
+    "image_index": 2,
+    "scene_description": "man in cream kurta wearing the chain, chest crop with natural scale",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: man in cream kurta wearing the chain, chest crop with natural scale.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Chains",
+    "subcategory": "Chains",
+    "slug": "chains",
+    "image_index": 3,
+    "scene_description": "extreme macro of link construction, clasp and polished metal texture",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: extreme macro of link construction, clasp and polished metal texture.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Chains",
+    "subcategory": "Chains",
+    "slug": "chains",
+    "image_index": 4,
+    "scene_description": "heritage menswear flat lay with silk, leather and brass props kept subtle",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: heritage menswear flat lay with silk, leather and brass props kept subtle.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Chains",
+    "subcategory": "Chains",
+    "slug": "chains",
+    "image_index": 5,
+    "scene_description": "dark luxury investment-style editorial with chain in an S curve and gold rim light",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: dark luxury investment-style editorial with chain in an S curve and gold rim light.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Pendant",
+    "subcategory": "Pendant",
+    "slug": "pendants",
+    "image_index": 1,
+    "scene_description": "single gold pendant with chain centered on ivory silk, pendant fully front-facing",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: single gold pendant with chain centered on ivory silk, pendant fully front-facing.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Pendant",
+    "subcategory": "Pendant",
+    "slug": "pendants",
+    "image_index": 2,
+    "scene_description": "woman or man wearing the pendant with a neutral silk outfit, chest crop",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: woman or man wearing the pendant with a neutral silk outfit, chest crop.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Pendant",
+    "subcategory": "Pendant",
+    "slug": "pendants",
+    "image_index": 3,
+    "scene_description": "macro of pendant motif, stone inlay, bail and fine engraving",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: macro of pendant motif, stone inlay, bail and fine engraving.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Pendant",
+    "subcategory": "Pendant",
+    "slug": "pendants",
+    "image_index": 4,
+    "scene_description": "festival gifting scene with cream box, maroon ribbon and warm diya bokeh",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: festival gifting scene with cream box, maroon ribbon and warm diya bokeh.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  },
+  {
+    "category": "Pendant",
+    "subcategory": "Pendant",
+    "slug": "pendants",
+    "image_index": 5,
+    "scene_description": "minimal charcoal campaign with pendant suspended in a sculptural composition and copy space",
+    "positive_prompt": "Use the attached exact product reference as the source of truth. Preserve the jewellery design, stone count, metal colour, proportions, motifs, clasp and finish; do not redesign it. Create a premium South Indian jewellery advertisement for Vedha Radha Jewellery, photorealistic commercial photography, realistic gold reflections, refined ivory, deep maroon and antique-gold palette, one product hero, no watermark, no fake logo, no price or fake hallmark text, leave clean copy space for website text. Scene: minimal charcoal campaign with pendant suspended in a sculptural composition and copy space.",
+    "negative_prompt": "altered jewellery, extra stones, missing stones, wrong motif, duplicate product, melted metal, plastic-looking gold, distorted hands or ears, fake text, fake logo, watermark, clutter, low resolution, oversaturation"
+  }
+]
