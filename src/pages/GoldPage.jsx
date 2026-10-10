@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 import { products } from '../data/products';
 import { goldCategories } from '../data/categoryData';
-import { 
-  Sparkles, 
-  ChevronRight, 
-  Heart, 
-  ShoppingBag, 
-  ShieldCheck, 
-  ArrowLeft, 
-  PhoneCall, 
+import {
+  Sparkles,
+  ChevronRight,
+  Heart,
+  ShoppingBag,
+  ShieldCheck,
+  ArrowLeft,
+  PhoneCall,
   SlidersHorizontal,
   Gem,
   CircleDot,
@@ -22,135 +22,135 @@ import {
 
 const CATEGORY_MAP = {
   // Main Categories
-  'earrings': { 
-    title: 'Gold Earrings Collection', 
+  'earrings': {
+    title: 'Gold Earrings Collection',
     desc: 'From royal Chettinad antique jhumkas to daily wear studs in 22K BIS 916 hallmarked gold.',
     parent: null
   },
-  'studs': { 
-    title: '22K Gold Studs', 
+  'studs': {
+    title: '22K Gold Studs',
     desc: 'Delicate everyday floral, pearl cluster, and solitaire-style gemstone studs.',
     parent: { name: 'Earrings', slug: 'earrings', path: '/gold/earrings' }
   },
-  'hangings': { 
-    title: 'Gold Hanging Earrings', 
+  'hangings': {
+    title: 'Gold Hanging Earrings',
     desc: 'Graceful dangling earrings and chandelier hangings with fine gold bead droplets.',
     parent: { name: 'Earrings', slug: 'earrings', path: '/gold/earrings' }
   },
-  'drops': { 
-    title: 'Gold Drop Earrings', 
+  'drops': {
+    title: 'Gold Drop Earrings',
     desc: 'Heirloom tear-drop and oval antique drops adorned with rubies and emeralds.',
     parent: { name: 'Earrings', slug: 'earrings', path: '/gold/earrings' }
   },
-  'jhumkas': { 
-    title: 'Chettinad Royal Gold Jhumkas', 
+  'jhumkas': {
+    title: 'Chettinad Royal Gold Jhumkas',
     desc: 'Grand multi-tier bell jhumkas inspired by South Indian temple architecture.',
     parent: { name: 'Earrings', slug: 'earrings', path: '/gold/earrings' }
   },
-  'hoops-bali': { 
-    title: 'Gold Hoops & Bali Earrings', 
+  'hoops-bali': {
+    title: 'Gold Hoops & Bali Earrings',
     desc: 'Classic circular South Indian balis, twisted hoop earrings, and lightweight daily loops.',
     parent: { name: 'Earrings', slug: 'earrings', path: '/gold/earrings' }
   },
 
   // Rings
-  'rings': { 
-    title: 'Gold Rings Collection', 
+  'rings': {
+    title: 'Gold Rings Collection',
     desc: 'Artisanal 22K cocktail rings, engagement bands, and auspicious gemstone signet rings.',
     parent: null
   },
-  'engagement-rings': { 
-    title: 'Gold Engagement Rings', 
+  'engagement-rings': {
+    title: 'Gold Engagement Rings',
     desc: 'Auspicious proposal bands, filigree solitaires, and eternity wedding rings.',
     parent: { name: 'Rings', slug: 'rings', path: '/gold/rings' }
   },
-  'casual-rings': { 
-    title: 'Casual & Daily Wear Gold Rings', 
+  'casual-rings': {
+    title: 'Casual & Daily Wear Gold Rings',
     desc: 'Comfort-fit lightweight gold rings, floral bands, and stackable modern accents.',
     parent: { name: 'Rings', slug: 'rings', path: '/gold/rings' }
   },
 
   // Bangles & Bracelets
-  'bangles': { 
-    title: 'Gold Bangles & Bracelets', 
+  'bangles': {
+    title: 'Gold Bangles & Bracelets',
     desc: 'Antique finish screw-kadas, traditional valayal sets, and lightweight daily bracelets.',
     parent: null
   },
-  'cuff-bracelets': { 
-    title: 'Gold Cuff Bracelets', 
+  'cuff-bracelets': {
+    title: 'Gold Cuff Bracelets',
     desc: 'Heavy structured kadas, open cuff bangles, and peacock-embossed wrist cuffs.',
     parent: { name: 'Bangle & Bracelets', slug: 'bangles', path: '/gold/bangles' }
   },
-  'chain-bracelets': { 
-    title: 'Gold Chain Bracelets', 
+  'chain-bracelets': {
+    title: 'Gold Chain Bracelets',
     desc: 'Flexible woven link bracelets, watch-charm bangles, and delicate gold wrist chains.',
     parent: { name: 'Bangle & Bracelets', slug: 'bangles', path: '/gold/bangles' }
   },
-  'bangle-bracelets': { 
-    title: 'Gold Bangle Bracelets', 
+  'bangle-bracelets': {
+    title: 'Gold Bangle Bracelets',
     desc: 'Contemporary hinge-lock bangle bracelets crafted for festive styling.',
     parent: { name: 'Bangle & Bracelets', slug: 'bangles', path: '/gold/bangles' }
   },
 
   // Necklaces
-  'necklaces': { 
-    title: 'Gold Necklaces & Harams', 
+  'necklaces': {
+    title: 'Gold Necklaces & Harams',
     desc: 'Heritage temple choker necklaces, long harams, and bridal kasu malas in 22K gold.',
     parent: null
   },
-  'short-necklace': { 
-    title: 'Short Gold Necklaces & Chokers', 
+  'short-necklace': {
+    title: 'Short Gold Necklaces & Chokers',
     desc: 'Close-fitting temple collar chokers, mango malas, and festive short necklaces.',
     parent: { name: 'Necklaces', slug: 'necklaces', path: '/gold/necklaces' }
   },
-  'long-necklace': { 
-    title: 'Long Gold Harams & Kasu Malas', 
+  'long-necklace': {
+    title: 'Long Gold Harams & Kasu Malas',
     desc: 'Grand 22-to-28 inch long bridal harams, coin malas, and multi-tier heirloom necklaces.',
     parent: { name: 'Necklaces', slug: 'necklaces', path: '/gold/necklaces' }
   },
 
   // Nosepin
-  'nosepin': { 
-    title: '22K Gold Nosepins & Mookuthi', 
+  'nosepin': {
+    title: '22K Gold Nosepins & Mookuthi',
     desc: 'Traditional South Indian stone mookuthi, floral diamond studs, and clip-on nose rings.',
     parent: null
   },
 
   // Occasion
-  'occasion': { 
-    title: 'Occasion Wear Gold Jewellery', 
+  'occasion': {
+    title: 'Occasion Wear Gold Jewellery',
     desc: 'Curated 22K jewellery ensembles tailored for casual days, celebrations, and wedding muhurthams.',
     parent: null
   },
-  'casual-wear': { 
-    title: 'Casual & Daily Wear Gold', 
+  'casual-wear': {
+    title: 'Casual & Daily Wear Gold',
     desc: 'Understated, lightweight 22K gold essentials designed for daily elegance and durability.',
     parent: { name: 'Occasion', slug: 'occasion', path: '/gold/occasion' }
   },
-  'party-wear': { 
-    title: 'Party & Festive Wear Gold', 
+  'party-wear': {
+    title: 'Party & Festive Wear Gold',
     desc: 'Radiant statement pieces, cocktail rings, and gemstone-accented jewellery for celebrations.',
     parent: { name: 'Occasion', slug: 'occasion', path: '/gold/occasion' }
   },
-  'traditional-wear': { 
-    title: 'Traditional & Muhurtham Wedding Gold', 
+  'traditional-wear': {
+    title: 'Traditional & Muhurtham Wedding Gold',
     desc: 'Auspicious temple harams, antique kadas, Kasu malas, and bridal heirloom sets.',
     parent: { name: 'Occasion', slug: 'occasion', path: '/gold/occasion' }
   },
 
   // Chains & Pendants
-  'chains': { 
-    title: '22K Gold Chains', 
+  'chains': {
+    title: '22K Gold Chains',
     desc: 'Hand-woven mugappu chains, hollow rope links, and durable everyday 22K chains.',
     parent: null
   },
-  'pendants': { 
-    title: '22K Gold Pendants', 
+  'pendants': {
+    title: '22K Gold Pendants',
     desc: 'Sacred temple deities, peacock medallions, and floral repoussé lockets in 22K gold.',
     parent: null
   },
-  'bridal-jewellery': { 
-    title: 'Bridal Gold Jewellery', 
+  'bridal-jewellery': {
+    title: 'Bridal Gold Jewellery',
     desc: 'Complete auspicious Muhurtham wedding trousseau sets and temple bridal jewelry.',
     parent: null
   }
@@ -256,9 +256,10 @@ function getCategoryIcon(slug, isActive = false) {
 }
 
 export default function GoldPage({
-  onViewProduct = () => {},
-  onAddToCart = () => {},
-  onAddToWishlist = () => {},
+  searchQuery = '',
+  onViewProduct = () => { },
+  onAddToCart = () => { },
+  onAddToWishlist = () => { },
   wishlistItems = []
 }) {
   const { subCategory, category, subType } = useParams();
@@ -302,6 +303,19 @@ export default function GoldPage({
   // Filter products matching category or subcategory
   const filteredProducts = products.filter(item => {
     if (item.category !== 'Gold') return false;
+
+    // Search query filter
+    if (searchQuery && searchQuery.trim() !== '') {
+      const q = searchQuery.toLowerCase().trim();
+      const matchesSearch =
+        item.name.toLowerCase().includes(q) ||
+        (item.description && item.description.toLowerCase().includes(q)) ||
+        (item.details && item.details.toLowerCase().includes(q)) ||
+        (item.subCategory && item.subCategory.toLowerCase().includes(q)) ||
+        (item.subType && item.subType.toLowerCase().includes(q)) ||
+        (item.sku && item.sku.toLowerCase().includes(q));
+      if (!matchesSearch) return false;
+    }
 
     // Category match
     let matchesCategory = false;
@@ -364,7 +378,7 @@ export default function GoldPage({
 
   return (
     <div className="bg-[#FAF7F2] min-h-screen border-b border-[#EAE2D5] font-sans selection:bg-[#581923] selection:text-white">
-      
+
       {/* Breadcrumb Navigation Container */}
       <div className="max-w-[1440px] mx-auto px-4 sm:px-8 pt-4 sm:pt-6 pb-3">
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-[#7A6E65] flex-wrap">
@@ -373,7 +387,7 @@ export default function GoldPage({
           <Link to="/gold" className={`hover:text-[#581923] transition-colors ${activeKey === 'all' ? 'font-bold text-[#581923]' : ''}`}>
             Gold Jewellery
           </Link>
-          
+
           {categoryInfo.parent && (
             <>
               <ChevronRight className="w-3.5 h-3.5 text-[#B38E46] shrink-0" />
@@ -399,7 +413,7 @@ export default function GoldPage({
       {/* ========================================================================= */}
       <div className="w-full bg-[#2D0F15] overflow-hidden shadow-lg border-y border-[#521B24] mb-8 sm:mb-10">
         <div className="w-full grid grid-cols-1 lg:grid-cols-2 min-h-[300px] lg:min-h-[440px]">
-          
+
           {/* Left Column: Lifestyle Image with Traditional Saree & Gold Jewellery */}
           <div className="relative w-full h-[280px] sm:h-[360px] lg:h-full min-h-[280px] lg:min-h-[440px] overflow-hidden bg-[#1E080D]">
             <img
@@ -442,7 +456,7 @@ export default function GoldPage({
       {/* MAIN CATALOG CONTENT CONTAINER                                            */}
       {/* ========================================================================= */}
       <div id="gold-catalog-section" className="max-w-[1440px] mx-auto px-4 sm:px-8 pb-12 scroll-mt-24">
-        
+
         {/* CENTERED SECTION HEADING & LOTUS FLOURISH */}
         <div className="text-center mb-6">
           {/* "Gold Collections" in Deep Navy Serif Typography */}
@@ -494,16 +508,15 @@ export default function GoldPage({
         {/* ========================================================================= */}
         <div className="mb-6">
           <div className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto scrollbar-none pb-2 sm:pb-0 px-1 sm:justify-center">
-            
+
             {/* "All Gold (N)" Pill */}
             <Link
               to="/gold"
               onClick={scrollToCatalog}
-              className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-xs shrink-0 ${
-                activeKey === 'all'
-                  ? 'bg-[#4D141C] text-white border border-[#4D141C] shadow-md'
-                  : 'bg-white text-[#1C273C] hover:text-[#581923] hover:border-[#C8A058] border border-[#E7DFD3]'
-              }`}
+              className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-xs shrink-0 ${activeKey === 'all'
+                ? 'bg-[#4D141C] text-white border border-[#4D141C] shadow-md'
+                : 'bg-white text-[#1C273C] hover:text-[#581923] hover:border-[#C8A058] border border-[#E7DFD3]'
+                }`}
             >
               {getCategoryIcon('all', activeKey === 'all')}
               <span>All Gold ({products.filter(p => p.category === 'Gold').length})</span>
@@ -517,11 +530,10 @@ export default function GoldPage({
                   key={cat.id}
                   to={cat.path}
                   onClick={scrollToCatalog}
-                  className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-xs shrink-0 ${
-                    isActive
-                      ? 'bg-[#4D141C] text-white border border-[#4D141C] shadow-md'
-                      : 'bg-white text-[#1C273C] hover:text-[#581923] hover:border-[#C8A058] border border-[#E7DFD3]'
-                  }`}
+                  className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-xs shrink-0 ${isActive
+                    ? 'bg-[#4D141C] text-white border border-[#4D141C] shadow-md'
+                    : 'bg-white text-[#1C273C] hover:text-[#581923] hover:border-[#C8A058] border border-[#E7DFD3]'
+                    }`}
                 >
                   {getCategoryIcon(cat.slug, isActive)}
                   <span>{cat.name}</span>
@@ -532,11 +544,10 @@ export default function GoldPage({
             {/* Dark Navy "Filter" Button with Filter Icon */}
             <button
               onClick={() => setIsFilterDrawerOpen(!isFilterDrawerOpen)}
-              className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-xs shrink-0 ${
-                isFilterDrawerOpen || priceFilter !== 'all'
-                  ? 'bg-[#121B28] text-[#E5C278] border border-[#E5C278] shadow-md'
-                  : 'bg-[#1A2536] hover:bg-[#111A27] text-white border border-[#1A2536]'
-              }`}
+              className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-xs shrink-0 ${isFilterDrawerOpen || priceFilter !== 'all'
+                ? 'bg-[#121B28] text-[#E5C278] border border-[#E5C278] shadow-md'
+                : 'bg-[#1A2536] hover:bg-[#111A27] text-white border border-[#1A2536]'
+                }`}
               title="Toggle Price & Purity Filter"
               aria-label="Filter products"
             >
@@ -579,11 +590,10 @@ export default function GoldPage({
                 <button
                   key={opt.id}
                   onClick={() => setPriceFilter(opt.id)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-semibold transition ${
-                    priceFilter === opt.id
-                      ? 'bg-[#581923] text-white shadow-xs'
-                      : 'bg-[#FAF7F2] text-gray-700 hover:bg-[#F3EAD3] border border-[#DECDBB]'
-                  }`}
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold transition ${priceFilter === opt.id
+                    ? 'bg-[#581923] text-white shadow-xs'
+                    : 'bg-[#FAF7F2] text-gray-700 hover:bg-[#F3EAD3] border border-[#DECDBB]'
+                    }`}
                 >
                   {opt.label}
                 </button>
@@ -601,11 +611,10 @@ export default function GoldPage({
             <Link
               to={currentCategoryData.path}
               onClick={scrollToCatalog}
-              className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
-                activeKey === currentCategoryData.slug
-                  ? 'bg-[#581923] text-white'
-                  : 'bg-white/80 text-[#3A2E28] hover:bg-white border border-[#DECDBB]'
-              }`}
+              className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${activeKey === currentCategoryData.slug
+                ? 'bg-[#581923] text-white'
+                : 'bg-white/80 text-[#3A2E28] hover:bg-white border border-[#DECDBB]'
+                }`}
             >
               View All
             </Link>
@@ -616,11 +625,10 @@ export default function GoldPage({
                   key={sub.slug}
                   to={sub.path}
                   onClick={scrollToCatalog}
-                  className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
-                    isSubActive
-                      ? 'bg-[#581923] text-white'
-                      : 'bg-white/80 text-[#3A2E28] hover:bg-white border border-[#DECDBB]'
-                  }`}
+                  className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${isSubActive
+                    ? 'bg-[#581923] text-white'
+                    : 'bg-white/80 text-[#3A2E28] hover:bg-white border border-[#DECDBB]'
+                    }`}
                 >
                   {sub.name}
                 </Link>
@@ -653,78 +661,110 @@ export default function GoldPage({
           </div>
         </div>
 
-        {/* Product Cards Grid */}
+        {/* Product Cards Grid with First JPG Product Image */}
         {sortedProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 my-8">
             {sortedProducts.map((item) => {
               const isWishlisted = wishlistItems.some(w => w.id === item.id);
+              const cardImage = (item.images && item.images.length > 0) ? item.images[0] : item.image;
+
               return (
                 <div
                   key={item.id}
-                  className="bg-white rounded-xl border border-[#E8DFC0] overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between group"
+                  className="bg-white rounded-2xl border border-[#E8DFC0] overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:border-[#C8A058] relative"
                 >
-                  <div className="relative aspect-square overflow-hidden bg-[#FAF6EE]">
+                  {/* Product Image Container */}
+                  <div
+                    className="relative aspect-square overflow-hidden bg-[#FAF6EE] cursor-pointer"
+                    onClick={() => onViewProduct(item)}
+                  >
                     <img
-                      src={item.image}
+                      src={cardImage}
                       alt={item.altText || item.name}
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                     />
+
+                    {/* Status Badge */}
                     <div className="absolute top-3 left-3 flex flex-col gap-1.5">
                       <span className="inline-block px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-[#DCF0DF] text-[#1E5C2D] border border-[#C1E3C6] shadow-xs">
-                        {item.badge}
+                        {item.badge || '22K BIS 916'}
                       </span>
                     </div>
 
+                    {/* 3-View Indicator Pill */}
+                    {item.images && item.images.length > 1 && (
+                      <div className="absolute bottom-3 left-3">
+                        <span className="bg-[#241716]/80 text-[#E5C278] text-[10px] font-semibold px-2 py-0.5 rounded-md backdrop-blur-xs flex items-center gap-1 shadow-xs">
+                          <span>{item.images.length} Views</span>
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Wishlist Button */}
                     <button
-                      onClick={() => onAddToWishlist(item)}
-                      className="absolute top-3 right-3 p-2 rounded-full bg-white/90 hover:bg-white text-[#581923] shadow-md transition-transform active:scale-95 cursor-pointer"
-                      title={isWishlisted ? "Item in Wishlist" : "Add to Wishlist"}
-                      aria-label={`Add ${item.name} to Wishlist`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onAddToWishlist(item);
+                      }}
+                      className={`absolute top-3 right-3 p-2 rounded-full border shadow-md transition-all active:scale-95 cursor-pointer z-10 ${isWishlisted
+                        ? 'bg-[#FDF2F2] border-[#F8B4B4] text-[#D32F2F]'
+                        : 'bg-white/90 hover:bg-white text-[#581923] border-[#EAE2D5]'
+                        }`}
+                      title={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
+                      aria-label={`${isWishlisted ? 'Remove' : 'Add'} ${item.name} ${isWishlisted ? 'from' : 'to'} Wishlist`}
                     >
                       <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-[#D32F2F] text-[#D32F2F]' : ''}`} />
                     </button>
                   </div>
 
+                  {/* Card Content */}
                   <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
                     <div>
-                      <div className="flex items-center justify-between gap-2 mb-1 flex-wrap">
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C6D2D]">
-                          {item.purity || item.details}
+                      {/* Category & Purity Tags */}
+                      <div className="flex items-center justify-between gap-2 mb-1.5 flex-wrap">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C6D2D] bg-[#FAF3E3] px-2 py-0.5 rounded border border-[#E8DFC0]/70">
+                          {item.purity || item.details || '22K BIS 916'}
                         </span>
-                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-[#F4EFE6] text-[#63574F] capitalize">
+                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-[#F4EFE6] text-[#63574F] capitalize">
                           {item.subType ? item.subType.replace(/-/g, ' ') : item.subCategory}
                         </span>
                       </div>
-                      <h3 
+
+                      {/* Product Name */}
+                      <h3
                         onClick={() => onViewProduct(item)}
                         className="font-serif text-base font-bold text-[#241716] group-hover:text-[#581923] transition-colors line-clamp-1 mt-1 cursor-pointer"
+                        title={item.name}
                       >
                         {item.name}
                       </h3>
+
+                      {/* Product Description */}
                       <p className="text-xs text-[#63574F] line-clamp-2 mt-1 leading-relaxed">
                         {item.description}
                       </p>
                     </div>
 
-                    <div className="mt-4 pt-3 border-t border-[#EAE2D5] flex items-center justify-between">
+                    {/* Card Bottom: Price & Action Buttons */}
+                    <div className="mt-4 pt-3 border-t border-[#EAE2D5] flex items-center justify-between gap-2">
                       <div>
-                        <span className="text-[10px] text-[#7A6E65] block">Showroom Price</span>
+                        <span className="text-[10px] text-[#7A6E65] block font-medium">Showroom Price</span>
                         <span className="font-serif text-lg font-bold text-[#48161E]">
                           {item.price}
                         </span>
                       </div>
 
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 shrink-0">
                         <button
                           onClick={() => onViewProduct(item)}
-                          className="px-3 py-1.5 rounded-md border border-[#581923] text-[#581923] hover:bg-[#FAF0E1] text-xs font-semibold transition-colors cursor-pointer"
+                          className="px-3 py-1.5 rounded-lg border border-[#581923] text-[#581923] hover:bg-[#FAF0E1] text-xs font-semibold transition-colors cursor-pointer"
                         >
                           Details
                         </button>
                         <button
                           onClick={() => onAddToCart(item)}
-                          className="px-3 py-1.5 rounded-md bg-[#581923] hover:bg-[#431219] text-white text-xs font-semibold flex items-center gap-1 transition-colors cursor-pointer"
+                          className="px-3 py-1.5 rounded-lg bg-[#581923] hover:bg-[#431219] text-white text-xs font-semibold flex items-center gap-1 transition-colors cursor-pointer shadow-2xs"
                         >
                           <ShoppingBag className="w-3.5 h-3.5" />
                           <span>Add</span>
@@ -768,7 +808,7 @@ export default function GoldPage({
         )}
 
         {/* Showroom Purity Assurance Footer */}
-        <div className="bg-[#FAF3E6] rounded-xl p-5 border border-[#E5D5BA] flex items-center justify-between flex-wrap gap-4 text-xs text-[#52453E]">
+        <div className=" p-5  flex items-center justify-between flex-wrap gap-4 text-xs text-[#52453E]">
           <div className="flex items-center gap-2 font-medium">
             <ShieldCheck className="w-4 h-4 text-[#581923]" />
             <span>100% BIS 916 Hallmark &bull; 0% Deduction on Old Gold Exchange &bull; Lifetime Free Maintenance</span>

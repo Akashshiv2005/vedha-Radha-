@@ -21,7 +21,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 24,500',
     numericPrice: 24500,
-    image: '/images/products/gold/gold_studs_1.svg',
+    images: [
+      '/images/products/gold/gold_studs_1-01.jpg',
+      '/images/products/gold/gold_studs_1-02.jpg',
+      '/images/products/gold/gold_studs_1-03.jpg'
+    ],
+    image: '/images/products/gold/gold_studs_1-01.jpg',
     altText: 'Delicate floral gold stud earring with a small ruby-red centre and fine petal detailing',
     description: 'A delicate floral gold stud with a small ruby-red centre and fine petal detailing, handcrafted in 22K hallmarked gold with micro-engraved petals.',
     weight: '6.2 grams',
@@ -46,7 +51,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 28,200',
     numericPrice: 28200,
-    image: '/images/products/gold/gold_studs_2.svg',
+    images: [
+      '/images/products/gold/gold_studs_2-01.jpg',
+      '/images/products/gold/gold_studs_2-02.jpg',
+      '/images/products/gold/gold_studs_2-03.jpg'
+    ],
+    image: '/images/products/gold/gold_studs_2-01.jpg',
     altText: 'Compact peacock-inspired gold stud earring with tiny green emerald accents and engraved feather details',
     description: 'A compact peacock-inspired gold stud with tiny green accents and engraved feather details, capturing South Indian temple Mayil motifs.',
     weight: '7.1 grams',
@@ -71,7 +81,12 @@ const goldProducts = [
     details: '22K BIS 916 Antique Gold',
     price: '₹ 31,800',
     numericPrice: 31800,
-    image: '/images/products/gold/gold_studs_3.svg',
+    images: [
+      '/images/products/gold/gold_studs_3-01.jpg',
+      '/images/products/gold/gold_studs_3-02.jpg',
+      '/images/products/gold/gold_studs_3-03.jpg'
+    ],
+    image: '/images/products/gold/gold_studs_3-01.jpg',
     altText: 'Traditional temple-style gold stud earring featuring a Lakshmi-inspired motif and beaded border',
     description: 'A small traditional temple-style stud featuring a Lakshmi-inspired motif and beaded border, invoking divine prosperity with antique patina.',
     weight: '8.0 grams',
@@ -96,7 +111,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 19,400',
     numericPrice: 19400,
-    image: '/images/products/gold/gold_studs_4.svg',
+    images: [
+      '/images/products/gold/gold_studs_4-01.jpg',
+      '/images/products/gold/gold_studs_4-02.jpg',
+      '/images/products/gold/gold_studs_4-03.jpg'
+    ],
+    image: '/images/products/gold/gold_studs_4-01.jpg',
     altText: 'Modern geometric gold stud earring with clean lines and a polished finish',
     description: 'A modern geometric gold stud with clean lines and a polished finish, designed for contemporary everyday office and festive styling.',
     weight: '4.8 grams',
@@ -121,7 +141,12 @@ const goldProducts = [
     details: '22K Gold & Natural South Sea Pearl',
     price: '₹ 26,700',
     numericPrice: 26700,
-    image: '/images/products/gold/gold_studs_5.svg',
+    images: [
+      '/images/products/gold/gold_studs_5-01.jpg',
+      '/images/products/gold/gold_studs_5-02.jpg',
+      '/images/products/gold/gold_studs_5-03.jpg'
+    ],
+    image: '/images/products/gold/gold_studs_5-01.jpg',
     altText: 'Round gold stud earring with a pearl-like centre and a finely detailed decorative halo',
     description: 'A round gold stud with a pearl-like centre and a finely detailed decorative halo, encircled by micro-granulated gold sunburst rays.',
     weight: '6.6 grams',
@@ -148,7 +173,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 44,500',
     numericPrice: 44500,
-    image: '/images/products/gold/gold_hangings_6.svg',
+    images: [
+      '/images/products/gold/gold_hangings_6-01.jpg',
+      '/images/products/gold/gold_hangings_6-02.jpg',
+      '/images/products/gold/gold_hangings_6-03.jpg'
+    ],
+    image: '/images/products/gold/gold_hangings_6-01.jpg',
     altText: 'Long floral gold hanging earrings with delicate engraved petals and small bead drops',
     description: 'Long floral gold hanging earrings with delicate engraved petals and small bead drops, offering graceful movement and radiance.',
     weight: '11.2 grams',
@@ -173,7 +203,12 @@ const goldProducts = [
     details: '22K BIS 916 Antique Gold',
     price: '₹ 52,000',
     numericPrice: 52000,
-    image: '/images/products/gold/gold_hangings_7.svg',
+    images: [
+      '/images/products/gold/gold_hangings_7-01.jpg',
+      '/images/products/gold/gold_hangings_7-02.jpg',
+      '/images/products/gold/gold_hangings_7-03.jpg'
+    ],
+    image: '/images/products/gold/gold_hangings_7-01.jpg',
     altText: 'Traditional temple-motif hanging earrings with a sculpted central ornament',
     description: 'Traditional temple-motif hanging earrings with a sculpted central ornament, featuring temple mantapam silhouettes and pearl droplets.',
     weight: '13.0 grams',
@@ -198,7 +233,12 @@ const goldProducts = [
     details: '22K Gold with Natural Kemp Stones',
     price: '₹ 48,600',
     numericPrice: 48600,
-    image: '/images/products/gold/gold_hangings_8.svg',
+    images: [
+      '/images/products/gold/gold_hangings_8-01.jpg',
+      '/images/products/gold/gold_hangings_8-02.jpg',
+      '/images/products/gold/gold_hangings_8-03.jpg'
+    ],
+    image: '/images/products/gold/gold_hangings_8-01.jpg',
     altText: 'Elegant gold hangings with a red-and-green stone-inspired floral arrangement',
     description: 'Elegant gold hangings with a red-and-green stone-inspired floral arrangement, set with brilliant cabochon rubies and emerald drops.',
     weight: '12.1 grams',
@@ -223,7 +263,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 39,800',
     numericPrice: 39800,
-    image: '/images/products/gold/gold_hangings_9.svg',
+    images: [
+      '/images/products/gold/gold_hangings_9-01.jpg',
+      '/images/products/gold/gold_hangings_9-02.jpg',
+      '/images/products/gold/gold_hangings_9-03.jpg'
+    ],
+    image: '/images/products/gold/gold_hangings_9-01.jpg',
     altText: 'Slim leaf-pattern gold hangings with articulated details and tiny dangling beads',
     description: 'Slim leaf-pattern gold hangings with articulated details and tiny dangling beads, cascading fluidly with every motion.',
     weight: '9.9 grams',
@@ -248,7 +293,12 @@ const goldProducts = [
     details: '22K Antique Hallmarked Gold',
     price: '₹ 58,400',
     numericPrice: 58400,
-    image: '/images/products/gold/gold_hangings_10.svg',
+    images: [
+      '/images/products/gold/gold_hangings_10-01.jpg',
+      '/images/products/gold/gold_hangings_10-02.jpg',
+      '/images/products/gold/gold_hangings_10-03.jpg'
+    ],
+    image: '/images/products/gold/gold_hangings_10-01.jpg',
     altText: 'Pair of ornate South Indian gold hanging earrings with a layered filigree silhouette',
     description: 'A pair of ornate South Indian gold hanging earrings with a layered filigree silhouette and cascading natural seed pearl droplets.',
     weight: '14.6 grams',
@@ -275,7 +325,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 36,500',
     numericPrice: 36500,
-    image: '/images/products/gold/gold_drops_11.svg',
+    images: [
+      '/images/products/gold/gold_drops_11-01.jpg',
+      '/images/products/gold/gold_drops_11-02.jpg',
+      '/images/products/gold/gold_drops_11-03.jpg'
+    ],
+    image: '/images/products/gold/gold_drops_11-01.jpg',
     altText: 'Teardrop-shaped gold drop earrings with a ruby-red centre and fine beaded edges',
     description: 'Teardrop-shaped gold drop earrings with a ruby-red centre and fine beaded edges, crowned with a micro-beaded aureole.',
     weight: '9.1 grams',
@@ -300,7 +355,12 @@ const goldProducts = [
     details: '22K Gold & Natural South Sea Pearl',
     price: '₹ 34,200',
     numericPrice: 34200,
-    image: '/images/products/gold/gold_drops_12.svg',
+    images: [
+      '/images/products/gold/gold_drops_12-01.jpg',
+      '/images/products/gold/gold_drops_12-02.jpg',
+      '/images/products/gold/gold_drops_12-03.jpg'
+    ],
+    image: '/images/products/gold/gold_drops_12-01.jpg',
     altText: 'Pearl-accent gold drop earrings with an elegant curved frame',
     description: 'Pearl-accent gold drop earrings with an elegant curved frame that suspends a lustrous natural pearl within a sculptural gold arc.',
     weight: '8.5 grams',
@@ -325,7 +385,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 29,900',
     numericPrice: 29900,
-    image: '/images/products/gold/gold_drops_13.svg',
+    images: [
+      '/images/products/gold/gold_drops_13-01.jpg',
+      '/images/products/gold/gold_drops_13-02.jpg',
+      '/images/products/gold/gold_drops_13-03.jpg'
+    ],
+    image: '/images/products/gold/gold_drops_13-01.jpg',
     altText: 'Small floral gold top with a single engraved leaf-shaped drop',
     description: 'A small floral gold top with a single engraved leaf-shaped drop, finished with satin engraving and polished gold highlights.',
     weight: '7.4 grams',
@@ -350,7 +415,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 38,000',
     numericPrice: 38000,
-    image: '/images/products/gold/gold_drops_14.svg',
+    images: [
+      '/images/products/gold/gold_drops_14-01.jpg',
+      '/images/products/gold/gold_drops_14-02.jpg',
+      '/images/products/gold/gold_drops_14-03.jpg'
+    ],
+    image: '/images/products/gold/gold_drops_14-01.jpg',
     altText: 'Two-tier gold drop earrings with a delicate geometric design',
     description: 'Two-tier gold drop earrings with a delicate geometric design, combining interlocking rhonbus and hexagon silhouettes.',
     weight: '9.5 grams',
@@ -375,7 +445,12 @@ const goldProducts = [
     details: '22K Gold with Cabochon Emerald',
     price: '₹ 41,200',
     numericPrice: 41200,
-    image: '/images/products/gold/gold_drops_15.svg',
+    images: [
+      '/images/products/gold/gold_drops_15-01.jpg',
+      '/images/products/gold/gold_drops_15-02.jpg',
+      '/images/products/gold/gold_drops_15-03.jpg'
+    ],
+    image: '/images/products/gold/gold_drops_15-01.jpg',
     altText: 'Gold drop earrings featuring a green stone-inspired centre and a tiny bell-shaped pendant',
     description: 'Gold drop earrings featuring a green stone-inspired centre and a tiny bell-shaped pendant with chiming micro-bead trim.',
     weight: '10.3 grams',
@@ -402,7 +477,12 @@ const goldProducts = [
     details: '22K Antique Hallmarked Gold',
     price: '₹ 54,000',
     numericPrice: 54000,
-    image: '/images/products/gold/gold_jhumkas_16.svg',
+    images: [
+      '/images/products/gold/gold_jhumkas_16-01.jpg',
+      '/images/products/gold/gold_jhumkas_16-02.jpg',
+      '/images/products/gold/gold_jhumkas_16-03.jpg'
+    ],
+    image: '/images/products/gold/gold_jhumkas_16-01.jpg',
     altText: 'Classic dome-shaped South Indian gold jhumkas with fine granulation and small bead fringe',
     description: 'Classic dome-shaped South Indian gold jhumkas with fine granulation and small bead fringe, forged with Chettinad bell symmetry.',
     weight: '13.5 grams',
@@ -427,7 +507,12 @@ const goldProducts = [
     details: '22K BIS 916 Antique Gold',
     price: '₹ 66,500',
     numericPrice: 66500,
-    image: '/images/products/gold/gold_jhumkas_17.svg',
+    images: [
+      '/images/products/gold/gold_jhumkas_17-01.jpg',
+      '/images/products/gold/gold_jhumkas_17-02.jpg',
+      '/images/products/gold/gold_jhumkas_17-03.jpg'
+    ],
+    image: '/images/products/gold/gold_jhumkas_17-01.jpg',
     altText: 'Temple-style gold jhumkas with a sculpted deity-inspired motif on the dome',
     description: 'Temple-style gold jhumkas with a sculpted deity-inspired motif on the dome, adorned with genuine seed pearls and antique patina.',
     weight: '16.6 grams',
@@ -452,7 +537,12 @@ const goldProducts = [
     details: '22K Gold with Ruby & Emerald Stones',
     price: '₹ 61,000',
     numericPrice: 61000,
-    image: '/images/products/gold/gold_jhumkas_18.svg',
+    images: [
+      '/images/products/gold/gold_jhumkas_18-01.jpg',
+      '/images/products/gold/gold_jhumkas_18-02.jpg',
+      '/images/products/gold/gold_jhumkas_18-03.jpg'
+    ],
+    image: '/images/products/gold/gold_jhumkas_18-01.jpg',
     altText: 'Floral gold jhumkas with red- and green-coloured stone-inspired details',
     description: 'Floral gold jhumkas with red- and green-coloured stone-inspired details, featuring dual-band floral kemp stone collars.',
     weight: '15.2 grams',
@@ -477,7 +567,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 58,900',
     numericPrice: 58900,
-    image: '/images/products/gold/gold_jhumkas_19.svg',
+    images: [
+      '/images/products/gold/gold_jhumkas_19-01.jpg',
+      '/images/products/gold/gold_jhumkas_19-02.jpg',
+      '/images/products/gold/gold_jhumkas_19-03.jpg'
+    ],
+    image: '/images/products/gold/gold_jhumkas_19-01.jpg',
     altText: 'Peacock-inspired gold jhumkas with engraved feather patterns and a delicate fringe',
     description: 'Peacock-inspired gold jhumkas with engraved feather patterns and a delicate fringe, crowned with an emerald crest.',
     weight: '14.7 grams',
@@ -502,7 +597,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 42,500',
     numericPrice: 42500,
-    image: '/images/products/gold/gold_jhumkas_20.svg',
+    images: [
+      '/images/products/gold/gold_jhumkas_20-01.jpg',
+      '/images/products/gold/gold_jhumkas_20-02.jpg',
+      '/images/products/gold/gold_jhumkas_20-03.jpg'
+    ],
+    image: '/images/products/gold/gold_jhumkas_20-01.jpg',
     altText: 'Petite gold jhumkas with layered filigree and tiny dangling beads',
     description: 'Petite gold jhumkas with layered filigree and tiny dangling beads, perfect for festive poojas and comfortable daily wear.',
     weight: '10.6 grams',
@@ -529,7 +629,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 22,800',
     numericPrice: 22800,
-    image: '/images/products/gold/gold_hoops_21.svg',
+    images: [
+      '/images/products/gold/gold_hoops_21-01.jpg',
+      '/images/products/gold/gold_hoops_21-02.jpg',
+      '/images/products/gold/gold_hoops_21-03.jpg'
+    ],
+    image: '/images/products/gold/gold_hoops_21-01.jpg',
     altText: 'Pair of classic rounded gold bali hoops with a smooth polished surface',
     description: 'A pair of classic rounded gold bali hoops with a smooth polished surface and secure hinged latch for effortless everyday comfort.',
     weight: '5.7 grams',
@@ -554,7 +659,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 27,500',
     numericPrice: 27500,
-    image: '/images/products/gold/gold_hoops_22.svg',
+    images: [
+      '/images/products/gold/gold_hoops_22-01.jpg',
+      '/images/products/gold/gold_hoops_22-02.jpg',
+      '/images/products/gold/gold_hoops_22-03.jpg'
+    ],
+    image: '/images/products/gold/gold_hoops_22-01.jpg',
     altText: 'Engraved gold hoops with fine traditional floral patterns',
     description: 'Engraved gold hoops with fine traditional floral patterns and micro-kemp stone studs around the circular silhouette.',
     weight: '6.8 grams',
@@ -579,7 +689,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 29,400',
     numericPrice: 29400,
-    image: '/images/products/gold/gold_hoops_23.svg',
+    images: [
+      '/images/products/gold/gold_hoops_23-01.jpg',
+      '/images/products/gold/gold_hoops_23-02.jpg',
+      '/images/products/gold/gold_hoops_23-03.jpg'
+    ],
+    image: '/images/products/gold/gold_hoops_23-01.jpg',
     altText: 'Twisted-rope gold hoops with a delicate beaded edge',
     description: 'Twisted-rope gold hoops with a delicate beaded edge, catching ambient light with high-relief reflective textures.',
     weight: '7.3 grams',
@@ -604,7 +719,12 @@ const goldProducts = [
     details: '22K Gold & Natural Kemp Rubies',
     price: '₹ 33,000',
     numericPrice: 33000,
-    image: '/images/products/gold/gold_hoops_24.svg',
+    images: [
+      '/images/products/gold/gold_hoops_24-01.jpg',
+      '/images/products/gold/gold_hoops_24-02.jpg',
+      '/images/products/gold/gold_hoops_24-03.jpg'
+    ],
+    image: '/images/products/gold/gold_hoops_24-01.jpg',
     altText: 'Floral-front gold bali hoops with small decorative accents',
     description: 'Floral-front gold bali hoops with small decorative accents and dangling South Sea seed pearl accents.',
     weight: '8.2 grams',
@@ -629,7 +749,12 @@ const goldProducts = [
     details: '22K BIS 916 Antique Gold',
     price: '₹ 36,800',
     numericPrice: 36800,
-    image: '/images/products/gold/gold_hoops_25.svg',
+    images: [
+      '/images/products/gold/gold_hoops_25-01.jpg',
+      '/images/products/gold/gold_hoops_25-02.jpg',
+      '/images/products/gold/gold_hoops_25-03.jpg'
+    ],
+    image: '/images/products/gold/gold_hoops_25-01.jpg',
     altText: 'Medium-sized hinged gold hoops with a sculpted traditional pattern',
     description: 'Medium-sized hinged gold hoops with a sculpted traditional pattern and click-lock security.',
     weight: '9.2 grams',
@@ -656,7 +781,12 @@ const goldProducts = [
     details: '22K BIS 916 Gold with Brilliant Solitaire',
     price: '₹ 32,000',
     numericPrice: 32000,
-    image: '/images/products/gold/gold_engagement_rings_26.svg',
+    images: [
+      '/images/products/gold/gold_engagement_rings_26-01.jpg',
+      '/images/products/gold/gold_engagement_rings_26-02.jpg',
+      '/images/products/gold/gold_engagement_rings_26-03.jpg'
+    ],
+    image: '/images/products/gold/gold_engagement_rings_26-01.jpg',
     altText: 'Elegant gold engagement ring with a raised clear centre stone and a simple band',
     description: 'An elegant gold engagement ring with a raised clear centre stone and a simple band, crafted in 22K yellow gold with six-prong setting.',
     weight: '5.3 grams',
@@ -681,7 +811,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 35,500',
     numericPrice: 35500,
-    image: '/images/products/gold/gold_engagement_rings_27.svg',
+    images: [
+      '/images/products/gold/gold_engagement_rings_27-01.jpg',
+      '/images/products/gold/gold_engagement_rings_27-02.jpg',
+      '/images/products/gold/gold_engagement_rings_27-03.jpg'
+    ],
+    image: '/images/products/gold/gold_engagement_rings_27-01.jpg',
     altText: 'Gold ring with a square clear centre stone and delicate side details',
     description: 'A gold ring with a square clear centre stone and delicate side details, featuring corner chevron gold clasps and polished tapered shoulders.',
     weight: '5.8 grams',
@@ -706,7 +841,12 @@ const goldProducts = [
     details: '22K Gold with Micro Pavé Accents',
     price: '₹ 38,900',
     numericPrice: 38900,
-    image: '/images/products/gold/gold_engagement_rings_28.svg',
+    images: [
+      '/images/products/gold/gold_engagement_rings_28-01.jpg',
+      '/images/products/gold/gold_engagement_rings_28-02.jpg',
+      '/images/products/gold/gold_engagement_rings_28-03.jpg'
+    ],
+    image: '/images/products/gold/gold_engagement_rings_28-01.jpg',
     altText: 'Gold ring with a round centre stone and a fine pavé-style band',
     description: 'A gold ring with a round centre stone and a fine pavé-style band, adorned with channel-set stones across the crown arc.',
     weight: '6.2 grams',
@@ -718,31 +858,7 @@ const goldProducts = [
     isNewArrival: true,
     collection: 'wedding'
   },
-  {
-    id: 'gold-ring-29-vintage-oval',
-    name: 'Vintage Oval Engraved Shoulder Gold Ring',
-    category: 'Gold',
-    subCategory: 'rings',
-    subCategorySlug: 'rings',
-    subType: 'engagement-rings',
-    occasion: 'traditional-wear',
-    badge: 'Heirloom Band',
-    badgeType: 'in-stock',
-    details: '22K Antique Hallmarked Gold',
-    price: '₹ 41,500',
-    numericPrice: 41500,
-    image: '/images/products/gold/gold_engagement_rings_29.svg',
-    altText: 'Vintage-inspired gold ring with an oval centre stone and engraved shoulders',
-    description: 'A vintage-inspired gold ring with an oval centre stone and engraved shoulders, embellished with filigree scrollwork.',
-    weight: '6.7 grams',
-    purity: '916 BIS Hallmarked 22 Karat Gold',
-    dimensions: 'Standard Indian Size 14',
-    craftsmanship: 'Vintage Chettinad Scroll Engraving',
-    certification: 'BIS Hallmark Certified',
-    isBridal: true,
-    isNewArrival: false,
-    collection: 'wedding'
-  },
+
   {
     id: 'gold-ring-30-bezel-minimal',
     name: 'Minimal Bezel-Set Gold Engagement Ring',
@@ -756,7 +872,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 29,800',
     numericPrice: 29800,
-    image: '/images/products/gold/gold_engagement_rings_30.svg',
+    images: [
+      '/images/products/gold/gold_engagement_rings_30-01.jpg',
+      '/images/products/gold/gold_engagement_rings_30-02.jpg',
+      '/images/products/gold/gold_engagement_rings_30-03.jpg'
+    ],
+    image: '/images/products/gold/gold_engagement_rings_30-01.jpg',
     altText: 'Minimal gold engagement ring with a bezel-set clear centre stone',
     description: 'A minimal gold engagement ring with a bezel-set clear centre stone, flush with the smooth gold rim for snag-free daily luxury.',
     weight: '4.9 grams',
@@ -783,7 +904,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 16,500',
     numericPrice: 16500,
-    image: '/images/products/gold/gold_casual_rings_31.svg',
+    images: [
+      '/images/products/gold/gold_casual_rings_31-01.jpg',
+      '/images/products/gold/gold_casual_rings_31-02.jpg',
+      '/images/products/gold/gold_casual_rings_31-03.jpg'
+    ],
+    image: '/images/products/gold/gold_casual_rings_31-01.jpg',
     altText: 'Slim everyday gold band with a small floral detail',
     description: 'A slim everyday gold band with a small floral detail and micro-granulated gold centre, designed for comfortable daily wear.',
     weight: '3.2 grams',
@@ -808,7 +934,12 @@ const goldProducts = [
     details: '22K Gold with Kemp Ruby',
     price: '₹ 18,200',
     numericPrice: 18200,
-    image: '/images/products/gold/gold_casual_rings_32.svg',
+    images: [
+      '/images/products/gold/gold_casual_rings_32-01.jpg',
+      '/images/products/gold/gold_casual_rings_32-02.jpg',
+      '/images/products/gold/gold_casual_rings_32-03.jpg'
+    ],
+    image: '/images/products/gold/gold_casual_rings_32-01.jpg',
     altText: 'Simple gold ring with a tiny coloured-stone-inspired accent',
     description: 'A simple gold ring with a tiny coloured-stone-inspired accent, featuring a radiant untreated Burmese ruby tone center.',
     weight: '3.5 grams',
@@ -833,7 +964,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 21,000',
     numericPrice: 21000,
-    image: '/images/products/gold/gold_casual_rings_33.svg',
+    images: [
+      '/images/products/gold/gold_casual_rings_33-01.jpg',
+      '/images/products/gold/gold_casual_rings_33-02.jpg',
+      '/images/products/gold/gold_casual_rings_33-03.jpg'
+    ],
+    image: '/images/products/gold/gold_casual_rings_33-01.jpg',
     altText: 'Open-ended gold ring with two small leaf motifs',
     description: 'An open-ended gold ring with two small leaf motifs, wrapping comfortably around the finger with satin-engraved botanical detailing.',
     weight: '4.1 grams',
@@ -858,7 +994,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 19,500',
     numericPrice: 19500,
-    image: '/images/products/gold/gold_casual_rings_34.svg',
+    images: [
+      '/images/products/gold/gold_casual_rings_34-01.jpg',
+      '/images/products/gold/gold_casual_rings_34-02.jpg',
+      '/images/products/gold/gold_casual_rings_34-03.jpg'
+    ],
+    image: '/images/products/gold/gold_casual_rings_34-01.jpg',
     altText: 'Modern, softly curved gold band with a polished finish',
     description: 'A modern, softly curved gold band with a polished finish, featuring aerodynamic wave contours and supreme comfort fit.',
     weight: '3.8 grams',
@@ -883,7 +1024,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 17,400',
     numericPrice: 17400,
-    image: '/images/products/gold/gold_casual_rings_35.svg',
+    images: [
+      '/images/products/gold/gold_casual_rings_35-01.jpg',
+      '/images/products/gold/gold_casual_rings_35-02.jpg',
+      '/images/products/gold/gold_casual_rings_35-03.jpg'
+    ],
+    image: '/images/products/gold/gold_casual_rings_35-01.jpg',
     altText: 'Delicate gold ring with a small engraved flower at the centre',
     description: 'A delicate gold ring with a small engraved flower at the centre, hand-engraved with Thanjavur botanical flourishes.',
     weight: '3.4 grams',
@@ -910,7 +1056,12 @@ const goldProducts = [
     details: '22K Solid Hallmarked Gold',
     price: '₹ 1,12,000',
     numericPrice: 112000,
-    image: '/images/products/gold/gold_cuff_bracelets_36.svg',
+    images: [
+      '/images/products/gold/gold_cuff_bracelets_36-01.jpg',
+      '/images/products/gold/gold_cuff_bracelets_36-02.jpg',
+      '/images/products/gold/gold_cuff_bracelets_36-03.jpg'
+    ],
+    image: '/images/products/gold/gold_cuff_bracelets_36-01.jpg',
     altText: 'Wide open gold cuff with traditional engraved floral details',
     description: 'A wide open gold cuff with traditional engraved floral details and heavy screw pin clasp, sculpted in 22K solid gold.',
     weight: '24.5 grams',
@@ -935,7 +1086,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 68,000',
     numericPrice: 68000,
-    image: '/images/products/gold/gold_cuff_bracelets_37.svg',
+    images: [
+      '/images/products/gold/gold_cuff_bracelets_37-01.jpg',
+      '/images/products/gold/gold_cuff_bracelets_37-02.jpg',
+      '/images/products/gold/gold_cuff_bracelets_37-03.jpg'
+    ],
+    image: '/images/products/gold/gold_cuff_bracelets_37-01.jpg',
     altText: 'Slim gold cuff with a clean, modern sculptural curve',
     description: 'A slim gold cuff with a clean, modern sculptural curve, offering minimalist wrist contouring and sleek flexibility.',
     weight: '15.0 grams',
@@ -960,7 +1116,12 @@ const goldProducts = [
     details: '22K Antique Hallmarked Gold',
     price: '₹ 98,500',
     numericPrice: 98500,
-    image: '/images/products/gold/gold_cuff_bracelets_38.svg',
+    images: [
+      '/images/products/gold/gold_cuff_bracelets_38-01.jpg',
+      '/images/products/gold/gold_cuff_bracelets_38-02.jpg',
+      '/images/products/gold/gold_cuff_bracelets_38-03.jpg'
+    ],
+    image: '/images/products/gold/gold_cuff_bracelets_38-01.jpg',
     altText: 'Temple-inspired cuff with a raised central motif and beaded edging',
     description: 'A temple-inspired cuff with a raised central motif and beaded edging, depicting Goddess Lakshmi flanked by sacred elephants.',
     weight: '21.5 grams',
@@ -985,7 +1146,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 86,000',
     numericPrice: 86000,
-    image: '/images/products/gold/gold_cuff_bracelets_39.svg',
+    images: [
+      '/images/products/gold/gold_cuff_bracelets_39-01.jpg',
+      '/images/products/gold/gold_cuff_bracelets_39-02.jpg',
+      '/images/products/gold/gold_cuff_bracelets_39-03.jpg'
+    ],
+    image: '/images/products/gold/gold_cuff_bracelets_39-01.jpg',
     altText: 'Gold cuff with repeating leaf patterns and subtle textured detailing',
     description: 'A gold cuff with repeating leaf patterns and subtle textured detailing, with alternating satin-brushed and polished highlights.',
     weight: '18.8 grams',
@@ -1010,7 +1176,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 92,000',
     numericPrice: 92000,
-    image: '/images/products/gold/gold_cuff_bracelets_40.svg',
+    images: [
+      '/images/products/gold/gold_cuff_bracelets_40-01.jpg',
+      '/images/products/gold/gold_cuff_bracelets_40-02.jpg',
+      '/images/products/gold/gold_cuff_bracelets_40-03.jpg'
+    ],
+    image: '/images/products/gold/gold_cuff_bracelets_40-01.jpg',
     altText: 'Hinged-look gold cuff with a central floral ornament and clean silhouette',
     description: 'A hinged-look gold cuff with a central floral ornament and clean silhouette, featuring side-locking security clasp.',
     weight: '20.2 grams',
@@ -1037,7 +1208,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 28,500',
     numericPrice: 28500,
-    image: '/images/products/gold/gold_chain_bracelets_41.svg',
+    images: [
+      '/images/products/gold/gold_chain_bracelets_41-01.jpg',
+      '/images/products/gold/gold_chain_bracelets_41-02.jpg',
+      '/images/products/gold/gold_chain_bracelets_41-03.jpg'
+    ],
+    image: '/images/products/gold/gold_chain_bracelets_41-01.jpg',
     altText: 'Fine gold chain bracelet with a tiny floral charm',
     description: 'A fine gold chain bracelet with a tiny floral charm, hand-threaded with 22K links and lobster-claw clasp.',
     weight: '6.0 grams',
@@ -1062,7 +1238,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 42,000',
     numericPrice: 42000,
-    image: '/images/products/gold/gold_chain_bracelets_42.svg',
+    images: [
+      '/images/products/gold/gold_chain_bracelets_42-01.jpg',
+      '/images/products/gold/gold_chain_bracelets_42-02.jpg',
+      '/images/products/gold/gold_chain_bracelets_42-03.jpg'
+    ],
+    image: '/images/products/gold/gold_chain_bracelets_42-01.jpg',
     altText: 'Linked gold bracelet with alternating polished and textured links',
     description: 'A linked gold bracelet with alternating polished and textured links, offering timeless unisex appeal and fluid wrist movement.',
     weight: '9.2 grams',
@@ -1087,7 +1268,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 31,500',
     numericPrice: 31500,
-    image: '/images/products/gold/gold_chain_bracelets_43.svg',
+    images: [
+      '/images/products/gold/gold_chain_bracelets_43-01.jpg',
+      '/images/products/gold/gold_chain_bracelets_43-02.jpg',
+      '/images/products/gold/gold_chain_bracelets_43-03.jpg'
+    ],
+    image: '/images/products/gold/gold_chain_bracelets_43-01.jpg',
     altText: 'Delicate gold chain bracelet with a small circular centre motif',
     description: 'A delicate gold chain bracelet with a small circular centre motif and kemp stone center, framed by micro-granulated gold.',
     weight: '6.8 grams',
@@ -1112,7 +1298,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 36,000',
     numericPrice: 36000,
-    image: '/images/products/gold/gold_chain_bracelets_44.svg',
+    images: [
+      '/images/products/gold/gold_chain_bracelets_44-01.jpg',
+      '/images/products/gold/gold_chain_bracelets_44-02.jpg',
+      '/images/products/gold/gold_chain_bracelets_44-03.jpg'
+    ],
+    image: '/images/products/gold/gold_chain_bracelets_44-01.jpg',
     altText: 'Traditional gold bracelet with tiny bead details along the chain',
     description: 'A traditional gold bracelet with tiny bead details along the chain, crafted with South Indian gold Mani spheres.',
     weight: '7.8 grams',
@@ -1137,7 +1328,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 34,000',
     numericPrice: 34000,
-    image: '/images/products/gold/gold_chain_bracelets_45.svg',
+    images: [
+      '/images/products/gold/gold_chain_bracelets_45-01.jpg',
+      '/images/products/gold/gold_chain_bracelets_45-02.jpg',
+      '/images/products/gold/gold_chain_bracelets_45-03.jpg'
+    ],
+    image: '/images/products/gold/gold_chain_bracelets_45-01.jpg',
     altText: 'Minimal gold link bracelet with a small decorative clasp',
     description: 'A minimal gold link bracelet with a small decorative clasp, finished with geometric locking links.',
     weight: '7.4 grams',
@@ -1164,7 +1360,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold (Pair)',
     price: '₹ 64,000',
     numericPrice: 64000,
-    image: '/images/products/gold/gold_bangle_bracelets_46.svg',
+    images: [
+      '/images/products/gold/gold_bangle_bracelets_46-01.jpg',
+      '/images/products/gold/gold_bangle_bracelets_46-02.jpg',
+      '/images/products/gold/gold_bangle_bracelets_46-03.jpg'
+    ],
+    image: '/images/products/gold/gold_bangle_bracelets_46-01.jpg',
     altText: 'Pair of slim polished gold bangles with a simple everyday design',
     description: 'A pair of slim polished gold bangles with a simple everyday design and rounded comfort edges.',
     weight: '14.0 grams (Pair)',
@@ -1189,7 +1390,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 58,000',
     numericPrice: 58000,
-    image: '/images/products/gold/gold_bangle_bracelets_47.svg',
+    images: [
+      '/images/products/gold/gold_bangle_bracelets_47-01.jpg',
+      '/images/products/gold/gold_bangle_bracelets_47-02.jpg',
+      '/images/products/gold/gold_bangle_bracelets_47-03.jpg'
+    ],
+    image: '/images/products/gold/gold_bangle_bracelets_47-01.jpg',
     altText: 'Textured gold bangle with repeating engraved motifs',
     description: 'A textured gold bangle with repeating engraved motifs and micro-facets creating a shimmering light dispersion.',
     weight: '12.8 grams',
@@ -1214,7 +1420,12 @@ const goldProducts = [
     details: '22K Gold with Kemp Accents',
     price: '₹ 62,500',
     numericPrice: 62500,
-    image: '/images/products/gold/gold_bangle_bracelets_48.svg',
+    images: [
+      '/images/products/gold/gold_bangle_bracelets_48-01.jpg',
+      '/images/products/gold/gold_bangle_bracelets_48-02.jpg',
+      '/images/products/gold/gold_bangle_bracelets_48-03.jpg'
+    ],
+    image: '/images/products/gold/gold_bangle_bracelets_48-01.jpg',
     altText: 'Gold bangle with small floral elements spaced around the band',
     description: 'A gold bangle with small floral elements spaced around the band, set with natural kemp rubies and granulation borders.',
     weight: '13.6 grams',
@@ -1239,7 +1450,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 55,000',
     numericPrice: 55000,
-    image: '/images/products/gold/gold_bangle_bracelets_49.svg',
+    images: [
+      '/images/products/gold/gold_bangle_bracelets_49-01.jpg',
+      '/images/products/gold/gold_bangle_bracelets_49-02.jpg',
+      '/images/products/gold/gold_bangle_bracelets_49-03.jpg'
+    ],
+    image: '/images/products/gold/gold_bangle_bracelets_49-01.jpg',
     altText: 'Traditional gold bangle with a fine beaded border',
     description: 'A traditional gold bangle with a fine beaded border, inspired by historic South Indian Chettinad valayal craftsmanship.',
     weight: '12.0 grams',
@@ -1264,7 +1480,12 @@ const goldProducts = [
     details: '22K Antique Hallmarked Gold',
     price: '₹ 78,000',
     numericPrice: 78000,
-    image: '/images/products/gold/gold_bangle_bracelets_50.svg',
+    images: [
+      '/images/products/gold/gold_bangle_bracelets_50-01.jpg',
+      '/images/products/gold/gold_bangle_bracelets_50-02.jpg',
+      '/images/products/gold/gold_bangle_bracelets_50-03.jpg'
+    ],
+    image: '/images/products/gold/gold_bangle_bracelets_50-01.jpg',
     altText: 'Wider gold bangle with a central decorative panel and engraved sides',
     description: 'A wider gold bangle with a central decorative panel and engraved sides, featuring antique temple filigree.',
     weight: '17.2 grams',
@@ -1291,7 +1512,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 96,000',
     numericPrice: 96000,
-    image: '/images/products/gold/gold_short_necklace_51.svg',
+    images: [
+      '/images/products/gold/gold_short_necklace_51-01.jpg',
+      '/images/products/gold/gold_short_necklace_51-02.jpg',
+      '/images/products/gold/gold_short_necklace_51-03.jpg'
+    ],
+    image: '/images/products/gold/gold_short_necklace_51-01.jpg',
     altText: 'Short gold necklace with a delicate floral centrepiece and fine matching links',
     description: 'A short gold necklace with a delicate floral centrepiece and fine matching links, accented with untreated ruby droplets and gold dori.',
     weight: '21.0 grams',
@@ -1316,7 +1542,12 @@ const goldProducts = [
     details: '22K Antique Hallmarked Gold',
     price: '₹ 1,18,000',
     numericPrice: 118000,
-    image: '/images/products/gold/gold_short_necklace_52.svg',
+    images: [
+      '/images/products/gold/gold_short_necklace_52-01.jpg',
+      '/images/products/gold/gold_short_necklace_52-02.jpg',
+      '/images/products/gold/gold_short_necklace_52-03.jpg'
+    ],
+    image: '/images/products/gold/gold_short_necklace_52-01.jpg',
     altText: 'Traditional short necklace with repeating small temple-inspired motifs',
     description: 'A traditional short necklace with repeating small temple-inspired motifs, featuring Lakshmi and elephant repoussé units.',
     weight: '26.0 grams',
@@ -1341,7 +1572,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 74,000',
     numericPrice: 74000,
-    image: '/images/products/gold/gold_short_necklace_53.svg',
+    images: [
+      '/images/products/gold/gold_short_necklace_53-01.jpg',
+      '/images/products/gold/gold_short_necklace_53-02.jpg',
+      '/images/products/gold/gold_short_necklace_53-03.jpg'
+    ],
+    image: '/images/products/gold/gold_short_necklace_53-01.jpg',
     altText: 'Minimal short gold necklace with a neat geometric pendant-like centre',
     description: 'A minimal short gold necklace with a neat geometric pendant-like centre, offering clean contemporary luxury.',
     weight: '16.2 grams',
@@ -1366,7 +1602,12 @@ const goldProducts = [
     details: '22K Gold with Kemp Rubies & Emeralds',
     price: '₹ 1,08,000',
     numericPrice: 108000,
-    image: '/images/products/gold/gold_short_necklace_54.svg',
+    images: [
+      '/images/products/gold/gold_short_necklace_54-01.jpg',
+      '/images/products/gold/gold_short_necklace_54-02.jpg',
+      '/images/products/gold/gold_short_necklace_54-03.jpg'
+    ],
+    image: '/images/products/gold/gold_short_necklace_54-01.jpg',
     altText: 'Short gold necklace with ruby-red and green stone-inspired floral accents',
     description: 'A short gold necklace with ruby-red and green stone-inspired floral accents, adorned with lustrous seed pearl drops.',
     weight: '23.8 grams',
@@ -1391,7 +1632,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 1,25,000',
     numericPrice: 125000,
-    image: '/images/products/gold/gold_short_necklace_55.svg',
+    images: [
+      '/images/products/gold/gold_short_necklace_55-01.jpg',
+      '/images/products/gold/gold_short_necklace_55-02.jpg',
+      '/images/products/gold/gold_short_necklace_55-03.jpg'
+    ],
+    image: '/images/products/gold/gold_short_necklace_55-01.jpg',
     altText: 'Layered-look short necklace with tiny gold motifs and a subtle beaded edge',
     description: 'A layered-look short necklace with tiny gold motifs and a subtle beaded edge, creating the appearance of dual heritage malas.',
     weight: '27.5 grams',
@@ -1418,7 +1664,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 1,75,000',
     numericPrice: 175000,
-    image: '/images/products/gold/gold_long_necklace_56.svg',
+    images: [
+      '/images/products/gold/gold_long_necklace_56-01.jpg',
+      '/images/products/gold/gold_long_necklace_56-02.jpg',
+      '/images/products/gold/gold_long_necklace_56-03.jpg'
+    ],
+    image: '/images/products/gold/gold_long_necklace_56-01.jpg',
     altText: 'Long traditional gold necklace with repeating engraved motifs and a small central pendant',
     description: 'A long traditional gold necklace with repeating engraved motifs and a small central pendant, measuring 24 inches for bridal grandeur.',
     weight: '38.5 grams',
@@ -1443,7 +1694,12 @@ const goldProducts = [
     details: '22K Antique Hallmarked Gold (54 Kasu Coins)',
     price: '₹ 2,10,000',
     numericPrice: 210000,
-    image: '/images/products/gold/gold_long_necklace_57.svg',
+    images: [
+      '/images/products/gold/gold_long_necklace_57-01.jpg',
+      '/images/products/gold/gold_long_necklace_57-02.jpg',
+      '/images/products/gold/gold_long_necklace_57-03.jpg'
+    ],
+    image: '/images/products/gold/gold_long_necklace_57-01.jpg',
     altText: 'Long temple-style necklace with a detailed Lakshmi-inspired centrepiece',
     description: 'A long temple-style necklace with a detailed Lakshmi-inspired centrepiece and auspicious Kasu coin borders.',
     weight: '46.0 grams',
@@ -1468,7 +1724,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 1,88,000',
     numericPrice: 188000,
-    image: '/images/products/gold/gold_long_necklace_58.svg',
+    images: [
+      '/images/products/gold/gold_long_necklace_58-01.jpg',
+      '/images/products/gold/gold_long_necklace_58-02.jpg',
+      '/images/products/gold/gold_long_necklace_58-03.jpg'
+    ],
+    image: '/images/products/gold/gold_long_necklace_58-01.jpg',
     altText: 'Long gold necklace with alternating floral links and small bead drops',
     description: 'A long gold necklace with alternating floral links and small bead drops, rhythmically arranged with hanging gold pearls.',
     weight: '41.2 grams',
@@ -1493,7 +1754,12 @@ const goldProducts = [
     details: '22K Gold with Natural Emeralds & Kemp',
     price: '₹ 1,95,000',
     numericPrice: 195000,
-    image: '/images/products/gold/gold_long_necklace_59.svg',
+    images: [
+      '/images/products/gold/gold_long_necklace_59-01.jpg',
+      '/images/products/gold/gold_long_necklace_59-02.jpg',
+      '/images/products/gold/gold_long_necklace_59-03.jpg'
+    ],
+    image: '/images/products/gold/gold_long_necklace_59-01.jpg',
     altText: 'Long South Indian necklace with peacock-inspired details and green accents',
     description: 'A long South Indian necklace with peacock-inspired details and green accents, featuring side Mayil mugappu motifs.',
     weight: '42.8 grams',
@@ -1518,7 +1784,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 1,62,000',
     numericPrice: 162000,
-    image: '/images/products/gold/gold_long_necklace_60.svg',
+    images: [
+      '/images/products/gold/gold_long_necklace_60-01.jpg',
+      '/images/products/gold/gold_long_necklace_60-02.jpg',
+      '/images/products/gold/gold_long_necklace_60-03.jpg'
+    ],
+    image: '/images/products/gold/gold_long_necklace_60-01.jpg',
     altText: 'Long, elegant gold chain necklace with a finely detailed central medallion',
     description: 'A long, elegant gold chain necklace with a finely detailed central medallion, surrounded by micro-granulated gold sunburst halo.',
     weight: '35.5 grams',
@@ -1545,7 +1816,12 @@ const goldProducts = [
     details: '22K BIS 916 Gold with Kemp Ruby',
     price: '₹ 4,800',
     numericPrice: 4800,
-    image: '/images/products/gold/gold_nosepin_61.svg',
+    images: [
+      '/images/products/gold/gold_nosepin_61-01.jpg',
+      '/images/products/gold/gold_nosepin_61-02.jpg',
+      '/images/products/gold/gold_nosepin_61-03.jpg'
+    ],
+    image: '/images/products/gold/gold_nosepin_61-01.jpg',
     altText: 'Delicate floral gold nose pin with a tiny ruby-red centre',
     description: 'A delicate floral gold nose pin with a tiny ruby-red centre and fine petal detailing, crafted with a smooth screw stem.',
     weight: '0.90 grams',
@@ -1570,7 +1846,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 4,200',
     numericPrice: 4200,
-    image: '/images/products/gold/gold_nosepin_62.svg',
+    images: [
+      '/images/products/gold/gold_nosepin_62-01.jpg',
+      '/images/products/gold/gold_nosepin_62-02.jpg',
+      '/images/products/gold/gold_nosepin_62-03.jpg'
+    ],
+    image: '/images/products/gold/gold_nosepin_62-01.jpg',
     altText: 'Minimal gold nose pin with a small clear stone-inspired centre',
     description: 'A minimal gold nose pin with a small clear stone-inspired centre, bezel-set for maximum sparkle and comfort.',
     weight: '0.80 grams',
@@ -1595,7 +1876,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 4,500',
     numericPrice: 4500,
-    image: '/images/products/gold/gold_nosepin_63.svg',
+    images: [
+      '/images/products/gold/gold_nosepin_63-01.jpg',
+      '/images/products/gold/gold_nosepin_63-02.jpg',
+      '/images/products/gold/gold_nosepin_63-03.jpg'
+    ],
+    image: '/images/products/gold/gold_nosepin_63-01.jpg',
     altText: 'Traditional gold nose pin with a tiny leaf-shaped ornament',
     description: 'A traditional gold nose pin with a tiny leaf-shaped ornament, featuring hand-chased botanical engraving.',
     weight: '0.85 grams',
@@ -1620,7 +1906,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 5,100',
     numericPrice: 5100,
-    image: '/images/products/gold/gold_nosepin_64.svg',
+    images: [
+      '/images/products/gold/gold_nosepin_64-01.jpg',
+      '/images/products/gold/gold_nosepin_64-02.jpg',
+      '/images/products/gold/gold_nosepin_64-03.jpg'
+    ],
+    image: '/images/products/gold/gold_nosepin_64-01.jpg',
     altText: 'Small round gold nose pin with a fine beaded border',
     description: 'A small round gold nose pin with a fine beaded border, encircling a brilliant cabochon ruby in traditional Thanjavur fashion.',
     weight: '1.00 grams',
@@ -1645,7 +1936,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 5,600',
     numericPrice: 5600,
-    image: '/images/products/gold/gold_nosepin_65.svg',
+    images: [
+      '/images/products/gold/gold_nosepin_65-01.jpg',
+      '/images/products/gold/gold_nosepin_65-02.jpg',
+      '/images/products/gold/gold_nosepin_65-03.jpg'
+    ],
+    image: '/images/products/gold/gold_nosepin_65-01.jpg',
     altText: 'Subtle gold nose pin with a miniature flower and one tiny dangling bead',
     description: 'A subtle gold nose pin with a miniature flower and one tiny dangling bead, designed for bridal muhurtham adornment.',
     weight: '1.10 grams',
@@ -1672,7 +1968,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 48,000',
     numericPrice: 48000,
-    image: '/images/products/gold/gold_casual_wear_66.svg',
+    images: [
+      '/images/products/gold/gold_casual_wear_66-01.jpg',
+      '/images/products/gold/gold_casual_wear_66-02.jpg',
+      '/images/products/gold/gold_casual_wear_66-03.jpg'
+    ],
+    image: '/images/products/gold/gold_casual_wear_66-01.jpg',
     altText: 'Lightweight gold necklace and earring set with simple everyday floral details',
     description: 'A lightweight gold necklace and earring set with simple everyday floral details, photogenic and graceful for daily elegance.',
     weight: '10.5 grams',
@@ -1697,7 +1998,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 45,000',
     numericPrice: 45000,
-    image: '/images/products/gold/gold_casual_wear_67.svg',
+    images: [
+      '/images/products/gold/gold_casual_wear_67-01.jpg',
+      '/images/products/gold/gold_casual_wear_67-02.jpg',
+      '/images/products/gold/gold_casual_wear_67-03.jpg'
+    ],
+    image: '/images/products/gold/gold_casual_wear_67-01.jpg',
     altText: 'Minimal gold hoops with a fine matching bracelet, photographed as a coordinated set',
     description: 'Minimal gold hoops with a fine matching bracelet, photographed as a coordinated set for modern everyday office and casual wear.',
     weight: '9.8 grams',
@@ -1722,7 +2028,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 36,000',
     numericPrice: 36000,
-    image: '/images/products/gold/gold_casual_wear_68.svg',
+    images: [
+      '/images/products/gold/gold_casual_wear_68-01.jpg',
+      '/images/products/gold/gold_casual_wear_68-02.jpg',
+      '/images/products/gold/gold_casual_wear_68-03.jpg'
+    ],
+    image: '/images/products/gold/gold_casual_wear_68-01.jpg',
     altText: 'Delicate gold chain and small pendant with understated detailing',
     description: 'A delicate gold chain and small pendant with understated detailing, designed for effortless casual styling and durability.',
     weight: '7.9 grams',
@@ -1747,7 +2058,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold (Pair)',
     price: '₹ 52,000',
     numericPrice: 52000,
-    image: '/images/products/gold/gold_casual_wear_69.svg',
+    images: [
+      '/images/products/gold/gold_casual_wear_69-01.jpg',
+      '/images/products/gold/gold_casual_wear_69-02.jpg',
+      '/images/products/gold/gold_casual_wear_69-03.jpg'
+    ],
+    image: '/images/products/gold/gold_casual_wear_69-01.jpg',
     altText: 'Slim gold bangles with a simple polished everyday finish',
     description: 'Slim gold bangles with a simple polished everyday finish, offering featherlight wear and radiant 22K warmth.',
     weight: '11.5 grams (Pair)',
@@ -1772,7 +2088,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 18,500',
     numericPrice: 18500,
-    image: '/images/products/gold/gold_casual_wear_70.svg',
+    images: [
+      '/images/products/gold/gold_casual_wear_70-01.jpg',
+      '/images/products/gold/gold_casual_wear_70-02.jpg',
+      '/images/products/gold/gold_casual_wear_70-03.jpg'
+    ],
+    image: '/images/products/gold/gold_casual_wear_70-01.jpg',
     altText: 'Compact gold studs with a subtle leaf motif for everyday styling',
     description: 'Compact gold studs with a subtle leaf motif for everyday styling, lightweight and hypoallergenic for 24/7 wear.',
     weight: '3.6 grams',
@@ -1799,7 +2120,12 @@ const goldProducts = [
     details: '22K Gold with Untreated Kemp Rubies',
     price: '₹ 56,000',
     numericPrice: 56000,
-    image: '/images/products/gold/gold_party_wear_71.svg',
+    images: [
+      '/images/products/gold/gold_party_wear_71-01.jpg',
+      '/images/products/gold/gold_party_wear_71-02.jpg',
+      '/images/products/gold/gold_party_wear_71-03.jpg'
+    ],
+    image: '/images/products/gold/gold_party_wear_71-01.jpg',
     altText: 'Statement gold drop earrings with a bold floral centre and refined stone-inspired accents',
     description: 'Statement gold drop earrings with a bold floral centre and refined stone-inspired accents, crafted for evening galas.',
     weight: '12.4 grams',
@@ -1824,7 +2150,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold & Kemp',
     price: '₹ 1,42,000',
     numericPrice: 142000,
-    image: '/images/products/gold/gold_party_wear_72.svg',
+    images: [
+      '/images/products/gold/gold_party_wear_72-01.jpg',
+      '/images/products/gold/gold_party_wear_72-02.jpg',
+      '/images/products/gold/gold_party_wear_72-03.jpg'
+    ],
+    image: '/images/products/gold/gold_party_wear_72-01.jpg',
     altText: 'Decorative gold necklace with a prominent centrepiece and elegant matching earrings',
     description: 'A decorative gold necklace with a prominent centrepiece and elegant matching earrings, designed for grand festive celebrations.',
     weight: '31.0 grams',
@@ -1849,7 +2180,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 88,000',
     numericPrice: 88000,
-    image: '/images/products/gold/gold_party_wear_73.svg',
+    images: [
+      '/images/products/gold/gold_party_wear_73-01.jpg',
+      '/images/products/gold/gold_party_wear_73-02.jpg',
+      '/images/products/gold/gold_party_wear_73-03.jpg'
+    ],
+    image: '/images/products/gold/gold_party_wear_73-01.jpg',
     altText: 'Glamorous layered gold bangles with polished highlights and intricate details',
     description: 'Glamorous layered gold bangles with polished highlights and intricate details, capturing radiant spotlight brilliance.',
     weight: '19.4 grams',
@@ -1874,7 +2210,12 @@ const goldProducts = [
     details: '22K Gold & Natural Kemp Stones',
     price: '₹ 46,000',
     numericPrice: 46000,
-    image: '/images/products/gold/gold_party_wear_74.svg',
+    images: [
+      '/images/products/gold/gold_party_wear_74-01.jpg',
+      '/images/products/gold/gold_party_wear_74-02.jpg',
+      '/images/products/gold/gold_party_wear_74-03.jpg'
+    ],
+    image: '/images/products/gold/gold_party_wear_74-01.jpg',
     altText: 'Large gold hoops with sculpted design and subtle coloured-stone-inspired accents',
     description: 'Large gold hoops with sculpted design and subtle coloured-stone-inspired accents, finished with antique brushed patinas.',
     weight: '10.2 grams',
@@ -1899,7 +2240,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 69,000',
     numericPrice: 69000,
-    image: '/images/products/gold/gold_party_wear_75.svg',
+    images: [
+      '/images/products/gold/gold_party_wear_75-01.jpg',
+      '/images/products/gold/gold_party_wear_75-02.jpg',
+      '/images/products/gold/gold_party_wear_75-03.jpg'
+    ],
+    image: '/images/products/gold/gold_party_wear_75-01.jpg',
     altText: 'Statement gold pendant necklace with an ornate centre and fine chain',
     description: 'A statement gold pendant necklace with an ornate centre and fine chain, crowned with a peacock filigree medallion.',
     weight: '15.2 grams',
@@ -1926,7 +2272,12 @@ const goldProducts = [
     details: '22K Antique Hallmarked Gold',
     price: '₹ 1,58,000',
     numericPrice: 158000,
-    image: '/images/products/gold/gold_traditional_wear_76.svg',
+    images: [
+      '/images/products/gold/gold_traditional_wear_76-01.jpg',
+      '/images/products/gold/gold_traditional_wear_76-02.jpg',
+      '/images/products/gold/gold_traditional_wear_76-03.jpg'
+    ],
+    image: '/images/products/gold/gold_traditional_wear_76-01.jpg',
     altText: 'South Indian temple jewellery necklace with an ornate Lakshmi-inspired pendant',
     description: 'A South Indian temple jewellery necklace with an ornate Lakshmi-inspired pendant, blessed for wedding muhurtham rituals.',
     weight: '34.5 grams',
@@ -1951,7 +2302,12 @@ const goldProducts = [
     details: '22K BIS 916 Antique Gold',
     price: '₹ 64,000',
     numericPrice: 64000,
-    image: '/images/products/gold/gold_traditional_wear_77.svg',
+    images: [
+      '/images/products/gold/gold_traditional_wear_77-01.jpg',
+      '/images/products/gold/gold_traditional_wear_77-02.jpg',
+      '/images/products/gold/gold_traditional_wear_77-03.jpg'
+    ],
+    image: '/images/products/gold/gold_traditional_wear_77-01.jpg',
     altText: 'Traditional gold jhumkas with a detailed dome and small bead fringe',
     description: 'Traditional gold jhumkas with a detailed dome and small bead fringe, featuring hand-granulated bell contours.',
     weight: '14.2 grams',
@@ -1976,7 +2332,12 @@ const goldProducts = [
     details: '22K BIS 916 Antique Gold (Pair)',
     price: '₹ 94,000',
     numericPrice: 94000,
-    image: '/images/products/gold/gold_traditional_wear_78.svg',
+    images: [
+      '/images/products/gold/gold_traditional_wear_78-01.jpg',
+      '/images/products/gold/gold_traditional_wear_78-02.jpg',
+      '/images/products/gold/gold_traditional_wear_78-03.jpg'
+    ],
+    image: '/images/products/gold/gold_traditional_wear_78-01.jpg',
     altText: 'Antique-style engraved gold bangles with temple-inspired motifs',
     description: 'Antique-style engraved gold bangles with temple-inspired motifs, featuring sacred temple deity and floral repoussé carvings.',
     weight: '20.8 grams (Pair)',
@@ -2001,7 +2362,12 @@ const goldProducts = [
     details: '22K Gold with Natural Kemp Stones',
     price: '₹ 1,82,000',
     numericPrice: 182000,
-    image: '/images/products/gold/gold_traditional_wear_79.svg',
+    images: [
+      '/images/products/gold/gold_traditional_wear_79-01.jpg',
+      '/images/products/gold/gold_traditional_wear_79-02.jpg',
+      '/images/products/gold/gold_traditional_wear_79-03.jpg'
+    ],
+    image: '/images/products/gold/gold_traditional_wear_79-01.jpg',
     altText: 'Traditional necklace and earring set with peacock-inspired details',
     description: 'A traditional necklace and earring set with peacock-inspired details, complete with matching Mayil jhumka earrings.',
     weight: '40.0 grams',
@@ -2026,7 +2392,12 @@ const goldProducts = [
     details: '22K BIS 916 Antique Gold',
     price: '₹ 2,25,000',
     numericPrice: 225000,
-    image: '/images/products/gold/gold_traditional_wear_80.svg',
+    images: [
+      '/images/products/gold/gold_traditional_wear_80-01.jpg',
+      '/images/products/gold/gold_traditional_wear_80-02.jpg',
+      '/images/products/gold/gold_traditional_wear_80-03.jpg'
+    ],
+    image: '/images/products/gold/gold_traditional_wear_80-01.jpg',
     altText: 'Long gold haram-style necklace with repeating motifs and a detailed centrepiece',
     description: 'A long gold haram-style necklace with repeating motifs and a detailed centrepiece, measuring 26 inches with 60 Lakshmi coin units.',
     weight: '49.5 grams',
@@ -2053,7 +2424,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 46,000',
     numericPrice: 46000,
-    image: '/images/products/gold/gold_chains_81.svg',
+    images: [
+      '/images/products/gold/gold_chains_81-01.jpg',
+      '/images/products/gold/gold_chains_81-02.jpg',
+      '/images/products/gold/gold_chains_81-03.jpg'
+    ],
+    image: '/images/products/gold/gold_chains_81-01.jpg',
     altText: 'Fine cable-link gold chain with a delicate, classic profile',
     description: 'A fine cable-link gold chain with a delicate, classic profile, hand-woven with durable interlocked round wire links.',
     weight: '10.0 grams',
@@ -2078,7 +2454,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 68,000',
     numericPrice: 68000,
-    image: '/images/products/gold/gold_chains_82.svg',
+    images: [
+      '/images/products/gold/gold_chains_82-01.jpg',
+      '/images/products/gold/gold_chains_82-02.jpg',
+      '/images/products/gold/gold_chains_82-03.jpg'
+    ],
+    image: '/images/products/gold/gold_chains_82-01.jpg',
     altText: 'Gold rope chain with a twisted, reflective texture',
     description: 'A gold rope chain with a twisted, reflective texture, diamond-cut facets shimmering brilliantly in every light angle.',
     weight: '15.0 grams',
@@ -2103,7 +2484,12 @@ const goldProducts = [
     details: '22K Solid Hallmarked Gold',
     price: '₹ 82,000',
     numericPrice: 82000,
-    image: '/images/products/gold/gold_chains_83.svg',
+    images: [
+      '/images/products/gold/gold_chains_83-01.jpg',
+      '/images/products/gold/gold_chains_83-02.jpg',
+      '/images/products/gold/gold_chains_83-03.jpg'
+    ],
+    image: '/images/products/gold/gold_chains_83-01.jpg',
     altText: 'Curb-link gold chain with smooth, closely connected links',
     description: 'A curb-link gold chain with smooth, closely connected links, lying flat comfortably on the neckline with mirror finish.',
     weight: '18.0 grams',
@@ -2128,7 +2514,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 54,000',
     numericPrice: 54000,
-    image: '/images/products/gold/gold_chains_84.svg',
+    images: [
+      '/images/products/gold/gold_chains_84-01.jpg',
+      '/images/products/gold/gold_chains_84-02.jpg',
+      '/images/products/gold/gold_chains_84-03.jpg'
+    ],
+    image: '/images/products/gold/gold_chains_84-01.jpg',
     altText: 'Fine box-link gold chain with crisp geometric links',
     description: 'A fine box-link gold chain with crisp geometric links, providing superior tensile strength for heavy pendants.',
     weight: '11.8 grams',
@@ -2153,7 +2544,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 75,000',
     numericPrice: 75000,
-    image: '/images/products/gold/gold_chains_85.svg',
+    images: [
+      '/images/products/gold/gold_chains_85-01.jpg',
+      '/images/products/gold/gold_chains_85-02.jpg',
+      '/images/products/gold/gold_chains_85-03.jpg'
+    ],
+    image: '/images/products/gold/gold_chains_85-01.jpg',
     altText: 'Traditional gold chain with repeating small decorative links',
     description: 'A traditional gold chain with repeating small decorative links, crafted in Madurai artisan chain guild traditions.',
     weight: '16.5 grams',
@@ -2180,7 +2576,12 @@ const goldProducts = [
     details: '22K Gold with Natural Kemp Ruby',
     price: '₹ 22,500',
     numericPrice: 22500,
-    image: '/images/products/gold/gold_pendants_86.svg',
+    images: [
+      '/images/products/gold/gold_pendants_86-01.jpg',
+      '/images/products/gold/gold_pendants_86-02.jpg',
+      '/images/products/gold/gold_pendants_86-03.jpg'
+    ],
+    image: '/images/products/gold/gold_pendants_86-01.jpg',
     altText: 'Small floral gold pendant with a ruby-red centre on a fine chain',
     description: 'A small floral gold pendant with a ruby-red centre on a fine chain, encircled by eight micro-granulated gold petals.',
     weight: '4.5 grams',
@@ -2205,7 +2606,12 @@ const goldProducts = [
     details: '22K BIS 916 Antique Gold',
     price: '₹ 34,000',
     numericPrice: 34000,
-    image: '/images/products/gold/gold_pendants_87.svg',
+    images: [
+      '/images/products/gold/gold_pendants_87-01.jpg',
+      '/images/products/gold/gold_pendants_87-02.jpg',
+      '/images/products/gold/gold_pendants_87-03.jpg'
+    ],
+    image: '/images/products/gold/gold_pendants_87-01.jpg',
     altText: 'Round temple-inspired gold pendant with a detailed engraved motif',
     description: 'A round temple-inspired gold pendant with a detailed engraved motif of Goddess Lakshmi with elephant carvings.',
     weight: '7.2 grams',
@@ -2230,7 +2636,12 @@ const goldProducts = [
     details: '22K Gold & Emerald Eye Accent',
     price: '₹ 29,800',
     numericPrice: 29800,
-    image: '/images/products/gold/gold_pendants_88.svg',
+    images: [
+      '/images/products/gold/gold_pendants_88-01.jpg',
+      '/images/products/gold/gold_pendants_88-02.jpg',
+      '/images/products/gold/gold_pendants_88-03.jpg'
+    ],
+    image: '/images/products/gold/gold_pendants_88-01.jpg',
     altText: 'Gold pendant with a delicate peacock silhouette and fine filigree',
     description: 'A gold pendant with a delicate peacock silhouette and fine filigree, showcasing hand-twisted 22K wirework and pearl droplets.',
     weight: '6.1 grams',
@@ -2255,7 +2666,12 @@ const goldProducts = [
     details: '22K BIS 916 Hallmarked Gold',
     price: '₹ 24,000',
     numericPrice: 24000,
-    image: '/images/products/gold/gold_pendants_89.svg',
+    images: [
+      '/images/products/gold/gold_pendants_89-01.jpg',
+      '/images/products/gold/gold_pendants_89-02.jpg',
+      '/images/products/gold/gold_pendants_89-03.jpg'
+    ],
+    image: '/images/products/gold/gold_pendants_89-01.jpg',
     altText: 'Modern geometric gold pendant with a clean, polished surface',
     description: 'A modern geometric gold pendant with a clean, polished surface, featuring sharp rhombus contours and diamond crystal center.',
     weight: '5.0 grams',
@@ -2280,7 +2696,12 @@ const goldProducts = [
     details: '22K Antique Hallmarked Gold',
     price: '₹ 37,500',
     numericPrice: 37500,
-    image: '/images/products/gold/gold_pendants_90.svg',
+    images: [
+      '/images/products/gold/gold_pendants_90-01.jpg',
+      '/images/products/gold/gold_pendants_90-02.jpg',
+      '/images/products/gold/gold_pendants_90-03.jpg'
+    ],
+    image: '/images/products/gold/gold_pendants_90-01.jpg',
     altText: 'Traditional gold medallion pendant with a beaded border and engraved centre',
     description: 'A traditional gold medallion pendant with a beaded border and engraved centre, suspended with a lustrous South Sea pearl droplet.',
     weight: '8.0 grams',

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { products } from '../data/products';
+import { exclusiveNewArrivals } from '../data/newArrivalsData';
 import { Sparkles, ChevronRight, Heart, ShoppingBag, ArrowLeft, Tag } from 'lucide-react';
 
 export default function NewArrivalsPage({
+  searchQuery = '',
   onViewProduct = () => {},
   onAddToCart = () => {},
   onAddToWishlist = () => {},
@@ -13,12 +14,31 @@ export default function NewArrivalsPage({
   const [activeFilter, setActiveFilter] = useState('All');
   const [sortBy, setSortBy] = useState('featured');
 
-  // Filter products tagged as new arrivals or top featured
-  const newArrivals = products.filter(p => p.isNewArrival || p.badge === 'In stock');
+  // Exclusive New Arrivals data source (isolated from Gold, Silver, Coins & Bars, and Collections pages)
+  const newArrivals = exclusiveNewArrivals;
 
-  const filteredProducts = activeFilter === 'All'
-    ? newArrivals
-    : newArrivals.filter(p => p.category.toLowerCase() === activeFilter.toLowerCase());
+  const filteredProducts = newArrivals.filter(p => {
+    // Search filter
+    if (searchQuery && searchQuery.trim() !== '') {
+      const q = searchQuery.toLowerCase().trim();
+      const matchSearch =
+        (p.name && p.name.toLowerCase().includes(q)) ||
+        (p.description && p.description.toLowerCase().includes(q)) ||
+        (p.category && p.category.toLowerCase().includes(q)) ||
+        (p.subCategory && p.subCategory.toLowerCase().includes(q)) ||
+        (p.subType && p.subType.toLowerCase().includes(q)) ||
+        (p.department && p.department.toLowerCase().includes(q)) ||
+        (p.material && p.material.toLowerCase().includes(q));
+      if (!matchSearch) return false;
+    }
+
+    // Category filter
+    if (activeFilter === 'All') return true;
+    return (
+      (p.department && p.department.toLowerCase() === activeFilter.toLowerCase()) ||
+      (p.category && p.category.toLowerCase() === activeFilter.toLowerCase())
+    );
+  });
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     if (sortBy === 'price-low') return a.numericPrice - b.numericPrice;
@@ -106,7 +126,7 @@ export default function NewArrivalsPage({
                       NEW
                     </span>
                     <span className="inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#FAF2DF] text-[#7A5826] border border-[#E2D4B7]">
-                      {item.category}
+                      {item.department || item.category}
                     </span>
                   </div>
 

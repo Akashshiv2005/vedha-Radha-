@@ -12,6 +12,7 @@ const COINS_MAP = {
 };
 
 export default function CoinsBarsPage({
+  searchQuery = '',
   onViewProduct = () => {},
   onAddToCart = () => {},
   onAddToWishlist = () => {},
@@ -27,9 +28,23 @@ export default function CoinsBarsPage({
     desc: 'Government recognized 24K (999/999.9) pure investment gold and 999 fine silver coins & bullion bars with 100% buyback guarantee.'
   };
 
-  // Filter products by category 'Coins & Bars' and subcategory
+  // Filter products by category 'Coins & Bars', subcategory, and search query
   const filteredProducts = products.filter(item => {
     if (item.category !== 'Coins & Bars') return false;
+
+    // Search query match
+    if (searchQuery && searchQuery.trim() !== '') {
+      const q = searchQuery.toLowerCase().trim();
+      const matchSearch =
+        (item.name && item.name.toLowerCase().includes(q)) ||
+        (item.description && item.description.toLowerCase().includes(q)) ||
+        (item.subCategory && item.subCategory.toLowerCase().includes(q)) ||
+        (item.subType && item.subType.toLowerCase().includes(q)) ||
+        (item.material && item.material.toLowerCase().includes(q)) ||
+        (item.purity && item.purity.toLowerCase().includes(q));
+      if (!matchSearch) return false;
+    }
+
     if (!subCategory || activeSlug === 'all') return true;
     return item.subCategorySlug === activeSlug || item.subCategory === activeSlug;
   });
