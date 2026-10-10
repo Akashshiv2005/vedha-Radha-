@@ -2,21 +2,198 @@ import React, { useState } from 'react';
 import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 import { products } from '../data/products';
 import { collectionsNavItems } from '../data/navigationData';
-import { Sparkles, ChevronRight, Heart, ShoppingBag, ShieldCheck, ArrowLeft, PhoneCall, Gift, Gem } from 'lucide-react';
+import { Sparkles, ChevronRight, Heart, ShoppingBag, ShieldCheck, ArrowLeft, PhoneCall, Gem, Layers, Eye } from 'lucide-react';
 
 const COLLECTIONS_MAP = {
-  'wedding': { title: 'Wedding & Bridal Collections', desc: 'Grand Muhurtham trousseau sets, temple Lakshmi harams, antique vankis, and royal wedding ornaments.' },
-  'wedding-collections': { title: 'Wedding & Bridal Collections', desc: 'Grand Muhurtham trousseau sets, temple Lakshmi harams, antique vankis, and royal wedding ornaments.' },
-  'baby': { title: 'Baby Collections (First Jewels)', desc: 'Auspicious black bead nazariya bracelets, soft baby bangles, silver anklets, and protective charms crafted with smooth skin-safe hypoallergenic finishes.' },
-  'baby-collections': { title: 'Baby Collections (First Jewels)', desc: 'Auspicious black bead nazariya bracelets, soft baby bangles, silver anklets, and protective charms crafted with smooth skin-safe hypoallergenic finishes.' },
-  'mens-accessories': { title: 'Men’s Fine Accessories', desc: 'Solid 22K gold kadas, certified gemstone Navaratna rings, heavy silver chains, and executive gold cufflinks.' },
-  'girls-accessories': { title: 'Girls’ & Teen Accessories', desc: 'Delicate floral studs, lightweight gold bracelets, chiming silver payals, and everyday modern pendants.' },
-  'pooja-items': { title: 'Sacred Temple Pooja Collections', desc: 'Ashtalakshmi prayer ensembles, hand-chased silver aarti sets, auspicious incense burners, and puja thalis crafted for spiritual sanctity.' },
-  'silver-idols': { title: 'Artisanal Pure Silver Idols (Murtis)', desc: 'Sacred cast silver murtis of Lord Ganesha, Goddess Lakshmi, Balaji, and Kamadhenu on lotus pedestals.' },
-  'silver-idol': { title: 'Artisanal Pure Silver Idols (Murtis)', desc: 'Sacred cast silver murtis of Lord Ganesha, Goddess Lakshmi, Balaji, and Kamadhenu on lotus pedestals.' }
+  'wedding': { 
+    title: 'Wedding & Bridal Collections', 
+    desc: 'Grand Muhurtham trousseau sets, temple Mayura harams, antique vankis, and royal wedding ornaments handcrafted in 22K hallmarked gold.' 
+  },
+  'wedding-collections': { 
+    title: 'Wedding & Bridal Collections', 
+    desc: 'Grand Muhurtham trousseau sets, temple Mayura harams, antique vankis, and royal wedding ornaments handcrafted in 22K hallmarked gold.' 
+  },
+  'baby': { 
+    title: 'Baby Collections (First Jewels)', 
+    desc: 'Auspicious black bead nazariya bracelets, child-safe rounded bangles, silver anklets, and protective charms crafted with smooth skin-safe hypoallergenic finishes.' 
+  },
+  'baby-collections': { 
+    title: 'Baby Collections (First Jewels)', 
+    desc: 'Auspicious black bead nazariya bracelets, child-safe rounded bangles, silver anklets, and protective charms crafted with smooth skin-safe hypoallergenic finishes.' 
+  },
+  'mens-accessories': { 
+    title: 'Men’s Fine Accessories', 
+    desc: 'Solid 22K gold Veera Simha kadas, certified gemstone signet rings, heavy silver chains, and executive gold cufflinks.' 
+  },
+  'girls-accessories': { 
+    title: 'Girls’ & Teen Accessories', 
+    desc: 'Delicate butterfly charm bracelets, lightweight floral earrings, chiming silver payals, and everyday modern pendants.' 
+  },
+  'pooja-items': { 
+    title: 'Sacred Temple Pooja Collections', 
+    desc: 'Mayur Stambh five-tier aarti deepams, Ashtalakshmi prayer ensembles, hand-chased silver deepams, and puja thalis crafted for spiritual sanctity.' 
+  },
+  'silver-idols': { 
+    title: 'Artisanal Pure Silver Idols (Murtis)', 
+    desc: 'Sacred cast 92.5 solid silver murtis of Lord Siddhi Anjaneya, Ganesha, Goddess Lakshmi, and Balaji on double-lotus pedestals.' 
+  },
+  'silver-idol': { 
+    title: 'Artisanal Pure Silver Idols (Murtis)', 
+    desc: 'Sacred cast 92.5 solid silver murtis of Lord Siddhi Anjaneya, Ganesha, Goddess Lakshmi, and Balaji on double-lotus pedestals.' 
+  }
 };
 
+// Map each collection slug to its strictly assigned exclusive product ID
+const COLLECTION_EXCLUSIVE_PRODUCT_MAP = {
+  'wedding': 'collections-wedding-exclusive-01',
+  'wedding-collections': 'collections-wedding-exclusive-01',
+  'baby': 'collections-baby-exclusive-01',
+  'baby-collections': 'collections-baby-exclusive-01',
+  'mens-accessories': 'collections-mens-exclusive-01',
+  'girls-accessories': 'collections-girls-exclusive-01',
+  'pooja-items': 'collections-pooja-exclusive-01',
+  'silver-idols': 'collections-silver-idol-exclusive-01',
+  'silver-idol': 'collections-silver-idol-exclusive-01'
+};
+
+const EXCLUSIVE_PRODUCT_IDS = Object.values(COLLECTION_EXCLUSIVE_PRODUCT_MAP);
+
+// Reusable Interactive Card with Thumbnail Gallery Switching
+function CollectionProductCard({ item, wishlistItems, onAddToCart, onAddToWishlist, onViewProduct }) {
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const isWishlisted = wishlistItems.some(w => w.id === item.id);
+  const images = item.images && item.images.length > 0 ? item.images : [item.image];
+  const currentImage = images[activeImageIndex] || item.image;
+
+  return (
+    <div className="bg-[#FAF8F5] rounded-xl border border-[#E8DFC0] overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between group">
+      {/* Product Image Stage */}
+      <div className="relative aspect-4/3 overflow-hidden bg-[#EFE8DC]">
+        <img
+          src={currentImage}
+          alt={`${item.name} - View ${activeImageIndex + 1}`}
+          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+          loading="lazy"
+        />
+
+        {/* Collection Badge */}
+        <div className="absolute top-3 left-3">
+          <span className="inline-block px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-[#DCF0DF] text-[#1E5C2D] border border-[#C1E3C6]">
+            {item.badge}
+          </span>
+        </div>
+
+        {/* View Index Badge */}
+        {images.length > 1 && (
+          <div className="absolute top-3 left-1/2 -translate-x-1/2">
+            <span className="bg-black/60 text-[#E5C278] text-[10px] font-medium px-2 py-0.5 rounded-full backdrop-blur-xs flex items-center gap-1">
+              <Eye className="w-3 h-3" />
+              View {activeImageIndex + 1} of {images.length}
+            </span>
+          </div>
+        )}
+
+        {/* Wishlist Button */}
+        <button
+          onClick={() => onAddToWishlist(item)}
+          className="absolute top-3 right-3 p-2 rounded-full bg-white/90 hover:bg-white text-[#581923] shadow-md transition-transform active:scale-95 cursor-pointer"
+          title={isWishlisted ? "Item in Wishlist" : "Add to Wishlist"}
+          aria-label={isWishlisted ? "Item in Wishlist" : "Add to Wishlist"}
+        >
+          <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-[#D32F2F] text-[#D32F2F]' : ''}`} />
+        </button>
+
+        {/* Interactive 3-Image Thumbnail Strip at bottom of preview */}
+        {images.length > 1 && (
+          <div className="absolute bottom-2 inset-x-0 flex justify-center gap-1.5 px-3 py-1 bg-black/40 backdrop-blur-xs rounded-full max-w-fit mx-auto">
+            {images.map((imgSrc, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setActiveImageIndex(idx);
+                }}
+                className={`relative w-8 h-8 rounded-md overflow-hidden border transition-all cursor-pointer ${
+                  activeImageIndex === idx
+                    ? 'border-[#FAF7F2] ring-2 ring-[#581923] scale-110'
+                    : 'border-white/50 opacity-75 hover:opacity-100'
+                }`}
+                title={`Switch to View ${idx + 1}`}
+                aria-label={`View angle ${idx + 1}`}
+              >
+                <img
+                  src={imgSrc}
+                  alt={`Thumbnail ${idx + 1}`}
+                  className="w-full h-full object-cover"
+                />
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Product Details Section */}
+      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+        <div>
+          <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C6D2D]">
+            {item.purity || item.details || item.material}
+          </span>
+          <h3 className="font-serif text-base font-bold text-[#241716] group-hover:text-[#581923] transition-colors line-clamp-1 mt-1">
+            {item.name}
+          </h3>
+          <p className="text-xs text-[#63574F] line-clamp-2 mt-1 leading-relaxed">
+            {item.description}
+          </p>
+
+          {/* Key Specs Pills */}
+          <div className="flex items-center gap-2 mt-2.5 text-[11px] text-[#7A6E65]">
+            {item.weight && (
+              <span className="bg-[#F3EAD3]/60 px-2 py-0.5 rounded border border-[#E8DFC0]/60">
+                Weight: {item.weight}
+              </span>
+            )}
+            {item.dimensions && (
+              <span className="bg-[#F3EAD3]/60 px-2 py-0.5 rounded border border-[#E8DFC0]/60 line-clamp-1">
+                {item.dimensions}
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Pricing & CTA Controls */}
+        <div className="mt-4 pt-3 border-t border-[#EAE2D5] flex items-center justify-between">
+          <div>
+            <span className="text-[10px] text-[#7A6E65] block">Showroom Price</span>
+            <span className="font-serif text-lg font-bold text-[#48161E]">
+              {item.price}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => onViewProduct(item)}
+              className="px-3 py-1.5 rounded-md border border-[#581923] text-[#581923] hover:bg-[#FAF0E1] text-xs font-semibold transition-colors cursor-pointer flex items-center gap-1"
+            >
+              <Layers className="w-3.5 h-3.5" />
+              <span>Details</span>
+            </button>
+            <button
+              onClick={() => onAddToCart(item)}
+              className="px-3 py-1.5 rounded-md bg-[#581923] hover:bg-[#431219] text-white text-xs font-semibold flex items-center gap-1 transition-colors cursor-pointer"
+            >
+              <ShoppingBag className="w-3.5 h-3.5" />
+              <span>Add</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function CollectionsCatalogPage({
+  searchQuery = '',
   onViewProduct = () => {},
   onAddToCart = () => {},
   onAddToWishlist = () => {},
@@ -32,15 +209,31 @@ export default function CollectionsCatalogPage({
     desc: 'Discover bespoke jewelry lines tailored for auspicious family milestones, weddings, baby ceremonies, men’s heirlooms, and sacred temple rituals.'
   };
 
-  // Filter products by collection slug
+  // Filter products strictly so each collection displays exactly 1 new unique product
   const filteredProducts = products.filter(item => {
-    if (!subCategory || activeSlug === 'all') return true;
-    if (activeSlug === 'wedding' || activeSlug === 'wedding-collections') return item.isBridal || item.collection === 'wedding';
-    if (activeSlug === 'baby' || activeSlug === 'baby-collections') return item.collection === 'baby';
-    if (activeSlug === 'mens-accessories') return item.collection === 'mens-accessories';
-    if (activeSlug === 'girls-accessories') return item.collection === 'girls-accessories';
-    if (activeSlug === 'pooja-items') return item.collection === 'pooja-items' || item.subCategorySlug === 'pooja-items';
-    if (activeSlug === 'silver-idols' || activeSlug === 'silver-idol') return item.collection === 'silver-idols' || item.collection === 'silver-idol' || item.subCategorySlug === 'silver-idols' || item.subCategorySlug === 'silver-idol';
+    // 1. Search Query Filter if active
+    if (searchQuery && searchQuery.trim()) {
+      const q = searchQuery.toLowerCase().trim();
+      const match =
+        (item.name && item.name.toLowerCase().includes(q)) ||
+        (item.description && item.description.toLowerCase().includes(q)) ||
+        (item.category && item.category.toLowerCase().includes(q)) ||
+        (item.subCategory && item.subCategory.toLowerCase().includes(q)) ||
+        (item.material && item.material.toLowerCase().includes(q)) ||
+        (item.purity && item.purity.toLowerCase().includes(q));
+      if (!match) return false;
+    }
+
+    // 2. Collection Route Filter: Each collection displays its exact 1 exclusive product
+    if (!subCategory || activeSlug === 'all') {
+      return item.id.startsWith('collections-') && item.id.includes('-exclusive-');
+    }
+
+    const assignedId = COLLECTION_EXCLUSIVE_PRODUCT_MAP[activeSlug];
+    if (assignedId) {
+      return item.id === assignedId;
+    }
+
     return item.collection === activeSlug;
   });
 
@@ -92,7 +285,7 @@ export default function CollectionsCatalogPage({
           </div>
         </div>
 
-        {/* Subcategory Pills Bar */}
+        {/* Subcategory Navigation Pills Bar */}
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 pb-6 border-b border-[#DECDBB]">
           <div className="flex items-center gap-2 flex-wrap">
             <Link
@@ -125,7 +318,7 @@ export default function CollectionsCatalogPage({
           </div>
 
           <div className="flex items-center gap-3 shrink-0 self-end lg:self-auto text-xs">
-            <span className="text-[#7A6E65]">Showing {sortedProducts.length} designs</span>
+            <span className="text-[#7A6E65]">Showing {sortedProducts.length} exclusive designs</span>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
@@ -141,76 +334,16 @@ export default function CollectionsCatalogPage({
         {/* Products Grid */}
         {sortedProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 my-8">
-            {sortedProducts.map((item) => {
-              const isWishlisted = wishlistItems.some(w => w.id === item.id);
-              return (
-                <div
-                  key={item.id}
-                  className="bg-[#FAF8F5] rounded-xl border border-[#E8DFC0] overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between group"
-                >
-                  <div className="relative aspect-4/3 overflow-hidden bg-[#EFE8DC]">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
-                    />
-                    <div className="absolute top-3 left-3">
-                      <span className="inline-block px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-[#DCF0DF] text-[#1E5C2D] border border-[#C1E3C6]">
-                        {item.badge}
-                      </span>
-                    </div>
-
-                    <button
-                      onClick={() => onAddToWishlist(item)}
-                      className="absolute top-3 right-3 p-2 rounded-full bg-white/90 hover:bg-white text-[#581923] shadow-md transition-transform active:scale-95 cursor-pointer"
-                      title={isWishlisted ? "Item in Wishlist" : "Add to Wishlist"}
-                    >
-                      <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-[#D32F2F] text-[#D32F2F]' : ''}`} />
-                    </button>
-                  </div>
-
-                  <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
-                    <div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C6D2D]">
-                        {item.purity || item.details}
-                      </span>
-                      <h3 className="font-serif text-base font-bold text-[#241716] group-hover:text-[#581923] transition-colors line-clamp-1 mt-1">
-                        {item.name}
-                      </h3>
-                      <p className="text-xs text-[#63574F] line-clamp-2 mt-1 leading-relaxed">
-                        {item.description}
-                      </p>
-                    </div>
-
-                    <div className="mt-4 pt-3 border-t border-[#EAE2D5] flex items-center justify-between">
-                      <div>
-                        <span className="text-[10px] text-[#7A6E65] block">Showroom Price</span>
-                        <span className="font-serif text-lg font-bold text-[#48161E]">
-                          {item.price}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => onViewProduct(item)}
-                          className="px-3 py-1.5 rounded-md border border-[#581923] text-[#581923] hover:bg-[#FAF0E1] text-xs font-semibold transition-colors cursor-pointer"
-                        >
-                          Details
-                        </button>
-                        <button
-                          onClick={() => onAddToCart(item)}
-                          className="px-3 py-1.5 rounded-md bg-[#581923] hover:bg-[#431219] text-white text-xs font-semibold flex items-center gap-1 transition-colors cursor-pointer"
-                        >
-                          <ShoppingBag className="w-3.5 h-3.5" />
-                          <span>Add</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+            {sortedProducts.map((item) => (
+              <CollectionProductCard
+                key={item.id}
+                item={item}
+                wishlistItems={wishlistItems}
+                onAddToCart={onAddToCart}
+                onAddToWishlist={onAddToWishlist}
+                onViewProduct={onViewProduct}
+              />
+            ))}
           </div>
         ) : (
           <div className="bg-white rounded-2xl p-8 sm:p-12 text-center border border-[#E8DFC0] my-8 shadow-xs max-w-2xl mx-auto space-y-4">

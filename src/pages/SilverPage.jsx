@@ -272,6 +272,7 @@ function getSilverCategoryIcon(slug, isActive = false) {
 }
 
 export default function SilverPage({
+  searchQuery = '',
   onViewProduct = () => {},
   onAddToCart = () => {},
   onAddToWishlist = () => {},
@@ -323,11 +324,26 @@ export default function SilverPage({
   const filteredProducts = products.filter(item => {
     if (item.category !== 'Silver') return false;
 
+    // Search query filter
+    if (searchQuery && searchQuery.trim() !== '') {
+      const q = searchQuery.toLowerCase().trim();
+      const matchSearch =
+        (item.name && item.name.toLowerCase().includes(q)) ||
+        (item.description && item.description.toLowerCase().includes(q)) ||
+        (item.subCategory && item.subCategory.toLowerCase().includes(q)) ||
+        (item.subType && item.subType.toLowerCase().includes(q)) ||
+        (item.material && item.material.toLowerCase().includes(q)) ||
+        (item.craftsmanship && item.craftsmanship.toLowerCase().includes(q));
+      if (!matchSearch) return false;
+    }
+
     // Category match
     let matchesCategory = false;
     if (activeKey === 'all') {
       matchesCategory = true;
-    } else if (item.subType === activeKey || item.subCategorySlug === activeKey || item.subCategory === activeKey || item.occasion === activeKey) {
+    } else if (item.subType === activeKey || item.subCategorySlug === activeKey || item.subCategory === activeKey) {
+      matchesCategory = true;
+    } else if (activeMainCat === 'earrings' && item.subCategory === 'earrings') {
       matchesCategory = true;
     } else if (activeMainCat === 'bangles' && (item.subCategory === 'bangles' || item.subCategory === 'anklets' || item.subCategory === 'handcrafted-silver')) {
       matchesCategory = true;
@@ -337,7 +353,15 @@ export default function SilverPage({
       matchesCategory = true;
     } else if (activeMainCat === 'chains' && item.subCategory === 'chains') {
       matchesCategory = true;
-    } else if (activeMainCat === 'occasion' && (item.occasion || item.isBridal)) {
+    } else if (activeMainCat === 'pendants' && item.subCategory === 'pendants') {
+      matchesCategory = true;
+    } else if (activeMainCat === 'pooja-items' && item.subCategory === 'pooja-items') {
+      matchesCategory = true;
+    } else if (activeMainCat === 'silver-idols' && item.subCategory === 'silver-idols') {
+      matchesCategory = true;
+    } else if (activeMainCat === 'coins-bars' && (item.subCategory === 'coins-bars' || item.subCategory === 'coins')) {
+      matchesCategory = true;
+    } else if (activeMainCat === 'occasion' && (item.occasion === activeKey || item.occasion || item.isBridal)) {
       matchesCategory = true;
     }
 

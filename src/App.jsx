@@ -157,6 +157,7 @@ export default function App() {
             path="/gold" 
             element={
               <GoldPage 
+                searchQuery={searchQuery}
                 onViewProduct={(p) => setSelectedProduct(p)}
                 onAddToCart={handleAddToCart}
                 onAddToWishlist={handleAddToWishlist}
@@ -168,6 +169,7 @@ export default function App() {
             path="/gold/:subCategory" 
             element={
               <GoldPage 
+                searchQuery={searchQuery}
                 onViewProduct={(p) => setSelectedProduct(p)}
                 onAddToCart={handleAddToCart}
                 onAddToWishlist={handleAddToWishlist}
@@ -179,6 +181,7 @@ export default function App() {
             path="/gold/:category/:subType" 
             element={
               <GoldPage 
+                searchQuery={searchQuery}
                 onViewProduct={(p) => setSelectedProduct(p)}
                 onAddToCart={handleAddToCart}
                 onAddToWishlist={handleAddToWishlist}
@@ -192,6 +195,7 @@ export default function App() {
             path="/silver" 
             element={
               <SilverPage 
+                searchQuery={searchQuery}
                 onViewProduct={(p) => setSelectedProduct(p)}
                 onAddToCart={handleAddToCart}
                 onAddToWishlist={handleAddToWishlist}
@@ -203,6 +207,7 @@ export default function App() {
             path="/silver/:subCategory" 
             element={
               <SilverPage 
+                searchQuery={searchQuery}
                 onViewProduct={(p) => setSelectedProduct(p)}
                 onAddToCart={handleAddToCart}
                 onAddToWishlist={handleAddToWishlist}
@@ -214,6 +219,7 @@ export default function App() {
             path="/silver/:category/:subType" 
             element={
               <SilverPage 
+                searchQuery={searchQuery}
                 onViewProduct={(p) => setSelectedProduct(p)}
                 onAddToCart={handleAddToCart}
                 onAddToWishlist={handleAddToWishlist}
@@ -227,6 +233,7 @@ export default function App() {
             path="/coins-bars" 
             element={
               <CoinsBarsPage 
+                searchQuery={searchQuery}
                 onViewProduct={(p) => setSelectedProduct(p)}
                 onAddToCart={handleAddToCart}
                 onAddToWishlist={handleAddToWishlist}
@@ -238,6 +245,7 @@ export default function App() {
             path="/coins-bars/:subCategory" 
             element={
               <CoinsBarsPage 
+                searchQuery={searchQuery}
                 onViewProduct={(p) => setSelectedProduct(p)}
                 onAddToCart={handleAddToCart}
                 onAddToWishlist={handleAddToWishlist}
@@ -251,6 +259,7 @@ export default function App() {
             path="/new-arrivals" 
             element={
               <NewArrivalsPage 
+                searchQuery={searchQuery}
                 onViewProduct={(p) => setSelectedProduct(p)}
                 onAddToCart={handleAddToCart}
                 onAddToWishlist={handleAddToWishlist}
@@ -264,6 +273,7 @@ export default function App() {
             path="/collections" 
             element={
               <CollectionsCatalogPage 
+                searchQuery={searchQuery}
                 onViewProduct={(p) => setSelectedProduct(p)}
                 onAddToCart={handleAddToCart}
                 onAddToWishlist={handleAddToWishlist}
@@ -275,6 +285,7 @@ export default function App() {
             path="/collections/:subCategory" 
             element={
               <CollectionsCatalogPage 
+                searchQuery={searchQuery}
                 onViewProduct={(p) => setSelectedProduct(p)}
                 onAddToCart={handleAddToCart}
                 onAddToWishlist={handleAddToWishlist}

@@ -13,7 +13,7 @@ export default function HomePage({
   const navigate = useNavigate();
 
   const handleExploreClick = () => {
-    navigate('/gold');
+    navigate('/collections');
   };
 
   const handleCategoryNav = (cat) => {

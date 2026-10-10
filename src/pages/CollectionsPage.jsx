@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { products } from '../data/products';
-import { Sparkles, ChevronRight, Gem, Shield, Heart, ShoppingBag } from 'lucide-react';
+import { Sparkles, ChevronRight, Gem, Shield, Heart, ShoppingBag, Layers, Eye } from 'lucide-react';
 
 export default function CollectionsPage({
+  searchQuery = '',
   onViewProduct = () => {},
   onAddToCart = () => {},
   onAddToWishlist = () => {},
@@ -11,37 +12,106 @@ export default function CollectionsPage({
 }) {
   const navigate = useNavigate();
   const [activeCollectionTab, setActiveCollectionTab] = useState('All');
+  const [activeCardImages, setActiveCardImages] = useState({});
 
   const collectionLines = [
     {
-      id: 'Heritage Temple Collection',
-      title: 'Heritage Temple Collection',
-      subtitle: 'Devotional sculpting inspired by Thanjavur & Mylapore temples',
-      description: 'Sacred motifs of Goddess Lakshmi, Lord Ganesha, peacocks, and temple gopurams meticulously carved in high-relief repoussé technique using 22K pure hallmarked gold.',
-      image: '/images/col_gold.jpg',
-      artisan: 'Thanjavur Master Guild'
+      id: 'wedding',
+      slug: 'wedding',
+      title: 'Wedding Collections',
+      subtitle: 'Grand Muhurtham Trousseau & Temple Bridal Sets',
+      description: 'A majestic 22K antique gold multi-strand bridal haar featuring intricately sculpted dancing Mayura peacocks, natural unheated Burmese rubies, pota emerald beads, and cascading jhumki drops.',
+      image: '/images/collections/collections-wedding-exclusive-01.jpg',
+      artisan: 'Chettinad Nakshi Master Guild',
+      productId: 'collections-wedding-exclusive-01'
     },
     {
-      id: 'Chettinad Antique Collection',
-      title: 'Chettinad Antique Collection',
-      subtitle: 'Aristocratic heirloom jewelry with natural unheated rubies',
-      description: 'Characterized by royal matte patina finishes, geometric ruby clusters, and robust screw-lock bangles inspired by the palatial mansions of Karaikudi.',
-      image: '/images/col_handcrafted.jpg',
-      artisan: 'Chettinad Heritage Goldsmiths'
+      id: 'baby',
+      slug: 'baby',
+      title: 'Baby Collections',
+      subtitle: 'Auspicious First Jewels & Hypoallergenic Charms',
+      description: 'A skin-safe, hypoallergenic 22K gold protective baby bangle featuring smooth rounded edges, sacred Swastik charm, protective black enamel nazar beads, and an adjustable safety clasp.',
+      image: '/images/collections/collections-baby-exclusive-01.jpg',
+      artisan: 'Pediatric Safety Certified Goldsmiths',
+      productId: 'collections-baby-exclusive-01'
     },
     {
-      id: '92.5 Pure Silver Articles',
-      title: '92.5 Pure Silver Articles',
-      subtitle: 'Sacred pooja vessels, auspicious lamps, and artisan silver payals',
-      description: 'Pure 925 sterling silver crafted for household prosperity, family pujas, and everyday elegance with fine engraving and high tarnish resistance.',
-      image: '/images/col_silver.jpg',
-      artisan: 'Salem Silversmith Colony'
+      id: 'mens-accessories',
+      slug: 'mens-accessories',
+      title: 'Men’s Accessories',
+      subtitle: 'Solid 22K Gold Kadas & Fine Masculine Heirlooms',
+      description: 'A commanding solid 22K gold men’s kada crowned with dual sculpted lion (Simha) heads biting a central gold ring, flanked by deeply fluted torc ridges and brushed satin panels.',
+      image: '/images/collections/collections-mens-exclusive-01.jpg',
+      artisan: 'Royal Armoury Goldsmiths',
+      productId: 'collections-mens-exclusive-01'
+    },
+    {
+      id: 'girls-accessories',
+      slug: 'girls-accessories',
+      title: 'Girls’ Accessories',
+      subtitle: 'Delicate Laser-Cut Charms & Lightweight Bracelets',
+      description: 'A whimsical and lightweight 22K yellow gold charm bracelet designed for girls and teens, featuring three fluttering laser-cut butterflies with pink sapphire accents and Italian rolo chain.',
+      image: '/images/collections/collections-girls-exclusive-01.jpg',
+      artisan: 'Modern Micro-Laser Atelier',
+      productId: 'collections-girls-exclusive-01'
+    },
+    {
+      id: 'pooja-items',
+      slug: 'pooja-items',
+      title: 'Pooja Items',
+      subtitle: 'Sacred Temple Vessels & Chased Deepam Lamps',
+      description: 'A grand five-tier ceremonial oil lamp (deepam) hand-forged in 92.5 pure sterling silver, crowned with an ornamental peacock finial, floral oil wells, and Ashtalakshmi pedestal base.',
+      image: '/images/collections/collections-pooja-exclusive-01.jpg',
+      artisan: 'Swamimalai Temple Silversmith Guild',
+      productId: 'collections-pooja-exclusive-01'
+    },
+    {
+      id: 'silver-idols',
+      slug: 'silver-idols',
+      title: 'Silver Idol',
+      subtitle: 'Sacred Lost-Wax Pure 925 Solid Silver Murtis',
+      description: 'A majestic solid 92.5 pure silver idol of Lord Veera Anjaneya Hanuman standing in Abhaya blessing posture on an inverted double-lotus pedestal, holding the sacred Sanjeevani mountain and Gada mace.',
+      image: '/images/collections/collections-silver-idol-exclusive-01.jpg',
+      artisan: 'Devalaya Iconographic Sculptors',
+      productId: 'collections-silver-idol-exclusive-01'
     }
   ];
 
-  const filteredProducts = activeCollectionTab === 'All'
-    ? products
-    : products.filter(p => p.collection === activeCollectionTab || p.category.includes(activeCollectionTab));
+  const exclusiveProductIds = collectionLines.map(c => c.productId);
+
+  // Filter products by active collection tab & search query
+  const filteredProducts = products.filter(item => {
+    // Search query check
+    if (searchQuery && searchQuery.trim()) {
+      const q = searchQuery.toLowerCase().trim();
+      const match =
+        (item.name && item.name.toLowerCase().includes(q)) ||
+        (item.description && item.description.toLowerCase().includes(q)) ||
+        (item.category && item.category.toLowerCase().includes(q)) ||
+        (item.subCategory && item.subCategory.toLowerCase().includes(q)) ||
+        (item.material && item.material.toLowerCase().includes(q)) ||
+        (item.purity && item.purity.toLowerCase().includes(q));
+      if (!match) return false;
+    }
+
+    if (activeCollectionTab === 'All') {
+      return exclusiveProductIds.includes(item.id);
+    }
+
+    const targetLine = collectionLines.find(c => c.id === activeCollectionTab || c.title === activeCollectionTab);
+    if (targetLine) {
+      return item.id === targetLine.productId;
+    }
+
+    return item.collection === activeCollectionTab;
+  });
+
+  const handleCardImageSelect = (productId, imageIndex) => {
+    setActiveCardImages(prev => ({
+      ...prev,
+      [productId]: imageIndex
+    }));
+  };
 
   return (
     <div className="bg-[#FAF7F2] min-h-screen py-8 sm:py-12 border-b border-[#EAE2D5]">
@@ -65,7 +135,7 @@ export default function CollectionsPage({
           </p>
         </div>
 
-        {/* Signature Collection Showcases */}
+        {/* 6 Curated Collection Showcases */}
         <div className="space-y-8 mb-14">
           {collectionLines.map((col, idx) => (
             <div 
@@ -111,7 +181,7 @@ export default function CollectionsPage({
                   >
                     Explore {col.title}
                   </button>
-                  <span className="text-xs text-[#8C6D2D] font-medium">100% Certified</span>
+                  <span className="text-xs text-[#8C6D2D] font-medium">100% Certified 916 / 925</span>
                 </div>
               </div>
             </div>
@@ -123,31 +193,33 @@ export default function CollectionsPage({
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-[#DECDBB]">
             <div>
               <h3 className="font-serif text-2xl font-bold text-[#241716]">
-                {activeCollectionTab === 'All' ? 'All Collection Pieces' : activeCollectionTab}
+                {activeCollectionTab === 'All' ? 'All Exclusive Collection Pieces' : collectionLines.find(c => c.id === activeCollectionTab)?.title || activeCollectionTab}
               </h3>
-              <p className="text-xs text-[#7A6E65] mt-0.5">Crafted with certified purity and hallmarked laser assaying.</p>
+              <p className="text-xs text-[#7A6E65] mt-0.5">
+                Displaying exactly 1 exclusive mastercrafted design per collection, complete with 3 verified photographic perspectives.
+              </p>
             </div>
 
             {/* Collection Filter Tabs */}
             <div className="flex items-center gap-2 flex-wrap">
               <button
                 onClick={() => setActiveCollectionTab('All')}
-                className={`px-3 py-1.5 rounded-full text-xs font-semibold cursor-pointer ${
+                className={`px-3 py-1.5 rounded-full text-xs font-semibold cursor-pointer transition-all ${
                   activeCollectionTab === 'All'
-                    ? 'bg-[#581923] text-white'
-                    : 'bg-white text-[#4A403A] border border-[#DECDBB]'
+                    ? 'bg-[#581923] text-white shadow-xs'
+                    : 'bg-white text-[#4A403A] border border-[#DECDBB] hover:bg-[#F3EAD3]'
                 }`}
               >
-                All
+                All Collections
               </button>
               {collectionLines.map(c => (
                 <button
                   key={c.id}
                   onClick={() => setActiveCollectionTab(c.id)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-semibold cursor-pointer ${
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold cursor-pointer transition-all ${
                     activeCollectionTab === c.id
-                      ? 'bg-[#581923] text-white'
-                      : 'bg-white text-[#4A403A] border border-[#DECDBB]'
+                      ? 'bg-[#581923] text-white shadow-xs'
+                      : 'bg-white text-[#4A403A] border border-[#DECDBB] hover:bg-[#F3EAD3]'
                   }`}
                 >
                   {c.title}
@@ -159,6 +231,10 @@ export default function CollectionsPage({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProducts.map((item) => {
               const isWishlisted = wishlistItems.some(w => w.id === item.id);
+              const imgIndex = activeCardImages[item.id] || 0;
+              const images = item.images && item.images.length > 0 ? item.images : [item.image];
+              const displayImage = images[imgIndex] || item.image;
+
               return (
                 <div
                   key={item.id}
@@ -166,24 +242,89 @@ export default function CollectionsPage({
                 >
                   <div className="relative aspect-4/3 overflow-hidden bg-[#EFE8DC]">
                     <img
-                      src={item.image}
-                      alt={item.name}
+                      src={displayImage}
+                      alt={`${item.name} - View ${imgIndex + 1}`}
                       className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                     />
+
+                    {/* Badge */}
+                    <div className="absolute top-3 left-3">
+                      <span className="inline-block px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-[#DCF0DF] text-[#1E5C2D] border border-[#C1E3C6]">
+                        {item.badge}
+                      </span>
+                    </div>
+
+                    {/* View Indicator */}
+                    {images.length > 1 && (
+                      <div className="absolute top-3 left-1/2 -translate-x-1/2">
+                        <span className="bg-black/60 text-[#E5C278] text-[10px] font-medium px-2 py-0.5 rounded-full backdrop-blur-xs flex items-center gap-1">
+                          <Eye className="w-3 h-3" />
+                          View {imgIndex + 1} of {images.length}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Wishlist Button */}
                     <button
                       onClick={() => onAddToWishlist(item)}
                       className="absolute top-3 right-3 p-2 rounded-full bg-white/90 hover:bg-white text-[#581923] shadow-md cursor-pointer"
-                      title="Add to Wishlist"
+                      title={isWishlisted ? "Item in Wishlist" : "Add to Wishlist"}
+                      aria-label={isWishlisted ? "Item in Wishlist" : "Add to Wishlist"}
                     >
                       <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-[#D32F2F] text-[#D32F2F]' : ''}`} />
                     </button>
+
+                    {/* 3 Thumbnails Strip */}
+                    {images.length > 1 && (
+                      <div className="absolute bottom-2 inset-x-0 flex justify-center gap-1.5 px-3 py-1 bg-black/40 backdrop-blur-xs rounded-full max-w-fit mx-auto">
+                        {images.map((imgSrc, idx) => (
+                          <button
+                            key={idx}
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleCardImageSelect(item.id, idx);
+                            }}
+                            className={`relative w-8 h-8 rounded-md overflow-hidden border transition-all cursor-pointer ${
+                              imgIndex === idx
+                                ? 'border-[#FAF7F2] ring-2 ring-[#581923] scale-110'
+                                : 'border-white/50 opacity-75 hover:opacity-100'
+                            }`}
+                            title={`Switch to View ${idx + 1}`}
+                            aria-label={`View angle ${idx + 1}`}
+                          >
+                            <img
+                              src={imgSrc}
+                              alt={`Thumbnail ${idx + 1}`}
+                              className="w-full h-full object-cover"
+                            />
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   <div className="p-5 flex-1 flex flex-col justify-between">
                     <div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C6D2D]">{item.craftsmanship || item.details}</span>
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C6D2D]">
+                        {item.purity || item.details || item.material}
+                      </span>
                       <h3 className="font-serif text-base font-bold text-[#241716] mt-1">{item.name}</h3>
-                      <p className="text-xs text-[#63574F] line-clamp-2 mt-1">{item.description}</p>
+                      <p className="text-xs text-[#63574F] line-clamp-2 mt-1 leading-relaxed">{item.description}</p>
+                      
+                      {/* Weight / Dimension Tags */}
+                      <div className="flex items-center gap-2 mt-2 text-[11px] text-[#7A6E65]">
+                        {item.weight && (
+                          <span className="bg-[#FAF7F2] px-2 py-0.5 rounded border border-[#EAE2D5]">
+                            {item.weight}
+                          </span>
+                        )}
+                        {item.dimensions && (
+                          <span className="bg-[#FAF7F2] px-2 py-0.5 rounded border border-[#EAE2D5] line-clamp-1">
+                            {item.dimensions}
+                          </span>
+                        )}
+                      </div>
                     </div>
 
                     <div className="mt-4 pt-3 border-t border-[#EAE2D5] flex items-center justify-between">
@@ -191,9 +332,10 @@ export default function CollectionsPage({
                       <div className="flex gap-2">
                         <button
                           onClick={() => onViewProduct(item)}
-                          className="px-3 py-1.5 rounded-md border border-[#581923] text-[#581923] hover:bg-[#FAF0E1] text-xs font-semibold cursor-pointer"
+                          className="px-3 py-1.5 rounded-md border border-[#581923] text-[#581923] hover:bg-[#FAF0E1] text-xs font-semibold cursor-pointer flex items-center gap-1"
                         >
-                          Details
+                          <Layers className="w-3.5 h-3.5" />
+                          <span>Details</span>
                         </button>
                         <button
                           onClick={() => onAddToCart(item)}
