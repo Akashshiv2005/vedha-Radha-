@@ -7,6 +7,35 @@ export default {
   theme: {
     extend: {
       colors: {
+        admin: {
+          bg: '#F5F6F8',
+          card: '#FFFFFF',
+          sidebar: '#35151B',
+          sidebarSecondary: '#421B23',
+          sidebarActive: '#651F2B',
+          primary: '#651F2B',
+          primaryHover: '#4B1620',
+          gold: '#C49A45',
+          goldLight: '#F2E7D5',
+          goldBorder: '#D8C39A',
+          textMain: '#292521',
+          textSecondary: '#6B7280',
+          textMuted: '#9CA3AF',
+          border: '#E5E7EB',
+          borderWarm: '#E7DED1',
+          hoverBg: '#F8F4EC',
+          // Operational statuses
+          success: '#287A52',
+          successBg: '#EAF5EE',
+          pending: '#B7791F',
+          pendingBg: '#FFF5DF',
+          error: '#C24141',
+          errorBg: '#FDECEC',
+          info: '#2563A6',
+          infoBg: '#EAF2FC',
+          reservedText: '#651F2B',
+          reservedBg: '#F4E8EB',
+        },
         maroon: {
           50: '#FDF4F5',
           100: '#FBE8EB',
@@ -39,6 +68,9 @@ export default {
         serif: ['"Playfair Display"', 'Cormorant Garamond', 'Georgia', 'serif'],
         display: ['"Cinzel"', '"Playfair Display"', 'serif'],
         sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
+        'admin-heading': ['var(--admin-font-heading)', '"Cormorant Garamond"', 'Georgia', 'serif'],
+        'admin-body': ['var(--admin-font-body)', '"DM Sans"', 'system-ui', 'sans-serif'],
+        'admin-mono': ['var(--admin-font-mono)', '"DM Mono"', 'monospace'],
       },
       boxShadow: {
         'soft': '0 4px 20px -2px rgba(92, 29, 39, 0.06)',

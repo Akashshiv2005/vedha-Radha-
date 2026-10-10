@@ -9,8 +9,8 @@ const STAFF_REGISTRY = [
     id: 'USR-001',
     username: 'admin',
     aliases: ['admin@vedaradha.com', 'manager'],
-    name: 'Veda Radha (Managing Director)',
-    role: 'Managing Director & Vault Custodian',
+    name: 'Admin',
+    role: 'Administrator',
     email: 'admin@vedaradha.com',
     passwordHash: crypto.createHash('sha256').update('admin@123' + 'vr_salt_2026_secure').digest('hex'),
     salt: 'vr_salt_2026_secure'

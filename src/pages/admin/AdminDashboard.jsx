@@ -53,7 +53,7 @@ function AdminDashboardInner() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#FAF7F2] text-[#2C2420] flex font-sans selection:bg-[#5C1D27] selection:text-white">
+    <div className={`min-h-screen ${currentTab === 'products' ? 'bg-[#FAF7F2]' : 'bg-[#F5F6F8]'} text-[#292521] flex font-admin-body text-[14px] leading-relaxed selection:bg-[#651F2B] selection:text-white antialiased transition-colors duration-150`}>
       {/* 1. Sidebar Navigation */}
       <AdminSidebar
         currentTab={currentTab}
@@ -63,23 +63,22 @@ function AdminDashboardInner() {
       />
 
       {/* 2. Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className={`flex-1 flex flex-col min-w-0 ${currentTab === 'products' ? 'bg-[#FAF7F2]' : ''}`}>
         {/* Top Header */}
         <AdminHeader
+          currentTab={currentTab}
           onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
-          onOpenSimulateReservation={() => setIsSimulateOpen(true)}
-          onOpenQuickShowroomSale={() => setIsQuickSaleOpen(true)}
           globalSearchQuery={globalSearchQuery}
           setGlobalSearchQuery={setGlobalSearchQuery}
+          onOpenSimulateReservation={() => setIsSimulateOpen(true)}
+          onOpenQuickSale={() => setIsQuickSaleOpen(true)}
         />
 
         {/* Dynamic Admin View */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
+        <main className={`flex-1 p-4 sm:p-6 lg:py-6 lg:px-8 max-w-7xl w-full mx-auto ${currentTab === 'products' ? 'bg-[#FAF7F2]' : ''}`}>
           {currentTab === 'overview' && (
             <AdminOverviewPage
               onNavigateToTab={handleTabChange}
-              onOpenSimulateReservation={() => setIsSimulateOpen(true)}
-              onOpenQuickShowroomSale={() => setIsQuickSaleOpen(true)}
               onOpenAddProduct={() => {
                 handleTabChange('products');
                 setIsAddProductOpen(true);
@@ -91,6 +90,8 @@ function AdminDashboardInner() {
             <AdminProductsPage
               isAddModalOpen={isAddProductOpen}
               setIsAddModalOpen={setIsAddProductOpen}
+              searchQuery={globalSearchQuery}
+              setSearchQuery={setGlobalSearchQuery}
             />
           )}
 
@@ -110,9 +111,9 @@ function AdminDashboardInner() {
         </main>
 
         {/* Admin Footer Disclaimer */}
-        <footer className="bg-[#FAF7F2] border-t border-[#E3D9CC] py-3.5 px-6 text-center text-xs text-gray-500">
+        <footer className="bg-[#FFFFFF] border-t border-[#E5E7EB] py-3.5 px-6 text-center text-[12px] font-admin-body text-[#6B7280]">
           <p>
-            <strong>Veda Radha Thangamaaligai</strong> — Showroom & E-Commerce Admin Prototype • Built for Client Operational Review
+            <strong className="font-admin-heading font-semibold text-[14px] text-[#292521]">Vedha Radha Thangamaaligai</strong> — Luxury Showroom & Inventory Management Dashboard
           </p>
         </footer>
       </div>
@@ -135,10 +136,77 @@ function AdminDashboardInner() {
   );
 }
 
+class AdminErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error('Admin Dashboard caught a render error:', error, errorInfo);
+  }
+
+  handleReset = () => {
+    try {
+      localStorage.removeItem('VEDA_RADHA_ADMIN_STATE_V1');
+    } catch {
+      // ignore
+    }
+    window.location.reload();
+  };
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen bg-[#F5F6F8] flex items-center justify-center p-6 font-admin-body">
+          <div className="bg-white border border-[#E5E7EB] rounded-2xl p-8 max-w-lg w-full shadow-xl text-center">
+            <div className="w-12 h-12 rounded-full bg-[#FDECEC] text-[#C24141] flex items-center justify-center mx-auto mb-4 text-xl font-bold font-admin-mono">
+              !
+            </div>
+            <h2 className="text-[22px] font-admin-heading font-semibold text-[#292521] mb-2">
+              Admin Interface Error
+            </h2>
+            <p className="text-[14px] font-admin-body text-[#6B7280] mb-4">
+              A temporary issue occurred while rendering the dashboard. You can reload the view or reset local demo data.
+            </p>
+            {this.state.error?.message && (
+              <div className="bg-[#FAF7F2] border border-[#E5E7EB] rounded-lg p-3 text-[12px] text-[#651F2B] font-admin-mono text-left mb-6 break-words">
+                {this.state.error.message}
+              </div>
+            )}
+            <div className="flex gap-3 justify-center text-[13px] font-admin-body">
+              <button
+                onClick={() => window.location.reload()}
+                className="px-4 py-2 bg-white border border-gray-300 rounded-xl font-medium hover:bg-gray-50 text-[#292521] shadow-xs"
+              >
+                Reload Page
+              </button>
+              <button
+                onClick={this.handleReset}
+                className="px-4 py-2 bg-[#651F2B] text-white rounded-xl font-semibold hover:bg-[#4E1721] shadow-xs"
+              >
+                Reset Demo State
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
 export default function AdminDashboard() {
   return (
-    <AdminProvider>
-      <AdminDashboardInner />
-    </AdminProvider>
+    <AdminErrorBoundary>
+      <AdminProvider>
+        <AdminDashboardInner />
+      </AdminProvider>
+    </AdminErrorBoundary>
   );
 }

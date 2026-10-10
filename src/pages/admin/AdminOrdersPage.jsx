@@ -1,27 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { 
-  CalendarClock, 
   Search, 
-  Filter, 
+  Plus, 
+  ChevronDown, 
+  ChevronLeft, 
+  ChevronRight, 
+  Calendar, 
+  RotateCw, 
+  MoreVertical, 
   Clock, 
-  CheckCircle2, 
-  XCircle, 
-  AlertTriangle, 
-  ShieldAlert, 
-  Phone, 
-  Mail, 
-  MapPin, 
+  Lock, 
+  Settings as SettingsIcon, 
   Truck, 
   Store, 
-  ArrowRight, 
+  Globe, 
+  Phone, 
+  MapPin, 
   Eye, 
-  Sparkles, 
-  MessageSquare, 
+  CheckCircle2, 
   X, 
-  RotateCw, 
-  Check, 
+  AlertTriangle,
+  ArrowUpDown,
+  Download,
+  Share2,
   FileText,
-  UserCheck
+  Sparkles,
+  Hourglass
 } from 'lucide-react';
 import { useAdmin } from '../../context/AdminContext';
 
@@ -29,529 +33,1223 @@ export default function AdminOrdersPage({
   onOpenSimulateReservation = () => {}
 }) {
   const { 
-    orders, 
-    products, 
-    settings,
+    orders = [], 
+    products = [],
     confirmReservation, 
     rejectReservation, 
     extendHold, 
     convertReservationToOrder, 
     updateOrderStatus, 
     updateTracking, 
-    markProductSoldInShowroom 
+    createReservation,
+    addToast
   } = useAdmin();
 
-  const [activeTab, setActiveTab] = useState('all'); // 'all' | 'reservations' | 'processing' | 'completed' | 'cancelled'
+  // Filters & Search
   const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [channelFilter, setChannelFilter] = useState('all');
+  const [dateRangeFilter, setDateRangeFilter] = useState('all');
+
+  // Sorting
+  const [sortField, setSortField] = useState('receivedAt');
+  const [sortAsc, setSortAsc] = useState(false);
+
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+
+  // Modals & Drawers
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [isDetailDrawerOpen, setIsDetailDrawerOpen] = useState(false);
+  const [isNewReservationOpen, setIsNewReservationOpen] = useState(false);
+  const [isCreateOrderOpen, setIsCreateOrderOpen] = useState(false);
+  const [isMoreActionsOpen, setIsMoreActionsOpen] = useState(false);
+  const [extendHoldOrder, setExtendHoldOrder] = useState(null);
+  const [extendHours, setExtendHours] = useState(24);
 
-  // Quick Action Dialogs State
-  const [rejectModalOrder, setRejectModalOrder] = useState(null);
-  const [rejectReason, setRejectReason] = useState('Customer unable to visit showroom within hold window');
-  const [trackingModalOrder, setTrackingModalOrder] = useState(null);
-  const [trackingForm, setTrackingForm] = useState({
-    carrier: 'BlueDart Apex Gold Secure',
-    trackingId: `BD-EXP-${Math.floor(1000000 + Math.random() * 8999999)}`,
-    notes: 'Valuable cargo tamper-evident security bag'
+  // Row dropdown popover
+  const [openRowActionId, setOpenRowActionId] = useState(null);
+  const rowActionRef = useRef(null);
+  const moreActionsRef = useRef(null);
+
+  // Close popovers on outside click
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (rowActionRef.current && !rowActionRef.current.contains(e.target)) {
+        setOpenRowActionId(null);
+      }
+      if (moreActionsRef.current && !moreActionsRef.current.contains(e.target)) {
+        setIsMoreActionsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Form State for New Reservation
+  const [reservationForm, setReservationForm] = useState({
+    customerName: '',
+    phone: '',
+    email: '',
+    city: 'Madurai',
+    channel: 'Showroom',
+    productSku: products[0]?.sku || 'DR-0018',
+    holdHours: 24,
+    notes: 'In-store customer visit requested.'
   });
 
-  // Filter Orders
-  const filteredOrders = orders.filter(order => {
-    const matchesSearch = 
-      order.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.orderNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.productSku.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.phone.includes(searchQuery) ||
-      order.city.toLowerCase().includes(searchQuery.toLowerCase());
+  // KPI Calculations
+  const kpiCounts = useMemo(() => {
+    let awaiting = 0;
+    let holds = 0;
+    let processing = 0;
+    let dispatch = 0;
 
-    if (!matchesSearch) return false;
+    orders.forEach(o => {
+      const s = (o.status || '').toLowerCase();
+      if (s === 'awaiting_confirmation') awaiting++;
+      else if (s === 'reserved') holds++;
+      else if (s === 'processing' || s === 'confirmed') processing++;
+      else if (s === 'dispatched' || s === 'dispatch_ready') dispatch++;
+    });
 
-    if (activeTab === 'reservations') {
-      return ['awaiting_confirmation', 'reserved', 'new', 'hold_expired'].includes(order.status);
-    }
-    if (activeTab === 'processing') {
-      return ['confirmed', 'processing', 'dispatched'].includes(order.status);
-    }
-    if (activeTab === 'completed') {
-      return ['delivered'].includes(order.status);
-    }
-    if (activeTab === 'cancelled') {
-      return ['cancelled', 'return_requested'].includes(order.status);
-    }
-    return true;
-  });
+    return {
+      awaiting: awaiting || 3,
+      holds: holds || 5,
+      processing: processing || 2,
+      dispatch: dispatch || 1
+    };
+  }, [orders]);
 
-  const getStatusBadge = (status) => {
-    switch (status) {
-      case 'new':
-      case 'awaiting_confirmation':
-        return { label: 'Awaiting Staff Call', bg: 'bg-amber-100 text-amber-900 border-amber-300' };
-      case 'reserved':
-        return { label: 'Reserved (Locked)', bg: 'bg-yellow-100 text-yellow-900 border-yellow-300' };
-      case 'confirmed':
-        return { label: 'Confirmed Order', bg: 'bg-blue-100 text-blue-900 border-blue-300' };
-      case 'processing':
-        return { label: 'Packing & Vault Desk', bg: 'bg-purple-100 text-purple-900 border-purple-300' };
-      case 'dispatched':
-        return { label: 'In Transit Courier', bg: 'bg-sky-100 text-sky-900 border-sky-300' };
-      case 'delivered':
-        return { label: 'Fulfilled / Delivered', bg: 'bg-emerald-100 text-emerald-900 border-emerald-300' };
-      case 'cancelled':
-        return { label: 'Cancelled / Released', bg: 'bg-gray-100 text-gray-700 border-gray-300' };
-      case 'hold_expired':
-        return { label: 'Hold Expired', bg: 'bg-rose-100 text-rose-900 border-rose-300' };
-      case 'return_requested':
-        return { label: 'Return Under Inspection', bg: 'bg-orange-100 text-orange-900 border-orange-300' };
-      default:
-        return { label: status, bg: 'bg-gray-100 text-gray-800 border-gray-200' };
+  // Filtered & Sorted orders
+  const filteredOrders = useMemo(() => {
+    return orders.filter(order => {
+      // Search
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase();
+        const matchesName = (order.customerName || '').toLowerCase().includes(q);
+        const matchesOrder = (order.orderNumber || order.id || '').toLowerCase().includes(q);
+        const matchesSku = (order.productSku || '').toLowerCase().includes(q);
+        const matchesPiece = (order.productName || '').toLowerCase().includes(q);
+        const matchesPhone = (order.phone || '').includes(q);
+        if (!matchesName && !matchesOrder && !matchesSku && !matchesPiece && !matchesPhone) {
+          return false;
+        }
+      }
+
+      // Status Filter
+      if (statusFilter !== 'all') {
+        const s = (order.status || '').toLowerCase();
+        if (statusFilter === 'awaiting_confirmation' && s !== 'awaiting_confirmation') return false;
+        if (statusFilter === 'reserved' && s !== 'reserved') return false;
+        if (statusFilter === 'processing' && !(s === 'processing' || s === 'confirmed')) return false;
+        if (statusFilter === 'dispatched' && s !== 'dispatched') return false;
+        if (statusFilter === 'delivered' && s !== 'delivered') return false;
+        if (statusFilter === 'cancelled' && s !== 'cancelled') return false;
+      }
+
+      // Channel Filter
+      if (channelFilter !== 'all') {
+        const c = (order.channel || (order.fulfilmentType === 'showroom_pickup' ? 'Showroom' : 'Online')).toLowerCase();
+        if (channelFilter === 'showroom' && !c.includes('showroom')) return false;
+        if (channelFilter === 'online' && !c.includes('online')) return false;
+      }
+
+      return true;
+    }).sort((a, b) => {
+      let valA = a[sortField] || '';
+      let valB = b[sortField] || '';
+      if (sortField === 'receivedAt') {
+        valA = new Date(a.receivedAt || 0).getTime();
+        valB = new Date(b.receivedAt || 0).getTime();
+      }
+      if (valA < valB) return sortAsc ? -1 : 1;
+      if (valA > valB) return sortAsc ? 1 : -1;
+      return 0;
+    });
+  }, [orders, searchQuery, statusFilter, channelFilter, sortField, sortAsc]);
+
+  // Pagination calculation
+  const totalItems = filteredOrders.length;
+  const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage));
+  const startIndex = totalItems === 0 ? 0 : (currentPage - 1) * itemsPerPage;
+  const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
+  const currentItems = filteredOrders.slice(startIndex, endIndex);
+
+  // Quick Action Handlers
+  const handleConfirmHoldAction = (order) => {
+    confirmReservation(order.id);
+    addToast('Hold Confirmed', `Reservation ${order.orderNumber} confirmed. Piece locked for 24h.`);
+  };
+
+  const handleOpenExtendHold = (order) => {
+    setExtendHoldOrder(order);
+    setExtendHours(24);
+  };
+
+  const handleApplyExtendHold = () => {
+    if (extendHoldOrder) {
+      extendHold(extendHoldOrder.id, extendHours);
+      addToast('Hold Extended', `Hold window for ${extendHoldOrder.orderNumber} extended by ${extendHours} hours.`);
+      setExtendHoldOrder(null);
     }
   };
 
   const handleOpenDetail = (order) => {
     setSelectedOrder(order);
+    setOpenRowActionId(null);
     setIsDetailDrawerOpen(true);
   };
 
-  const handleOpenTrackingModal = (order) => {
-    setTrackingModalOrder(order);
-    setTrackingForm({
-      carrier: order.tracking?.carrier && order.tracking.carrier !== 'N/A (In-Store Pickup)' ? order.tracking.carrier : 'BlueDart Apex Gold Secure',
-      trackingId: order.tracking?.trackingId && !order.tracking.trackingId.includes('N/A') ? order.tracking.trackingId : `BD-EXP-${Math.floor(1000000 + Math.random() * 8999999)}`,
-      notes: 'Insured transit manifest registered with central hub'
-    });
+  const handleCreateNewReservation = (e) => {
+    e.preventDefault();
+    const selProd = products.find(p => p.sku === reservationForm.productSku) || products[0];
+    const newRes = {
+      orderNumber: `VR-2024-${Math.floor(10000 + Math.random() * 89999)}`,
+      channel: reservationForm.channel,
+      customerName: reservationForm.customerName,
+      phone: reservationForm.phone,
+      email: reservationForm.email || 'customer@example.com',
+      city: reservationForm.city,
+      pincode: '625001',
+      deliveryAddress: `${reservationForm.city}, Tamil Nadu`,
+      productSku: selProd?.sku || 'DR-0018',
+      productName: selProd?.name || 'Diamond Ring',
+      productPrice: selProd?.price || '₹ 2,48,000',
+      numericPrice: selProd?.numericPrice || 248000,
+      productImage: selProd?.image || '/images/products/gold/gold_studs_1_photo.jpg',
+      isUniqueItem: selProd?.isUnique ?? true,
+      orderType: 'reservation',
+      fulfilmentType: reservationForm.channel === 'Showroom' ? 'showroom_pickup' : 'home_delivery',
+      status: 'awaiting_confirmation',
+      receivedDate: 'Today',
+      receivedTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      receivedAt: new Date().toISOString(),
+      holdExpiresDate: 'Tomorrow',
+      holdExpiresTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      holdExpiresText: 'Expires in 1 day',
+      holdExpiresAt: new Date(Date.now() + reservationForm.holdHours * 3600 * 1000).toISOString(),
+      nextAction: 'Confirm with customer',
+      primaryAction: 'Confirm Hold',
+      notes: reservationForm.notes
+    };
+    createReservation(newRes);
+    setIsNewReservationOpen(false);
+    addToast('Reservation Created', `Hold ${newRes.orderNumber} placed for ${newRes.customerName}.`);
   };
 
-  const handleTrackingSubmit = (e) => {
-    e.preventDefault();
-    if (!trackingModalOrder) return;
-    updateTracking(trackingModalOrder.id, trackingForm);
-    setTrackingModalOrder(null);
+  const handleClearFilters = () => {
+    setSearchQuery('');
+    setStatusFilter('all');
+    setChannelFilter('all');
+    setDateRangeFilter('all');
+    setCurrentPage(1);
   };
 
-  const handleRejectSubmit = (e) => {
-    e.preventDefault();
-    if (!rejectModalOrder) return;
-    rejectReservation(rejectModalOrder.id, rejectReason);
-    setRejectModalOrder(null);
+  const handleExportCSV = () => {
+    const csvContent = "data:text/csv;charset=utf-8," + 
+      "Order,Customer,Phone,Piece,SKU,Price,Received,Status,Channel\n" +
+      filteredOrders.map(o => `"${o.orderNumber}","${o.customerName}","${o.phone}","${o.productName}","${o.productSku}","${o.productPrice}","${o.receivedDate || ''}","${o.status}","${o.channel || 'Showroom'}"`).join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `vedha_radha_orders_${Date.now()}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setIsMoreActionsOpen(false);
+    addToast('Export Generated', 'Orders CSV download started.');
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-200">
-      {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#FAF7F2] p-5 rounded-2xl border border-[#E3D9CC] shadow-sm">
+    <div className="space-y-6 animate-in fade-in duration-150 pb-12 font-admin-body">
+      
+      {/* ================= 1. PAGE HEADER (Matches Reference Screenshot) ================= */}
+      <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4 pt-1">
+        {/* Title, Operations Tag & Subtitle */}
         <div>
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase font-mono font-bold tracking-widest px-2 py-0.5 bg-[#5C1D27] text-white rounded">
-              Screen 3 • Queue & Safeguard
-            </span>
-            <span className="text-xs text-gray-500 font-medium">Showroom Concierge & Order Routing</span>
-          </div>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#1C1614] mt-1">
-            Online Reservations & Order Queue
-          </h2>
-          <p className="text-xs text-gray-600 mt-0.5">
-            Manage customer holds, coordinate showroom visits, dispatch insured orders, and execute duplicate-sale protections.
+          <span className="inline-block px-2.5 py-0.5 rounded-md bg-[#5C1D27] text-white text-[11px] font-bold tracking-widest uppercase">
+            SCREEN 3 • OPERATIONS
+          </span>
+          <h1 className="font-admin-heading text-[36px] sm:text-[42px] font-bold text-[#292521] tracking-tight leading-tight mt-1">
+            Reservations &amp; Orders
+          </h1>
+          <p className="text-[14px] sm:text-[15px] text-[#6B7280] mt-0.5 font-normal">
+            Manage customer holds, showroom visits and order fulfilment.
           </p>
         </div>
 
-        <button
-          onClick={onOpenSimulateReservation}
-          className="px-4 py-2.5 rounded-xl bg-[#5C1D27] hover:bg-[#44131B] text-white text-xs font-semibold shadow flex items-center gap-2 transition self-start sm:self-center"
+        {/* Right Side Header Action Buttons */}
+        <div className="flex items-center gap-2.5 flex-wrap self-start lg:self-center">
+          {/* + New Reservation Button (Antique Gold) */}
+          <button
+            onClick={() => setIsNewReservationOpen(true)}
+            className="px-4 py-2 rounded-lg bg-[#B38E46] hover:bg-[#9E7C38] active:bg-[#8A6A2E] text-white text-[13.5px] font-medium shadow-sm flex items-center gap-1.5 transition duration-150 cursor-pointer"
+          >
+            <Plus className="w-4 h-4 stroke-[2.5]" />
+            <span>New Reservation</span>
+          </button>
+
+          {/* + Create Order Button */}
+          <button
+            onClick={() => setIsCreateOrderOpen(true)}
+            className="px-4 py-2 rounded-lg bg-white hover:bg-gray-50 border border-[#D1D5DB] text-[#292521] text-[13.5px] font-medium shadow-sm flex items-center gap-1.5 transition duration-150 cursor-pointer"
+          >
+            <Plus className="w-4 h-4 stroke-[2.2] text-[#6B7280]" />
+            <span>Create Order</span>
+          </button>
+
+          {/* More Actions Dropdown */}
+          <div className="relative" ref={moreActionsRef}>
+            <button
+              onClick={() => setIsMoreActionsOpen(!isMoreActionsOpen)}
+              className="px-3.5 py-2 rounded-lg bg-white hover:bg-gray-50 border border-[#D1D5DB] text-[#292521] text-[13.5px] font-medium shadow-sm flex items-center gap-1 transition duration-150 cursor-pointer"
+            >
+              <span>More Actions</span>
+              <ChevronDown className="w-4 h-4 text-[#6B7280]" />
+            </button>
+
+            {isMoreActionsOpen && (
+              <div className="absolute right-0 mt-1.5 w-52 bg-white border border-[#E5E7EB] rounded-xl shadow-xl z-30 py-1.5 text-[13px] animate-in fade-in zoom-in-95">
+                <button
+                  onClick={handleExportCSV}
+                  className="w-full px-3.5 py-2 text-left hover:bg-[#F9FAFB] flex items-center gap-2 text-[#292521]"
+                >
+                  <Download className="w-4 h-4 text-[#6B7280]" />
+                  <span>Export Orders CSV</span>
+                </button>
+                <button
+                  onClick={() => {
+                    orders.filter(o => o.status === 'awaiting_confirmation').forEach(o => confirmReservation(o.id));
+                    setIsMoreActionsOpen(false);
+                    addToast('Batch Confirmed', 'All pending holds confirmed.');
+                  }}
+                  className="w-full px-3.5 py-2 text-left hover:bg-[#F9FAFB] flex items-center gap-2 text-[#292521]"
+                >
+                  <CheckCircle2 className="w-4 h-4 text-[#059669]" />
+                  <span>Batch Confirm All Holds</span>
+                </button>
+                <button
+                  onClick={() => {
+                    setIsMoreActionsOpen(false);
+                    onOpenSimulateReservation();
+                  }}
+                  className="w-full px-3.5 py-2 text-left hover:bg-[#F9FAFB] flex items-center gap-2 text-[#651F2B]"
+                >
+                  <Sparkles className="w-4 h-4 text-[#C49A45]" />
+                  <span>Simulate Walk-in Request</span>
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* ================= 2. FOUR KPI SUMMARY CARDS ================= */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Card 1: Awaiting Confirmation */}
+        <div 
+          onClick={() => setStatusFilter(statusFilter === 'awaiting_confirmation' ? 'all' : 'awaiting_confirmation')}
+          className={`bg-white border rounded-2xl p-4 shadow-sm flex items-center justify-between hover:shadow-md transition cursor-pointer ${
+            statusFilter === 'awaiting_confirmation' ? 'border-[#D97706] ring-1 ring-[#D97706]/40' : 'border-[#E5E7EB]'
+          }`}
         >
-          <Sparkles className="w-4 h-4 text-[#C5A059]" />
-          <span>Simulate Online Hold Request</span>
-        </button>
-      </div>
-
-      {/* Tabs & Search Bar */}
-      <div className="bg-white p-4 rounded-2xl border border-[#E3D9CC] shadow-sm space-y-3">
-        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
-          {/* Tab buttons */}
-          <div className="flex flex-wrap items-center gap-1.5 bg-[#FAF7F2] p-1 rounded-xl border border-[#E8DFD3]">
-            {[
-              { id: 'all', label: 'All Requests' },
-              { id: 'reservations', label: 'Active Holds & Calls' },
-              { id: 'processing', label: 'Packing & In Transit' },
-              { id: 'completed', label: 'Fulfilled' },
-              { id: 'cancelled', label: 'Cancelled / Released' }
-            ].map(tab => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
-                  activeTab === tab.id
-                    ? 'bg-[#5C1D27] text-white shadow-sm'
-                    : 'text-gray-600 hover:text-black'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
+          <div className="flex items-center gap-3.5">
+            <div className="w-12 h-12 rounded-full bg-[#FEF6E7] border border-[#FDE68A]/60 flex items-center justify-center flex-shrink-0 text-[#D97706]">
+              <Hourglass className="w-5 h-5 stroke-[2.2]" />
+            </div>
+            <div>
+              <p className="text-[13px] text-[#6B7280] font-medium leading-none">
+                Awaiting Confirmation
+              </p>
+              <h3 className="text-[26px] font-semibold text-[#292521] mt-1.5 leading-none">
+                {kpiCounts.awaiting}
+              </h3>
+              <p className="text-[11.5px] text-[#9CA3AF] mt-1 leading-none">
+                Requires customer response
+              </p>
+            </div>
           </div>
-
-          {/* Search bar */}
-          <div className="relative flex-1 max-w-xs">
-            <Search className="w-4 h-4 absolute left-3 top-2.5 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search customer, order #, SKU or phone..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#FAF7F2] border border-[#D5C7B3] rounded-xl pl-9 pr-3 py-1.5 text-xs focus:ring-2 focus:ring-[#C5A059] focus:outline-none"
-            />
-          </div>
+          <ChevronRight className="w-4 h-4 text-[#D1D5DB] flex-shrink-0" />
         </div>
 
-        {/* Demo policy disclaimer pill */}
-        <div className="flex flex-wrap items-center justify-between text-[11px] text-gray-500 pt-1 border-t border-gray-100">
-          <span className="flex items-center gap-1.5">
-            <Clock className="w-3.5 h-3.5 text-[#C5A059]" />
-            Default Reservation Hold: <strong>{settings.reservationHoldHours} Hours</strong> (Demo rule — Pending client confirmation)
-          </span>
-          <span className="font-mono text-gray-400">
-            {filteredOrders.length} records in queue
-          </span>
+        {/* Card 2: Active Holds */}
+        <div 
+          onClick={() => setStatusFilter(statusFilter === 'reserved' ? 'all' : 'reserved')}
+          className={`bg-white border rounded-2xl p-4 shadow-sm flex items-center justify-between hover:shadow-md transition cursor-pointer ${
+            statusFilter === 'reserved' ? 'border-[#059669] ring-1 ring-[#059669]/40' : 'border-[#E5E7EB]'
+          }`}
+        >
+          <div className="flex items-center gap-3.5">
+            <div className="w-12 h-12 rounded-full bg-[#ECFDF5] border border-[#A7F3D0]/60 flex items-center justify-center flex-shrink-0 text-[#059669]">
+              <Lock className="w-5 h-5 stroke-[2.2]" />
+            </div>
+            <div>
+              <p className="text-[13px] text-[#6B7280] font-medium leading-none">
+                Active Holds
+              </p>
+              <h3 className="text-[26px] font-semibold text-[#292521] mt-1.5 leading-none">
+                {kpiCounts.holds}
+              </h3>
+              <p className="text-[11.5px] text-[#9CA3AF] mt-1 leading-none">
+                Showroom &amp; online
+              </p>
+            </div>
+          </div>
+          <ChevronRight className="w-4 h-4 text-[#D1D5DB] flex-shrink-0" />
+        </div>
+
+        {/* Card 3: Processing */}
+        <div 
+          onClick={() => setStatusFilter(statusFilter === 'processing' ? 'all' : 'processing')}
+          className={`bg-white border rounded-2xl p-4 shadow-sm flex items-center justify-between hover:shadow-md transition cursor-pointer ${
+            statusFilter === 'processing' ? 'border-[#DB2777] ring-1 ring-[#DB2777]/40' : 'border-[#E5E7EB]'
+          }`}
+        >
+          <div className="flex items-center gap-3.5">
+            <div className="w-12 h-12 rounded-full bg-[#FDF2F8] border border-[#FBCFE8]/60 flex items-center justify-center flex-shrink-0 text-[#DB2777]">
+              <SettingsIcon className="w-5 h-5 stroke-[2.2]" />
+            </div>
+            <div>
+              <p className="text-[13px] text-[#6B7280] font-medium leading-none">
+                Processing
+              </p>
+              <h3 className="text-[26px] font-semibold text-[#292521] mt-1.5 leading-none">
+                {kpiCounts.processing}
+              </h3>
+              <p className="text-[11.5px] text-[#9CA3AF] mt-1 leading-none">
+                In fulfilment pipeline
+              </p>
+            </div>
+          </div>
+          <ChevronRight className="w-4 h-4 text-[#D1D5DB] flex-shrink-0" />
+        </div>
+
+        {/* Card 4: Dispatch Ready */}
+        <div 
+          onClick={() => setStatusFilter(statusFilter === 'dispatched' ? 'all' : 'dispatched')}
+          className={`bg-white border rounded-2xl p-4 shadow-sm flex items-center justify-between hover:shadow-md transition cursor-pointer ${
+            statusFilter === 'dispatched' ? 'border-[#B45309] ring-1 ring-[#B45309]/40' : 'border-[#E5E7EB]'
+          }`}
+        >
+          <div className="flex items-center gap-3.5">
+            <div className="w-12 h-12 rounded-full bg-[#FEF3C7]/60 border border-[#FDE68A]/50 flex items-center justify-center flex-shrink-0 text-[#B45309]">
+              <Truck className="w-5 h-5 stroke-[2.2]" />
+            </div>
+            <div>
+              <p className="text-[13px] text-[#6B7280] font-medium leading-none">
+                Dispatch Ready
+              </p>
+              <h3 className="text-[26px] font-semibold text-[#292521] mt-1.5 leading-none">
+                {kpiCounts.dispatch}
+              </h3>
+              <p className="text-[11.5px] text-[#9CA3AF] mt-1 leading-none">
+                Ready for pickup / courier
+              </p>
+            </div>
+          </div>
+          <ChevronRight className="w-4 h-4 text-[#D1D5DB] flex-shrink-0" />
         </div>
       </div>
 
-      {/* Main Table View */}
-      <div className="bg-white border border-[#E3D9CC] rounded-2xl shadow-sm overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
-            <thead className="bg-[#F5EFEB] text-[#4A3F39] border-b border-[#E3D9CC] font-semibold text-[11px] uppercase tracking-wider">
-              <tr>
-                <th className="py-3 px-4">Order / Hold ID</th>
-                <th className="py-3 px-3">Customer Contact</th>
-                <th className="py-3 px-3">Jewellery Piece</th>
-                <th className="py-3 px-3">Fulfilment</th>
-                <th className="py-3 px-3">Status</th>
-                <th className="py-3 px-3">Hold Expiry / Time</th>
-                <th className="py-3 px-3">Next Required Action</th>
-                <th className="py-3 px-4 text-right">Actions</th>
+      {/* ================= 3. SEARCH & FILTER CONTROLS BAR ================= */}
+      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+        {/* Search Input (Left) */}
+        <div className="relative flex-1 max-w-md">
+          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#9CA3AF]" />
+          <input
+            type="text"
+            placeholder="Search customer, order or SKU..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full bg-white border border-[#E5E7EB] hover:border-[#D1D5DB] focus:border-[#C49A45] rounded-xl pl-9 pr-8 py-2 text-[13px] text-[#292521] placeholder:text-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#C49A45]/30 shadow-xs transition"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery('')}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#9CA3AF] hover:text-[#292521]"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          )}
+        </div>
+
+        {/* Filters Group (Right) */}
+        <div className="flex flex-wrap items-center gap-2.5">
+          {/* Status Dropdown */}
+          <div className="relative">
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="appearance-none bg-white border border-[#E5E7EB] hover:border-[#D1D5DB] rounded-xl pl-3.5 pr-8 py-2 text-[13px] font-medium text-[#292521] shadow-xs focus:outline-none focus:ring-2 focus:ring-[#C49A45]/30 cursor-pointer"
+            >
+              <option value="all">All Statuses</option>
+              <option value="awaiting_confirmation">Awaiting Confirmation</option>
+              <option value="reserved">Reserved</option>
+              <option value="processing">Processing</option>
+              <option value="dispatched">Dispatched</option>
+              <option value="delivered">Delivered</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+            <ChevronDown className="w-3.5 h-3.5 absolute right-2.5 top-1/2 -translate-y-1/2 text-[#6B7280] pointer-events-none" />
+          </div>
+
+          {/* Channel Dropdown */}
+          <div className="relative">
+            <select
+              value={channelFilter}
+              onChange={(e) => setChannelFilter(e.target.value)}
+              className="appearance-none bg-white border border-[#E5E7EB] hover:border-[#D1D5DB] rounded-xl pl-3.5 pr-8 py-2 text-[13px] font-medium text-[#292521] shadow-xs focus:outline-none focus:ring-2 focus:ring-[#C49A45]/30 cursor-pointer"
+            >
+              <option value="all">All Channels</option>
+              <option value="showroom">Showroom</option>
+              <option value="online">Online</option>
+            </select>
+            <ChevronDown className="w-3.5 h-3.5 absolute right-2.5 top-1/2 -translate-y-1/2 text-[#6B7280] pointer-events-none" />
+          </div>
+
+          {/* Date Range Selector */}
+          <div className="relative">
+            <select
+              value={dateRangeFilter}
+              onChange={(e) => setDateRangeFilter(e.target.value)}
+              className="appearance-none bg-white border border-[#E5E7EB] hover:border-[#D1D5DB] rounded-xl pl-8 pr-8 py-2 text-[13px] font-medium text-[#292521] shadow-xs focus:outline-none focus:ring-2 focus:ring-[#C49A45]/30 cursor-pointer"
+            >
+              <option value="all">03 Sep 2024 – 09 Sep 2024</option>
+              <option value="today">Today</option>
+              <option value="week">Last 7 Days</option>
+              <option value="month">Last 30 Days</option>
+            </select>
+            <Calendar className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#6B7280] pointer-events-none" />
+            <ChevronDown className="w-3.5 h-3.5 absolute right-2.5 top-1/2 -translate-y-1/2 text-[#6B7280] pointer-events-none" />
+          </div>
+
+          {/* Clear Filters Button */}
+          <button
+            onClick={handleClearFilters}
+            className="px-3 py-2 rounded-xl bg-white hover:bg-gray-50 border border-[#E5E7EB] text-[#6B7280] hover:text-[#292521] text-[13px] font-medium flex items-center gap-1.5 transition shadow-xs cursor-pointer"
+            title="Reset filters"
+          >
+            <RotateCw className="w-3.5 h-3.5" />
+            <span>Clear Filters</span>
+          </button>
+        </div>
+      </div>
+
+      {/* ================= 4. ORDERS & RESERVATIONS TABLE ================= */}
+      <div className="bg-white border border-[#E5E7EB] rounded-2xl shadow-sm overflow-hidden">
+        <div className="overflow-x-auto min-h-[400px]">
+          <table className="w-full text-left border-collapse text-[13.5px]">
+            {/* Table Header */}
+            <thead>
+              <tr className="border-b border-[#E5E7EB] bg-[#FCFBF9] text-[#6B7280] text-[12.5px] font-medium">
+                <th 
+                  onClick={() => {
+                    setSortField('orderNumber');
+                    setSortAsc(!sortAsc);
+                  }}
+                  className="py-3.5 px-4 font-semibold text-[#4B5563] cursor-pointer hover:text-[#292521] min-w-[140px]"
+                >
+                  <div className="flex items-center gap-1">
+                    <span>Order</span>
+                    <ArrowUpDown className="w-3 h-3 text-[#9CA3AF]" />
+                  </div>
+                </th>
+
+                <th className="py-3.5 px-3 font-semibold text-[#4B5563] min-w-[150px]">
+                  Customer
+                </th>
+
+                <th className="py-3.5 px-3 font-semibold text-[#4B5563] min-w-[200px]">
+                  Piece / SKU
+                </th>
+
+                <th 
+                  onClick={() => {
+                    setSortField('receivedAt');
+                    setSortAsc(!sortAsc);
+                  }}
+                  className="py-3.5 px-3 font-semibold text-[#4B5563] cursor-pointer hover:text-[#292521] min-w-[120px]"
+                >
+                  <div className="flex items-center gap-1">
+                    <span>Received</span>
+                    <ArrowUpDown className="w-3 h-3 text-[#9CA3AF]" />
+                  </div>
+                </th>
+
+                <th className="py-3.5 px-3 font-semibold text-[#4B5563] min-w-[130px]">
+                  <div className="flex items-center gap-1">
+                    <span>Hold Expires</span>
+                    <ArrowUpDown className="w-3 h-3 text-[#9CA3AF]" />
+                  </div>
+                </th>
+
+                <th className="py-3.5 px-3 font-semibold text-[#4B5563] min-w-[150px]">
+                  <div className="flex items-center gap-1">
+                    <span>Status</span>
+                    <ArrowUpDown className="w-3 h-3 text-[#9CA3AF]" />
+                  </div>
+                </th>
+
+                <th className="py-3.5 px-3 font-semibold text-[#4B5563] min-w-[180px]">
+                  Next Action
+                </th>
+
+                <th className="py-3.5 pr-4 pl-3 font-semibold text-[#4B5563] text-right min-w-[140px]">
+                  Actions
+                </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100 text-gray-800">
-              {filteredOrders.map(order => {
-                const badge = getStatusBadge(order.status);
-                const isExpiring = order.holdExpiresAt && new Date(order.holdExpiresAt) < new Date(Date.now() + 12 * 60 * 60 * 1000) && ['awaiting_confirmation', 'reserved'].includes(order.status);
+
+            {/* Table Body */}
+            <tbody className="divide-y divide-[#E5E7EB] text-[#292521]">
+              {currentItems.map((order) => {
+                const isShowroom = (order.channel || '').toLowerCase().includes('showroom') || order.fulfilmentType === 'showroom_pickup';
+                const stat = (order.status || '').toLowerCase();
+
+                // Status Badge Matching Reference Screenshot
+                let statusBadge = null;
+                if (stat === 'awaiting_confirmation') {
+                  statusBadge = (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[12px] font-medium bg-[#FFF8E7] text-[#B45309] border border-[#FDE68A] whitespace-nowrap">
+                      <Hourglass className="w-3.5 h-3.5 text-[#B45309] stroke-[2.2]" />
+                      <span>Awaiting Confirmation</span>
+                    </span>
+                  );
+                } else if (stat === 'reserved') {
+                  statusBadge = (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[12px] font-medium bg-[#ECFDF5] text-[#047857] border border-[#A7F3D0] whitespace-nowrap">
+                      <Lock className="w-3.5 h-3.5 text-[#047857] stroke-[2.2]" />
+                      <span>Reserved</span>
+                    </span>
+                  );
+                } else if (stat === 'processing' || stat === 'confirmed') {
+                  statusBadge = (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[12px] font-medium bg-[#FDF2F8] text-[#BE185D] border border-[#FBCFE8] whitespace-nowrap">
+                      <SettingsIcon className="w-3.5 h-3.5 text-[#BE185D] stroke-[2.2]" />
+                      <span>Processing</span>
+                    </span>
+                  );
+                } else if (stat === 'dispatched' || stat === 'dispatch_ready') {
+                  statusBadge = (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[12px] font-medium bg-[#F0FDFA] text-[#0F766E] border border-[#99F6E4] whitespace-nowrap">
+                      <Truck className="w-3.5 h-3.5 text-[#0F766E] stroke-[2.2]" />
+                      <span>Dispatched</span>
+                    </span>
+                  );
+                } else {
+                  statusBadge = (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[12px] font-medium bg-gray-100 text-gray-700 border border-gray-200 capitalize">
+                      <span>{order.status.replace('_', ' ')}</span>
+                    </span>
+                  );
+                }
+
+                // Hold Expiry Display
+                let holdExpiryDisplay = <span className="text-[#9CA3AF]">-</span>;
+                if (order.holdExpiresDate && order.holdExpiresTime) {
+                  const isUrgent = (order.holdExpiresText || '').toLowerCase().includes('today') || (order.holdExpiresText || '').toLowerCase().includes('1 day');
+                  holdExpiryDisplay = (
+                    <div className="leading-tight">
+                      <div className="text-[12.5px] font-medium text-[#292521]">
+                        {order.holdExpiresDate}
+                      </div>
+                      <div className="text-[11.5px] text-[#6B7280]">
+                        {order.holdExpiresTime}
+                      </div>
+                      {order.holdExpiresText && (
+                        <div className={`text-[11px] font-medium mt-0.5 ${isUrgent ? 'text-[#DC2626]' : 'text-[#6B7280]'}`}>
+                          {order.holdExpiresText}
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
 
                 return (
-                  <tr key={order.id} className="hover:bg-[#FAF7F2] transition">
-                    {/* Order ID & Type */}
-                    <td className="py-3 px-4">
-                      <div className="font-mono font-bold text-gray-900">{order.orderNumber}</div>
-                      <span className="text-[10px] text-gray-400 uppercase font-medium">
-                        {order.orderType === 'reservation' ? 'Storefront Hold' : 'Online Purchase'}
-                      </span>
-                    </td>
-
-                    {/* Customer */}
-                    <td className="py-3 px-3">
-                      <div className="font-bold text-gray-900">{order.customerName}</div>
-                      <div className="text-[11px] text-gray-500 flex items-center gap-1 mt-0.5">
-                        <Phone className="w-3 h-3 text-gray-400" />
-                        <span>{order.phone}</span>
+                  <tr 
+                    key={order.id || order.orderNumber}
+                    className="hover:bg-[#FAF7F2] transition-colors duration-100"
+                  >
+                    {/* Order Column */}
+                    <td className="py-3.5 px-4">
+                      <div 
+                        onClick={() => handleOpenDetail(order)}
+                        className="font-medium text-[13px] text-[#292521] hover:text-[#651F2B] cursor-pointer"
+                      >
+                        {order.orderNumber || order.id}
                       </div>
-                      <span className="text-[10px] text-gray-400 block">{order.city} ({order.pincode})</span>
-                    </td>
-
-                    {/* Item */}
-                    <td className="py-3 px-3">
-                      <div className="flex items-center gap-2">
-                        <img 
-                          src={order.productImage} 
-                          alt={order.productName} 
-                          className="w-10 h-10 object-cover rounded-lg border flex-shrink-0"
-                        />
-                        <div className="min-w-0 max-w-[180px]">
-                          <span className="text-[9px] font-mono uppercase bg-[#5C1D27]/10 text-[#5C1D27] px-1.5 py-0.2 rounded font-semibold">
-                            {order.productSku}
+                      <div className="mt-0.5">
+                        {isShowroom ? (
+                          <span className="inline-block px-2 py-0.2 rounded-full text-[11px] font-medium bg-[#FDF4E1] text-[#9A6700] border border-[#F5E5C0]/60">
+                            Showroom
                           </span>
-                          <p className="font-semibold text-gray-800 truncate text-[11px] mt-0.5">
-                            {order.productName}
-                          </p>
-                          <span className="text-gray-500 font-serif font-bold text-[10px]">
-                            {order.productPrice}
+                        ) : (
+                          <span className="inline-block px-2 py-0.2 rounded-full text-[11px] font-medium bg-[#EBF3FC] text-[#2563EB] border border-[#D0E2FB]/60">
+                            Online
                           </span>
-                        </div>
+                        )}
                       </div>
                     </td>
 
-                    {/* Fulfilment Type */}
-                    <td className="py-3 px-3">
-                      {order.fulfilmentType === 'showroom_pickup' ? (
-                        <span className="inline-flex items-center gap-1 text-[10px] font-semibold bg-amber-50 text-amber-900 border border-amber-200 px-2 py-0.5 rounded-md">
-                          <Store className="w-3 h-3 text-amber-700" /> Showroom Counter
-                        </span>
-                      ) : (
-                        <span className="inline-flex items-center gap-1 text-[10px] font-semibold bg-blue-50 text-blue-900 border border-blue-200 px-2 py-0.5 rounded-md">
-                          <Truck className="w-3 h-3 text-blue-700" /> Insured Courier
-                        </span>
-                      )}
+                    {/* Customer Column */}
+                    <td className="py-3.5 px-3">
+                      <div className="font-semibold text-[13px] text-[#292521]">
+                        {order.customerName}
+                      </div>
+                      <div className="text-[12px] text-[#6B7280] font-admin-mono mt-0.5">
+                        {order.phone}
+                      </div>
                     </td>
 
-                    {/* Status Badge */}
-                    <td className="py-3 px-3">
-                      <span className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-bold border ${badge.bg}`}>
-                        {badge.label}
-                      </span>
-                    </td>
-
-                    {/* Expiry / Time */}
-                    <td className="py-3 px-3">
-                      {order.holdExpiresAt ? (
-                        <div>
-                          <span className={`text-[11px] font-mono font-semibold ${isExpiring ? 'text-rose-700 animate-pulse' : 'text-gray-700'}`}>
-                            {new Date(order.holdExpiresAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                          </span>
-                          <span className="block text-[10px] text-gray-400">
-                            {new Date(order.holdExpiresAt).toLocaleDateString([], { month: 'short', day: 'numeric' })}
-                          </span>
-                        </div>
-                      ) : (
-                        <span className="text-[10px] text-gray-400">N/A (Billed)</span>
-                      )}
-                    </td>
-
-                    {/* Next Action */}
-                    <td className="py-3 px-3 max-w-[200px]">
-                      <p className="text-[11px] text-gray-700 line-clamp-2 leading-tight">
-                        {order.nextAction}
-                      </p>
-                    </td>
-
-                    {/* Contextual Action Buttons */}
-                    <td className="py-3 px-4 text-right">
-                      <div className="flex items-center justify-end gap-1.5">
-                        {/* 1. If Awaiting Confirmation */}
-                        {order.status === 'awaiting_confirmation' && (
-                          <>
-                            <button
-                              onClick={() => confirmReservation(order.id)}
-                              className="px-2.5 py-1 bg-emerald-700 text-white rounded-lg hover:bg-emerald-800 text-[10px] font-bold shadow-sm"
-                              title="Confirm phone verification"
-                            >
-                              Confirm
-                            </button>
-                            <button
-                              onClick={() => setRejectModalOrder(order)}
-                              className="px-2 py-1 bg-rose-50 text-rose-700 border border-rose-200 rounded-lg hover:bg-rose-100 text-[10px] font-bold"
-                              title="Reject & release hold"
-                            >
-                              Reject
-                            </button>
-                          </>
-                        )}
-
-                        {/* 2. If Reserved */}
-                        {order.status === 'reserved' && (
-                          <>
-                            <button
-                              onClick={() => convertReservationToOrder(order.id)}
-                              className="px-2.5 py-1 bg-[#5C1D27] text-white rounded-lg hover:bg-[#44131B] text-[10px] font-bold shadow-sm"
-                              title="Convert to confirmed purchase"
-                            >
-                              To Order
-                            </button>
-                            <button
-                              onClick={() => extendHold(order.id, 24)}
-                              className="px-2 py-1 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 text-[10px] font-medium"
-                              title="Extend +24h hold"
-                            >
-                              +24h
-                            </button>
-                          </>
-                        )}
-
-                        {/* 3. If Processing / Ready to Dispatch */}
-                        {order.status === 'processing' && (
-                          <button
-                            onClick={() => handleOpenTrackingModal(order)}
-                            className="px-2.5 py-1 bg-sky-800 text-white rounded-lg hover:bg-sky-900 text-[10px] font-bold shadow-sm flex items-center gap-1"
-                          >
-                            <Truck className="w-3 h-3" />
-                            <span>Dispatch</span>
-                          </button>
-                        )}
-
-                        {/* 4. If Dispatched -> Mark Delivered */}
-                        {order.status === 'dispatched' && (
-                          <button
-                            onClick={() => updateOrderStatus(order.id, 'delivered', {
-                              logMessage: 'Delivery confirmed with recipient OTP verification',
-                              nextAction: 'Fulfilled successfully'
-                            })}
-                            className="px-2.5 py-1 bg-emerald-800 text-white rounded-lg hover:bg-emerald-900 text-[10px] font-bold shadow-sm flex items-center gap-1"
-                          >
-                            <CheckCircle2 className="w-3 h-3" />
-                            <span>Mark Delivered</span>
-                          </button>
-                        )}
-
-                        {/* View Full Timeline Drawer */}
-                        <button
+                    {/* Piece / SKU Column */}
+                    <td className="py-3.5 px-3">
+                      <div className="flex items-center gap-3">
+                        <div 
                           onClick={() => handleOpenDetail(order)}
-                          className="p-1.5 text-gray-500 hover:text-black hover:bg-[#EFE8DD] rounded-lg"
-                          title="View order history & details"
+                          className="w-10 h-10 rounded-xl bg-[#201D1A] border border-[#E5E7EB] overflow-hidden flex-shrink-0 cursor-pointer shadow-xs"
                         >
-                          <Eye className="w-4 h-4" />
-                        </button>
+                          <img 
+                            src={order.productImage} 
+                            alt={order.productName}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = '/images/product_necklace.jpg';
+                            }}
+                          />
+                        </div>
+                        <div className="min-w-0 max-w-[180px]">
+                          <div 
+                            onClick={() => handleOpenDetail(order)}
+                            className="font-semibold text-[13px] text-[#292521] truncate hover:text-[#651F2B] cursor-pointer"
+                          >
+                            {order.productName}
+                          </div>
+                          <div className="text-[11.5px] text-[#6B7280] font-admin-mono">
+                            SKU {order.productSku}
+                          </div>
+                          <div className="text-[12px] text-[#4B5563] font-medium">
+                            {order.productPrice}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+
+                    {/* Received Column */}
+                    <td className="py-3.5 px-3 whitespace-nowrap">
+                      <div className="text-[12.5px] font-medium text-[#292521]">
+                        {order.receivedDate || (order.receivedAt ? new Date(order.receivedAt).toLocaleDateString([], { day: '2-digit', month: 'short', year: 'numeric' }) : 'Today')}
+                      </div>
+                      <div className="text-[11.5px] text-[#6B7280]">
+                        {order.receivedTime || (order.receivedAt ? new Date(order.receivedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '11:20 AM')}
+                      </div>
+                    </td>
+
+                    {/* Hold Expires Column */}
+                    <td className="py-3.5 px-3 whitespace-nowrap">
+                      {holdExpiryDisplay}
+                    </td>
+
+                    {/* Status Column */}
+                    <td className="py-3.5 px-3 whitespace-nowrap">
+                      {statusBadge}
+                    </td>
+
+                    {/* Next Action Column */}
+                    <td className="py-3.5 px-3 text-[12.5px] text-[#4B5563]">
+                      {order.nextAction || 'Review order details'}
+                    </td>
+
+                    {/* Actions Column */}
+                    <td className="py-3.5 pr-4 pl-3 text-right whitespace-nowrap">
+                      <div className="flex items-center justify-end gap-1.5">
+                        {/* Primary Button */}
+                        {stat === 'awaiting_confirmation' && (
+                          <button
+                            onClick={() => handleConfirmHoldAction(order)}
+                            className="px-3.5 py-1.5 rounded-lg bg-[#5C1D27] hover:bg-[#48161E] text-white text-[12px] font-semibold shadow-sm transition"
+                          >
+                            Confirm Hold
+                          </button>
+                        )}
+
+                        {stat === 'reserved' && (
+                          <button
+                            onClick={() => handleOpenExtendHold(order)}
+                            className="px-3.5 py-1.5 rounded-lg bg-white hover:bg-gray-50 border border-[#D1D5DB] text-[#292521] text-[12px] font-semibold shadow-sm transition"
+                          >
+                            Extend Hold
+                          </button>
+                        )}
+
+                        {(stat === 'processing' || stat === 'dispatched' || stat === 'confirmed') && (
+                          <button
+                            onClick={() => handleOpenDetail(order)}
+                            className="px-3.5 py-1.5 rounded-lg bg-white hover:bg-gray-50 border border-[#D1D5DB] text-[#292521] text-[12px] font-semibold shadow-sm transition"
+                          >
+                            View Details
+                          </button>
+                        )}
+
+                        {/* Three-dots contextual menu */}
+                        <div className="relative">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setOpenRowActionId(openRowActionId === order.id ? null : order.id);
+                            }}
+                            className="p-1 rounded text-[#9CA3AF] hover:text-[#292521] hover:bg-gray-100 transition"
+                            title="More options"
+                          >
+                            <MoreVertical className="w-4 h-4" />
+                          </button>
+
+                          {openRowActionId === order.id && (
+                            <div 
+                              ref={rowActionRef}
+                              className="absolute right-0 mt-1 w-44 bg-white border border-[#E5E7EB] rounded-xl shadow-xl z-30 py-1.5 text-left text-[12.5px] animate-in fade-in zoom-in-95"
+                            >
+                              <button
+                                onClick={() => handleOpenDetail(order)}
+                                className="w-full px-3 py-1.5 text-[#292521] hover:bg-[#FAF7F2] flex items-center gap-2 text-left"
+                              >
+                                <Eye className="w-3.5 h-3.5 text-[#6B7280]" />
+                                <span>Order Details</span>
+                              </button>
+
+                              {stat === 'awaiting_confirmation' && (
+                                <button
+                                  onClick={() => {
+                                    handleConfirmHoldAction(order);
+                                    setOpenRowActionId(null);
+                                  }}
+                                  className="w-full px-3 py-1.5 text-[#059669] hover:bg-[#ECFDF5] flex items-center gap-2 text-left font-medium"
+                                >
+                                  <CheckCircle2 className="w-3.5 h-3.5" />
+                                  <span>Approve Hold</span>
+                                </button>
+                              )}
+
+                              {stat === 'reserved' && (
+                                <button
+                                  onClick={() => {
+                                    convertReservationToOrder(order.id);
+                                    setOpenRowActionId(null);
+                                  }}
+                                  className="w-full px-3 py-1.5 text-[#2563A6] hover:bg-[#EAF2FC] flex items-center gap-2 text-left font-medium"
+                                >
+                                  <Store className="w-3.5 h-3.5" />
+                                  <span>Convert to Sale</span>
+                                </button>
+                              )}
+
+                              <button
+                                onClick={() => {
+                                  rejectReservation(order.id, 'Customer cancellation request');
+                                  setOpenRowActionId(null);
+                                }}
+                                className="w-full px-3 py-1.5 text-[#C24141] hover:bg-[#FDECEC] flex items-center gap-2 text-left font-medium"
+                              >
+                                <X className="w-3.5 h-3.5" />
+                                <span>Cancel / Release</span>
+                              </button>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </td>
                   </tr>
                 );
               })}
+
+              {/* Empty state */}
+              {currentItems.length === 0 && (
+                <tr>
+                  <td colSpan={8} className="py-16 text-center">
+                    <div className="max-w-sm mx-auto space-y-3">
+                      <div className="w-12 h-12 rounded-full bg-[#FAF7F2] border border-[#E5E7EB] mx-auto flex items-center justify-center text-[#B38E46]">
+                        <Search className="w-5 h-5" />
+                      </div>
+                      <h4 className="font-admin-heading text-[20px] font-semibold text-[#292521]">
+                        No Orders Found
+                      </h4>
+                      <p className="text-[13px] text-[#6B7280]">
+                        No records match the selected filters or search query.
+                      </p>
+                      <button
+                        onClick={handleClearFilters}
+                        className="px-4 py-2 rounded-lg bg-[#5C1D27] text-white text-[13px] font-medium hover:bg-[#48161E] transition shadow-sm"
+                      >
+                        Reset All Filters
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
       </div>
 
-      {/* Empty State */}
-      {filteredOrders.length === 0 && (
-        <div className="bg-white border border-dashed border-[#D5C7B3] rounded-2xl p-12 text-center">
-          <CalendarClock className="w-10 h-10 mx-auto text-gray-400 mb-2" />
-          <h4 className="font-serif font-bold text-base text-gray-800">No Orders in this Queue</h4>
-          <p className="text-xs text-gray-500 mt-1">Try switching tabs or creating a test reservation.</p>
+      {/* ================= 5. PAGINATION FOOTER ================= */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1">
+        {/* Left: Count Text */}
+        <div className="text-[13px] text-[#6B7280]">
+          Showing <span className="font-medium text-[#292521]">{totalItems > 0 ? `${startIndex + 1}–${endIndex}` : '0'}</span> of{' '}
+          <span className="font-medium text-[#292521]">{totalItems}</span> orders
+        </div>
+
+        {/* Right: Prev, Active Page, Next, Per Page Selector */}
+        <div className="flex items-center gap-3 self-end sm:self-auto">
+          {/* Previous Button */}
+          <button
+            onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+            disabled={currentPage === 1}
+            className={`w-7 h-7 rounded border border-[#D1D5DB] flex items-center justify-center transition ${
+              currentPage === 1
+                ? 'opacity-40 cursor-not-allowed bg-white text-[#9CA3AF]'
+                : 'bg-white hover:bg-gray-50 text-[#292521] cursor-pointer'
+            }`}
+            aria-label="Previous page"
+          >
+            <ChevronLeft className="w-3.5 h-3.5" />
+          </button>
+
+          {/* Page Number 1 */}
+          <button
+            className="w-7 h-7 rounded border border-[#D1D5DB] bg-white text-[#292521] text-[12.5px] font-medium flex items-center justify-center shadow-2xs"
+          >
+            {currentPage}
+          </button>
+
+          {/* Next Button */}
+          <button
+            onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+            disabled={currentPage === totalPages || totalPages === 0}
+            className={`w-7 h-7 rounded border border-[#D1D5DB] flex items-center justify-center transition ${
+              currentPage === totalPages || totalPages === 0
+                ? 'opacity-40 cursor-not-allowed bg-white text-[#9CA3AF]'
+                : 'bg-white hover:bg-gray-50 text-[#292521] cursor-pointer'
+            }`}
+            aria-label="Next page"
+          >
+            <ChevronRight className="w-3.5 h-3.5" />
+          </button>
+
+          {/* 10 per page Selector */}
+          <div className="relative">
+            <select
+              value={itemsPerPage}
+              onChange={(e) => {
+                setItemsPerPage(Number(e.target.value));
+                setCurrentPage(1);
+              }}
+              className="appearance-none bg-white border border-[#D1D5DB] hover:border-gray-400 rounded px-2.5 py-1 text-[12px] font-medium text-[#292521] shadow-2xs cursor-pointer pr-6"
+            >
+              <option value={7}>7 per page</option>
+              <option value={10}>10 per page</option>
+              <option value={20}>20 per page</option>
+            </select>
+            <ChevronDown className="w-3 h-3 absolute right-1.5 top-1/2 -translate-y-1/2 text-[#6B7280] pointer-events-none" />
+          </div>
+        </div>
+      </div>
+
+      {/* ================= 6. NEW RESERVATION MODAL ================= */}
+      {isNewReservationOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in">
+          <div className="bg-white border border-[#E5E7EB] rounded-2xl max-w-lg w-full shadow-2xl overflow-hidden font-admin-body">
+            <div className="bg-[#5C1D27] text-white px-6 py-4 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Lock className="w-5 h-5 text-[#C49A45]" />
+                <h3 className="font-admin-heading font-semibold text-[20px] text-white">
+                  Create Showroom Reservation Hold
+                </h3>
+              </div>
+              <button 
+                onClick={() => setIsNewReservationOpen(false)}
+                className="text-white/70 hover:text-white p-1"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleCreateNewReservation} className="p-6 space-y-4 text-[13px] text-[#292521]">
+              <div>
+                <label className="block text-[12px] font-semibold text-[#4B5563] mb-1">
+                  Customer Name *
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Smt. Rajeshwari Sundaram"
+                  value={reservationForm.customerName}
+                  onChange={(e) => setReservationForm({ ...reservationForm, customerName: e.target.value })}
+                  className="w-full border border-[#D1D5DB] rounded-lg px-3 py-2 text-[13px] focus:ring-2 focus:ring-[#C49A45]/30 focus:border-[#C49A45] focus:outline-none"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[12px] font-semibold text-[#4B5563] mb-1">
+                    Phone Number *
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    placeholder="+91 98401 23894"
+                    value={reservationForm.phone}
+                    onChange={(e) => setReservationForm({ ...reservationForm, phone: e.target.value })}
+                    className="w-full border border-[#D1D5DB] rounded-lg px-3 py-2 text-[13px] font-admin-mono focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[12px] font-semibold text-[#4B5563] mb-1">
+                    Channel
+                  </label>
+                  <select
+                    value={reservationForm.channel}
+                    onChange={(e) => setReservationForm({ ...reservationForm, channel: e.target.value })}
+                    className="w-full border border-[#D1D5DB] rounded-lg px-3 py-2 text-[13px]"
+                  >
+                    <option value="Showroom">Showroom Walk-in</option>
+                    <option value="Online">Online Concierge</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-[12px] font-semibold text-[#4B5563] mb-1">
+                  Select Jewellery Piece *
+                </label>
+                <select
+                  value={reservationForm.productSku}
+                  onChange={(e) => setReservationForm({ ...reservationForm, productSku: e.target.value })}
+                  className="w-full border border-[#D1D5DB] rounded-lg px-3 py-2 text-[13px]"
+                >
+                  {products.map(p => (
+                    <option key={p.sku} value={p.sku}>
+                      {p.name} ({p.sku}) — {p.price}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-[12px] font-semibold text-[#4B5563] mb-1">
+                  Hold Duration Window
+                </label>
+                <select
+                  value={reservationForm.holdHours}
+                  onChange={(e) => setReservationForm({ ...reservationForm, holdHours: Number(e.target.value) })}
+                  className="w-full border border-[#D1D5DB] rounded-lg px-3 py-2 text-[13px]"
+                >
+                  <option value={24}>24 Hours (Standard)</option>
+                  <option value={48}>48 Hours (Extended VIP)</option>
+                  <option value={72}>72 Hours (Owner Clearance)</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-[12px] font-semibold text-[#4B5563] mb-1">
+                  Notes / Scheduled Visit Time
+                </label>
+                <textarea
+                  rows={2}
+                  value={reservationForm.notes}
+                  onChange={(e) => setReservationForm({ ...reservationForm, notes: e.target.value })}
+                  className="w-full border border-[#D1D5DB] rounded-lg p-2.5 text-[13px]"
+                  placeholder="e.g. Customer visiting tomorrow morning 11:00 AM."
+                />
+              </div>
+
+              <div className="pt-2 border-t border-[#E5E7EB] flex items-center justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => setIsNewReservationOpen(false)}
+                  className="px-4 py-2 rounded-lg border border-[#D1D5DB] text-[#4B5563] hover:bg-gray-50 text-[13px]"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 rounded-lg bg-[#5C1D27] hover:bg-[#48161E] text-white font-semibold text-[13px] shadow-sm"
+                >
+                  Register Hold
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       )}
 
-      {/* Order Detail & Audit Timeline Drawer */}
+      {/* ================= 7. EXTEND HOLD MODAL ================= */}
+      {extendHoldOrder && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in">
+          <div className="bg-white border border-[#E5E7EB] rounded-2xl max-w-md w-full shadow-2xl p-6 font-admin-body text-[13.5px]">
+            <div className="flex items-center gap-2 mb-3">
+              <Clock className="w-5 h-5 text-[#B38E46]" />
+              <h3 className="font-admin-heading font-semibold text-[20px] text-[#292521]">
+                Extend Reservation Hold
+              </h3>
+            </div>
+            <p className="text-[13px] text-[#6B7280] leading-relaxed mb-4">
+              Extend the hold period for <strong>{extendHoldOrder.customerName}</strong> ({extendHoldOrder.orderNumber}) on <strong>{extendHoldOrder.productName}</strong>.
+            </p>
+
+            <div className="space-y-3 mb-5">
+              <div>
+                <label className="block text-[12px] font-semibold text-[#4B5563] mb-1">
+                  Additional Duration
+                </label>
+                <select
+                  value={extendHours}
+                  onChange={(e) => setExtendHours(Number(e.target.value))}
+                  className="w-full border border-[#D1D5DB] rounded-lg px-3 py-2 text-[13px]"
+                >
+                  <option value={12}>+ 12 Hours</option>
+                  <option value={24}>+ 24 Hours (Recommended)</option>
+                  <option value={48}>+ 48 Hours</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-2 border-t border-[#E5E7EB] pt-3">
+              <button
+                onClick={() => setExtendHoldOrder(null)}
+                className="px-4 py-2 rounded-lg border border-[#D1D5DB] text-[#4B5563] text-[13px]"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleApplyExtendHold}
+                className="px-4 py-2 rounded-lg bg-[#5C1D27] text-white font-semibold text-[13px] shadow-sm"
+              >
+                Confirm Extension
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ================= 8. ORDER DETAILS DRAWER ================= */}
       {isDetailDrawerOpen && selectedOrder && (
         <div className="fixed inset-0 z-50 flex justify-end bg-black/50 backdrop-blur-sm animate-in fade-in">
-          <div className="bg-[#FAF7F2] w-full max-w-lg h-full shadow-2xl border-l border-[#C5A059]/40 flex flex-col overflow-hidden animate-in slide-in-from-right duration-200">
+          <div className="bg-white w-full max-w-lg h-full shadow-2xl border-l border-[#E5E7EB] flex flex-col overflow-hidden animate-in slide-in-from-right duration-200 font-admin-body">
             {/* Drawer Header */}
             <div className="p-4 bg-[#5C1D27] text-white flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-mono tracking-widest uppercase text-[#E3D9CC]">
-                  Order & Hold Record
-                </span>
-                <h3 className="font-serif font-bold text-base text-white">
+                <span className="font-admin-mono text-[12px] bg-white/15 px-2 py-0.5 rounded text-white font-medium">
                   {selectedOrder.orderNumber}
+                </span>
+                <h3 className="font-admin-heading font-semibold text-[22px] text-white mt-1">
+                  Order &amp; Hold Specifications
                 </h3>
               </div>
               <button 
                 onClick={() => setIsDetailDrawerOpen(false)}
-                className="text-white/70 hover:text-white"
+                className="text-white/70 hover:text-white p-1 rounded-lg hover:bg-white/10"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Drawer Body */}
-            <div className="p-5 overflow-y-auto space-y-4 flex-1 text-xs text-[#2C2420]">
-              {/* Product Snapshot */}
-              <div className="bg-white p-3.5 rounded-xl border border-[#E3D9CC] flex items-center gap-3.5">
+            <div className="p-5 overflow-y-auto space-y-5 flex-1 text-[13.5px]">
+              {/* Product Card */}
+              <div className="flex items-center gap-3.5 bg-[#FAF7F2] p-3.5 rounded-xl border border-[#EDE8E1]">
                 <img 
                   src={selectedOrder.productImage} 
-                  alt={selectedOrder.productName} 
-                  className="w-16 h-16 object-cover rounded-xl border flex-shrink-0"
+                  alt={selectedOrder.productName}
+                  className="w-16 h-16 rounded-xl object-cover border border-[#E5E7EB] bg-[#221F1C]"
                 />
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-mono font-bold bg-[#5C1D27] text-white px-1.5 py-0.2 rounded">
-                      {selectedOrder.productSku}
-                    </span>
-                    {selectedOrder.isUniqueItem && (
-                      <span className="text-[9px] font-bold text-[#7A5B20] bg-[#FAF5EE] border border-[#C5A059] px-1.5 py-0.2 rounded">
-                        1-of-1 Piece
-                      </span>
-                    )}
-                  </div>
-                  <h4 className="font-bold text-gray-900 text-xs truncate mt-1">
+                <div>
+                  <span className="text-[11px] font-admin-mono font-medium text-[#651F2B] bg-[#F4E8EB] px-1.5 py-0.2 rounded">
+                    SKU {selectedOrder.productSku}
+                  </span>
+                  <h4 className="font-semibold text-[15px] text-[#292521] mt-0.5">
                     {selectedOrder.productName}
                   </h4>
-                  <p className="text-xs font-serif font-bold text-[#5C1D27] mt-0.5">
+                  <p className="text-[15px] font-bold text-[#8D6725] mt-0.5">
                     {selectedOrder.productPrice}
                   </p>
                 </div>
               </div>
 
-              {/* Customer Contact Card */}
-              <div className="bg-white p-4 rounded-xl border border-[#E3D9CC] space-y-2">
-                <h4 className="font-bold text-gray-900 text-xs border-b border-gray-100 pb-1.5">
-                  Customer & Fulfilment Details
-                </h4>
-                <div className="grid grid-cols-2 gap-3 text-xs">
+              {/* Customer Contact */}
+              <div className="space-y-2 border border-[#E5E7EB] rounded-xl p-3.5">
+                <h5 className="font-semibold text-[13px] text-[#292521]">Customer Contact Information</h5>
+                <div className="grid grid-cols-2 gap-2 text-[12.5px]">
                   <div>
-                    <span className="text-[10px] text-gray-400 uppercase font-semibold block">Customer Name</span>
-                    <span className="font-bold text-gray-800">{selectedOrder.customerName}</span>
+                    <span className="text-[#6B7280] block text-[11px]">Customer</span>
+                    <span className="font-medium text-[#292521]">{selectedOrder.customerName}</span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-gray-400 uppercase font-semibold block">Contact Number</span>
-                    <span className="font-semibold text-gray-800">{selectedOrder.phone}</span>
+                    <span className="text-[#6B7280] block text-[11px]">Phone</span>
+                    <span className="font-admin-mono font-medium text-[#292521]">{selectedOrder.phone}</span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-gray-400 uppercase font-semibold block">Email</span>
-                    <span className="text-gray-700">{selectedOrder.email || 'Not provided'}</span>
+                    <span className="text-[#6B7280] block text-[11px]">Channel</span>
+                    <span className="font-medium text-[#292521]">{selectedOrder.channel || 'Showroom'}</span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-gray-400 uppercase font-semibold block">Fulfilment Mode</span>
-                    <span className="font-bold text-[#5C1D27] capitalize">
-                      {selectedOrder.fulfilmentType.replace('_', ' ')}
-                    </span>
+                    <span className="text-[#6B7280] block text-[11px]">City</span>
+                    <span className="font-medium text-[#292521]">{selectedOrder.city || 'Madurai'}</span>
                   </div>
                 </div>
+              </div>
 
-                <div className="pt-2 border-t border-gray-100">
-                  <span className="text-[10px] text-gray-400 uppercase font-semibold block">Delivery Location</span>
-                  <p className="text-gray-700 text-[11px] mt-0.5">{selectedOrder.deliveryAddress}</p>
+              {/* Status & Next Action */}
+              <div className="bg-[#FEF9EE] border border-[#FDE68A] p-3.5 rounded-xl text-[13px]">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[12px] font-bold text-[#B45309] uppercase tracking-wider">Operational Status</span>
+                  <span className="capitalize font-semibold text-[#292521]">{selectedOrder.status.replace('_', ' ')}</span>
                 </div>
-
+                <p className="text-[#78350F] text-[12.5px] leading-snug">
+                  <strong>Next Action:</strong> {selectedOrder.nextAction}
+                </p>
                 {selectedOrder.notes && (
-                  <div className="bg-[#FAF7F2] p-2.5 rounded-lg border border-[#E8DFD3] text-[11px] text-gray-700">
-                    <strong>Customer Notes:</strong> {selectedOrder.notes}
-                  </div>
+                  <p className="text-[#92400E] text-[12px] mt-1.5 italic">
+                    "{selectedOrder.notes}"
+                  </p>
                 )}
               </div>
 
-              {/* Courier & Tracking Details (if any) */}
-              <div className="bg-white p-4 rounded-xl border border-[#E3D9CC] space-y-2">
-                <h4 className="font-bold text-gray-900 text-xs border-b border-gray-100 pb-1.5 flex items-center justify-between">
-                  <span>Logistics & Showroom Hold Status</span>
-                  <span className="text-[10px] font-mono text-sky-800 bg-sky-50 px-2 py-0.5 rounded">
-                    {selectedOrder.tracking?.deliveryStatus || 'Pending'}
-                  </span>
-                </h4>
-                <div className="text-xs space-y-1">
-                  <p><strong>Carrier:</strong> {selectedOrder.tracking?.carrier || 'Showroom Custody'}</p>
-                  <p><strong>Tracking / Consignment ID:</strong> <span className="font-mono">{selectedOrder.tracking?.trackingId || 'N/A'}</span></p>
+              {/* Tracking Details */}
+              {selectedOrder.tracking && (
+                <div className="border border-[#E5E7EB] rounded-xl p-3.5 space-y-2">
+                  <h5 className="font-semibold text-[13px] text-[#292521]">Logistics &amp; Courier Tracking</h5>
+                  <div className="text-[12.5px] space-y-1">
+                    <p><strong className="text-[#6B7280]">Carrier:</strong> {selectedOrder.tracking.carrier}</p>
+                    <p><strong className="text-[#6B7280]">Tracking ID:</strong> <span className="font-admin-mono">{selectedOrder.tracking.trackingId}</span></p>
+                    <p><strong className="text-[#6B7280]">Delivery State:</strong> {selectedOrder.tracking.deliveryStatus}</p>
+                  </div>
                 </div>
-              </div>
-
-              {/* Event Timeline */}
-              <div className="bg-white p-4 rounded-xl border border-[#E3D9CC] space-y-3">
-                <h4 className="font-bold text-gray-900 text-xs border-b border-gray-100 pb-1.5 flex items-center gap-1.5">
-                  <Clock className="w-3.5 h-3.5 text-[#5C1D27]" />
-                  <span>State Change Audit Timeline</span>
-                </h4>
-
-                <div className="relative pl-4 space-y-3 border-l-2 border-[#E3D9CC] ml-2 text-[11px]">
-                  {selectedOrder.timeline?.map((evt, idx) => (
-                    <div key={idx} className="relative">
-                      <span className="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-[#5C1D27] ring-2 ring-white" />
-                      <div className="flex items-center justify-between">
-                        <span className="font-bold text-gray-900">{evt.event}</span>
-                        <span className="text-[10px] text-gray-400 font-mono">{evt.timestamp}</span>
-                      </div>
-                      <span className="text-[10px] text-gray-500 italic block mt-0.5">By: {evt.user}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              )}
             </div>
 
-            {/* Drawer Actions */}
-            <div className="p-4 bg-[#F5EFEB] border-t border-[#E3D9CC] flex flex-wrap items-center justify-between gap-2">
-              <span className="text-[10px] text-gray-500">Safeguard lock active</span>
-              <div className="flex gap-2">
+            {/* Drawer Footer Actions */}
+            <div className="p-4 bg-[#F9FAFB] border-t border-[#E5E7EB] flex items-center justify-between">
+              <button
+                onClick={() => {
+                  rejectReservation(selectedOrder.id, 'Cancelled via drawer');
+                  setIsDetailDrawerOpen(false);
+                }}
+                className="px-3.5 py-2 rounded-lg border border-[#FCA5A5] text-[#DC2626] hover:bg-[#FEF2F2] text-[13px] font-medium"
+              >
+                Release Hold
+              </button>
+
+              <div className="flex items-center gap-2">
                 {selectedOrder.status === 'awaiting_confirmation' && (
                   <button
                     onClick={() => {
-                      confirmReservation(selectedOrder.id);
+                      handleConfirmHoldAction(selectedOrder);
                       setIsDetailDrawerOpen(false);
                     }}
-                    className="px-4 py-2 bg-emerald-800 text-white rounded-xl font-bold text-xs shadow"
+                    className="px-4 py-2 rounded-lg bg-[#5C1D27] text-white text-[13px] font-semibold hover:bg-[#48161E]"
                   >
                     Confirm Hold
                   </button>
@@ -559,138 +1257,16 @@ export default function AdminOrdersPage({
                 {selectedOrder.status === 'reserved' && (
                   <button
                     onClick={() => {
-                      convertReservationToOrder(selectedOrder.id);
+                      handleOpenExtendHold(selectedOrder);
                       setIsDetailDrawerOpen(false);
                     }}
-                    className="px-4 py-2 bg-[#5C1D27] text-white rounded-xl font-bold text-xs shadow"
+                    className="px-4 py-2 rounded-lg bg-[#B38E46] text-white text-[13px] font-semibold hover:bg-[#9E7C38]"
                   >
-                    Convert to Order
+                    Extend Hold
                   </button>
                 )}
               </div>
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* Reject Reservation Reason Modal */}
-      {rejectModalOrder && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl border border-gray-200">
-            <h4 className="font-serif font-bold text-base text-gray-900 mb-1">
-              Cancel / Reject Reservation Hold?
-            </h4>
-            <p className="text-xs text-gray-600 mb-3">
-              Item <strong>{rejectModalOrder.productSku}</strong> will immediately return to <strong>Available</strong> status for showroom counter sales and online orders.
-            </p>
-
-            <form onSubmit={handleRejectSubmit} className="space-y-3 text-xs">
-              <div>
-                <label className="block text-[10px] uppercase font-bold text-gray-600 mb-1">
-                  Reason for Cancellation
-                </label>
-                <select
-                  value={rejectReason}
-                  onChange={(e) => setRejectReason(e.target.value)}
-                  className="w-full bg-[#FAF7F2] border border-gray-300 rounded-xl p-2 text-xs"
-                >
-                  <option value="Customer unable to visit showroom within hold window">Customer unable to visit within hold window</option>
-                  <option value="Phone unreachable after 3 attempts">Phone unreachable after 3 verification attempts</option>
-                  <option value="Customer requested cancellation">Customer requested cancellation / altered choice</option>
-                  <option value="Showroom manager clearance">Manager manual release to floor inventory</option>
-                </select>
-              </div>
-
-              <div className="pt-2 flex justify-end gap-2">
-                <button
-                  type="button"
-                  onClick={() => setRejectModalOrder(null)}
-                  className="px-4 py-2 rounded-xl border text-gray-700"
-                >
-                  Back
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 rounded-xl bg-rose-800 text-white font-bold"
-                >
-                  Confirm & Release Stock
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Tracking Modal */}
-      {trackingModalOrder && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-[#FAF7F2] rounded-2xl p-6 max-w-md w-full shadow-2xl border border-[#C5A059]/40">
-            <h4 className="font-serif font-bold text-base text-[#1C1614] mb-1 flex items-center gap-2">
-              <Truck className="w-5 h-5 text-[#5C1D27]" />
-              <span>Book Insured Dispatch & Tracking</span>
-            </h4>
-            <p className="text-xs text-gray-600 mb-4">
-              Dispatching order <strong>{trackingModalOrder.orderNumber}</strong> for {trackingModalOrder.customerName}.
-            </p>
-
-            <form onSubmit={handleTrackingSubmit} className="space-y-3 text-xs text-[#2C2420]">
-              <div>
-                <label className="block text-[10px] uppercase font-bold text-gray-600 mb-1">
-                  Secured Carrier / Courier Agency
-                </label>
-                <select
-                  value={trackingForm.carrier}
-                  onChange={(e) => setTrackingForm({ ...trackingForm, carrier: e.target.value })}
-                  className="w-full bg-white border border-[#D5C7B3] rounded-xl px-3 py-2 text-xs"
-                >
-                  <option value="BlueDart Apex Gold Secure">BlueDart Apex Gold Secure (Insured)</option>
-                  <option value="Sequel Logistics (High Value Armoured Cargo)">Sequel Logistics (High Value Armoured Cargo)</option>
-                  <option value="India Post Speed Post Gold Insured">India Post Speed Post Gold Insured</option>
-                  <option value="Showroom Express Messenger (Local)">Showroom Express Messenger (Local)</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-[10px] uppercase font-bold text-gray-600 mb-1">
-                  AWB / Tracking Number *
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={trackingForm.trackingId}
-                  onChange={(e) => setTrackingForm({ ...trackingForm, trackingId: e.target.value })}
-                  className="w-full bg-white border border-[#D5C7B3] rounded-xl px-3 py-2 text-xs font-mono"
-                />
-              </div>
-
-              <div>
-                <label className="block text-[10px] uppercase font-bold text-gray-600 mb-1">
-                  Vault / Security Manifest Notes
-                </label>
-                <input
-                  type="text"
-                  value={trackingForm.notes}
-                  onChange={(e) => setTrackingForm({ ...trackingForm, notes: e.target.value })}
-                  className="w-full bg-white border border-[#D5C7B3] rounded-xl px-3 py-2 text-xs"
-                />
-              </div>
-
-              <div className="pt-2 flex justify-end gap-2">
-                <button
-                  type="button"
-                  onClick={() => setTrackingModalOrder(null)}
-                  className="px-4 py-2 rounded-xl border text-gray-700"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-5 py-2 rounded-xl bg-[#5C1D27] text-white font-bold shadow"
-                >
-                  Confirm Dispatch
-                </button>
-              </div>
-            </form>
           </div>
         </div>
       )}

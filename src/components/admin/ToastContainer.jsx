@@ -16,26 +16,26 @@ export default function ToastContainer() {
   return (
     <div className="fixed bottom-5 right-5 z-[9999] flex flex-col gap-2.5 max-w-md w-full pointer-events-none px-4 sm:px-0">
       {toasts.map(toast => {
-        let borderClass = 'border-[#C5A059] bg-[#FAF7F2] text-[#2C2420]';
+        let borderClass = 'border-admin-success/40 bg-admin-success-bg text-admin-main';
         let Icon = CheckCircle2;
-        let iconColor = 'text-emerald-700';
+        let iconColor = 'text-admin-success';
 
         if (toast.type === 'error') {
-          borderClass = 'border-rose-400 bg-[#FFF5F5] text-rose-950';
+          borderClass = 'border-admin-error/40 bg-admin-error-bg text-admin-main';
           Icon = XCircle;
-          iconColor = 'text-rose-600';
+          iconColor = 'text-admin-error';
         } else if (toast.type === 'warning') {
-          borderClass = 'border-amber-400 bg-[#FFFBEB] text-amber-950';
+          borderClass = 'border-admin-pending/40 bg-admin-pending-bg text-admin-main';
           Icon = AlertTriangle;
-          iconColor = 'text-amber-600';
+          iconColor = 'text-admin-pending';
         } else if (toast.type === 'info') {
-          borderClass = 'border-sky-300 bg-[#F0F9FF] text-sky-950';
+          borderClass = 'border-admin-info/40 bg-admin-info-bg text-admin-main';
           Icon = Info;
-          iconColor = 'text-sky-600';
+          iconColor = 'text-admin-info';
         } else {
-          borderClass = 'border-[#C5A059]/60 bg-[#FAF7F2] text-[#2C2420]';
+          borderClass = 'border-admin-success/40 bg-admin-success-bg text-admin-main';
           Icon = CheckCircle2;
-          iconColor = 'text-[#5C1D27]';
+          iconColor = 'text-admin-success';
         }
 
         return (
@@ -47,10 +47,10 @@ export default function ToastContainer() {
               <Icon className="w-5 h-5" />
             </div>
             <div className="flex-1 pr-4">
-              <h4 className="text-xs font-bold uppercase tracking-wider font-sans mb-0.5">
+              <h4 className="text-[13px] font-semibold font-admin-body mb-0.5 text-admin-main">
                 {toast.title}
               </h4>
-              <p className="text-xs leading-relaxed text-opacity-90">
+              <p className="text-[12px] font-admin-body leading-relaxed text-admin-main/80">
                 {toast.message}
               </p>
             </div>
@@ -62,7 +62,7 @@ export default function ToastContainer() {
               <X className="w-3.5 h-3.5" />
             </button>
             <div 
-              className="absolute bottom-0 left-0 h-0.5 bg-[#C5A059]/40 w-full animate-pulse" 
+              className="absolute bottom-0 left-0 h-0.5 bg-admin-gold/50 w-full animate-pulse" 
             />
           </div>
         );

@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { 
   INITIAL_PRODUCTS, 
   INITIAL_ORDERS, 
+  INITIAL_DELIVERIES,
   INITIAL_RETURNS_CASES, 
   INITIAL_SETTINGS,
   INITIAL_AUDIT_LOGS 
@@ -12,12 +13,43 @@ const AdminContext = createContext(null);
 const STORAGE_KEY = 'VEDA_RADHA_ADMIN_STATE_V1';
 
 export function AdminProvider({ children }) {
-  // Load initial or persisted state
+  // Load initial or persisted state with safe defaults
   const [state, setState] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        let productsList = Array.isArray(parsed?.products) ? parsed.products : INITIAL_PRODUCTS;
+        if (!productsList.some(p => p.sku === 'SA-001')) {
+          productsList = [
+            ...INITIAL_PRODUCTS,
+            ...productsList.filter(p => !INITIAL_PRODUCTS.some(ip => ip.sku === p.sku))
+          ];
+        }
+        let ordersList = Array.isArray(parsed?.orders) ? parsed.orders : INITIAL_ORDERS;
+        if (!ordersList.some(o => o.orderNumber === 'VR-2024-00128' || o.id === 'VR-2024-00128')) {
+          ordersList = [
+            ...INITIAL_ORDERS,
+            ...ordersList.filter(o => !INITIAL_ORDERS.some(io => io.orderNumber === o.orderNumber || io.id === o.id))
+          ];
+        }
+        let deliveriesList = Array.isArray(parsed?.deliveries) && parsed.deliveries.length > 0 ? parsed.deliveries : INITIAL_DELIVERIES;
+        if (!deliveriesList.some(d => d.orderNumber === 'VRJ-2025-0847')) {
+          deliveriesList = INITIAL_DELIVERIES;
+        }
+        let returnsList = Array.isArray(parsed?.returns) && parsed.returns.length > 0 ? parsed.returns : INITIAL_RETURNS_CASES;
+        if (!returnsList.some(r => r.id === 'RET-1008')) {
+          returnsList = INITIAL_RETURNS_CASES;
+        }
+        let settingsObj = parsed?.settings && typeof parsed.settings === 'object' ? { ...INITIAL_SETTINGS, ...parsed.settings } : INITIAL_SETTINGS;
+        return {
+          products: productsList,
+          orders: ordersList,
+          deliveries: deliveriesList,
+          returns: returnsList,
+          settings: settingsObj,
+          auditLogs: Array.isArray(parsed?.auditLogs) ? parsed.auditLogs : INITIAL_AUDIT_LOGS
+        };
       }
     } catch (e) {
       console.warn('Failed to load local admin state:', e);
@@ -25,6 +57,7 @@ export function AdminProvider({ children }) {
     return {
       products: INITIAL_PRODUCTS,
       orders: INITIAL_ORDERS,
+      deliveries: INITIAL_DELIVERIES,
       returns: INITIAL_RETURNS_CASES,
       settings: INITIAL_SETTINGS,
       auditLogs: INITIAL_AUDIT_LOGS
@@ -106,6 +139,15 @@ export function AdminProvider({ children }) {
     }));
     logAction('PRODUCT_UPDATED', `Product ${sku} details updated.`, 'Staff', 'info');
     addToast('Inventory Updated', `Saved changes for SKU ${sku}`);
+  };
+
+  const deleteProduct = (sku) => {
+    setState(prev => ({
+      ...prev,
+      products: prev.products.filter(p => p.sku !== sku)
+    }));
+    logAction('PRODUCT_DELETED', `Product ${sku} removed from catalog.`, 'Admin', 'warning');
+    addToast('Product Removed', `SKU ${sku} deleted from inventory.`, 'info');
   };
 
   // CRITICAL BUSINESS SAFEGUARD: Mark Sold in Showroom
@@ -458,6 +500,106 @@ export function AdminProvider({ children }) {
   };
 
   // --------------------------------------------------------------------------
+  // DELIVERY & LOGISTICS DISPATCH ACTIONS (REFERENCE UI COMPLIANT)
+  // --------------------------------------------------------------------------
+
+  const updateDeliveryTracking = (orderNumber, { courier, trackingId, status, checkpointNote = '', issueDetails = '' }) => {
+    setState(prev => ({
+      ...prev,
+      deliveries: (prev.deliveries || []).map(d => {
+        if (d.orderNumber !== orderNumber) return d;
+        const nowStr = `Today ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+        const timelineEvent = checkpointNote 
+          ? `Checkpoint: ${checkpointNote} (${courier || d.courier})` 
+          : `Tracking updated: ${courier || d.courier} • ${trackingId || d.trackingId}`;
+        const newTimeline = [
+          { timestamp: nowStr, event: timelineEvent, user: 'Logistics Desk' },
+          ...(d.timeline || [])
+        ];
+        return {
+          ...d,
+          courier: courier || d.courier,
+          trackingId: trackingId || d.trackingId,
+          status: status || d.status,
+          issueDetails: status === 'Service Issues' ? (issueDetails || d.issueDetails) : undefined,
+          timeline: newTimeline
+        };
+      })
+    }));
+
+    logAction('DELIVERY_TRACKING_UPDATE', `Consignment for ${orderNumber} updated (${courier} - ${trackingId}).`, 'Logistics Desk', 'info');
+    addToast('Tracking Updated', `Saved shipment updates for order ${orderNumber}.`);
+  };
+
+  const updateDeliveryStatus = (orderNumber, newStatus, note = '') => {
+    setState(prev => ({
+      ...prev,
+      deliveries: (prev.deliveries || []).map(d => {
+        if (d.orderNumber !== orderNumber) return d;
+        const nowStr = `Today ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+        const eventText = note ? `Status changed to ${newStatus}: ${note}` : `Status changed to ${newStatus}`;
+        return {
+          ...d,
+          status: newStatus,
+          deliveredAt: newStatus === 'Delivered' 
+            ? `${new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}, ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}` 
+            : d.deliveredAt,
+          issueDetails: newStatus === 'Service Issues' ? (note || d.issueDetails) : (newStatus === 'Delivered' ? undefined : d.issueDetails),
+          timeline: [
+            { timestamp: nowStr, event: eventText, user: 'Logistics Supervisor' },
+            ...(d.timeline || [])
+          ]
+        };
+      })
+    }));
+
+    logAction('DELIVERY_STATUS_CHANGED', `Consignment ${orderNumber} marked ${newStatus}.`, 'Logistics Desk', 'info');
+    addToast('Status Updated', `Order ${orderNumber} set to "${newStatus}".`);
+  };
+
+  const createDispatch = (dispatchData) => {
+    const newDelivery = {
+      id: `DEL-${Date.now().toString().slice(-4)}`,
+      orderNumber: dispatchData.orderNumber || `VRJ-2025-${Math.floor(800 + Math.random() * 199)}`,
+      date: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+      customerName: dispatchData.customerName,
+      phone: dispatchData.phone,
+      destination: dispatchData.destination,
+      pincode: dispatchData.pincode || '600001',
+      courier: dispatchData.courier || 'Blue Dart',
+      trackingId: dispatchData.trackingId || `BD${Math.floor(100000000 + Math.random() * 900000000)}IN`,
+      status: dispatchData.status || 'Ready to Dispatch',
+      itemsSummary: dispatchData.itemsSummary || 'Showroom Jewellery Parcel',
+      itemPrice: dispatchData.itemPrice || '₹ 45,000',
+      timeline: [
+        { 
+          timestamp: `Today ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`, 
+          event: `Dispatch consignment created and booked with ${dispatchData.courier || 'Blue Dart'}`, 
+          user: 'Logistics Desk' 
+        }
+      ]
+    };
+
+    setState(prev => ({
+      ...prev,
+      deliveries: [newDelivery, ...(prev.deliveries || [])]
+    }));
+
+    logAction('DISPATCH_CREATED', `New dispatch consignment ${newDelivery.orderNumber} booked with ${newDelivery.courier}.`, 'Logistics Desk', 'success');
+    addToast('Dispatch Created', `Consignment ${newDelivery.orderNumber} successfully registered.`);
+    return newDelivery;
+  };
+
+  const deleteDispatch = (orderNumber) => {
+    setState(prev => ({
+      ...prev,
+      deliveries: (prev.deliveries || []).filter(d => d.orderNumber !== orderNumber)
+    }));
+    logAction('DISPATCH_DELETED', `Dispatch record for ${orderNumber} cancelled.`, 'Logistics Desk', 'warning');
+    addToast('Consignment Removed', `Removed ${orderNumber} from dispatch list.`, 'info');
+  };
+
+  // --------------------------------------------------------------------------
   // RETURNS, CANCELLATION & INSPECTION DECISIONS
   // --------------------------------------------------------------------------
 
@@ -520,6 +662,27 @@ export function AdminProvider({ children }) {
     addToast('Inspection Processed', `Case ${caseId}: ${nextStatusText}`);
   };
 
+  const updateReturnStatus = (returnId, newStatus, nextAction = '', note = '') => {
+    setState(prev => ({
+      ...prev,
+      returns: (prev.returns || []).map(r => {
+        if (r.id !== returnId) return r;
+        const nowStr = `Today ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+        return {
+          ...r,
+          status: newStatus,
+          nextAction: nextAction || r.nextAction,
+          timeline: [
+            { timestamp: nowStr, event: note || `Status updated to ${newStatus}`, user: 'Staff' },
+            ...(r.timeline || [])
+          ]
+        };
+      })
+    }));
+    logAction('RETURN_STATUS_UPDATE', `Return case ${returnId} updated to ${newStatus}.`, 'Staff', 'info');
+    addToast('Return Updated', `Case ${returnId} marked as ${newStatus}.`);
+  };
+
   // --------------------------------------------------------------------------
   // SETTINGS & DEMO RESET
   // --------------------------------------------------------------------------
@@ -537,6 +700,7 @@ export function AdminProvider({ children }) {
     setState({
       products: INITIAL_PRODUCTS,
       orders: INITIAL_ORDERS,
+      deliveries: INITIAL_DELIVERIES,
       returns: INITIAL_RETURNS_CASES,
       settings: INITIAL_SETTINGS,
       auditLogs: INITIAL_AUDIT_LOGS
@@ -550,6 +714,7 @@ export function AdminProvider({ children }) {
       value={{
         products: state.products,
         orders: state.orders,
+        deliveries: state.deliveries || INITIAL_DELIVERIES,
         returns: state.returns,
         settings: state.settings,
         auditLogs: state.auditLogs,
@@ -561,6 +726,7 @@ export function AdminProvider({ children }) {
         logAction,
         addProduct,
         updateProduct,
+        deleteProduct,
         markProductSoldInShowroom,
         releaseReservation,
         markProductUnavailable,
@@ -571,7 +737,12 @@ export function AdminProvider({ children }) {
         convertReservationToOrder,
         updateOrderStatus,
         updateTracking,
+        updateDeliveryTracking,
+        updateDeliveryStatus,
+        createDispatch,
+        deleteDispatch,
         processReturnInspection,
+        updateReturnStatus,
         updateSettings,
         resetToDemoDefaults
       }}

@@ -88,10 +88,10 @@ export function RequireAuth({ children }) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#FAF7F2] flex items-center justify-center">
+      <div className="min-h-screen bg-[#F5F6F8] flex items-center justify-center font-admin-body">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 rounded-full border-2 border-[#5C1D27] border-t-transparent animate-spin" />
-          <p className="text-xs font-serif text-[#5C1D27] tracking-wider uppercase font-semibold">
+          <div className="w-8 h-8 rounded-full border-2 border-[#651F2B] border-t-transparent animate-spin" />
+          <p className="text-[14px] font-admin-heading text-[#651F2B] tracking-wide font-semibold">
             Verifying staff credentials...
           </p>
         </div>

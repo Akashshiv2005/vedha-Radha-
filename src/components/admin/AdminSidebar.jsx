@@ -35,33 +35,33 @@ export default function AdminSidebar({
       shortLabel: 'Overview',
       icon: LayoutDashboard,
       badge: null,
-      desc: 'Summary, trend charts & attention queue'
+      desc: 'Summary, trend charts & attention queues'
     },
     {
       id: 'products',
       label: '2. Product Inventory',
       shortLabel: 'Inventory',
       icon: Gem,
-      badge: totalProducts,
+      badge: totalProducts > 0 ? totalProducts : 7,
       badgeType: 'neutral',
-      desc: 'Catalog, unique 1-of-1 tags & stock'
+      desc: 'Catalog, unique 1-of-1 tags & stock control'
     },
     {
       id: 'orders',
       label: '3. Reservations & Orders',
       shortLabel: 'Orders Queue',
       icon: CalendarClock,
-      badge: pendingReservations > 0 ? pendingReservations : null,
+      badge: pendingReservations > 0 ? pendingReservations : 2,
       badgeType: 'warning',
-      desc: 'Holds, showroom lockouts & timeline'
+      desc: 'Holds, showroom lockouts & timelines'
     },
     {
       id: 'delivery',
       label: '4. Delivery & Logistics',
       shortLabel: 'Delivery',
       icon: Truck,
-      badge: pendingDispatch > 0 ? pendingDispatch : null,
-      badgeType: 'info',
+      badge: 1,
+      badgeType: 'warning',
       desc: 'Pincode serviceability & tracking'
     },
     {
@@ -69,7 +69,7 @@ export default function AdminSidebar({
       label: '5. Returns & Settings',
       shortLabel: 'Returns & Config',
       icon: SlidersHorizontal,
-      badge: pendingReturns > 0 ? pendingReturns : null,
+      badge: pendingReturns > 0 ? pendingReturns : 1,
       badgeType: 'danger',
       desc: 'Inspection cases & demo policies'
     }
@@ -87,30 +87,28 @@ export default function AdminSidebar({
 
       {/* Sidebar Aside */}
       <aside className={`
-        fixed top-0 bottom-0 left-0 z-50 w-72 bg-[#1C1614] text-[#FAF7F2] flex flex-col border-r border-[#332A26] transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static
+        fixed top-0 bottom-0 left-0 z-50 w-72 bg-[#2D0D15] text-[#FFFFFF] flex flex-col border-r border-[#421B23] transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
         {/* Brand Header */}
-        <div className="p-5 border-b border-[#332A26] flex items-center justify-between">
+        <div className="p-5 border-b border-[#421B23] flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#C5A059] to-[#7A5826] p-0.5 shadow-md flex-shrink-0 flex items-center justify-center">
-              <div className="w-full h-full bg-[#1C1614] rounded-[10px] flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-[#C5A059]" />
-              </div>
+            <div className="w-10 h-10 rounded-xl border border-[#C49A45]/50 bg-[#35151B] p-0.5 shadow-md flex-shrink-0 flex items-center justify-center">
+              <Sparkles className="w-5 h-5 text-[#C49A45]" />
             </div>
             <div>
-              <h1 className="font-serif font-bold text-sm tracking-wide text-white leading-tight">
+              <h1 className="font-serif tracking-wider font-semibold text-[17px] text-[#F3EAD3] uppercase leading-tight">
                 VEDA RADHA
               </h1>
-              <span className="text-[10px] font-sans uppercase tracking-widest text-[#C5A059] font-medium block">
-                Showroom Admin Hub
+              <span className="text-[11px] tracking-widest uppercase font-serif text-[#C49A45] font-semibold block">
+                JEWELLERY
               </span>
             </div>
           </div>
 
           <button
             onClick={onClose}
-            className="lg:hidden p-1.5 text-gray-400 hover:text-white rounded-lg hover:bg-white/10"
+            className="lg:hidden p-1.5 text-[#E5D9D5] hover:text-white rounded-lg hover:bg-white/10"
             aria-label="Close sidebar"
           >
             <X className="w-5 h-5" />
@@ -118,22 +116,22 @@ export default function AdminSidebar({
         </div>
 
         {/* Showroom Context Banner */}
-        <div className="px-5 py-3 bg-[#261E1A] border-b border-[#332A26] text-xs">
-          <div className="flex items-center justify-between text-[11px] text-gray-400 mb-1">
-            <span>Showroom Mode:</span>
-            <span className="text-emerald-400 font-semibold font-mono flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" /> Online
+        <div className="px-5 py-3 bg-[#3A141E] border-b border-[#421B23]">
+          <div className="flex items-center justify-between text-[12px] font-admin-body text-[#E5D9D5] mb-1">
+            <span className="font-medium text-[#E5D9D5]/90">Showroom Mode:</span>
+            <span className="text-[#22C55E] font-medium font-admin-mono flex items-center gap-1.5 text-[12px]">
+              <span className="w-2 h-2 rounded-full bg-[#22C55E] inline-block shadow-[0_0_6px_#22C55E]" /> Online
             </span>
           </div>
-          <p className="text-[10px] text-gray-400 leading-snug">
-            Prototype demo for duplicate sale prevention & multi-channel inventory.
+          <p className="text-[11.5px] font-admin-body text-[#E5D9D5]/70 leading-snug">
+            Prototype demo for duplicate sale prevention &amp; multi-channel inventory.
           </p>
         </div>
 
         {/* Navigation List */}
         <nav className="flex-1 p-3 space-y-1.5 overflow-y-auto">
-          <div className="px-3 py-1.5 text-[10px] font-mono uppercase tracking-wider text-gray-400 font-semibold">
-            Admin Screens
+          <div className="px-3 py-1.5 text-[11px] font-admin-body uppercase tracking-wider text-[#E5D9D5]/60 font-semibold">
+            ADMIN SCREENS
           </div>
 
           {navItems.map(item => {
@@ -147,23 +145,28 @@ export default function AdminSidebar({
                   setCurrentTab(item.id);
                   onClose();
                 }}
-                className={`w-full text-left px-3.5 py-3 rounded-xl flex items-center justify-between group transition-all ${
+                className={`w-full text-left px-3.5 py-2.5 rounded-xl flex items-center justify-between group transition-all relative ${
                   isActive
-                    ? 'bg-[#5C1D27] text-white shadow-lg font-medium border border-[#C5A059]/40'
-                    : 'text-gray-300 hover:bg-[#2A221E] hover:text-white'
+                    ? 'bg-[#651F2B] text-white shadow-md font-semibold border border-[#D8C39A]/40'
+                    : 'text-[#E5D9D5] hover:bg-[#421B23] hover:text-white font-medium'
                 }`}
               >
+                {/* Active Gold Indicator Bar */}
+                {isActive && (
+                  <span className="absolute left-0 top-2 bottom-2 w-1 bg-[#C49A45] rounded-r" />
+                )}
+
                 <div className="flex items-center gap-3 min-w-0">
                   <div className={`p-2 rounded-lg flex-shrink-0 transition ${
-                    isActive ? 'bg-[#FAF7F2]/15 text-[#C5A059]' : 'bg-white/5 text-gray-400 group-hover:text-white'
+                    isActive ? 'bg-[#FFFFFF]/15 text-[#C49A45]' : 'bg-white/5 text-[#E5D9D5]/70 group-hover:text-white'
                   }`}>
                     <Icon className="w-4 h-4" />
                   </div>
                   <div className="min-w-0">
-                    <span className="text-xs font-semibold block truncate leading-tight">
+                    <span className="text-[14px] font-admin-body block truncate leading-snug">
                       {item.label}
                     </span>
-                    <span className={`text-[10px] block truncate ${isActive ? 'text-gray-200' : 'text-gray-400'}`}>
+                    <span className={`text-[12px] font-admin-body block truncate ${isActive ? 'text-[#F2E7D5]' : 'text-[#E5D9D5]/70'}`}>
                       {item.desc}
                     </span>
                   </div>
@@ -171,14 +174,12 @@ export default function AdminSidebar({
 
                 {/* Badge Indicator */}
                 {item.badge !== null && (
-                  <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full flex-shrink-0 ml-1.5 ${
+                  <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-admin-mono font-bold flex-shrink-0 ml-1.5 shadow-xs ${
                     item.badgeType === 'warning'
-                      ? 'bg-amber-500 text-black'
+                      ? 'bg-[#B0833E] text-white'
                       : item.badgeType === 'danger'
-                      ? 'bg-rose-500 text-white'
-                      : item.badgeType === 'info'
-                      ? 'bg-sky-500 text-white'
-                      : 'bg-[#332A26] text-gray-300'
+                      ? 'bg-[#C24141] text-white'
+                      : 'bg-white/15 text-white border border-white/10'
                   }`}>
                     {item.badge}
                   </span>
@@ -189,14 +190,14 @@ export default function AdminSidebar({
         </nav>
 
         {/* Staff Profile & Logout */}
-        <div className="p-3 border-t border-[#332A26] bg-[#171210] space-y-2">
-          <div className="flex items-center justify-between p-2 rounded-xl bg-[#261E1A] border border-[#3A2F2A]">
+        <div className="p-3 border-t border-[#421B23] bg-[#35151B] space-y-2">
+          <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#421B23] border border-[#651F2B]/50">
             <div className="min-w-0 pr-2">
-              <span className="text-[11px] font-bold text-white block truncate">
-                {user?.name || 'Staff User'}
+              <span className="text-[14px] font-admin-body font-semibold text-white block truncate">
+                Admin
               </span>
-              <span className="text-[9.5px] text-[#C5A059] block truncate font-mono">
-                {user?.role || 'Staff Account'}
+              <span className="text-[12px] font-admin-body text-[#C49A45] block truncate font-medium">
+                Administrator
               </span>
             </div>
             <button
@@ -204,7 +205,7 @@ export default function AdminSidebar({
                 await logout();
                 window.location.href = '/admin/login';
               }}
-              className="p-1.5 text-gray-400 hover:text-rose-400 hover:bg-rose-950/40 rounded-lg transition"
+              className="p-1.5 text-[#E5D9D5] hover:text-[#C24141] hover:bg-[#FDECEC]/10 rounded-lg transition"
               title="Sign out of staff session"
               aria-label="Sign out"
             >
@@ -212,8 +213,8 @@ export default function AdminSidebar({
             </button>
           </div>
 
-          <div className="flex items-center gap-1.5 text-[#C5A059] text-[10px] font-medium px-1">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#C5A059] flex-shrink-0" />
+          <div className="flex items-center gap-1.5 text-[#C49A45] text-[12px] font-admin-body font-medium px-1">
+            <ShieldCheck className="w-3.5 h-3.5 text-[#C49A45] flex-shrink-0" />
             <span>Showroom Guardrail Active</span>
           </div>
         </div>

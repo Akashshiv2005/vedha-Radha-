@@ -43,8 +43,8 @@ describe('Admin Authentication Backend Service', () => {
     assert.equal(res.statusCode, 200);
     assert.ok(res.token && typeof res.token === 'string');
     assert.ok(res.user);
-    assert.equal(res.user.name, 'Veda Radha (Managing Director)');
-    assert.equal(res.user.role, 'Managing Director & Vault Custodian');
+    assert.equal(res.user.name, 'Admin');
+    assert.equal(res.user.role, 'Administrator');
     // Ensure password hash or salt is NEVER exposed in the user object
     assert.equal(res.user.passwordHash, undefined);
     assert.equal(res.user.salt, undefined);
@@ -63,7 +63,7 @@ describe('Admin Authentication Backend Service', () => {
     const res = await authenticateStaff('admin@vedaradha.com', 'admin@123');
     assert.equal(res.success, true);
     assert.equal(res.statusCode, 200);
-    assert.equal(res.user.name, 'Veda Radha (Managing Director)');
+    assert.equal(res.user.name, 'Admin');
     assert.ok(res.token);
   });
 });

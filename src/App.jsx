@@ -99,6 +99,14 @@ export default function App() {
         <Routes>
           <Route path="/admin/login" element={<AdminLoginPage />} />
           <Route 
+            path="/admin" 
+            element={
+              <RequireAuth>
+                <AdminDashboard />
+              </RequireAuth>
+            } 
+          />
+          <Route 
             path="/admin/*" 
             element={
               <RequireAuth>
@@ -132,6 +140,14 @@ export default function App() {
           <Routes>
             {/* Admin Routes */}
             <Route path="/admin/login" element={<AdminLoginPage />} />
+            <Route 
+              path="/admin" 
+              element={
+                <RequireAuth>
+                  <AdminDashboard />
+                </RequireAuth>
+              } 
+            />
             <Route 
               path="/admin/*" 
               element={
