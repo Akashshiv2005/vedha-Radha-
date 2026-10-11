@@ -416,12 +416,15 @@ export default function AdminDeliveryPage() {
       </nav>
 
       {/* 2. Page Header & Actions */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
         <div>
-          <h1 className="text-[32px] font-bold text-[#1F1D1A] tracking-tight font-admin-heading leading-tight">
+          <span className="inline-block px-2.5 py-0.5 rounded-md bg-[#5C1D27] text-white text-[11px] font-semibold font-admin-body tracking-widest uppercase">
+            SCREEN 4 • LOGISTICS
+          </span>
+          <h1 className="text-[28px] sm:text-[32px] font-semibold text-[#1C1917] tracking-tight font-admin-heading leading-tight mt-1">
             Delivery &amp; Logistics
           </h1>
-          <p className="text-[14px] text-[#6B7280] mt-0.5">
+          <p className="text-[14px] text-[#6B7280] mt-0.5 font-normal font-admin-body">
             Prepare, track and complete showroom deliveries.
           </p>
         </div>
@@ -440,7 +443,7 @@ export default function AdminDeliveryPage() {
           {/* Export Button */}
           <button
             onClick={handleExport}
-            className="flex items-center gap-2 px-4 py-2 bg-white border border-[#D1D5DB] rounded-xl text-[13.5px] font-medium text-[#374151] hover:bg-gray-50 shadow-xs transition cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2 bg-white border border-[#D1D5DB] rounded-xl text-[14px] font-semibold font-admin-body text-[#374151] hover:bg-gray-50 shadow-xs transition cursor-pointer"
           >
             <Download className="w-4 h-4 text-[#6B7280]" />
             <span>Export</span>
@@ -449,7 +452,7 @@ export default function AdminDeliveryPage() {
           {/* Create Dispatch Button */}
           <button
             onClick={handleOpenCreateModal}
-            className="flex items-center gap-1.5 px-4 py-2 bg-[#A87B3B] hover:bg-[#92652A] text-white rounded-xl text-[13.5px] font-medium shadow-xs transition cursor-pointer"
+            className="flex items-center gap-1.5 px-4 py-2 bg-[#A87B3B] hover:bg-[#92652A] text-white rounded-xl text-[14px] font-semibold font-admin-body shadow-xs transition cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>Create Dispatch</span>
@@ -513,112 +516,211 @@ export default function AdminDeliveryPage() {
       )}
 
       {/* 3. 4 KPI Stat Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 items-stretch">
         {/* Card 1: Ready to Dispatch */}
         <div 
           onClick={() => handleStatCardClick('Ready to Dispatch')}
-          className={`bg-white border rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition cursor-pointer relative group flex items-start gap-3.5 ${
+          className={`bg-white border rounded-2xl p-5 shadow-[0_2px_12px_-2px_rgba(28,25,23,0.04)] hover:shadow-[0_14px_30px_-6px_rgba(168,123,59,0.12)] hover:-translate-y-1 cursor-pointer transition-all duration-300 flex flex-col justify-between group relative overflow-hidden ${
             appliedFilters.status === 'Ready to Dispatch' 
               ? 'border-[#A87B3B] ring-2 ring-[#A87B3B]/20 bg-[#FDFBF7]' 
-              : 'border-[#E5E7EB]'
+              : 'border-[#E9E4DC] hover:border-[#A87B3B]'
           }`}
         >
-          <div className="w-12 h-12 rounded-xl bg-[#FDF6E9] border border-[#F5E2B8] flex items-center justify-center text-[#A87B3B] flex-shrink-0">
-            <Package className="w-6 h-6 stroke-[1.75]" />
+          {/* Top Accent Hairline */}
+          <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#A87B3B] via-[#F4DEB7] to-[#A87B3B]/50 opacity-90 group-hover:opacity-100 transition-opacity" />
+          {/* Corner Glow */}
+          <div className="absolute -top-12 -right-12 w-28 h-28 bg-[#A87B3B]/5 rounded-full blur-2xl group-hover:bg-[#A87B3B]/15 transition-all duration-300 pointer-events-none" />
+
+          {/* Row 1: Icon + Title */}
+          <div className="flex items-center gap-3 mb-3.5">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FDF6E9] to-[#FCEECB] border border-[#F5E2B8] flex items-center justify-center text-[#A87B3B] shadow-2xs group-hover:scale-105 transition-transform duration-200 flex-shrink-0">
+              <Package className="w-4.5 h-4.5 stroke-[2]" />
+            </div>
+            <h3 className="font-admin-body text-[15px] font-semibold text-[#1C1917] tracking-tight group-hover:text-[#A87B3B] transition-colors">
+              Ready to Dispatch
+            </h3>
           </div>
 
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center justify-between">
-              <span className="text-[14px] font-semibold text-[#1F2937]">Ready to Dispatch</span>
-              <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition flex-shrink-0" />
+          {/* Row 2: Hero Stat Number + Unit + Action Chevron */}
+          <div className="flex items-center justify-between mb-3.5">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-[34px] sm:text-[36px] font-admin-body font-bold tracking-[-1.5px] tabular-nums text-[#1C1917] leading-none">
+                {stats.readyToDispatch}
+              </span>
+              <span className="text-[13px] font-normal font-admin-body text-[#78716C]">
+                parcels
+              </span>
             </div>
-            <div className="text-[28px] sm:text-[30px] font-bold text-[#111827] mt-1 leading-none font-admin-body">
-              {stats.readyToDispatch}
+            <div className="w-7 h-7 rounded-full bg-[#FAF7F2] border border-[#ECE5DA] flex items-center justify-center text-[#9CA3AF] group-hover:bg-[#A87B3B] group-hover:text-white group-hover:border-[#A87B3B] group-hover:translate-x-0.5 transition-all duration-200 flex-shrink-0 shadow-2xs">
+              <ChevronRight className="w-3.5 h-3.5 stroke-[2.2]" />
             </div>
-            <p className="text-[12px] text-[#6B7280] mt-1.5 leading-snug">
-              Orders packed and awaiting pickup
-            </p>
+          </div>
+
+          {/* Row 3: Trend & Context Footer */}
+          <div className="pt-3 border-t border-[#F5EFE6]/80 flex flex-col gap-0.5">
+            <div className="flex items-center gap-1.5 text-[12px] font-semibold text-[#A87B3B]">
+              <Package className="w-3.5 h-3.5 stroke-[2]" />
+              <span>Packed &amp; Sealed</span>
+            </div>
+            <span className="text-[11.5px] font-normal text-[#9CA3AF]">
+              Awaiting armoured courier pickup
+            </span>
           </div>
         </div>
 
         {/* Card 2: In Transit */}
         <div 
           onClick={() => handleStatCardClick('In Transit')}
-          className={`bg-white border rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition cursor-pointer relative group flex items-start gap-3.5 ${
+          className={`bg-white border rounded-2xl p-5 shadow-[0_2px_12px_-2px_rgba(28,25,23,0.04)] hover:shadow-[0_14px_30px_-6px_rgba(37,99,235,0.12)] hover:-translate-y-1 cursor-pointer transition-all duration-300 flex flex-col justify-between group relative overflow-hidden ${
             appliedFilters.status === 'In Transit' 
               ? 'border-[#2563EB] ring-2 ring-[#2563EB]/20 bg-[#F8FAFF]' 
-              : 'border-[#E5E7EB]'
+              : 'border-[#E9E4DC] hover:border-[#2563EB]'
           }`}
         >
-          <div className="w-12 h-12 rounded-xl bg-[#ECFDF5] border border-[#A7F3D0] flex items-center justify-center text-[#059669] flex-shrink-0">
-            <Truck className="w-6 h-6 stroke-[1.75]" />
+          {/* Top Accent Hairline */}
+          <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#2563EB] via-[#93C5FD] to-[#2563EB]/50 opacity-90 group-hover:opacity-100 transition-opacity" />
+          {/* Corner Glow */}
+          <div className="absolute -top-12 -right-12 w-28 h-28 bg-[#2563EB]/5 rounded-full blur-2xl group-hover:bg-[#2563EB]/15 transition-all duration-300 pointer-events-none" />
+
+          {/* Row 1: Icon + Title */}
+          <div className="flex items-center gap-3 mb-3.5">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#EFF6FF] to-[#DBEAFE] border border-[#BFDBFE] flex items-center justify-center text-[#2563EB] shadow-2xs group-hover:scale-105 transition-transform duration-200 flex-shrink-0">
+              <Truck className="w-4.5 h-4.5 stroke-[2]" />
+            </div>
+            <h3 className="font-admin-body text-[15px] font-semibold text-[#1C1917] tracking-tight group-hover:text-[#2563EB] transition-colors">
+              In Transit
+            </h3>
           </div>
 
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center justify-between">
-              <span className="text-[14px] font-semibold text-[#1F2937]">In Transit</span>
-              <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition flex-shrink-0" />
+          {/* Row 2: Hero Stat Number + Unit + Action Chevron */}
+          <div className="flex items-center justify-between mb-3.5">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-[34px] sm:text-[36px] font-admin-body font-bold tracking-[-1.5px] tabular-nums text-[#1C1917] leading-none">
+                {stats.inTransit}
+              </span>
+              <span className="text-[13px] font-normal font-admin-body text-[#78716C]">
+                shipments
+              </span>
             </div>
-            <div className="text-[28px] sm:text-[30px] font-bold text-[#111827] mt-1 leading-none font-admin-body">
-              {stats.inTransit}
+            <div className="w-7 h-7 rounded-full bg-[#FAF7F2] border border-[#ECE5DA] flex items-center justify-center text-[#9CA3AF] group-hover:bg-[#2563EB] group-hover:text-white group-hover:border-[#2563EB] group-hover:translate-x-0.5 transition-all duration-200 flex-shrink-0 shadow-2xs">
+              <ChevronRight className="w-3.5 h-3.5 stroke-[2.2]" />
             </div>
-            <p className="text-[12px] text-[#6B7280] mt-1.5 leading-snug">
-              Out for delivery across India
-            </p>
+          </div>
+
+          {/* Row 3: Trend & Context Footer */}
+          <div className="pt-3 border-t border-[#F5EFE6]/80 flex flex-col gap-0.5">
+            <div className="flex items-center gap-1.5 text-[12px] font-semibold text-[#2563EB]">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#3B82F6] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2563EB]"></span>
+              </span>
+              <span>Armoured transit</span>
+            </div>
+            <span className="text-[11.5px] font-normal text-[#9CA3AF]">
+              Secured pan-India routes
+            </span>
           </div>
         </div>
 
         {/* Card 3: Delivered Today */}
         <div 
           onClick={() => handleStatCardClick('Delivered')}
-          className={`bg-white border rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition cursor-pointer relative group flex items-start gap-3.5 ${
+          className={`bg-white border rounded-2xl p-5 shadow-[0_2px_12px_-2px_rgba(28,25,23,0.04)] hover:shadow-[0_14px_30px_-6px_rgba(22,163,74,0.12)] hover:-translate-y-1 cursor-pointer transition-all duration-300 flex flex-col justify-between group relative overflow-hidden ${
             appliedFilters.status === 'Delivered' 
               ? 'border-[#16A34A] ring-2 ring-[#16A34A]/20 bg-[#F6FCF7]' 
-              : 'border-[#E5E7EB]'
+              : 'border-[#E9E4DC] hover:border-[#16A34A]'
           }`}
         >
-          <div className="w-12 h-12 rounded-xl bg-[#F0FDF4] border border-[#BBF7D0] flex items-center justify-center text-[#16A34A] flex-shrink-0">
-            <CheckCircle2 className="w-6 h-6 stroke-[1.75]" />
+          {/* Top Accent Hairline */}
+          <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#16A34A] via-[#86EFAC] to-[#16A34A]/50 opacity-90 group-hover:opacity-100 transition-opacity" />
+          {/* Corner Glow */}
+          <div className="absolute -top-12 -right-12 w-28 h-28 bg-[#16A34A]/5 rounded-full blur-2xl group-hover:bg-[#16A34A]/15 transition-all duration-300 pointer-events-none" />
+
+          {/* Row 1: Icon + Title */}
+          <div className="flex items-center gap-3 mb-3.5">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#F0FDF4] to-[#DCFCE7] border border-[#BBF7D0] flex items-center justify-center text-[#16A34A] shadow-2xs group-hover:scale-105 transition-transform duration-200 flex-shrink-0">
+              <CheckCircle2 className="w-4.5 h-4.5 stroke-[2.2]" />
+            </div>
+            <h3 className="font-admin-body text-[15px] font-semibold text-[#1C1917] tracking-tight group-hover:text-[#16A34A] transition-colors">
+              Delivered Today
+            </h3>
           </div>
 
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center justify-between">
-              <span className="text-[14px] font-semibold text-[#1F2937]">Delivered Today</span>
-              <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition flex-shrink-0" />
+          {/* Row 2: Hero Stat Number + Unit + Action Chevron */}
+          <div className="flex items-center justify-between mb-3.5">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-[34px] sm:text-[36px] font-admin-body font-bold tracking-[-1.5px] tabular-nums text-[#1C1917] leading-none">
+                {stats.deliveredToday}
+              </span>
+              <span className="text-[13px] font-normal font-admin-body text-[#78716C]">
+                completed
+              </span>
             </div>
-            <div className="text-[28px] sm:text-[30px] font-bold text-[#111827] mt-1 leading-none font-admin-body">
-              {stats.deliveredToday}
+            <div className="w-7 h-7 rounded-full bg-[#FAF7F2] border border-[#ECE5DA] flex items-center justify-center text-[#9CA3AF] group-hover:bg-[#16A34A] group-hover:text-white group-hover:border-[#16A34A] group-hover:translate-x-0.5 transition-all duration-200 flex-shrink-0 shadow-2xs">
+              <ChevronRight className="w-3.5 h-3.5 stroke-[2.2]" />
             </div>
-            <p className="text-[12px] text-[#6B7280] mt-1.5 leading-snug">
-              Successfully delivered
-            </p>
+          </div>
+
+          {/* Row 3: Trend & Context Footer */}
+          <div className="pt-3 border-t border-[#F5EFE6]/80 flex flex-col gap-0.5">
+            <div className="flex items-center gap-1.5 text-[12px] font-semibold text-[#16A34A]">
+              <CheckCircle2 className="w-3.5 h-3.5 stroke-[2.5]" />
+              <span>OTP verified handovers</span>
+            </div>
+            <span className="text-[11.5px] font-normal text-[#9CA3AF]">
+              Customer deliveries completed
+            </span>
           </div>
         </div>
 
         {/* Card 4: Service Issues */}
         <div 
           onClick={() => handleStatCardClick('Service Issues')}
-          className={`bg-white border rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition cursor-pointer relative group flex items-start gap-3.5 ${
+          className={`bg-white border rounded-2xl p-5 shadow-[0_2px_12px_-2px_rgba(28,25,23,0.04)] hover:shadow-[0_14px_30px_-6px_rgba(220,38,38,0.12)] hover:-translate-y-1 cursor-pointer transition-all duration-300 flex flex-col justify-between group relative overflow-hidden ${
             appliedFilters.status === 'Service Issues' 
               ? 'border-[#DC2626] ring-2 ring-[#DC2626]/20 bg-[#FEF8F8]' 
-              : 'border-[#E5E7EB]'
+              : 'border-[#E9E4DC] hover:border-[#DC2626]'
           }`}
         >
-          <div className="w-12 h-12 rounded-xl bg-[#FEF2F2] border border-[#FECACA] flex items-center justify-center text-[#DC2626] flex-shrink-0">
-            <AlertTriangle className="w-6 h-6 stroke-[1.75]" />
+          {/* Top Accent Hairline */}
+          <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#DC2626] via-[#FCA5A5] to-[#DC2626]/50 opacity-90 group-hover:opacity-100 transition-opacity" />
+          {/* Corner Glow */}
+          <div className="absolute -top-12 -right-12 w-28 h-28 bg-[#DC2626]/5 rounded-full blur-2xl group-hover:bg-[#DC2626]/15 transition-all duration-300 pointer-events-none" />
+
+          {/* Row 1: Icon + Title */}
+          <div className="flex items-center gap-3 mb-3.5">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FEF2F2] to-[#FECDD3] border border-[#FECACA] flex items-center justify-center text-[#DC2626] shadow-2xs group-hover:scale-105 transition-transform duration-200 flex-shrink-0">
+              <AlertTriangle className="w-4.5 h-4.5 stroke-[2]" />
+            </div>
+            <h3 className="font-admin-body text-[15px] font-semibold text-[#1C1917] tracking-tight group-hover:text-[#DC2626] transition-colors">
+              Service Issues
+            </h3>
           </div>
 
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center justify-between">
-              <span className="text-[14px] font-semibold text-[#1F2937]">Service Issues</span>
-              <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition flex-shrink-0" />
+          {/* Row 2: Hero Stat Number + Unit + Action Chevron */}
+          <div className="flex items-center justify-between mb-3.5">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-[34px] sm:text-[36px] font-admin-body font-bold tracking-[-1.5px] tabular-nums text-[#DC2626] leading-none">
+                {stats.serviceIssues}
+              </span>
+              <span className="text-[13px] font-medium font-admin-body text-[#DC2626]">
+                flagged
+              </span>
             </div>
-            <div className="text-[28px] sm:text-[30px] font-bold text-[#DC2626] mt-1 leading-none font-admin-body">
-              {stats.serviceIssues}
+            <div className="w-7 h-7 rounded-full bg-[#FAF7F2] border border-[#ECE5DA] flex items-center justify-center text-[#9CA3AF] group-hover:bg-[#DC2626] group-hover:text-white group-hover:border-[#DC2626] group-hover:translate-x-0.5 transition-all duration-200 flex-shrink-0 shadow-2xs">
+              <ChevronRight className="w-3.5 h-3.5 stroke-[2.2]" />
             </div>
-            <p className="text-[12px] text-[#6B7280] mt-1.5 leading-snug">
-              Requires attention
-            </p>
+          </div>
+
+          {/* Row 3: Trend & Context Footer */}
+          <div className="pt-3 border-t border-[#F5EFE6]/80 flex flex-col gap-0.5">
+            <div className="flex items-center gap-1.5 text-[12px] font-semibold text-[#DC2626]">
+              <span className="w-2 h-2 rounded-full bg-[#DC2626] animate-pulse"></span>
+              <span>Requires attention</span>
+            </div>
+            <span className="text-[11.5px] font-normal text-[#9CA3AF]">
+              Transit delays &amp; PIN review
+            </span>
           </div>
         </div>
       </div>
@@ -754,7 +856,7 @@ export default function AdminDeliveryPage() {
       {/* 5. Orders & Logistics Table */}
       <div className="bg-white border border-[#E5E7EB] rounded-2xl shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
+          <table className="w-full text-left border-collapse text-[13.5px] tabular-nums">
             <thead>
               <tr className="border-b border-[#E5E7EB] bg-white text-[12.5px] font-semibold text-[#4B5563]">
                 {/* Select All Checkbox */}

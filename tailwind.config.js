@@ -65,12 +65,13 @@ export default {
         }
       },
       fontFamily: {
-        serif: ['"Playfair Display"', 'Cormorant Garamond', 'Georgia', 'serif'],
-        display: ['"Cinzel"', '"Playfair Display"', 'serif'],
-        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
-        'admin-heading': ['var(--admin-font-heading)', '"Cormorant Garamond"', 'Georgia', 'serif'],
-        'admin-body': ['var(--admin-font-body)', '"DM Sans"', 'system-ui', 'sans-serif'],
-        'admin-mono': ['var(--admin-font-mono)', '"DM Mono"', 'monospace'],
+        sans: ['"Inter"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+        display: ['"Playfair Display"', '"Cinzel"', 'serif'],
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+        'admin-heading': ['var(--admin-font-heading)', '"Inter"', 'system-ui', 'sans-serif'],
+        'admin-body': ['var(--admin-font-body)', '"Inter"', 'system-ui', 'sans-serif'],
+        'admin-mono': ['var(--admin-font-mono)', '"JetBrains Mono"', 'monospace'],
       },
       boxShadow: {
         'soft': '0 4px 20px -2px rgba(92, 29, 39, 0.06)',

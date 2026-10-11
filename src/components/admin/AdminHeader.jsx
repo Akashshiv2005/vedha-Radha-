@@ -181,7 +181,7 @@ export default function AdminHeader({
         <Link
           to="/"
           target="_blank"
-          className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#F5F2EC] hover:bg-[#EAE4D8] text-[#5C5042] text-[12.5px] font-medium transition shadow-2xs"
+          className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#F5F2EC] hover:bg-[#EAE4D8] text-[#5C5042] text-[14px] font-medium font-admin-body transition shadow-2xs"
           title="View customer showroom website"
         >
           <span>Showroom Website</span>
@@ -199,14 +199,14 @@ export default function AdminHeader({
           </div>
           
           {/* Profile Name: "Admin" only (subtitle removed) */}
-          <span className="text-[13.5px] font-admin-body font-semibold text-[#292521] hidden sm:inline">
+          <span className="text-[14px] font-admin-body font-medium text-[#292521] hidden sm:inline">
             Admin
           </span>
 
           {/* Sign Out Button */}
           <button
             onClick={handleSignOut}
-            className="p-1.5 sm:px-2.5 sm:py-1.5 text-gray-500 hover:text-[#C24141] rounded-xl hover:bg-[#FDECEC] transition flex items-center gap-1.5 text-[12.5px] font-admin-body font-medium"
+            className="p-1.5 sm:px-2.5 sm:py-1.5 text-gray-500 hover:text-[#C24141] rounded-xl hover:bg-[#FDECEC] transition flex items-center gap-1.5 text-[14px] font-admin-body font-medium"
             title="Sign out"
           >
             <LogOut className="w-4 h-4" />

@@ -1,17 +1,44 @@
 import React from 'react';
 import { 
-  LayoutDashboard, 
-  Gem, 
-  CalendarClock, 
-  Truck, 
-  SlidersHorizontal, 
   ShieldCheck, 
-  Sparkles, 
   X,
   LogOut
 } from 'lucide-react';
-import { useAdmin } from '../../context/AdminContext';
 import { useAuth } from '../../context/AuthContext';
+
+function LotusBrandMark({ className = "w-5 h-5 text-[#D6A84B]" }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 40 32"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {/* Center Petal */}
+      <path d="M20 4C16.8 8.2 16.8 13.2 20 19" />
+      <path d="M20 4C23.2 8.2 23.2 13.2 20 19" />
+
+      {/* Left Inner Petal */}
+      <path d="M20 19C16.5 14 11.8 11.5 10.5 13.8C9.3 16.2 13.5 19 20 19Z" />
+
+      {/* Right Inner Petal */}
+      <path d="M20 19C23.5 14 28.2 11.5 29.5 13.8C30.7 16.2 26.5 19 20 19Z" />
+
+      {/* Left Outer Petal */}
+      <path d="M19 19.5C14.5 17.2 8.2 17.5 6.5 20C5.3 22 11.8 22.8 19.5 20.5" />
+
+      {/* Right Outer Petal */}
+      <path d="M21 19.5C25.5 17.2 31.8 17.5 33.5 20C34.7 22 28.2 22.8 20.5 20.5" />
+
+      {/* Bottom Lotus Curve */}
+      <path d="M10 21C13.5 23.5 16.8 24.5 20 24.5C23.2 24.5 26.5 23.5 30 21" />
+    </svg>
+  );
+}
 
 export default function AdminSidebar({ 
   currentTab = 'overview', 
@@ -19,60 +46,14 @@ export default function AdminSidebar({
   isOpen = false, 
   onClose = () => {} 
 }) {
-  const { products, orders, returns } = useAdmin();
   const { user, logout } = useAuth();
 
-  // Badge calculations
-  const totalProducts = products.length;
-  const pendingReservations = orders.filter(o => ['awaiting_confirmation', 'reserved', 'new'].includes(o.status)).length;
-  const pendingDispatch = orders.filter(o => ['processing', 'confirmed'].includes(o.status)).length;
-  const pendingReturns = returns.filter(r => r.currentStep !== 'resolved').length;
-
   const navItems = [
-    {
-      id: 'overview',
-      label: '1. Overview Dashboard',
-      shortLabel: 'Overview',
-      icon: LayoutDashboard,
-      badge: null,
-      desc: 'Summary, trend charts & attention queues'
-    },
-    {
-      id: 'products',
-      label: '2. Product Inventory',
-      shortLabel: 'Inventory',
-      icon: Gem,
-      badge: totalProducts > 0 ? totalProducts : 7,
-      badgeType: 'neutral',
-      desc: 'Catalog, unique 1-of-1 tags & stock control'
-    },
-    {
-      id: 'orders',
-      label: '3. Reservations & Orders',
-      shortLabel: 'Orders Queue',
-      icon: CalendarClock,
-      badge: pendingReservations > 0 ? pendingReservations : 2,
-      badgeType: 'warning',
-      desc: 'Holds, showroom lockouts & timelines'
-    },
-    {
-      id: 'delivery',
-      label: '4. Delivery & Logistics',
-      shortLabel: 'Delivery',
-      icon: Truck,
-      badge: 1,
-      badgeType: 'warning',
-      desc: 'Pincode serviceability & tracking'
-    },
-    {
-      id: 'returns_settings',
-      label: '5. Returns & Settings',
-      shortLabel: 'Returns & Config',
-      icon: SlidersHorizontal,
-      badge: pendingReturns > 0 ? pendingReturns : 1,
-      badgeType: 'danger',
-      desc: 'Inspection cases & demo policies'
-    }
+    { id: 'overview', label: 'Dashboard' },
+    { id: 'products', label: 'Product Inventory' },
+    { id: 'orders', label: 'Reservations & Orders' },
+    { id: 'delivery', label: 'Delivery & Logistics' },
+    { id: 'returns_settings', label: 'Returns & Settings' }
   ];
 
   return (
@@ -82,25 +63,41 @@ export default function AdminSidebar({
         <div 
           onClick={onClose}
           className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden animate-in fade-in" 
+          aria-hidden="true"
         />
       )}
 
       {/* Sidebar Aside */}
-      <aside className={`
-        fixed top-0 bottom-0 left-0 z-50 w-72 bg-[#2D0D15] text-[#FFFFFF] flex flex-col border-r border-[#421B23] transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static
-        ${isOpen ? 'translate-x-0' : '-translate-x-full'}
-      `}>
+      <aside 
+        aria-label="Admin Navigation Sidebar"
+        className={`
+          fixed top-0 bottom-0 left-0 z-50 w-72 bg-[#073F3B] text-[#F5F3EA] flex flex-col border-r border-[#0D5953] transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:h-screen lg:sticky lg:top-0 lg:self-start lg:flex-shrink-0
+          ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+        `}
+      >
         {/* Brand Header */}
-        <div className="p-5 border-b border-[#421B23] flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl border border-[#C49A45]/50 bg-[#35151B] p-0.5 shadow-md flex-shrink-0 flex items-center justify-center">
-              <Sparkles className="w-5 h-5 text-[#C49A45]" />
-            </div>
-            <div>
-              <h1 className="font-serif tracking-wider font-semibold text-[17px] text-[#F3EAD3] uppercase leading-tight">
+        <div className="px-5 py-4 border-b border-[#0D5953] flex items-center justify-between flex-shrink-0">
+          <div className="flex items-center gap-3 min-w-0">
+            {/* Reference Logo Emblem */}
+            <img 
+              src="/images/vedha_radha_logo.png" 
+              alt="Vedha Radha Brand Logo" 
+              className="h-11 w-auto max-w-[85px] object-contain flex-shrink-0"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = '/images/vedha_radha_brand_logo.png';
+              }}
+            />
+
+            {/* Subtle Vertical Divider Line matching reference */}
+            <div className="w-[1px] h-8 bg-[#2F665F]/80 flex-shrink-0" />
+
+            {/* Brand Title & Subtitle matching reference */}
+            <div className="min-w-0">
+              <h1 className="font-serif tracking-wide font-bold text-[17px] text-[#F5F3EA] uppercase leading-tight truncate">
                 VEDA RADHA
               </h1>
-              <span className="text-[11px] tracking-widest uppercase font-serif text-[#C49A45] font-semibold block">
+              <span className="text-[11px] tracking-[0.2em] uppercase font-serif text-[#D6A84B] font-semibold block mt-0.5">
                 JEWELLERY
               </span>
             </div>
@@ -108,96 +105,80 @@ export default function AdminSidebar({
 
           <button
             onClick={onClose}
-            className="lg:hidden p-1.5 text-[#E5D9D5] hover:text-white rounded-lg hover:bg-white/10"
+            className="lg:hidden p-1.5 text-[#91AAA4] hover:text-[#F5F3EA] rounded-lg hover:bg-[#0D5953] transition cursor-pointer"
             aria-label="Close sidebar"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Showroom Context Banner */}
-        <div className="px-5 py-3 bg-[#3A141E] border-b border-[#421B23]">
-          <div className="flex items-center justify-between text-[12px] font-admin-body text-[#E5D9D5] mb-1">
-            <span className="font-medium text-[#E5D9D5]/90">Showroom Mode:</span>
-            <span className="text-[#22C55E] font-medium font-admin-mono flex items-center gap-1.5 text-[12px]">
-              <span className="w-2 h-2 rounded-full bg-[#22C55E] inline-block shadow-[0_0_6px_#22C55E]" /> Online
+        {/* Showroom Mode Section (Matches Reference Screenshot exactly) */}
+        <div className="px-5 py-3.5 bg-[#0D5953]/35 border-b border-[#0D5953] flex-shrink-0">
+          <div className="flex items-center justify-between mb-1">
+            <span className="text-[13.5px] font-admin-body font-medium text-[#F5F3EA]">
+              Showroom Mode
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#034D47] border border-[#066159]/40 text-[#2DD4BF] text-[12px] font-medium font-admin-mono">
+              <span className="w-2 h-2 rounded-full bg-[#10B981] inline-block shadow-[0_0_6px_#34D399]" />
+              <span>Online</span>
             </span>
           </div>
-          <p className="text-[11.5px] font-admin-body text-[#E5D9D5]/70 leading-snug">
-            Prototype demo for duplicate sale prevention &amp; multi-channel inventory.
+          <p className="text-[12px] font-admin-body text-[#91AAA4] leading-snug">
+            Primary device for display and processing of jewellery inventory.
           </p>
         </div>
 
         {/* Navigation List */}
-        <nav className="flex-1 p-3 space-y-1.5 overflow-y-auto">
-          <div className="px-3 py-1.5 text-[11px] font-admin-body uppercase tracking-wider text-[#E5D9D5]/60 font-semibold">
+        <nav 
+          aria-label="Admin Navigation"
+          className="flex-1 min-h-0 px-3 py-3 space-y-1.5 overflow-y-auto"
+        >
+          <div className="px-3 pt-1 pb-2 text-[11px] font-admin-body uppercase tracking-wider text-[#91AAA4] font-semibold select-none">
             ADMIN SCREENS
           </div>
 
           {navItems.map(item => {
-            const Icon = item.icon;
             const isActive = currentTab === item.id;
 
             return (
               <button
                 key={item.id}
+                type="button"
                 onClick={() => {
                   setCurrentTab(item.id);
                   onClose();
                 }}
-                className={`w-full text-left px-3.5 py-2.5 rounded-xl flex items-center justify-between group transition-all relative ${
+                className={`w-full text-left px-4 py-3 rounded-xl relative block transition-colors duration-150 cursor-pointer text-[14px] font-admin-body focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D6A84B] focus-visible:ring-inset ${
                   isActive
-                    ? 'bg-[#651F2B] text-white shadow-md font-semibold border border-[#D8C39A]/40'
-                    : 'text-[#E5D9D5] hover:bg-[#421B23] hover:text-white font-medium'
+                    ? 'bg-[#0D5953] text-[#D6A84B] font-semibold shadow-xs'
+                    : 'text-[#F5F3EA] hover:text-[#D6A84B] hover:bg-[#0D5953] font-medium'
                 }`}
               >
-                {/* Active Gold Indicator Bar */}
+                {/* Active Gold Left-Edge Indicator */}
                 {isActive && (
-                  <span className="absolute left-0 top-2 bottom-2 w-1 bg-[#C49A45] rounded-r" />
+                  <span
+                    className="absolute left-0 top-2 bottom-2 w-1 bg-[#D6A84B] rounded-r"
+                    aria-hidden="true"
+                  />
                 )}
 
-                <div className="flex items-center gap-3 min-w-0">
-                  <div className={`p-2 rounded-lg flex-shrink-0 transition ${
-                    isActive ? 'bg-[#FFFFFF]/15 text-[#C49A45]' : 'bg-white/5 text-[#E5D9D5]/70 group-hover:text-white'
-                  }`}>
-                    <Icon className="w-4 h-4" />
-                  </div>
-                  <div className="min-w-0">
-                    <span className="text-[14px] font-admin-body block truncate leading-snug">
-                      {item.label}
-                    </span>
-                    <span className={`text-[12px] font-admin-body block truncate ${isActive ? 'text-[#F2E7D5]' : 'text-[#E5D9D5]/70'}`}>
-                      {item.desc}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Badge Indicator */}
-                {item.badge !== null && (
-                  <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-admin-mono font-bold flex-shrink-0 ml-1.5 shadow-xs ${
-                    item.badgeType === 'warning'
-                      ? 'bg-[#B0833E] text-white'
-                      : item.badgeType === 'danger'
-                      ? 'bg-[#C24141] text-white'
-                      : 'bg-white/15 text-white border border-white/10'
-                  }`}>
-                    {item.badge}
-                  </span>
-                )}
+                <span className="block truncate tracking-wide">
+                  {item.label}
+                </span>
               </button>
             );
           })}
         </nav>
 
         {/* Staff Profile & Logout */}
-        <div className="p-3 border-t border-[#421B23] bg-[#35151B] space-y-2">
-          <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#421B23] border border-[#651F2B]/50">
+        <div className="p-3 border-t border-[#0D5953] bg-[#073F3B] space-y-2 flex-shrink-0 mt-auto">
+          <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#0D5953] border border-[#0D5953] shadow-xs">
             <div className="min-w-0 pr-2">
-              <span className="text-[14px] font-admin-body font-semibold text-white block truncate">
-                Admin
+              <span className="text-[14px] font-admin-body font-semibold text-[#F5F3EA] block truncate">
+                {user?.name || 'Admin'}
               </span>
-              <span className="text-[12px] font-admin-body text-[#C49A45] block truncate font-medium">
-                Administrator
+              <span className="text-[12px] font-admin-body text-[#D6A84B] block truncate font-medium">
+                {user?.role || 'Administrator'}
               </span>
             </div>
             <button
@@ -205,7 +186,7 @@ export default function AdminSidebar({
                 await logout();
                 window.location.href = '/admin/login';
               }}
-              className="p-1.5 text-[#E5D9D5] hover:text-[#C24141] hover:bg-[#FDECEC]/10 rounded-lg transition"
+              className="p-1.5 text-[#91AAA4] hover:text-[#F5F3EA] hover:bg-[#073F3B] rounded-lg transition cursor-pointer"
               title="Sign out of staff session"
               aria-label="Sign out"
             >
@@ -213,9 +194,9 @@ export default function AdminSidebar({
             </button>
           </div>
 
-          <div className="flex items-center gap-1.5 text-[#C49A45] text-[12px] font-admin-body font-medium px-1">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#C49A45] flex-shrink-0" />
-            <span>Showroom Guardrail Active</span>
+          <div className="flex items-center gap-1.5 text-[#D6A84B] text-[12px] font-admin-body font-medium px-1">
+            <ShieldCheck className="w-3.5 h-3.5 text-[#D6A84B] flex-shrink-0" />
+            <span>Showroom Guard Active</span>
           </div>
         </div>
       </aside>
