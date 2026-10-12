@@ -270,14 +270,24 @@ export default function GoldPage({
   const [priceFilter, setPriceFilter] = useState('all'); // 'all' | 'under50k' | '50k-100k' | 'above100k'
 
   // Identify active category key from either single-level or nested route
+  const isBanglesSubStyle = Boolean(subType) && (subType.toLowerCase() === 'bangles' || subType.toLowerCase() === 'bangle-bracelets');
   const activeKey = (subType || subCategory || category || 'all').toLowerCase();
   const activeMainCat = (category || subCategory || 'all').toLowerCase();
 
-  const categoryInfo = CATEGORY_MAP[activeKey] || {
-    title: '22K Hallmarked Gold Jewellery',
-    desc: 'Explore our complete range of BIS 916 certified South Indian bridal necklaces, antique bangles, earrings, and temple jewels.',
-    parent: null
-  };
+  let categoryInfo = CATEGORY_MAP[activeKey];
+  if (isBanglesSubStyle) {
+    categoryInfo = {
+      title: 'Gold Bangles',
+      desc: 'Heritage antique gold kadas, daily wear valayals, and handcrafted 22K bangles.',
+      parent: { name: 'Bangle & Bracelets', slug: 'bangles', path: '/gold/bangles' }
+    };
+  } else if (!categoryInfo) {
+    categoryInfo = {
+      title: '22K Hallmarked Gold Jewellery',
+      desc: 'Explore our complete range of BIS 916 certified South Indian bridal necklaces, antique bangles, earrings, and temple jewels.',
+      parent: null
+    };
+  }
 
   // Smooth scroll helper to navigate directly to catalog products instead of jumping to hero
   const isInitialMount = React.useRef(true);
@@ -322,12 +332,16 @@ export default function GoldPage({
     if (activeKey === 'all') {
       matchesCategory = true;
     } else if (subType) {
-      // Direct subcategory view (e.g., /gold/earrings/studs, /gold/rings/engagement-rings, /gold/occasion/casual-wear)
-      matchesCategory = (
-        item.subType === activeKey ||
-        item.subCategorySlug === activeKey ||
-        item.occasion === activeKey
-      );
+      // Direct subcategory view (e.g., /gold/earrings/studs, /gold/rings/engagement-rings, /gold/bangles/bangles, /gold/occasion/casual-wear)
+      if (isBanglesSubStyle) {
+        matchesCategory = (item.subType === 'bangles' || item.subType === 'bangle-bracelets');
+      } else {
+        matchesCategory = (
+          item.subType === activeKey ||
+          item.subCategorySlug === activeKey ||
+          item.occasion === activeKey
+        );
+      }
     } else if (activeMainCat === 'all') {
       matchesCategory = true;
     } else if (activeMainCat === 'earrings') {
@@ -612,25 +626,29 @@ export default function GoldPage({
             </span>
             <Link
               to={currentCategoryData.path}
+              id="gold-style-filter-view-all"
               onClick={scrollToCatalog}
-              className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${activeKey === currentCategoryData.slug
-                ? 'bg-[#581923] text-white'
-                : 'bg-white/80 text-[#3A2E28] hover:bg-white border border-[#DECDBB]'
-                }`}
+              className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
+                !subType
+                  ? 'bg-[#581923] text-white'
+                  : 'bg-white/80 text-[#3A2E28] hover:bg-white border border-[#DECDBB]'
+              }`}
             >
               View All
             </Link>
             {activeSubcategories.map(sub => {
-              const isSubActive = activeKey === sub.slug;
+              const isSubActive = Boolean(subType) && (subType.toLowerCase() === sub.slug.toLowerCase());
               return (
                 <Link
                   key={sub.slug}
+                  id={`gold-style-filter-${sub.slug}`}
                   to={sub.path}
                   onClick={scrollToCatalog}
-                  className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${isSubActive
-                    ? 'bg-[#581923] text-white'
-                    : 'bg-white/80 text-[#3A2E28] hover:bg-white border border-[#DECDBB]'
-                    }`}
+                  className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
+                    isSubActive
+                      ? 'bg-[#581923] text-white'
+                      : 'bg-white/80 text-[#3A2E28] hover:bg-white border border-[#DECDBB]'
+                  }`}
                 >
                   {sub.name}
                 </Link>
