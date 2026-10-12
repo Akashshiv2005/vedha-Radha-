@@ -16,38 +16,38 @@ export default function BridalHeroBanner({ onExploreClick }) {
           />
 
           {/* Gentle vignette/gradient on the left to ensure crisp, effortless legibility for text */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#380911]/95 via-[#450F18]/70 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#380911]/95 via-[#450F18]/85 to-[#450F18]/50 sm:to-transparent pointer-events-none" />
 
           {/* Left-Aligned Copy Block */}
-          <div className="relative z-10 h-full flex flex-col justify-center px-4 xs:px-6 sm:px-12 lg:px-16 xl:px-20 max-w-xl lg:max-w-2xl py-6 sm:py-8">
+          <div className="relative z-10 h-full flex flex-col justify-center px-4 xs:px-6 sm:px-10 lg:px-16 xl:px-20 max-w-xl lg:max-w-2xl py-5 xs:py-7 sm:py-10">
             
             {/* Eyebrow: Gold hairline rule with uppercase gold text */}
-            <div className="flex items-center gap-2.5 sm:gap-3.5 mb-3 sm:mb-6">
-              <span className="h-[1px] w-7 sm:w-12 bg-[#C49A45]"></span>
-              <span className="text-[#C49A45] text-[10px] sm:text-xs font-semibold tracking-[0.2em] sm:tracking-[0.24em] uppercase font-sans">
+            <div className="flex items-center gap-2 xs:gap-2.5 sm:gap-3.5 mb-2 xs:mb-3 sm:mb-5">
+              <span className="h-[1px] w-6 xs:w-8 sm:w-12 bg-[#C49A45]"></span>
+              <span className="text-[#C49A45] text-[9.5px] xs:text-[10.5px] sm:text-xs font-semibold tracking-[0.2em] sm:tracking-[0.24em] uppercase font-sans">
                 BRIDAL COLLECTION
               </span>
             </div>
 
             {/* Headline: Elegant Serif in Ivory with generous line-height */}
-            <h2 className="font-serif text-2xl xs:text-3xl sm:text-4xl lg:text-[44px] xl:text-[48px] font-normal text-[#F8F4EC] leading-[1.24] sm:leading-[1.32] tracking-tight">
+            <h2 className="font-serif text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-[44px] xl:text-[48px] font-normal text-[#F8F4EC] leading-[1.22] sm:leading-[1.3] tracking-tight">
               Where Every Bride<br />
               Becomes a Tradition
             </h2>
 
             {/* Supporting Text: Soft Ivory with generous margin and line-height */}
-            <p className="text-[#F8F4EC]/90 font-sans text-xs sm:text-sm lg:text-[15px] font-normal leading-[1.65] sm:leading-[1.85] mt-3 sm:mt-6 lg:mt-7 max-w-md sm:max-w-lg">
+            <p className="text-[#F8F4EC]/90 font-sans text-[11.5px] xs:text-xs sm:text-sm lg:text-[15px] font-normal leading-[1.55] sm:leading-[1.8] mt-2 xs:mt-3 sm:mt-5 max-w-md sm:max-w-lg">
               Heirloom-inspired gold jewellery, designed to shine through sacred rituals and timeless celebrations.
             </p>
 
-            {/* CTA Button: Generous margin-top */}
-            <div className="mt-5 sm:mt-9 lg:mt-10">
+            {/* CTA Button */}
+            <div className="mt-3.5 xs:mt-5 sm:mt-8">
               <button
                 type="button"
                 onClick={onExploreClick}
-                className="group inline-flex items-center justify-center px-5 sm:px-8 py-2.5 sm:py-3.5 rounded border border-[#C49A45] bg-[#3B0B14]/40 hover:bg-[#651F2B] hover:border-[#E5C278] text-[#F8F4EC] hover:text-white transition-all duration-300 shadow-sm cursor-pointer min-h-[44px]"
+                className="group inline-flex items-center justify-center px-4 xs:px-6 sm:px-8 py-2 xs:py-2.5 sm:py-3.5 rounded border border-[#C49A45] bg-[#3B0B14]/40 hover:bg-[#651F2B] hover:border-[#E5C278] text-[#F8F4EC] hover:text-white transition-all duration-300 shadow-sm cursor-pointer min-h-[40px] xs:min-h-[44px]"
               >
-                <span className="text-[10.5px] sm:text-[11.5px] font-medium tracking-[0.2em] uppercase font-sans">
+                <span className="text-[10px] xs:text-[11px] sm:text-[11.5px] font-medium tracking-[0.2em] uppercase font-sans">
                   EXPLORE COLLECTION
                 </span>
               </button>

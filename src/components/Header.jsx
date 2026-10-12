@@ -151,13 +151,13 @@ export default function Header({
       {/* ========================================================================= */}
       {/* 1. TOP UTILITY BAR (Deep Maroon Row)                                      */}
       {/* ========================================================================= */}
-      <div className="bg-[#3B1117] text-[#EAD8D8] text-[10px] xs:text-[11px] sm:text-[11.5px] border-b border-[#521B24] px-2.5 sm:px-8 py-1.5">
-        <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-1.5 lg:gap-4 flex-wrap lg:flex-nowrap">
+      <div className="bg-[#3B1117] text-[#EAD8D8] text-[10.5px] xs:text-[11px] sm:text-[11.5px] border-b border-[#521B24] px-3 sm:px-6 lg:px-8 py-1 sm:py-1.5">
+        <div className="max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-1 sm:gap-3 lg:gap-4">
 
           {/* Left: Free Shipping */}
-          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 mx-auto sm:mx-0 text-center sm:text-left">
+          <div className="flex items-center justify-center sm:justify-start gap-1.5 sm:gap-2 shrink-0 w-full sm:w-auto text-center sm:text-left py-0.5 sm:py-0">
             <Truck className="w-3.5 h-3.5 text-[#E5C278] shrink-0" aria-hidden="true" />
-            <span className="tracking-wide text-[#EAD8D8] font-normal">
+            <span className="tracking-wide text-[#EAD8D8] font-normal truncate sm:overflow-visible">
               Free Shipping on Orders Above ₹5,000
             </span>
           </div>
@@ -165,10 +165,10 @@ export default function Header({
           <div className="hidden lg:block h-3.5 w-px bg-[#692F39] shrink-0" />
 
           {/* Center: Live Benchmark Gold & Silver Rate Pill */}
-          <div className="flex items-center justify-center my-0.5 sm:my-0 mx-auto lg:mx-0 max-w-full overflow-hidden">
+          <div className="flex items-center justify-center my-0.5 sm:my-0 w-full sm:w-auto overflow-hidden">
             <button
               onClick={() => setIsGoldRateModalOpen(true)}
-              className="relative inline-flex items-center gap-1.5 xs:gap-2 sm:gap-2.5 px-2.5 xs:px-3 sm:px-3.5 py-1 rounded-full bg-gradient-to-r from-[#FFF4DF] via-[#FDF0D5] to-[#F7E1B5] text-[#2C1D18] border border-[#D4AF37]/80 shadow-[0_0_12px_rgba(212,175,55,0.25)] hover:shadow-[0_0_16px_rgba(212,175,55,0.5)] hover:scale-[1.01] transition-all duration-200 cursor-pointer group max-w-full"
+              className="relative inline-flex items-center gap-1.5 xs:gap-2 sm:gap-2.5 px-2.5 xs:px-3 sm:px-3.5 py-0.5 sm:py-1 rounded-full bg-gradient-to-r from-[#FFF4DF] via-[#FDF0D5] to-[#F7E1B5] text-[#2C1D18] border border-[#D4AF37]/80 shadow-[0_0_12px_rgba(212,175,55,0.25)] hover:shadow-[0_0_16px_rgba(212,175,55,0.5)] hover:scale-[1.01] transition-all duration-200 cursor-pointer group max-w-full text-[10px] xs:text-[11px] sm:text-[11.5px]"
               title={`Click for multi-purity rates & conversion details. ${disclaimer}`}
               aria-label={`Today's 22K Gold: ₹${rates.gold22k}/g, Silver: ₹${rates.silver1g}/g. Last updated ${rates.lastUpdated}.`}
             >
@@ -183,7 +183,7 @@ export default function Header({
 
               {/* Gold Rate */}
               <div className="flex items-center gap-1">
-                <span className="font-normal text-[9px] xs:text-[10px] sm:text-[11px] text-[#554133]">
+                <span className="font-normal text-[9.5px] xs:text-[10px] sm:text-[11px] text-[#554133]">
                   Gold (22K):
                 </span>
                 <span className="font-bold text-[10px] xs:text-[11px] sm:text-[11.5px] text-[#1F1511]">
@@ -195,7 +195,7 @@ export default function Header({
 
               {/* Silver Rate */}
               <div className="flex items-center gap-1">
-                <span className="font-normal text-[9px] xs:text-[10px] sm:text-[11px] text-[#554133]">
+                <span className="font-normal text-[9.5px] xs:text-[10px] sm:text-[11px] text-[#554133]">
                   Silver:
                 </span>
                 <span className="font-bold text-[10px] xs:text-[11px] sm:text-[11.5px] text-[#1F1511]">
@@ -307,16 +307,16 @@ export default function Header({
       {/* ========================================================================= */}
       {/* 2. MAIN NAVIGATION ROW (Warm Ivory Row with New Navigation Structure)      */}
       {/* ========================================================================= */}
-      <div className="bg-[#FAF7F2] border-b border-[#E8DFC0]/90 py-2.5 sm:py-3.5 px-3 sm:px-8 relative">
-        <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-2 sm:gap-4">
+      <div className="bg-[#FAF7F2] border-b border-[#E8DFC0]/90 py-2 sm:py-3 px-3 sm:px-6 lg:px-8 relative">
+        <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-1.5 sm:gap-4">
 
-          {/* Left: Brand Logo & Wordmark + Mobile Hamburger (< xl) */}
-          <div className="flex items-center gap-1.5 xs:gap-3 sm:gap-4 shrink-0">
+          {/* Left: Brand Logo & Wordmark + Mobile Hamburger (< lg) */}
+          <div className="flex items-center gap-1 xs:gap-2.5 sm:gap-4 shrink-0">
 
-            {/* Mobile Hamburger Menu Button (< xl) */}
+            {/* Mobile Hamburger Menu Button (< lg) */}
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="xl:hidden p-1.5 xs:p-2 -ml-1 text-[#2C1D18] hover:text-[#581923] hover:bg-[#F3EAD3]/60 rounded-lg transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 shrink-0"
+              className="lg:hidden p-1.5 xs:p-2 -ml-1 text-[#2C1D18] hover:text-[#581923] hover:bg-[#F3EAD3]/60 rounded-lg transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 shrink-0"
               aria-label="Open mobile navigation menu"
               title="Open Navigation Menu"
             >
@@ -326,10 +326,10 @@ export default function Header({
             {/* Vedha Radha Logo & Wordmark */}
             <Link
               to="/"
-              className="flex items-center gap-2 sm:gap-3 group cursor-pointer"
+              className="flex items-center gap-1.5 xs:gap-2.5 sm:gap-3 group cursor-pointer"
               aria-label="Vedha Radha Thanga Maaligai Homepage"
             >
-              <div className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 text-[#B8924B] shrink-0 transition-transform duration-300 group-hover:scale-105">
+              <div className="w-7 h-7 xs:w-8 xs:h-8 sm:w-10 sm:h-10 text-[#B8924B] shrink-0 transition-transform duration-300 group-hover:scale-105">
                 <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full drop-shadow-2xs">
                   <path d="M50 10 C42 32 30 50 18 64 C28 72 40 76 50 76 C60 76 72 72 82 64 C70 50 58 32 50 10 Z" stroke="#B8924B" strokeWidth="2.5" fill="#FAF6EE" />
                   <path d="M50 18 C46 36 40 52 50 70 C60 52 54 36 50 18 Z" fill="#C5A059" stroke="#947130" strokeWidth="1.5" />
@@ -340,11 +340,11 @@ export default function Header({
                 </svg>
               </div>
 
-              <div className="flex flex-col justify-center">
-                <span className="font-serif text-[18px] xs:text-[21px] sm:text-[24px] font-bold text-[#241716] leading-none tracking-tight group-hover:text-[#581923] transition-colors">
+              <div className="flex flex-col justify-center min-w-0">
+                <span className="font-serif text-[16px] xs:text-[19px] sm:text-[23px] font-bold text-[#241716] leading-none tracking-tight group-hover:text-[#581923] transition-colors whitespace-nowrap">
                   Vedha Radha
                 </span>
-                <span className="font-sans text-[7px] xs:text-[8.5px] sm:text-[9.5px] font-semibold tracking-[0.24em] xs:tracking-[0.28em] text-[#7A6252] uppercase mt-1">
+                <span className="font-sans text-[6.5px] xs:text-[7.5px] sm:text-[9px] font-semibold tracking-[0.22em] xs:tracking-[0.26em] text-[#7A6252] uppercase mt-0.5 sm:mt-1 whitespace-nowrap">
                   THANGAMAALIGAI
                 </span>
               </div>
@@ -355,7 +355,7 @@ export default function Header({
           {/* Center: Main Navigation: Home | Gold | Silver | Coins & Bars ▼ | New Arrivals | Collections ▼ */}
           <nav
             ref={dropdownRef}
-            className="hidden xl:flex items-center gap-6 2xl:gap-8 text-[13.5px] font-medium text-[#3A2E28]"
+            className="hidden lg:flex items-center gap-3.5 xl:gap-6 2xl:gap-8 text-[12.5px] xl:text-[13.5px] font-medium text-[#3A2E28]"
             aria-label="Main Navigation"
           >
             {/* 0. HOME */}
@@ -591,35 +591,35 @@ export default function Header({
           </nav>
 
           {/* Right: Fine-line Search, Account, Wishlist, Shopping-Bag Icons */}
-          <div className="flex items-center gap-1 xs:gap-2 sm:gap-4 text-[#2C1D18]">
+          <div className="flex items-center gap-0.5 xs:gap-1.5 sm:gap-3 text-[#2C1D18] shrink-0 pr-1 sm:pr-0">
 
             <button
               onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="p-1.5 xs:p-2 hover:text-[#581923] rounded-full hover:bg-[#F3EAD3]/60 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 min-w-[36px] min-h-[36px] flex items-center justify-center"
+              className="p-1.5 xs:p-2 hover:text-[#581923] rounded-full hover:bg-[#F3EAD3]/60 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 min-w-[34px] min-h-[34px] sm:min-w-[38px] sm:min-h-[38px] flex items-center justify-center"
               aria-label="Search jewellery collection"
               title="Search collection"
             >
-              <Search className="w-4 h-4 xs:w-5 xs:h-5 stroke-[1.75]" />
+              <Search className="w-4 h-4 xs:w-4.5 xs:h-4.5 sm:w-5 sm:h-5 stroke-[1.75]" />
             </button>
 
             <button
               onClick={onOpenAccount}
-              className="p-1.5 xs:p-2 hover:text-[#581923] rounded-full hover:bg-[#F3EAD3]/60 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 min-w-[36px] min-h-[36px] flex items-center justify-center"
+              className="p-1.5 xs:p-2 hover:text-[#581923] rounded-full hover:bg-[#F3EAD3]/60 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 min-w-[34px] min-h-[34px] sm:min-w-[38px] sm:min-h-[38px] flex items-center justify-center"
               aria-label="My Account and Privilege Club"
               title="Vedha Radha Privilege Club"
             >
-              <User className="w-4 h-4 xs:w-5 xs:h-5 stroke-[1.75]" />
+              <User className="w-4 h-4 xs:w-4.5 xs:h-4.5 sm:w-5 sm:h-5 stroke-[1.75]" />
             </button>
 
             <button
               onClick={onOpenWishlist}
-              className="relative p-1.5 xs:p-2 hover:text-[#581923] rounded-full hover:bg-[#F3EAD3]/60 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 min-w-[36px] min-h-[36px] flex items-center justify-center"
+              className="relative p-1.5 xs:p-2 hover:text-[#581923] rounded-full hover:bg-[#F3EAD3]/60 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 min-w-[34px] min-h-[34px] sm:min-w-[38px] sm:min-h-[38px] flex items-center justify-center"
               aria-label={`Wishlist containing ${wishlistCount} saved items`}
               title={`Saved Wishlist (${wishlistCount})`}
             >
-              <Heart className="w-4 h-4 xs:w-5 xs:h-5 stroke-[1.75]" />
+              <Heart className="w-4 h-4 xs:w-4.5 xs:h-4.5 sm:w-5 sm:h-5 stroke-[1.75]" />
               {wishlistCount > 0 && (
-                <span className="absolute top-0 right-0 xs:top-0.5 xs:right-0.5 bg-[#D32F2F] text-white text-[9px] xs:text-[9.5px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-xs animate-scaleIn">
+                <span className="absolute -top-0.5 -right-0.5 xs:top-0 xs:right-0 bg-[#D32F2F] text-white text-[8.5px] xs:text-[9.5px] font-bold w-3.5 h-3.5 xs:w-4 xs:h-4 rounded-full flex items-center justify-center shadow-xs animate-scaleIn pointer-events-none leading-none z-10">
                   {wishlistCount}
                 </span>
               )}
@@ -627,13 +627,13 @@ export default function Header({
 
             <button
               onClick={onOpenCart}
-              className="relative p-1.5 xs:p-2 hover:text-[#581923] rounded-full hover:bg-[#F3EAD3]/60 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 min-w-[36px] min-h-[36px] flex items-center justify-center"
+              className="relative p-1.5 xs:p-2 hover:text-[#581923] rounded-full hover:bg-[#F3EAD3]/60 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 min-w-[34px] min-h-[34px] sm:min-w-[38px] sm:min-h-[38px] flex items-center justify-center"
               aria-label={`Shopping bag containing ${cartCount} items`}
               title={`Shopping Bag (${cartCount})`}
             >
-              <ShoppingBag className="w-4 h-4 xs:w-5 xs:h-5 stroke-[1.75]" />
+              <ShoppingBag className="w-4 h-4 xs:w-4.5 xs:h-4.5 sm:w-5 sm:h-5 stroke-[1.75]" />
               {cartCount > 0 && (
-                <span className="absolute top-0 right-0 xs:top-0.5 xs:right-0.5 bg-[#D32F2F] text-white text-[9px] xs:text-[9.5px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-xs animate-scaleIn">
+                <span className="absolute -top-0.5 -right-0.5 xs:top-0 xs:right-0 bg-[#D32F2F] text-white text-[8.5px] xs:text-[9.5px] font-bold w-3.5 h-3.5 xs:w-4 xs:h-4 rounded-full flex items-center justify-center shadow-xs animate-scaleIn pointer-events-none leading-none z-10">
                   {cartCount}
                 </span>
               )}
@@ -715,7 +715,7 @@ export default function Header({
       {/* ========================================================================= */}
       {mobileMenuOpen && (
         <div 
-          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex justify-start animate-fadeIn xl:hidden cursor-pointer"
+          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex justify-start animate-fadeIn lg:hidden cursor-pointer"
           onClick={() => setMobileMenuOpen(false)}
         >
           <div
