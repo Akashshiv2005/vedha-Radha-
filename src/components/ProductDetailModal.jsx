@@ -28,9 +28,12 @@ export default function ProductDetailModal({ product, onClose, onAddToCart }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs animate-fadeIn overflow-y-auto">
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-4 bg-black/60 backdrop-blur-xs animate-fadeIn overflow-y-auto cursor-pointer"
+      onClick={onClose}
+    >
       <div 
-        className="bg-[#FAF7F2] rounded-2xl max-w-3xl w-full overflow-hidden shadow-2xl border border-[#E8DFC0] relative animate-scaleUp my-auto"
+        className="bg-[#FAF7F2] rounded-2xl max-w-3xl w-full overflow-hidden shadow-2xl border border-[#E8DFC0] relative animate-scaleUp my-auto max-h-[92vh] overflow-y-auto cursor-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}

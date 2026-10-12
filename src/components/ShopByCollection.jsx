@@ -66,15 +66,15 @@ export default function ShopByCollection({ onSelectCategory }) {
         </div>
 
         {/* 3-Column by 2-Row Balanced Grid of 6 Spacious Rounded Rectangular Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-7">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-7">
           {collectionCategories.map((item) => (
             <div
               key={item.id}
               onClick={() => onSelectCategory && onSelectCategory(item.categoryKey || item.title)}
-              className="group relative bg-[#FFFDF9] hover:bg-white rounded-full border border-[#C49A45]/35 hover:border-[#218F95] p-3 sm:p-3.5 lg:p-4 flex items-center gap-4 sm:gap-5 shadow-[0_2px_12px_rgba(101,31,43,0.03)] hover:shadow-[0_8px_24px_rgba(33,143,149,0.12)] hover:-translate-y-0.5 transition-all duration-300 cursor-pointer"
+              className="group relative bg-[#FFFDF9] hover:bg-white rounded-2xl sm:rounded-full border border-[#C49A45]/35 hover:border-[#218F95] p-2.5 sm:p-3.5 lg:p-4 flex items-center gap-3 sm:gap-5 shadow-[0_2px_12px_rgba(101,31,43,0.03)] hover:shadow-[0_8px_24px_rgba(33,143,149,0.12)] hover:-translate-y-0.5 transition-all duration-300 cursor-pointer"
             >
               {/* Product Thumbnail on the Left */}
-              <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-[82px] lg:h-[82px] rounded-full bg-[#FAF7F2] border border-[#C49A45]/30 group-hover:border-[#218F95]/50 overflow-hidden shrink-0 flex items-center justify-center p-1 transition-colors duration-300">
+              <div className="w-14 h-14 sm:w-20 sm:h-20 lg:w-[82px] lg:h-[82px] rounded-full bg-[#FAF7F2] border border-[#C49A45]/30 group-hover:border-[#218F95]/50 overflow-hidden shrink-0 flex items-center justify-center p-1 transition-colors duration-300">
                 <img
                   src={item.image}
                   alt={item.title}
@@ -84,17 +84,17 @@ export default function ShopByCollection({ onSelectCategory }) {
               </div>
 
               {/* Title & Description on the Right */}
-              <div className="flex flex-col justify-center min-w-0 pr-4 sm:pr-6">
-                <h3 className="font-serif text-[17px] sm:text-[18px] lg:text-[19px] font-bold text-[#651F2B] group-hover:text-[#218F95] transition-colors duration-200 leading-snug">
+              <div className="flex flex-col justify-center min-w-0 pr-3 sm:pr-6">
+                <h3 className="font-serif text-[16px] sm:text-[18px] lg:text-[19px] font-bold text-[#651F2B] group-hover:text-[#218F95] transition-colors duration-200 leading-snug">
                   {item.title}
                 </h3>
-                <p className="font-sans text-xs sm:text-[13px] text-[#55453E] leading-relaxed mt-1 font-normal">
+                <p className="font-sans text-xs sm:text-[13px] text-[#55453E] leading-relaxed mt-0.5 sm:mt-1 font-normal line-clamp-2">
                   {item.description}
                 </p>
               </div>
 
               {/* Subtle Teal Highlight on Hover */}
-              <span className="absolute right-5 w-1.5 h-1.5 rounded-full bg-[#218F95] opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true" />
+              <span className="absolute right-5 w-1.5 h-1.5 rounded-full bg-[#218F95] opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden sm:inline-block" aria-hidden="true" />
             </div>
           ))}
         </div>

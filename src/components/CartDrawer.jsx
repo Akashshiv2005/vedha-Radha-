@@ -7,8 +7,14 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onRemoveItem, o
   const totalAmount = cartItems.reduce((acc, item) => acc + (item.numericPrice || 0), 0);
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-black/50 backdrop-blur-xs animate-fadeIn">
-      <div className="bg-[#FAF7F2] w-full max-w-md h-full shadow-2xl flex flex-col justify-between border-l border-[#EAE2D5] animate-slideLeft">
+    <div 
+      className="fixed inset-0 z-50 flex justify-end bg-black/50 backdrop-blur-xs animate-fadeIn cursor-pointer"
+      onClick={onClose}
+    >
+      <div 
+        className="bg-[#FAF7F2] w-[88%] sm:w-full max-w-md h-full shadow-2xl flex flex-col justify-between border-l border-[#EAE2D5] animate-slideLeft cursor-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
         
         {/* Header */}
         <div className="p-4 sm:p-5 border-b border-[#EAE2D5] flex items-center justify-between bg-[#FAF8F5]">

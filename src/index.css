@@ -308,3 +308,33 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+/* Global mobile responsiveness & overflow safeguards */
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Touch target comfort on mobile */
+@media (max-width: 768px) {
+  a, button, input, select {
+    touch-action: manipulation;
+  }
+}
+
+/* Respect user's reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
