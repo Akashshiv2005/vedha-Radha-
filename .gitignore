@@ -9,8 +9,6 @@ lerna-debug.log*
 
 # Diagnostic / Dependency directories
 node_modules
-dist
-dist-ssr
 *.local
 
 # Editor & OS files
@@ -32,7 +30,9 @@ Thumbs.db
 .env.test.local
 .env.production.local
 
-# Vite / Build cache
+# Build output & cache
+dist
+dist-ssr
 .vite
 .turbo
 .parcel-cache
