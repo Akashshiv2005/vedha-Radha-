@@ -24,42 +24,42 @@ export default function SacredHeroBanner({ onExploreClick }) {
             loading="eager"
           />
 
-          {/* Smooth blend overlay into deep maroon #651F2B on the right half for pristine contrast & typography */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#651F2B]/40 to-[#651F2B]/95 md:to-[#651F2B] pointer-events-none" />
+          {/* Smooth blend overlay into deep maroon #651F2B for pristine contrast & typography */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#651F2B]/90 via-[#651F2B]/80 to-[#651F2B]/95 md:from-transparent md:via-[#651F2B]/40 md:to-[#651F2B] pointer-events-none" />
 
           {/* Subtle restrained teal #218F95 ambiance accent on the right boundary */}
           <div className="absolute -right-24 -top-24 w-96 h-96 bg-[#218F95]/5 rounded-full blur-3xl pointer-events-none" />
 
           {/* Right-Aligned Text & CTA Block */}
-          <div className="relative z-10 h-full flex flex-col justify-center items-start md:items-start ml-auto w-full md:w-[48%] lg:w-[44%] px-6 sm:px-10 lg:pr-16 xl:pr-20 py-8">
+          <div className="relative z-10 h-full flex flex-col justify-center items-start md:items-start ml-auto w-full md:w-[48%] lg:w-[44%] px-4 xs:px-6 sm:px-10 lg:pr-16 xl:pr-20 py-5 xs:py-7 sm:py-10">
             
             {/* Eyebrow: Antique Gold #C49A45 with generous bottom margin */}
-            <div className="flex items-center gap-3 mb-4 sm:mb-5 lg:mb-6">
+            <div className="flex items-center gap-2 xs:gap-2.5 sm:gap-3 mb-2 xs:mb-3 sm:mb-5">
               {/* Optional restrained teal #218F95 micro-pip */}
               <span className="w-1.5 h-1.5 rounded-full bg-[#218F95]/80 inline-block"></span>
-              <span className="text-[#C49A45] text-[11px] sm:text-xs font-semibold tracking-[0.26em] uppercase font-sans">
+              <span className="text-[#C49A45] text-[9.5px] xs:text-[10.5px] sm:text-xs font-semibold tracking-[0.22em] sm:tracking-[0.26em] uppercase font-sans">
                 SACRED COLLECTION
               </span>
             </div>
 
             {/* Headline: Warm Ivory #F8F4EC serif with generous spacing */}
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-[46px] xl:text-[52px] font-normal text-[#F8F4EC] leading-[1.24] tracking-normal mb-4 sm:mb-5 lg:mb-6">
+            <h2 className="font-serif text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-[46px] xl:text-[52px] font-normal text-[#F8F4EC] leading-[1.2] sm:leading-[1.24] tracking-normal mb-2 xs:mb-3 sm:mb-5">
               Silver Idols
             </h2>
 
             {/* Description: Warm Ivory #F8F4EC with open leading and ample bottom margin */}
-            <p className="text-[#F8F4EC]/90 font-serif sm:font-sans text-xs sm:text-sm lg:text-[15px] font-normal leading-[1.75] sm:leading-[1.85] max-w-md mb-8 sm:mb-9 lg:mb-10">
+            <p className="text-[#F8F4EC]/90 font-serif sm:font-sans text-[11.5px] xs:text-xs sm:text-sm lg:text-[15px] font-normal leading-[1.55] sm:leading-[1.8] max-w-md mb-4 xs:mb-6 sm:mb-9">
               Sacred idols crafted in fine silver, designed to elevate every sacred space.
             </p>
 
-            {/* CTA Button: Antique Gold outline with rounded profile */}
+            {/* CTA Button */}
             <div>
               <button
                 type="button"
                 onClick={onExploreClick}
-                className="group inline-flex items-center justify-center px-7 sm:px-9 py-2.5 sm:py-3.5 rounded-lg sm:rounded-xl border border-[#C49A45] bg-[#651F2B]/60 hover:bg-[#651F2B] hover:border-[#E5C278] text-[#F8F4EC] transition-all duration-300 shadow-sm hover:shadow-[0_4px_16px_rgba(196,154,69,0.25)] cursor-pointer active:scale-[0.98]"
+                className="group inline-flex items-center justify-center px-4 xs:px-6 sm:px-9 py-2 xs:py-2.5 sm:py-3.5 rounded-lg sm:rounded-xl border border-[#C49A45] bg-[#651F2B]/60 hover:bg-[#651F2B] hover:border-[#E5C278] text-[#F8F4EC] transition-all duration-300 shadow-sm hover:shadow-[0_4px_16px_rgba(196,154,69,0.25)] cursor-pointer active:scale-[0.98] min-h-[40px] xs:min-h-[44px]"
               >
-                <span className="text-[10.5px] sm:text-[11.5px] font-medium tracking-[0.22em] uppercase font-sans">
+                <span className="text-[10px] xs:text-[11px] sm:text-[11.5px] font-medium tracking-[0.22em] uppercase font-sans">
                   EXPLORE COLLECTION
                 </span>
               </button>

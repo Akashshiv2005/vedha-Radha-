@@ -35,12 +35,12 @@ export default function FeaturedJewellery({ onSelectCollection }) {
         </div>
 
         {/* Asymmetrical Three-Card Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
           
           {/* Left Card: Tall Editorial Portrait (Layered Luxe) */}
           <div 
             onClick={() => onSelectCollection && onSelectCollection('Layered Luxe')}
-            className="group relative w-full aspect-[4/4.5] lg:aspect-auto lg:h-full min-h-[380px] sm:min-h-[460px] lg:min-h-0 rounded-2xl overflow-hidden border border-[#C49A45] shadow-[0_6px_20px_rgba(101,31,43,0.06)] bg-[#1A1A1A] cursor-pointer"
+            className="group relative w-full aspect-[4/4.5] lg:aspect-auto lg:h-full min-h-[320px] sm:min-h-[460px] lg:min-h-0 rounded-2xl overflow-hidden border border-[#C49A45] shadow-[0_6px_20px_rgba(101,31,43,0.06)] bg-[#1A1A1A] cursor-pointer"
           >
             {/* Absolute positioning prevents image from causing container height overflow */}
             <img
@@ -54,23 +54,23 @@ export default function FeaturedJewellery({ onSelectCollection }) {
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/35 pointer-events-none" />
 
             {/* Exact Text Overlay (Upper Right) */}
-            <div className="absolute top-6 sm:top-8 right-6 sm:right-8 text-right z-10 pointer-events-none">
-              <h3 className="font-serif text-2xl sm:text-3xl lg:text-[34px] font-normal text-white tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] leading-tight">
+            <div className="absolute top-4 xs:top-6 sm:top-8 right-4 xs:right-6 sm:right-8 text-right z-10 pointer-events-none">
+              <h3 className="font-serif text-xl xs:text-2xl sm:text-3xl lg:text-[34px] font-normal text-white tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] leading-tight">
                 Layered Luxe
               </h3>
-              <p className="text-white/95 font-serif text-xs sm:text-[13.5px] tracking-wide mt-1 sm:mt-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+              <p className="text-white/95 font-serif text-xs sm:text-[13.5px] tracking-wide mt-0.5 sm:mt-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                 Stack it. Style it. Own it.
               </p>
             </div>
           </div>
 
           {/* Right Column: Two Wide Cards Stacked Vertically */}
-          <div className="flex flex-col gap-5 lg:gap-6">
+          <div className="flex flex-col gap-4 sm:gap-5 lg:gap-6">
             
             {/* Upper-Right Card: Close-up Gold Necklace on Silk (Ethnic Glow) */}
             <div 
               onClick={() => onSelectCollection && onSelectCollection('Ethnic Glow')}
-              className="group relative w-full aspect-[470/220] rounded-2xl overflow-hidden border border-[#C49A45] shadow-[0_6px_20px_rgba(101,31,43,0.06)] bg-[#1A1A1A] cursor-pointer"
+              className="group relative w-full aspect-[16/9] sm:aspect-[470/220] min-h-[160px] sm:min-h-[190px] rounded-2xl overflow-hidden border border-[#C49A45] shadow-[0_6px_20px_rgba(101,31,43,0.06)] bg-[#1A1A1A] cursor-pointer"
             >
               <img
                 src="/images/featured_ethnic_glow.jpg"
@@ -83,11 +83,11 @@ export default function FeaturedJewellery({ onSelectCollection }) {
               <div className="absolute inset-0 bg-gradient-to-l from-black/60 via-black/15 to-transparent pointer-events-none" />
 
               {/* Exact Text Overlay (Lower Right) */}
-              <div className="absolute bottom-5 sm:bottom-6 right-6 sm:right-8 text-right z-10 pointer-events-none">
-                <h3 className="font-serif text-2xl sm:text-[28px] font-normal text-white tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] leading-tight">
+              <div className="absolute bottom-4 xs:bottom-5 sm:bottom-6 right-4 xs:right-6 sm:right-8 text-right z-10 pointer-events-none">
+                <h3 className="font-serif text-xl xs:text-2xl sm:text-[28px] font-normal text-white tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] leading-tight">
                   Ethnic Glow
                 </h3>
-                <p className="text-white/95 font-serif text-xs sm:text-[13.5px] tracking-wide mt-1 sm:mt-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+                <p className="text-white/95 font-serif text-xs sm:text-[13.5px] tracking-wide mt-0.5 sm:mt-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                   Tradition with a twist.
                 </p>
               </div>
@@ -96,7 +96,7 @@ export default function FeaturedJewellery({ onSelectCollection }) {
             {/* Lower-Right Card: Close-up Hand with Gold Ring (Everyday Icons) */}
             <div 
               onClick={() => onSelectCollection && onSelectCollection('Everyday Icons')}
-              className="group relative w-full aspect-[470/220] rounded-2xl overflow-hidden border border-[#C49A45] shadow-[0_6px_20px_rgba(101,31,43,0.06)] bg-[#1A1A1A] cursor-pointer"
+              className="group relative w-full aspect-[16/9] sm:aspect-[470/220] min-h-[160px] sm:min-h-[190px] rounded-2xl overflow-hidden border border-[#C49A45] shadow-[0_6px_20px_rgba(101,31,43,0.06)] bg-[#1A1A1A] cursor-pointer"
             >
               <img
                 src="/images/featured_everyday_icons.jpg"
@@ -109,11 +109,11 @@ export default function FeaturedJewellery({ onSelectCollection }) {
               <div className="absolute inset-0 bg-gradient-to-l from-black/60 via-black/20 to-transparent pointer-events-none" />
 
               {/* Exact Text Overlay (Lower Right) */}
-              <div className="absolute bottom-5 sm:bottom-6 right-6 sm:right-8 text-right z-10 pointer-events-none">
-                <h3 className="font-serif text-2xl sm:text-[28px] font-normal text-white tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] leading-tight">
+              <div className="absolute bottom-4 xs:bottom-5 sm:bottom-6 right-4 xs:right-6 sm:right-8 text-right z-10 pointer-events-none">
+                <h3 className="font-serif text-xl xs:text-2xl sm:text-[28px] font-normal text-white tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] leading-tight">
                   Everyday Icons
                 </h3>
-                <p className="text-white/95 font-serif text-xs sm:text-[13.5px] tracking-wide mt-1 sm:mt-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+                <p className="text-white/95 font-serif text-xs sm:text-[13.5px] tracking-wide mt-0.5 sm:mt-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                   Little details. Lasting meaning.
                 </p>
               </div>
