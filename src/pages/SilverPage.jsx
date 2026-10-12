@@ -287,13 +287,13 @@ export default function SilverPage({
 
   // Active category / subcategory resolution
   const activeKey = (subType || subCategory || category || 'all').toLowerCase();
-  const activeMainCat = (category || subCategory || 'all').toLowerCase();
-
   const categoryInfo = SILVER_CATEGORY_MAP[activeKey] || {
     title: '92.5 Sterling Silver Collection',
     desc: 'Explore authentic 925 hallmarked South Indian silver anklets, sacred pooja sets, auspicious lamps, and fine silver ornaments.',
     parent: null
   };
+  const activeMainCat = (category || (categoryInfo.parent ? categoryInfo.parent.slug : subCategory) || 'all').toLowerCase();
+  const isSubStyleView = Boolean(subType) || Boolean(categoryInfo.parent);
 
   // Smooth scroll helper to navigate directly to catalog products instead of jumping to hero
   const isInitialMount = React.useRef(true);
@@ -341,28 +341,43 @@ export default function SilverPage({
     let matchesCategory = false;
     if (activeKey === 'all') {
       matchesCategory = true;
-    } else if (item.subType === activeKey || item.subCategorySlug === activeKey || item.subCategory === activeKey) {
-      matchesCategory = true;
-    } else if (activeMainCat === 'earrings' && item.subCategory === 'earrings') {
-      matchesCategory = true;
-    } else if (activeMainCat === 'bangles' && (item.subCategory === 'bangles' || item.subCategory === 'anklets' || item.subCategory === 'handcrafted-silver')) {
-      matchesCategory = true;
-    } else if (activeMainCat === 'rings' && (item.subCategory === 'rings' || item.subCategory === 'toe-rings')) {
-      matchesCategory = true;
-    } else if (activeMainCat === 'necklaces' && item.subCategory === 'necklaces') {
-      matchesCategory = true;
-    } else if (activeMainCat === 'chains' && item.subCategory === 'chains') {
-      matchesCategory = true;
-    } else if (activeMainCat === 'pendants' && item.subCategory === 'pendants') {
-      matchesCategory = true;
-    } else if (activeMainCat === 'pooja-items' && item.subCategory === 'pooja-items') {
-      matchesCategory = true;
-    } else if (activeMainCat === 'silver-idols' && item.subCategory === 'silver-idols') {
-      matchesCategory = true;
-    } else if (activeMainCat === 'coins-bars' && (item.subCategory === 'coins-bars' || item.subCategory === 'coins')) {
-      matchesCategory = true;
-    } else if (activeMainCat === 'occasion' && (item.occasion === activeKey || item.occasion || item.isBridal)) {
-      matchesCategory = true;
+    } else if (isSubStyleView) {
+      // Direct subcategory / style view (e.g., /silver/earrings/studs, /silver/rings/engagement-rings, /silver/occasion/casual-wear)
+      matchesCategory = (
+        item.subType === activeKey ||
+        item.subCategorySlug === activeKey ||
+        item.occasion === activeKey ||
+        (activeKey === 'bangles' && item.subType === 'bangle-bracelets')
+      );
+    } else if (activeMainCat === 'earrings') {
+      matchesCategory = (item.subCategory === 'earrings' || item.subCategorySlug === 'earrings');
+    } else if (activeMainCat === 'bangles') {
+      matchesCategory = (item.subCategory === 'bangles' || item.subCategorySlug === 'bangles' || item.subCategory === 'anklets' || item.subCategory === 'handcrafted-silver');
+    } else if (activeMainCat === 'rings') {
+      matchesCategory = (item.subCategory === 'rings' || item.subCategorySlug === 'rings' || item.subCategory === 'toe-rings');
+    } else if (activeMainCat === 'necklaces') {
+      matchesCategory = (item.subCategory === 'necklaces' || item.subCategorySlug === 'necklaces');
+    } else if (activeMainCat === 'chains') {
+      matchesCategory = (item.subCategory === 'chains' || item.subCategorySlug === 'chains' || item.subType === 'chains');
+    } else if (activeMainCat === 'pendants') {
+      matchesCategory = (item.subCategory === 'pendants' || item.subCategorySlug === 'pendants' || item.subType === 'pendants');
+    } else if (activeMainCat === 'nosepin') {
+      matchesCategory = (item.subCategory === 'nosepin' || item.subCategorySlug === 'nosepin' || item.subType === 'nosepin');
+    } else if (activeMainCat === 'pooja-items') {
+      matchesCategory = (item.subCategory === 'pooja-items' || item.subCategorySlug === 'pooja-items');
+    } else if (activeMainCat === 'silver-idols') {
+      matchesCategory = (item.subCategory === 'silver-idols' || item.subCategorySlug === 'silver-idols');
+    } else if (activeMainCat === 'coins-bars') {
+      matchesCategory = (item.subCategory === 'coins-bars' || item.subCategory === 'coins' || item.subCategorySlug === 'coins-bars');
+    } else if (activeMainCat === 'occasion') {
+      matchesCategory = (item.subCategory === 'occasion' || item.occasion || item.isBridal);
+    } else {
+      matchesCategory = (
+        item.subType === activeKey ||
+        item.subCategorySlug === activeKey ||
+        item.subCategory === activeKey ||
+        item.occasion === activeKey
+      );
     }
 
     if (!matchesCategory) return false;
@@ -383,7 +398,9 @@ export default function SilverPage({
   });
 
   // Find subcategories for the current main category
-  const currentCategoryData = silverCategories.find(c => c.slug === activeMainCat || c.slug === activeKey);
+  const currentCategoryData = silverCategories.find(
+    c => c.slug === activeMainCat || c.slug === activeKey || (categoryInfo.parent && c.slug === categoryInfo.parent.slug)
+  );
   const activeSubcategories = currentCategoryData?.subcategories || [];
 
   return (

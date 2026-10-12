@@ -373,7 +373,9 @@ export default function GoldPage({
   });
 
   // Find subcategories for the current main category
-  const currentCategoryData = goldCategories.find(c => c.slug === activeMainCat || c.slug === activeKey);
+  const currentCategoryData = goldCategories.find(
+    c => c.slug === activeMainCat || c.slug === activeKey || (categoryInfo.parent && c.slug === categoryInfo.parent.slug)
+  );
   const activeSubcategories = currentCategoryData?.subcategories || [];
 
   return (
