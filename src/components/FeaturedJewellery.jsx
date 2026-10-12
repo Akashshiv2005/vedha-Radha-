@@ -1,121 +1,126 @@
 import React from 'react';
-import { ArrowRight } from 'lucide-react';
-import { products } from '../data/products';
 
-export default function FeaturedJewellery({ 
-  searchQuery, 
-  onViewDetails, 
-  onViewAllClick 
-}) {
-  // Filter products by search query if any
-  const filteredProducts = products.filter(item => {
-    if (!searchQuery) return true;
-    return (
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.details.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.category.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  });
-
-  const getBadgeStyle = (badgeType) => {
-    switch (badgeType) {
-      case 'in-stock':
-        return 'bg-[#DCF0DF] text-[#1E5C2D] border-[#C1E3C6]';
-      case 'one-piece':
-        return 'bg-[#FEF3D6] text-[#855B09] border-[#F4E0A5]';
-      case 'reserved':
-        return 'bg-[#FBE4E7] text-[#731E2A] border-[#F2C2C9]';
-      default:
-        return 'bg-[#F2ECE4] text-[#554A42] border-[#E3D9CD]';
-    }
-  };
-
+export default function FeaturedJewellery({ onSelectCollection }) {
   return (
-    <section className="bg-[#FAF7F2] py-8 sm:py-10 border-b border-[#EAE2D5]">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-8">
+    <section className="bg-[#F8F4EC] py-10 lg:py-14 border-b border-[#EAE2D5] select-none">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header */}
-        <div className="flex flex-row items-center justify-between gap-4 mb-5 sm:mb-6">
-          <h2 className="font-serif text-2xl sm:text-[26px] font-semibold text-[#241716] tracking-tight">
-            Featured Jewellery
+        {/* Centered Top Heading Block */}
+        <div className="text-center mb-8 lg:mb-10">
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-[42px] font-normal text-[#651F2B] tracking-normal leading-tight">
+            Featured Jewellery Collections
           </h2>
-          <button 
-            onClick={onViewAllClick}
-            className="group flex items-center gap-1.5 text-xs sm:text-[13px] font-medium text-[#48161E] hover:text-[#73222E] transition-colors cursor-pointer"
-          >
-            <span>View all products</span>
-            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200" />
-          </button>
+
+          {/* Decorative Divider: Gold lines with Teal Lotus emblem */}
+          <div className="flex items-center justify-center gap-3 mt-3 mb-2">
+            <span className="h-[1px] w-12 sm:w-16 bg-[#C49A45]/70"></span>
+            <svg 
+              className="w-5 h-5 text-[#218F95]" 
+              viewBox="0 0 24 24" 
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              {/* Refined Lotus / Floral motif */}
+              <path d="M12 3C11.5 5.5 10.5 8 8 10C10.5 10.5 12 12.5 12 15C12 12.5 13.5 10.5 16 10C13.5 8 12.5 5.5 12 3Z" opacity="0.95" />
+              <path d="M7 11C5 12 3 14 3 17C6 17 8 15 9 13C8.2 12.2 7.5 11.5 7 11Z" opacity="0.8" />
+              <path d="M17 11C19 12 21 14 21 17C18 17 16 15 15 13C15.8 12.2 16.5 11.5 17 11Z" opacity="0.8" />
+              <path d="M10 17C10.5 18 11.2 19 12 19.5C12.8 19 13.5 18 14 17C12.8 17.5 11.2 17.5 10 17Z" />
+            </svg>
+            <span className="h-[1px] w-12 sm:w-16 bg-[#C49A45]/70"></span>
+          </div>
+
+          <p className="font-serif text-[#218F95] text-sm sm:text-base tracking-wide font-normal">
+            Discover signature designs for every moment.
+          </p>
         </div>
 
-        {/* Product Grid */}
-        {filteredProducts.length === 0 ? (
-          <div className="bg-[#F6EFE6] rounded-lg p-8 text-center border border-[#E3DACB]">
-            <p className="font-serif text-lg text-[#4A403A]">No jewellery matching "{searchQuery}"</p>
-            <p className="text-xs text-[#7A6E65] mt-1">Try searching for Gold, Silver, Necklace, Anklet, or Bangles</p>
+        {/* Asymmetrical Three-Card Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-6">
+          
+          {/* Left Card: Tall Editorial Portrait (Layered Luxe) */}
+          <div 
+            onClick={() => onSelectCollection && onSelectCollection('Layered Luxe')}
+            className="group relative w-full aspect-[4/4.5] lg:aspect-auto lg:h-full min-h-[380px] sm:min-h-[460px] lg:min-h-0 rounded-2xl overflow-hidden border border-[#C49A45] shadow-[0_6px_20px_rgba(101,31,43,0.06)] bg-[#1A1A1A] cursor-pointer"
+          >
+            {/* Absolute positioning prevents image from causing container height overflow */}
+            <img
+              src="/images/featured_layered_luxe.jpg"
+              alt="Layered Luxe - South Indian woman with vivid gold earrings and bangles"
+              className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+              loading="lazy"
+            />
+
+            {/* Subtle Gradient for enhanced text readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/35 pointer-events-none" />
+
+            {/* Exact Text Overlay (Upper Right) */}
+            <div className="absolute top-6 sm:top-8 right-6 sm:right-8 text-right z-10 pointer-events-none">
+              <h3 className="font-serif text-2xl sm:text-3xl lg:text-[34px] font-normal text-white tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] leading-tight">
+                Layered Luxe
+              </h3>
+              <p className="text-white/95 font-serif text-xs sm:text-[13.5px] tracking-wide mt-1 sm:mt-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+                Stack it. Style it. Own it.
+              </p>
+            </div>
           </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-5">
-            {filteredProducts.map((item) => (
-              <div
-                key={item.id}
-                className="bg-[#FAF8F5] rounded-lg border border-[#E8DFC0]/70 p-3 sm:p-3.5 shadow-sm hover:shadow-md transition-all duration-300 flex flex-row gap-3 sm:gap-4 items-center group"
-              >
-                {/* Product Image Thumbnail */}
-                <div className="w-28 sm:w-32 h-28 sm:h-32 rounded-md overflow-hidden bg-[#ECE4D8] shrink-0 border border-[#E2D8C7] relative">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                </div>
 
-                {/* Product Details (Right side of card) */}
-                <div className="flex flex-col justify-between flex-1 min-w-0 h-full py-0.5">
-                  <div>
-                    {/* Status Badge */}
-                    <div className="flex items-center mb-1.5">
-                      <span
-                        className={`inline-block px-2.5 py-0.5 rounded-full text-[10.5px] font-medium border ${getBadgeStyle(
-                          item.badgeType
-                        )}`}
-                      >
-                        {item.badge}
-                      </span>
-                    </div>
+          {/* Right Column: Two Wide Cards Stacked Vertically */}
+          <div className="flex flex-col gap-5 lg:gap-6">
+            
+            {/* Upper-Right Card: Close-up Gold Necklace on Silk (Ethnic Glow) */}
+            <div 
+              onClick={() => onSelectCollection && onSelectCollection('Ethnic Glow')}
+              className="group relative w-full aspect-[470/220] rounded-2xl overflow-hidden border border-[#C49A45] shadow-[0_6px_20px_rgba(101,31,43,0.06)] bg-[#1A1A1A] cursor-pointer"
+            >
+              <img
+                src="/images/featured_ethnic_glow.jpg"
+                alt="Ethnic Glow - South Indian gold necklace on elegant silk"
+                className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+                loading="lazy"
+              />
 
-                    {/* Product Name */}
-                    <h3 className="font-serif text-[14px] sm:text-[15px] font-bold text-[#241716] leading-snug line-clamp-2 group-hover:text-[#581923] transition-colors">
-                      {item.name}
-                    </h3>
+              {/* Subtle Gradient for enhanced text readability */}
+              <div className="absolute inset-0 bg-gradient-to-l from-black/60 via-black/15 to-transparent pointer-events-none" />
 
-                    {/* Details / Metal Quality */}
-                    <p className="text-[11px] sm:text-xs text-[#7A6E65] font-sans mt-0.5">
-                      {item.details}
-                    </p>
-                  </div>
-
-                  {/* Price and Action Button */}
-                  <div className="mt-2 pt-1.5 flex flex-col gap-1.5">
-                    <p className="font-serif text-sm sm:text-[15px] font-bold text-[#351218]">
-                      {item.price}
-                    </p>
-                    <div>
-                      <button
-                        onClick={() => onViewDetails(item)}
-                        className="w-full bg-[#581923] hover:bg-[#431219] text-[#FAF7F2] text-[11px] font-medium py-1.5 px-3 rounded shadow-xs hover:shadow transition-all duration-200 text-center cursor-pointer"
-                      >
-                        View Details
-                      </button>
-                    </div>
-                  </div>
-
-                </div>
+              {/* Exact Text Overlay (Lower Right) */}
+              <div className="absolute bottom-5 sm:bottom-6 right-6 sm:right-8 text-right z-10 pointer-events-none">
+                <h3 className="font-serif text-2xl sm:text-[28px] font-normal text-white tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] leading-tight">
+                  Ethnic Glow
+                </h3>
+                <p className="text-white/95 font-serif text-xs sm:text-[13.5px] tracking-wide mt-1 sm:mt-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+                  Tradition with a twist.
+                </p>
               </div>
-            ))}
+            </div>
+
+            {/* Lower-Right Card: Close-up Hand with Gold Ring (Everyday Icons) */}
+            <div 
+              onClick={() => onSelectCollection && onSelectCollection('Everyday Icons')}
+              className="group relative w-full aspect-[470/220] rounded-2xl overflow-hidden border border-[#C49A45] shadow-[0_6px_20px_rgba(101,31,43,0.06)] bg-[#1A1A1A] cursor-pointer"
+            >
+              <img
+                src="/images/featured_everyday_icons.jpg"
+                alt="Everyday Icons - Woman's hand wearing a refined gold ring"
+                className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+                loading="lazy"
+              />
+
+              {/* Subtle Gradient for enhanced text readability */}
+              <div className="absolute inset-0 bg-gradient-to-l from-black/60 via-black/20 to-transparent pointer-events-none" />
+
+              {/* Exact Text Overlay (Lower Right) */}
+              <div className="absolute bottom-5 sm:bottom-6 right-6 sm:right-8 text-right z-10 pointer-events-none">
+                <h3 className="font-serif text-2xl sm:text-[28px] font-normal text-white tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] leading-tight">
+                  Everyday Icons
+                </h3>
+                <p className="text-white/95 font-serif text-xs sm:text-[13.5px] tracking-wide mt-1 sm:mt-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+                  Little details. Lasting meaning.
+                </p>
+              </div>
+            </div>
+
           </div>
-        )}
+        </div>
 
       </div>
     </section>
