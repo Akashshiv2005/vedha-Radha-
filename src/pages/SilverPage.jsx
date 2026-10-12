@@ -5,6 +5,7 @@ import { silverCategories } from '../data/categoryData';
 import { 
   Sparkles, 
   ChevronRight, 
+  ChevronLeft,
   Heart, 
   ShoppingBag, 
   ShieldCheck, 
@@ -266,6 +267,30 @@ function getSilverCategoryIcon(slug, isActive = false) {
           <circle cx="12" cy="16" r="1.5" fill="currentColor" />
         </svg>
       );
+    case 'anklets':
+      return (
+        <svg className={`w-4 h-4 shrink-0 ${iconColor}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M3 10C7 16.5 17 16.5 21 10" />
+          <path d="M8 14.5V17" />
+          <circle cx="8" cy="18" r="1" fill="currentColor" />
+          <path d="M12 15.2V18" />
+          <circle cx="12" cy="19" r="1" fill="currentColor" />
+          <path d="M16 14.5V17" />
+          <circle cx="16" cy="18" r="1" fill="currentColor" />
+          <circle cx="3.5" cy="10" r="1" fill="currentColor" />
+          <circle cx="20.5" cy="10" r="1" fill="currentColor" />
+        </svg>
+      );
+    case 'toe-rings':
+      return (
+        <svg className={`w-4 h-4 shrink-0 ${iconColor}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <ellipse cx="12" cy="14" rx="7" ry="5" />
+          <ellipse cx="12" cy="14" rx="4.5" ry="3" />
+          <circle cx="12" cy="6" r="2.5" />
+          <circle cx="12" cy="6" r="1" fill="currentColor" />
+          <path d="M12 8.5V9.5" />
+        </svg>
+      );
     default:
       return <Sparkles className={`w-4 h-4 shrink-0 ${iconColor}`} />;
   }
@@ -284,16 +309,65 @@ export default function SilverPage({
   const [sortBy, setSortBy] = useState('featured');
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
   const [priceFilter, setPriceFilter] = useState('all');
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(false);
+  const pillTrackRef = useRef(null);
 
   // Active category / subcategory resolution
+  const isBanglesSubStyle = Boolean(subType) && (subType.toLowerCase() === 'bangles' || subType.toLowerCase() === 'bangle-bracelets');
   const activeKey = (subType || subCategory || category || 'all').toLowerCase();
-  const categoryInfo = SILVER_CATEGORY_MAP[activeKey] || {
-    title: '92.5 Sterling Silver Collection',
-    desc: 'Explore authentic 925 hallmarked South Indian silver anklets, sacred pooja sets, auspicious lamps, and fine silver ornaments.',
-    parent: null
-  };
+  
+  let categoryInfo = SILVER_CATEGORY_MAP[activeKey];
+  if (isBanglesSubStyle) {
+    categoryInfo = {
+      title: 'Silver Bangles',
+      desc: 'Hinged screw-lock silver bangles, traditional Salem valayals, and antique kada bangles.',
+      parent: { name: 'Bangle & Bracelets', slug: 'bangles', path: '/silver/bangles' }
+    };
+  } else if (!categoryInfo) {
+    categoryInfo = {
+      title: '92.5 Sterling Silver Collection',
+      desc: 'Explore authentic 925 hallmarked South Indian silver anklets, sacred pooja sets, auspicious lamps, and fine silver ornaments.',
+      parent: null
+    };
+  }
   const activeMainCat = (category || (categoryInfo.parent ? categoryInfo.parent.slug : subCategory) || 'all').toLowerCase();
   const isSubStyleView = Boolean(subType) || Boolean(categoryInfo.parent);
+
+  const checkPillScroll = () => {
+    if (!pillTrackRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = pillTrackRef.current;
+    setShowLeftArrow(scrollLeft > 10);
+    setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 10);
+  };
+
+  React.useEffect(() => {
+    const el = pillTrackRef.current;
+    if (el) {
+      checkPillScroll();
+      el.addEventListener('scroll', checkPillScroll, { passive: true });
+      window.addEventListener('resize', checkPillScroll);
+      return () => {
+        el.removeEventListener('scroll', checkPillScroll);
+        window.removeEventListener('resize', checkPillScroll);
+      };
+    }
+  }, []);
+
+  const handlePillScroll = (direction) => {
+    if (pillTrackRef.current) {
+      const scrollAmount = direction === 'left' ? -260 : 260;
+      pillTrackRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
+  React.useEffect(() => {
+    if (!pillTrackRef.current) return;
+    if (activeKey === 'all') {
+      pillTrackRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+    }
+    checkPillScroll();
+  }, [activeKey, activeMainCat]);
 
   // Smooth scroll helper to navigate directly to catalog products instead of jumping to hero
   const isInitialMount = React.useRef(true);
@@ -342,19 +416,32 @@ export default function SilverPage({
     if (activeKey === 'all') {
       matchesCategory = true;
     } else if (isSubStyleView) {
-      // Direct subcategory / style view (e.g., /silver/earrings/studs, /silver/rings/engagement-rings, /silver/occasion/casual-wear)
-      matchesCategory = (
-        item.subType === activeKey ||
-        item.subCategorySlug === activeKey ||
-        item.occasion === activeKey ||
-        (activeKey === 'bangles' && item.subType === 'bangle-bracelets')
-      );
+      // Direct subcategory / style view (e.g., /silver/earrings/studs, /silver/rings/engagement-rings, /silver/bangles/bangles, /silver/occasion/casual-wear)
+      if (isBanglesSubStyle) {
+        matchesCategory = (item.subType === 'bangles' || item.subType === 'bangle-bracelets');
+      } else {
+        matchesCategory = (
+          item.subType === activeKey ||
+          item.subCategorySlug === activeKey ||
+          item.occasion === activeKey
+        );
+      }
     } else if (activeMainCat === 'earrings') {
       matchesCategory = (item.subCategory === 'earrings' || item.subCategorySlug === 'earrings');
     } else if (activeMainCat === 'bangles') {
-      matchesCategory = (item.subCategory === 'bangles' || item.subCategorySlug === 'bangles' || item.subCategory === 'anklets' || item.subCategory === 'handcrafted-silver');
+      matchesCategory = (
+        (item.subCategory === 'bangles' || item.subCategorySlug === 'bangles' || item.subCategory === 'handcrafted-silver') &&
+        !item.name?.toLowerCase().includes('payal') &&
+        !item.id?.includes('payal') &&
+        item.subCategory !== 'anklets'
+      );
     } else if (activeMainCat === 'rings') {
-      matchesCategory = (item.subCategory === 'rings' || item.subCategorySlug === 'rings' || item.subCategory === 'toe-rings');
+      matchesCategory = (
+        (item.subCategory === 'rings' || item.subCategorySlug === 'rings') &&
+        !item.name?.toLowerCase().includes('metti') &&
+        !item.id?.includes('metti') &&
+        item.subCategory !== 'toe-rings'
+      );
     } else if (activeMainCat === 'necklaces') {
       matchesCategory = (item.subCategory === 'necklaces' || item.subCategorySlug === 'necklaces');
     } else if (activeMainCat === 'chains') {
@@ -363,6 +450,28 @@ export default function SilverPage({
       matchesCategory = (item.subCategory === 'pendants' || item.subCategorySlug === 'pendants' || item.subType === 'pendants');
     } else if (activeMainCat === 'nosepin') {
       matchesCategory = (item.subCategory === 'nosepin' || item.subCategorySlug === 'nosepin' || item.subType === 'nosepin');
+    } else if (activeMainCat === 'anklets') {
+      matchesCategory = (
+        item.subCategory === 'anklets' ||
+        item.subCategorySlug === 'anklets' ||
+        item.subType === 'anklets' ||
+        item.designType?.includes('anklet') ||
+        item.id?.includes('anklet') ||
+        item.id?.includes('payal') ||
+        item.name?.toLowerCase().includes('payal') ||
+        item.name?.toLowerCase().includes('anklet')
+      );
+    } else if (activeMainCat === 'toe-rings') {
+      matchesCategory = (
+        item.subCategory === 'toe-rings' ||
+        item.subCategorySlug === 'toe-rings' ||
+        item.subType === 'toe-rings' ||
+        item.designType?.includes('metti') ||
+        item.id?.includes('toe-ring') ||
+        item.id?.includes('metti') ||
+        item.name?.toLowerCase().includes('toe ring') ||
+        item.name?.toLowerCase().includes('metti')
+      );
     } else if (activeMainCat === 'pooja-items') {
       matchesCategory = (item.subCategory === 'pooja-items' || item.subCategorySlug === 'pooja-items');
     } else if (activeMainCat === 'silver-idols') {
@@ -532,14 +641,29 @@ export default function SilverPage({
         {/* ========================================================================= */}
         {/* CATEGORY FILTERS: Compact Rounded White Pills + Dark Navy Filter Button    */}
         {/* ========================================================================= */}
-        <div className="mb-6">
-          <div className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto scrollbar-none pb-2 sm:pb-0 px-1 sm:justify-center">
-            
+        <div className="relative mb-6">
+          {/* Desktop Left Scroll Control */}
+          {showLeftArrow && (
+            <button
+              onClick={() => handlePillScroll('left')}
+              className="hidden md:flex absolute -left-3 sm:-left-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 items-center justify-center rounded-full bg-white/95 border border-[#DECDBB] text-[#1E293B] shadow-md hover:bg-[#F1F5F9] hover:scale-105 transition-all cursor-pointer focus:outline-none"
+              aria-label="Scroll categories left"
+            >
+              <ChevronLeft className="w-4 h-4 stroke-[2.2]" />
+            </button>
+          )}
+
+          <div
+            ref={pillTrackRef}
+            className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto scrollbar-none pb-2 sm:pb-0 px-1 justify-start scroll-smooth"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
             {/* "All Silver (N)" Pill */}
             <Link
               to="/silver"
               onClick={scrollToCatalog}
-              className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-xs shrink-0 ${
+              data-active={activeKey === 'all'}
+              className={`px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-xs shrink-0 ${
                 activeKey === 'all'
                   ? 'bg-[#1E293B] text-white border border-[#1E293B] shadow-md'
                   : 'bg-white text-[#1C273C] hover:text-[#1E293B] hover:border-[#94A3B8] border border-[#E2E8F0]'
@@ -557,7 +681,8 @@ export default function SilverPage({
                   key={cat.id}
                   to={cat.path}
                   onClick={scrollToCatalog}
-                  className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-xs shrink-0 ${
+                  data-active={isActive}
+                  className={`px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-xs shrink-0 ${
                     isActive
                       ? 'bg-[#1E293B] text-white border border-[#1E293B] shadow-md'
                       : 'bg-white text-[#1C273C] hover:text-[#1E293B] hover:border-[#94A3B8] border border-[#E2E8F0]'
@@ -572,7 +697,7 @@ export default function SilverPage({
             {/* Dark Navy "Filter" Button with Filter Icon */}
             <button
               onClick={() => setIsFilterDrawerOpen(!isFilterDrawerOpen)}
-              className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-xs shrink-0 ${
+              className={`px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-xs shrink-0 ${
                 isFilterDrawerOpen || priceFilter !== 'all'
                   ? 'bg-[#0F172A] text-[#93C5FD] border border-[#93C5FD] shadow-md'
                   : 'bg-[#1E293B] hover:bg-[#0F172A] text-white border border-[#1E293B]'
@@ -587,6 +712,17 @@ export default function SilverPage({
               )}
             </button>
           </div>
+
+          {/* Desktop Right Scroll Control */}
+          {showRightArrow && (
+            <button
+              onClick={() => handlePillScroll('right')}
+              className="hidden md:flex absolute -right-3 sm:-right-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 items-center justify-center rounded-full bg-white/95 border border-[#DECDBB] text-[#1E293B] shadow-md hover:bg-[#F1F5F9] hover:scale-105 transition-all cursor-pointer focus:outline-none"
+              aria-label="Scroll categories right"
+            >
+              <ChevronRight className="w-4 h-4 stroke-[2.2]" />
+            </button>
+          )}
         </div>
 
         {/* Collapsible Filter Panel (When Filter is toggled) */}
@@ -640,9 +776,10 @@ export default function SilverPage({
             </span>
             <Link
               to={currentCategoryData.path}
+              id="style-filter-view-all"
               onClick={scrollToCatalog}
               className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
-                activeKey === currentCategoryData.slug
+                !subType
                   ? 'bg-[#1E293B] text-white'
                   : 'bg-white text-[#334155] hover:bg-white border border-[#CBD5E1]'
               }`}
@@ -650,10 +787,11 @@ export default function SilverPage({
               View All
             </Link>
             {activeSubcategories.map(sub => {
-              const isSubActive = activeKey === sub.slug;
+              const isSubActive = Boolean(subType) && (subType.toLowerCase() === sub.slug.toLowerCase());
               return (
                 <Link
                   key={sub.slug}
+                  id={`style-filter-${sub.slug}`}
                   to={sub.path}
                   onClick={scrollToCatalog}
                   className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${

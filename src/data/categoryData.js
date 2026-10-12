@@ -36,8 +36,7 @@ export const goldCategories = [
     subcategories: [
       { name: 'Bangles', slug: 'bangles', path: '/gold/bangles/bangles' },
       { name: 'Cuff Bracelets', slug: 'cuff-bracelets', path: '/gold/bangles/cuff-bracelets' },
-      { name: 'Chain Bracelets', slug: 'chain-bracelets', path: '/gold/bangles/chain-bracelets' },
-      { name: 'Bangle Bracelets', slug: 'bangle-bracelets', path: '/gold/bangles/bangle-bracelets' }
+      { name: 'Chain Bracelets', slug: 'chain-bracelets', path: '/gold/bangles/chain-bracelets' }
     ]
   },
   {
@@ -138,8 +137,7 @@ export const silverCategories = [
     subcategories: [
       { name: 'Bangles', slug: 'bangles', path: '/silver/bangles/bangles' },
       { name: 'Cuff Bracelets', slug: 'cuff-bracelets', path: '/silver/bangles/cuff-bracelets' },
-      { name: 'Chain Bracelets', slug: 'chain-bracelets', path: '/silver/bangles/chain-bracelets' },
-      { name: 'Bangle Bracelets', slug: 'bangle-bracelets', path: '/silver/bangles/bangle-bracelets' }
+      { name: 'Chain Bracelets', slug: 'chain-bracelets', path: '/silver/bangles/chain-bracelets' }
     ]
   },
   {
@@ -192,6 +190,24 @@ export const silverCategories = [
     path: '/silver/pendants',
     image: '/images/col_silver.jpg',
     description: 'Sacred deity silver medallions, Ganesha pendants, and floral lockets.',
+    subcategories: []
+  },
+  {
+    id: 'anklets',
+    name: 'Anklets',
+    slug: 'anklets',
+    path: '/silver/anklets',
+    image: '/images/products/silver/silver-anklets-payal-01.jpg',
+    description: 'Melodic ghungroo payals, antique Kasu payals, and Salem bridal ankle kadas.',
+    subcategories: []
+  },
+  {
+    id: 'toe-rings',
+    name: 'Toe Rings',
+    slug: 'toe-rings',
+    path: '/silver/toe-rings',
+    image: '/images/products/silver/silver-rings-metti-01.jpg',
+    description: 'Traditional South Indian bridal metti and contemporary sterling silver toe rings.',
     subcategories: []
   }
 ];
