@@ -177,12 +177,15 @@ export default function AdminReturnsSettingsPage() {
   return (
     <div className="space-y-6 font-admin-body animate-in fade-in duration-200">
       {/* 1. Header Banner & Generational Brand Slogan */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
         <div>
-          <h1 className="text-[32px] font-bold text-[#1F1D1A] tracking-tight font-admin-heading leading-tight">
+          <span className="inline-block px-2.5 py-0.5 rounded-md bg-[#5C1D27] text-white text-[11px] font-semibold font-admin-body tracking-widest uppercase">
+            SCREEN 5 • SETTINGS
+          </span>
+          <h1 className="text-[28px] sm:text-[32px] font-semibold text-[#1C1917] tracking-tight font-admin-heading leading-tight mt-1">
             Returns &amp; Settings
           </h1>
-          <p className="text-[14px] text-[#6B7280] mt-0.5">
+          <p className="text-[14px] text-[#6B7280] mt-0.5 font-normal font-admin-body">
             Manage returns, inspections and system settings
           </p>
         </div>
@@ -197,104 +200,208 @@ export default function AdminReturnsSettingsPage() {
       </div>
 
       {/* 2. Top 4 KPI Stat Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 items-stretch">
         {/* Card 1: Pending Returns */}
         <div 
           onClick={() => handleStatCardClick('Pending')}
-          className={`bg-white border rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition cursor-pointer relative group flex items-start gap-3.5 ${
-            activeStatusTab === 'Pending' ? 'border-[#A87B3B] ring-2 ring-[#A87B3B]/20 bg-[#FDFBF7]' : 'border-[#E5E7EB]'
+          className={`bg-white border rounded-2xl p-5 shadow-[0_2px_12px_-2px_rgba(28,25,23,0.04)] hover:shadow-[0_14px_30px_-6px_rgba(176,131,62,0.12)] hover:-translate-y-1 cursor-pointer transition-all duration-300 flex flex-col justify-between group relative overflow-hidden ${
+            activeStatusTab === 'Pending' 
+              ? 'border-[#B0833E] ring-2 ring-[#B0833E]/20 bg-[#FDFBF7]' 
+              : 'border-[#E9E4DC] hover:border-[#B0833E]'
           }`}
         >
-          <div className="w-12 h-12 rounded-xl bg-[#FEF6E7] border border-[#FDE68A]/60 flex items-center justify-center text-[#B0833E] flex-shrink-0">
-            <RotateCcw className="w-5 h-5 stroke-[2]" />
+          {/* Top Accent Hairline */}
+          <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#B0833E] via-[#F4DEB7] to-[#B0833E]/50 opacity-90 group-hover:opacity-100 transition-opacity" />
+          {/* Corner Glow */}
+          <div className="absolute -top-12 -right-12 w-28 h-28 bg-[#B0833E]/5 rounded-full blur-2xl group-hover:bg-[#B0833E]/15 transition-all duration-300 pointer-events-none" />
+
+          {/* Row 1: Icon + Title */}
+          <div className="flex items-center gap-3 mb-3.5">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FEF6E7] to-[#FDE4C2] border border-[#FCD34D] flex items-center justify-center text-[#B0833E] shadow-2xs group-hover:scale-105 transition-transform duration-200 flex-shrink-0">
+              <RotateCcw className="w-4.5 h-4.5 stroke-[2.2]" />
+            </div>
+            <h3 className="font-admin-body text-[15px] font-semibold text-[#1C1917] tracking-tight group-hover:text-[#B0833E] transition-colors">
+              Pending Returns
+            </h3>
           </div>
 
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center justify-between">
-              <span className="text-[14px] font-semibold text-[#1F2937]">Pending Returns</span>
-              <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition flex-shrink-0" />
+          {/* Row 2: Hero Stat Number + Unit + Action Chevron */}
+          <div className="flex items-center justify-between mb-3.5">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-[34px] sm:text-[36px] font-admin-body font-bold tracking-[-1.5px] tabular-nums text-[#1C1917] leading-none">
+                {stats.pending}
+              </span>
+              <span className="text-[13px] font-normal font-admin-body text-[#78716C]">
+                requests
+              </span>
             </div>
-            <div className="text-[28px] sm:text-[30px] font-bold text-[#111827] mt-1 leading-none font-admin-body">
-              {stats.pending}
+            <div className="w-7 h-7 rounded-full bg-[#FAF7F2] border border-[#ECE5DA] flex items-center justify-center text-[#9CA3AF] group-hover:bg-[#B0833E] group-hover:text-white group-hover:border-[#B0833E] group-hover:translate-x-0.5 transition-all duration-200 flex-shrink-0 shadow-2xs">
+              <ChevronRight className="w-3.5 h-3.5 stroke-[2.2]" />
             </div>
-            <p className="text-[12px] text-[#6B7280] mt-1.5 leading-snug">
-              Awaiting inspection
-            </p>
+          </div>
+
+          {/* Row 3: Trend & Context Footer */}
+          <div className="pt-3 border-t border-[#F5EFE6]/80 flex flex-col gap-0.5">
+            <div className="flex items-center gap-1.5 text-[12px] font-semibold text-[#B0833E]">
+              <Clock className="w-3.5 h-3.5 text-[#B0833E] stroke-[2.2]" />
+              <span>Awaiting inspection</span>
+            </div>
+            <span className="text-[11.5px] font-normal text-[#9CA3AF]">
+              Customer return requests intake
+            </span>
           </div>
         </div>
 
         {/* Card 2: Under Inspection */}
         <div 
           onClick={() => handleStatCardClick('Inspection')}
-          className={`bg-white border rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition cursor-pointer relative group flex items-start gap-3.5 ${
-            activeStatusTab === 'Inspection' ? 'border-[#2563EB] ring-2 ring-[#2563EB]/20 bg-[#F8FAFF]' : 'border-[#E5E7EB]'
+          className={`bg-white border rounded-2xl p-5 shadow-[0_2px_12px_-2px_rgba(28,25,23,0.04)] hover:shadow-[0_14px_30px_-6px_rgba(37,99,235,0.12)] hover:-translate-y-1 cursor-pointer transition-all duration-300 flex flex-col justify-between group relative overflow-hidden ${
+            activeStatusTab === 'Inspection' 
+              ? 'border-[#2563EB] ring-2 ring-[#2563EB]/20 bg-[#F8FAFF]' 
+              : 'border-[#E9E4DC] hover:border-[#2563EB]'
           }`}
         >
-          <div className="w-12 h-12 rounded-xl bg-[#EFF6FF] border border-[#BFDBFE]/60 flex items-center justify-center text-[#2563EB] flex-shrink-0">
-            <ShieldCheck className="w-5 h-5 stroke-[2]" />
+          {/* Top Accent Hairline */}
+          <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#2563EB] via-[#93C5FD] to-[#2563EB]/50 opacity-90 group-hover:opacity-100 transition-opacity" />
+          {/* Corner Glow */}
+          <div className="absolute -top-12 -right-12 w-28 h-28 bg-[#2563EB]/5 rounded-full blur-2xl group-hover:bg-[#2563EB]/15 transition-all duration-300 pointer-events-none" />
+
+          {/* Row 1: Icon + Title */}
+          <div className="flex items-center gap-3 mb-3.5">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#EFF6FF] to-[#DBEAFE] border border-[#BFDBFE] flex items-center justify-center text-[#2563EB] shadow-2xs group-hover:scale-105 transition-transform duration-200 flex-shrink-0">
+              <ShieldCheck className="w-4.5 h-4.5 stroke-[2.2]" />
+            </div>
+            <h3 className="font-admin-body text-[15px] font-semibold text-[#1C1917] tracking-tight group-hover:text-[#2563EB] transition-colors">
+              Under Inspection
+            </h3>
           </div>
 
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center justify-between">
-              <span className="text-[14px] font-semibold text-[#1F2937]">Under Inspection</span>
-              <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition flex-shrink-0" />
+          {/* Row 2: Hero Stat Number + Unit + Action Chevron */}
+          <div className="flex items-center justify-between mb-3.5">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-[34px] sm:text-[36px] font-admin-body font-bold tracking-[-1.5px] tabular-nums text-[#1C1917] leading-none">
+                {stats.inspection}
+              </span>
+              <span className="text-[13px] font-normal font-admin-body text-[#78716C]">
+                in progress
+              </span>
             </div>
-            <div className="text-[28px] sm:text-[30px] font-bold text-[#111827] mt-1 leading-none font-admin-body">
-              {stats.inspection}
+            <div className="w-7 h-7 rounded-full bg-[#FAF7F2] border border-[#ECE5DA] flex items-center justify-center text-[#9CA3AF] group-hover:bg-[#2563EB] group-hover:text-white group-hover:border-[#2563EB] group-hover:translate-x-0.5 transition-all duration-200 flex-shrink-0 shadow-2xs">
+              <ChevronRight className="w-3.5 h-3.5 stroke-[2.2]" />
             </div>
-            <p className="text-[12px] text-[#6B7280] mt-1.5 leading-snug">
-              In progress
-            </p>
+          </div>
+
+          {/* Row 3: Trend & Context Footer */}
+          <div className="pt-3 border-t border-[#F5EFE6]/80 flex flex-col gap-0.5">
+            <div className="flex items-center gap-1.5 text-[12px] font-semibold text-[#2563EB]">
+              <ShieldCheck className="w-3.5 h-3.5 stroke-[2.2]" />
+              <span>Purity &amp; weight QA</span>
+            </div>
+            <span className="text-[11.5px] font-normal text-[#9CA3AF]">
+              Showroom vault verification
+            </span>
           </div>
         </div>
 
         {/* Card 3: Resolved */}
         <div 
           onClick={() => handleStatCardClick('Resolved')}
-          className={`bg-white border rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition cursor-pointer relative group flex items-start gap-3.5 ${
-            activeStatusTab === 'Resolved' ? 'border-[#16A34A] ring-2 ring-[#16A34A]/20 bg-[#F6FCF7]' : 'border-[#E5E7EB]'
+          className={`bg-white border rounded-2xl p-5 shadow-[0_2px_12px_-2px_rgba(28,25,23,0.04)] hover:shadow-[0_14px_30px_-6px_rgba(22,163,74,0.12)] hover:-translate-y-1 cursor-pointer transition-all duration-300 flex flex-col justify-between group relative overflow-hidden ${
+            activeStatusTab === 'Resolved' 
+              ? 'border-[#16A34A] ring-2 ring-[#16A34A]/20 bg-[#F6FCF7]' 
+              : 'border-[#E9E4DC] hover:border-[#16A34A]'
           }`}
         >
-          <div className="w-12 h-12 rounded-xl bg-[#ECFDF5] border border-[#A7F3D0]/60 flex items-center justify-center text-[#047857] flex-shrink-0">
-            <CheckCircle2 className="w-5 h-5 stroke-[2]" />
+          {/* Top Accent Hairline */}
+          <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#16A34A] via-[#86EFAC] to-[#16A34A]/50 opacity-90 group-hover:opacity-100 transition-opacity" />
+          {/* Corner Glow */}
+          <div className="absolute -top-12 -right-12 w-28 h-28 bg-[#16A34A]/5 rounded-full blur-2xl group-hover:bg-[#16A34A]/15 transition-all duration-300 pointer-events-none" />
+
+          {/* Row 1: Icon + Title */}
+          <div className="flex items-center gap-3 mb-3.5">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#ECFDF5] to-[#DCFCE7] border border-[#A7F3D0] flex items-center justify-center text-[#047857] shadow-2xs group-hover:scale-105 transition-transform duration-200 flex-shrink-0">
+              <CheckCircle2 className="w-4.5 h-4.5 stroke-[2.2]" />
+            </div>
+            <h3 className="font-admin-body text-[15px] font-semibold text-[#1C1917] tracking-tight group-hover:text-[#047857] transition-colors">
+              Resolved
+            </h3>
           </div>
 
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center justify-between">
-              <span className="text-[14px] font-semibold text-[#1F2937]">Resolved</span>
-              <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition flex-shrink-0" />
+          {/* Row 2: Hero Stat Number + Unit + Action Chevron */}
+          <div className="flex items-center justify-between mb-3.5">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-[34px] sm:text-[36px] font-admin-body font-bold tracking-[-1.5px] tabular-nums text-[#1C1917] leading-none">
+                {stats.resolved}
+              </span>
+              <span className="text-[13px] font-normal font-admin-body text-[#78716C]">
+                completed
+              </span>
             </div>
-            <div className="text-[28px] sm:text-[30px] font-bold text-[#111827] mt-1 leading-none font-admin-body">
-              {stats.resolved}
+            <div className="w-7 h-7 rounded-full bg-[#FAF7F2] border border-[#ECE5DA] flex items-center justify-center text-[#9CA3AF] group-hover:bg-[#047857] group-hover:text-white group-hover:border-[#047857] group-hover:translate-x-0.5 transition-all duration-200 flex-shrink-0 shadow-2xs">
+              <ChevronRight className="w-3.5 h-3.5 stroke-[2.2]" />
             </div>
-            <p className="text-[12px] text-[#6B7280] mt-1.5 leading-snug">
-              Completed
-            </p>
+          </div>
+
+          {/* Row 3: Trend & Context Footer */}
+          <div className="pt-3 border-t border-[#F5EFE6]/80 flex flex-col gap-0.5">
+            <div className="flex items-center gap-1.5 text-[12px] font-semibold text-[#047857]">
+              <CheckCircle2 className="w-3.5 h-3.5 stroke-[2.5]" />
+              <span>Refund / exchange complete</span>
+            </div>
+            <span className="text-[11.5px] font-normal text-[#9CA3AF]">
+              Ledger adjusted &amp; restocked
+            </span>
           </div>
         </div>
 
         {/* Card 4: Cancelled */}
         <div 
           onClick={() => handleStatCardClick('Cancelled')}
-          className={`bg-white border rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition cursor-pointer relative group flex items-start gap-3.5 ${
-            activeStatusTab === 'Cancelled' ? 'border-[#DC2626] ring-2 ring-[#DC2626]/20 bg-[#FEF8F8]' : 'border-[#E5E7EB]'
+          className={`bg-white border rounded-2xl p-5 shadow-[0_2px_12px_-2px_rgba(28,25,23,0.04)] hover:shadow-[0_14px_30px_-6px_rgba(220,38,38,0.12)] hover:-translate-y-1 cursor-pointer transition-all duration-300 flex flex-col justify-between group relative overflow-hidden ${
+            activeStatusTab === 'Cancelled' 
+              ? 'border-[#DC2626] ring-2 ring-[#DC2626]/20 bg-[#FEF8F8]' 
+              : 'border-[#E9E4DC] hover:border-[#DC2626]'
           }`}
         >
-          <div className="w-12 h-12 rounded-xl bg-[#FEF2F2] border border-[#FECACA]/60 flex items-center justify-center text-[#DC2626] flex-shrink-0">
-            <XCircle className="w-5 h-5 stroke-[2]" />
+          {/* Top Accent Hairline */}
+          <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#DC2626] via-[#FCA5A5] to-[#DC2626]/50 opacity-90 group-hover:opacity-100 transition-opacity" />
+          {/* Corner Glow */}
+          <div className="absolute -top-12 -right-12 w-28 h-28 bg-[#DC2626]/5 rounded-full blur-2xl group-hover:bg-[#DC2626]/15 transition-all duration-300 pointer-events-none" />
+
+          {/* Row 1: Icon + Title */}
+          <div className="flex items-center gap-3 mb-3.5">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FEF2F2] to-[#FECDD3] border border-[#FECACA] flex items-center justify-center text-[#DC2626] shadow-2xs group-hover:scale-105 transition-transform duration-200 flex-shrink-0">
+              <XCircle className="w-4.5 h-4.5 stroke-[2.2]" />
+            </div>
+            <h3 className="font-admin-body text-[15px] font-semibold text-[#1C1917] tracking-tight group-hover:text-[#DC2626] transition-colors">
+              Cancelled
+            </h3>
           </div>
 
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center justify-between">
-              <span className="text-[14px] font-semibold text-[#1F2937]">Cancelled</span>
-              <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition flex-shrink-0" />
+          {/* Row 2: Hero Stat Number + Unit + Action Chevron */}
+          <div className="flex items-center justify-between mb-3.5">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-[34px] sm:text-[36px] font-admin-body font-bold tracking-[-1.5px] tabular-nums text-[#1C1917] leading-none">
+                {stats.cancelled}
+              </span>
+              <span className="text-[13px] font-normal font-admin-body text-[#78716C]">
+                cancelled
+              </span>
             </div>
-            <div className="text-[28px] sm:text-[30px] font-bold text-[#111827] mt-1 leading-none font-admin-body">
-              {stats.cancelled}
+            <div className="w-7 h-7 rounded-full bg-[#FAF7F2] border border-[#ECE5DA] flex items-center justify-center text-[#9CA3AF] group-hover:bg-[#DC2626] group-hover:text-white group-hover:border-[#DC2626] group-hover:translate-x-0.5 transition-all duration-200 flex-shrink-0 shadow-2xs">
+              <ChevronRight className="w-3.5 h-3.5 stroke-[2.2]" />
             </div>
-            <p className="text-[12px] text-[#6B7280] mt-1.5 leading-snug">
-              Return request cancelled
-            </p>
+          </div>
+
+          {/* Row 3: Trend & Context Footer */}
+          <div className="pt-3 border-t border-[#F5EFE6]/80 flex flex-col gap-0.5">
+            <div className="flex items-center gap-1.5 text-[12px] font-medium text-[#6B7280]">
+              <XCircle className="w-3.5 h-3.5 text-[#DC2626] stroke-[2.2]" />
+              <span>Return request cancelled</span>
+            </div>
+            <span className="text-[11.5px] font-normal text-[#9CA3AF]">
+              No deduction or refund recorded
+            </span>
           </div>
         </div>
       </div>
@@ -309,7 +416,7 @@ export default function AdminReturnsSettingsPage() {
             {/* Top Toolbar: Title, Search & Filter */}
             <div className="p-5 border-b border-[#E5E7EB] space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <h2 className="font-admin-heading font-semibold text-[22px] text-[#1F1D1A]">
+                <h2 className="font-admin-body font-semibold text-[18px] sm:text-[20px] text-[#1F1D1A]">
                   Returns &amp; Inspection Requests
                 </h2>
 
@@ -390,7 +497,7 @@ export default function AdminReturnsSettingsPage() {
 
             {/* Table of Returns */}
             <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
+              <table className="w-full text-left border-collapse text-[13.5px] tabular-nums">
                 <thead>
                   <tr className="border-b border-[#E5E7EB] bg-white text-[12px] font-semibold text-[#4B5563]">
                     <th className="py-3 px-3.5 w-10 text-center">
@@ -831,34 +938,6 @@ export default function AdminReturnsSettingsPage() {
                 <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition" />
               </div>
             </div>
-          </div>
-
-          {/* 3. Customer Satisfaction Luxury Banner matching reference screenshot */}
-          <div className="bg-gradient-to-r from-[#80541E] via-[#6F4717] to-[#4F300C] text-white rounded-2xl p-5 shadow-sm relative overflow-hidden flex items-center justify-between">
-            <div className="relative z-10 max-w-[210px]">
-              <h4 className="font-serif font-semibold text-[15px] leading-snug text-white">
-                Customer Satisfaction is Our Priority
-              </h4>
-              <p className="text-[11.5px] text-[#F3EAD3]/90 mt-1.5 leading-relaxed">
-                We ensure a smooth and secure return process for every purchase.
-              </p>
-            </div>
-
-            {/* Circular Jewellery Art Thumbnail */}
-            <div className="relative z-10 w-20 h-20 rounded-full bg-[#3D2508]/40 border-2 border-[#D8C39A]/60 p-1 flex-shrink-0 shadow-lg flex items-center justify-center overflow-hidden">
-              <img
-                src="/images/col_bridal.jpg"
-                alt="Jewellery Satisfaction Emblem"
-                className="w-full h-full object-cover rounded-full filter brightness-105"
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = '/images/col_gold.jpg';
-                }}
-              />
-            </div>
-
-            {/* Decorative background glow circle */}
-            <div className="absolute -right-6 -bottom-6 w-32 h-32 rounded-full bg-[#C49A45]/20 blur-xl pointer-events-none" />
           </div>
         </div>
       </div>

@@ -115,8 +115,8 @@ export default function AdminOrdersPage({
     });
 
     return {
-      awaiting: awaiting || 3,
-      holds: holds || 5,
+      awaiting: awaiting || 2,
+      holds: holds || 2,
       processing: processing || 2,
       dispatch: dispatch || 1
     };
@@ -269,13 +269,13 @@ export default function AdminOrdersPage({
       <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4 pt-1">
         {/* Title, Operations Tag & Subtitle */}
         <div>
-          <span className="inline-block px-2.5 py-0.5 rounded-md bg-[#5C1D27] text-white text-[11px] font-bold tracking-widest uppercase">
+          <span className="inline-block px-2.5 py-0.5 rounded-md bg-[#5C1D27] text-white text-[11px] font-semibold font-admin-body tracking-widest uppercase">
             SCREEN 3 • OPERATIONS
           </span>
-          <h1 className="font-admin-heading text-[36px] sm:text-[42px] font-bold text-[#292521] tracking-tight leading-tight mt-1">
+          <h1 className="font-admin-heading text-[28px] sm:text-[32px] font-semibold text-[#1C1917] tracking-tight leading-tight mt-1">
             Reservations &amp; Orders
           </h1>
-          <p className="text-[14px] sm:text-[15px] text-[#6B7280] mt-0.5 font-normal">
+          <p className="text-[14px] text-[#6B7280] mt-0.5 font-normal font-admin-body">
             Manage customer holds, showroom visits and order fulfilment.
           </p>
         </div>
@@ -285,7 +285,7 @@ export default function AdminOrdersPage({
           {/* + New Reservation Button (Antique Gold) */}
           <button
             onClick={() => setIsNewReservationOpen(true)}
-            className="px-4 py-2 rounded-lg bg-[#B38E46] hover:bg-[#9E7C38] active:bg-[#8A6A2E] text-white text-[13.5px] font-medium shadow-sm flex items-center gap-1.5 transition duration-150 cursor-pointer"
+            className="px-4 py-2 rounded-lg bg-[#B38E46] hover:bg-[#9E7C38] active:bg-[#8A6A2E] text-white text-[14px] font-semibold font-admin-body shadow-sm flex items-center gap-1.5 transition duration-150 cursor-pointer"
           >
             <Plus className="w-4 h-4 stroke-[2.5]" />
             <span>New Reservation</span>
@@ -294,7 +294,7 @@ export default function AdminOrdersPage({
           {/* + Create Order Button */}
           <button
             onClick={() => setIsCreateOrderOpen(true)}
-            className="px-4 py-2 rounded-lg bg-white hover:bg-gray-50 border border-[#D1D5DB] text-[#292521] text-[13.5px] font-medium shadow-sm flex items-center gap-1.5 transition duration-150 cursor-pointer"
+            className="px-4 py-2 rounded-lg bg-white hover:bg-gray-50 border border-[#D1D5DB] text-[#292521] text-[14px] font-semibold font-admin-body shadow-sm flex items-center gap-1.5 transition duration-150 cursor-pointer"
           >
             <Plus className="w-4 h-4 stroke-[2.2] text-[#6B7280]" />
             <span>Create Order</span>
@@ -304,7 +304,7 @@ export default function AdminOrdersPage({
           <div className="relative" ref={moreActionsRef}>
             <button
               onClick={() => setIsMoreActionsOpen(!isMoreActionsOpen)}
-              className="px-3.5 py-2 rounded-lg bg-white hover:bg-gray-50 border border-[#D1D5DB] text-[#292521] text-[13.5px] font-medium shadow-sm flex items-center gap-1 transition duration-150 cursor-pointer"
+              className="px-3.5 py-2 rounded-lg bg-white hover:bg-gray-50 border border-[#D1D5DB] text-[#292521] text-[14px] font-semibold font-admin-body shadow-sm flex items-center gap-1 transition duration-150 cursor-pointer"
             >
               <span>More Actions</span>
               <ChevronDown className="w-4 h-4 text-[#6B7280]" />
@@ -347,109 +347,212 @@ export default function AdminOrdersPage({
       </div>
 
       {/* ================= 2. FOUR KPI SUMMARY CARDS ================= */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
         {/* Card 1: Awaiting Confirmation */}
         <div 
           onClick={() => setStatusFilter(statusFilter === 'awaiting_confirmation' ? 'all' : 'awaiting_confirmation')}
-          className={`bg-white border rounded-2xl p-4 shadow-sm flex items-center justify-between hover:shadow-md transition cursor-pointer ${
-            statusFilter === 'awaiting_confirmation' ? 'border-[#D97706] ring-1 ring-[#D97706]/40' : 'border-[#E5E7EB]'
+          className={`bg-white border rounded-2xl p-5 shadow-[0_2px_12px_-2px_rgba(28,25,23,0.04)] hover:shadow-[0_14px_30px_-6px_rgba(217,119,6,0.12)] hover:-translate-y-1 cursor-pointer transition-all duration-300 flex flex-col justify-between group relative overflow-hidden ${
+            statusFilter === 'awaiting_confirmation' 
+              ? 'border-[#D97706] ring-2 ring-[#D97706]/20 bg-[#FDFBF7]' 
+              : 'border-[#E9E4DC] hover:border-[#D97706]'
           }`}
         >
-          <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-full bg-[#FEF6E7] border border-[#FDE68A]/60 flex items-center justify-center flex-shrink-0 text-[#D97706]">
-              <Hourglass className="w-5 h-5 stroke-[2.2]" />
+          {/* Top Accent Hairline */}
+          <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#F59E0B] via-[#FDE68A] to-[#F59E0B]/50 opacity-90 group-hover:opacity-100 transition-opacity" />
+          {/* Corner Glow */}
+          <div className="absolute -top-12 -right-12 w-28 h-28 bg-[#F59E0B]/5 rounded-full blur-2xl group-hover:bg-[#F59E0B]/15 transition-all duration-300 pointer-events-none" />
+
+          {/* Row 1: Icon + Title */}
+          <div className="flex items-center gap-3 mb-3.5">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FEF7EC] to-[#FDE4C2] border border-[#FCD34D] flex items-center justify-center text-[#D97706] shadow-2xs group-hover:scale-105 transition-transform duration-200 flex-shrink-0">
+              <Hourglass className="w-4.5 h-4.5 stroke-[2.2]" />
             </div>
-            <div>
-              <p className="text-[13px] text-[#6B7280] font-medium leading-none">
-                Awaiting Confirmation
-              </p>
-              <h3 className="text-[26px] font-semibold text-[#292521] mt-1.5 leading-none">
+            <h3 className="font-admin-body text-[15px] font-semibold text-[#1C1917] tracking-tight group-hover:text-[#D97706] transition-colors">
+              Awaiting Confirmation
+            </h3>
+          </div>
+
+          {/* Row 2: Hero Stat Number + Unit + Action Chevron */}
+          <div className="flex items-center justify-between mb-3.5">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-[34px] sm:text-[36px] font-admin-body font-bold tracking-[-1.5px] tabular-nums text-[#1C1917] leading-none">
                 {kpiCounts.awaiting}
-              </h3>
-              <p className="text-[11.5px] text-[#9CA3AF] mt-1 leading-none">
-                Requires customer response
-              </p>
+              </span>
+              <span className="text-[13px] font-normal font-admin-body text-[#78716C]">
+                requests
+              </span>
+            </div>
+            <div className="w-7 h-7 rounded-full bg-[#FAF7F2] border border-[#ECE5DA] flex items-center justify-center text-[#9CA3AF] group-hover:bg-[#D97706] group-hover:text-white group-hover:border-[#D97706] group-hover:translate-x-0.5 transition-all duration-200 flex-shrink-0 shadow-2xs">
+              <ChevronRight className="w-3.5 h-3.5 stroke-[2.2]" />
             </div>
           </div>
-          <ChevronRight className="w-4 h-4 text-[#D1D5DB] flex-shrink-0" />
+
+          {/* Row 3: Trend & Context Footer */}
+          <div className="pt-3 border-t border-[#F5EFE6]/80 flex flex-col gap-0.5">
+            <div className="flex items-center gap-1.5 text-[12px] font-medium text-[#B45309]">
+              <Clock className="w-3.5 h-3.5 text-[#D97706] stroke-[2.2]" />
+              <span>Requires response</span>
+            </div>
+            <span className="text-[11.5px] font-normal text-[#9CA3AF]">
+              Showroom &amp; online intake
+            </span>
+          </div>
         </div>
 
         {/* Card 2: Active Holds */}
         <div 
           onClick={() => setStatusFilter(statusFilter === 'reserved' ? 'all' : 'reserved')}
-          className={`bg-white border rounded-2xl p-4 shadow-sm flex items-center justify-between hover:shadow-md transition cursor-pointer ${
-            statusFilter === 'reserved' ? 'border-[#059669] ring-1 ring-[#059669]/40' : 'border-[#E5E7EB]'
+          className={`bg-white border rounded-2xl p-5 shadow-[0_2px_12px_-2px_rgba(28,25,23,0.04)] hover:shadow-[0_14px_30px_-6px_rgba(16,185,129,0.12)] hover:-translate-y-1 cursor-pointer transition-all duration-300 flex flex-col justify-between group relative overflow-hidden ${
+            statusFilter === 'reserved' 
+              ? 'border-[#059669] ring-2 ring-[#059669]/20 bg-[#F6FCF7]' 
+              : 'border-[#E9E4DC] hover:border-[#059669]'
           }`}
         >
-          <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-full bg-[#ECFDF5] border border-[#A7F3D0]/60 flex items-center justify-center flex-shrink-0 text-[#059669]">
-              <Lock className="w-5 h-5 stroke-[2.2]" />
+          {/* Top Accent Hairline */}
+          <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#10B981] via-[#6EE7B7] to-[#10B981]/50 opacity-90 group-hover:opacity-100 transition-opacity" />
+          {/* Corner Glow */}
+          <div className="absolute -top-12 -right-12 w-28 h-28 bg-[#10B981]/5 rounded-full blur-2xl group-hover:bg-[#10B981]/15 transition-all duration-300 pointer-events-none" />
+
+          {/* Row 1: Icon + Title */}
+          <div className="flex items-center gap-3 mb-3.5">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#ECFDF5] to-[#D1FAE5] border border-[#A7F3D0] flex items-center justify-center text-[#059669] shadow-2xs group-hover:scale-105 transition-transform duration-200 flex-shrink-0">
+              <Lock className="w-4.5 h-4.5 stroke-[2.2]" />
             </div>
-            <div>
-              <p className="text-[13px] text-[#6B7280] font-medium leading-none">
-                Active Holds
-              </p>
-              <h3 className="text-[26px] font-semibold text-[#292521] mt-1.5 leading-none">
+            <h3 className="font-admin-body text-[15px] font-semibold text-[#1C1917] tracking-tight group-hover:text-[#059669] transition-colors">
+              Active Holds
+            </h3>
+          </div>
+
+          {/* Row 2: Hero Stat Number + Unit + Action Chevron */}
+          <div className="flex items-center justify-between mb-3.5">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-[34px] sm:text-[36px] font-admin-body font-bold tracking-[-1.5px] tabular-nums text-[#1C1917] leading-none">
                 {kpiCounts.holds}
-              </h3>
-              <p className="text-[11.5px] text-[#9CA3AF] mt-1 leading-none">
-                Showroom &amp; online
-              </p>
+              </span>
+              <span className="text-[13px] font-normal font-admin-body text-[#78716C]">
+                locked
+              </span>
+            </div>
+            <div className="w-7 h-7 rounded-full bg-[#FAF7F2] border border-[#ECE5DA] flex items-center justify-center text-[#9CA3AF] group-hover:bg-[#059669] group-hover:text-white group-hover:border-[#059669] group-hover:translate-x-0.5 transition-all duration-200 flex-shrink-0 shadow-2xs">
+              <ChevronRight className="w-3.5 h-3.5 stroke-[2.2]" />
             </div>
           </div>
-          <ChevronRight className="w-4 h-4 text-[#D1D5DB] flex-shrink-0" />
+
+          {/* Row 3: Trend & Context Footer */}
+          <div className="pt-3 border-t border-[#F5EFE6]/80 flex flex-col gap-0.5">
+            <div className="flex items-center gap-1.5 text-[12px] font-semibold text-[#047857]">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#059669]"></span>
+              </span>
+              <span>Safeguard lock active</span>
+            </div>
+            <span className="text-[11.5px] font-normal text-[#9CA3AF]">
+              48h customer reservation
+            </span>
+          </div>
         </div>
 
         {/* Card 3: Processing */}
         <div 
           onClick={() => setStatusFilter(statusFilter === 'processing' ? 'all' : 'processing')}
-          className={`bg-white border rounded-2xl p-4 shadow-sm flex items-center justify-between hover:shadow-md transition cursor-pointer ${
-            statusFilter === 'processing' ? 'border-[#DB2777] ring-1 ring-[#DB2777]/40' : 'border-[#E5E7EB]'
+          className={`bg-white border rounded-2xl p-5 shadow-[0_2px_12px_-2px_rgba(28,25,23,0.04)] hover:shadow-[0_14px_30px_-6px_rgba(219,39,119,0.12)] hover:-translate-y-1 cursor-pointer transition-all duration-300 flex flex-col justify-between group relative overflow-hidden ${
+            statusFilter === 'processing' 
+              ? 'border-[#DB2777] ring-2 ring-[#DB2777]/20 bg-[#FDF7FA]' 
+              : 'border-[#E9E4DC] hover:border-[#DB2777]'
           }`}
         >
-          <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-full bg-[#FDF2F8] border border-[#FBCFE8]/60 flex items-center justify-center flex-shrink-0 text-[#DB2777]">
-              <SettingsIcon className="w-5 h-5 stroke-[2.2]" />
+          {/* Top Accent Hairline */}
+          <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#DB2777] via-[#F472B6] to-[#DB2777]/50 opacity-90 group-hover:opacity-100 transition-opacity" />
+          {/* Corner Glow */}
+          <div className="absolute -top-12 -right-12 w-28 h-28 bg-[#DB2777]/5 rounded-full blur-2xl group-hover:bg-[#DB2777]/15 transition-all duration-300 pointer-events-none" />
+
+          {/* Row 1: Icon + Title */}
+          <div className="flex items-center gap-3 mb-3.5">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FDF2F8] to-[#FCE7F3] border border-[#FBCFE8] flex items-center justify-center text-[#DB2777] shadow-2xs group-hover:scale-105 transition-transform duration-200 flex-shrink-0">
+              <SettingsIcon className="w-4.5 h-4.5 stroke-[2.2]" />
             </div>
-            <div>
-              <p className="text-[13px] text-[#6B7280] font-medium leading-none">
-                Processing
-              </p>
-              <h3 className="text-[26px] font-semibold text-[#292521] mt-1.5 leading-none">
+            <h3 className="font-admin-body text-[15px] font-semibold text-[#1C1917] tracking-tight group-hover:text-[#DB2777] transition-colors">
+              Processing
+            </h3>
+          </div>
+
+          {/* Row 2: Hero Stat Number + Unit + Action Chevron */}
+          <div className="flex items-center justify-between mb-3.5">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-[34px] sm:text-[36px] font-admin-body font-bold tracking-[-1.5px] tabular-nums text-[#1C1917] leading-none">
                 {kpiCounts.processing}
-              </h3>
-              <p className="text-[11.5px] text-[#9CA3AF] mt-1 leading-none">
-                In fulfilment pipeline
-              </p>
+              </span>
+              <span className="text-[13px] font-normal font-admin-body text-[#78716C]">
+                in progress
+              </span>
+            </div>
+            <div className="w-7 h-7 rounded-full bg-[#FAF7F2] border border-[#ECE5DA] flex items-center justify-center text-[#9CA3AF] group-hover:bg-[#DB2777] group-hover:text-white group-hover:border-[#DB2777] group-hover:translate-x-0.5 transition-all duration-200 flex-shrink-0 shadow-2xs">
+              <ChevronRight className="w-3.5 h-3.5 stroke-[2.2]" />
             </div>
           </div>
-          <ChevronRight className="w-4 h-4 text-[#D1D5DB] flex-shrink-0" />
+
+          {/* Row 3: Trend & Context Footer */}
+          <div className="pt-3 border-t border-[#F5EFE6]/80 flex flex-col gap-0.5">
+            <div className="flex items-center gap-1.5 text-[12px] font-semibold text-[#BE185D]">
+              <Sparkles className="w-3.5 h-3.5 text-[#DB2777]" />
+              <span>Workshop &amp; QA pipeline</span>
+            </div>
+            <span className="text-[11.5px] font-normal text-[#9CA3AF]">
+              Hallmarking &amp; custom packing
+            </span>
+          </div>
         </div>
 
         {/* Card 4: Dispatch Ready */}
         <div 
           onClick={() => setStatusFilter(statusFilter === 'dispatched' ? 'all' : 'dispatched')}
-          className={`bg-white border rounded-2xl p-4 shadow-sm flex items-center justify-between hover:shadow-md transition cursor-pointer ${
-            statusFilter === 'dispatched' ? 'border-[#B45309] ring-1 ring-[#B45309]/40' : 'border-[#E5E7EB]'
+          className={`bg-white border rounded-2xl p-5 shadow-[0_2px_12px_-2px_rgba(28,25,23,0.04)] hover:shadow-[0_14px_30px_-6px_rgba(180,83,9,0.12)] hover:-translate-y-1 cursor-pointer transition-all duration-300 flex flex-col justify-between group relative overflow-hidden ${
+            statusFilter === 'dispatched' 
+              ? 'border-[#B45309] ring-2 ring-[#B45309]/20 bg-[#FDFBF7]' 
+              : 'border-[#E9E4DC] hover:border-[#B45309]'
           }`}
         >
-          <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-full bg-[#FEF3C7]/60 border border-[#FDE68A]/50 flex items-center justify-center flex-shrink-0 text-[#B45309]">
-              <Truck className="w-5 h-5 stroke-[2.2]" />
+          {/* Top Accent Hairline */}
+          <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#B45309] via-[#FDE68A] to-[#B45309]/50 opacity-90 group-hover:opacity-100 transition-opacity" />
+          {/* Corner Glow */}
+          <div className="absolute -top-12 -right-12 w-28 h-28 bg-[#B45309]/5 rounded-full blur-2xl group-hover:bg-[#B45309]/15 transition-all duration-300 pointer-events-none" />
+
+          {/* Row 1: Icon + Title */}
+          <div className="flex items-center gap-3 mb-3.5">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FEF3C7] to-[#FDE68A] border border-[#FCD34D] flex items-center justify-center text-[#B45309] shadow-2xs group-hover:scale-105 transition-transform duration-200 flex-shrink-0">
+              <Truck className="w-4.5 h-4.5 stroke-[2.2]" />
             </div>
-            <div>
-              <p className="text-[13px] text-[#6B7280] font-medium leading-none">
-                Dispatch Ready
-              </p>
-              <h3 className="text-[26px] font-semibold text-[#292521] mt-1.5 leading-none">
+            <h3 className="font-admin-body text-[15px] font-semibold text-[#1C1917] tracking-tight group-hover:text-[#B45309] transition-colors">
+              Dispatch Ready
+            </h3>
+          </div>
+
+          {/* Row 2: Hero Stat Number + Unit + Action Chevron */}
+          <div className="flex items-center justify-between mb-3.5">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-[34px] sm:text-[36px] font-admin-body font-bold tracking-[-1.5px] tabular-nums text-[#1C1917] leading-none">
                 {kpiCounts.dispatch}
-              </h3>
-              <p className="text-[11.5px] text-[#9CA3AF] mt-1 leading-none">
-                Ready for pickup / courier
-              </p>
+              </span>
+              <span className="text-[13px] font-normal font-admin-body text-[#78716C]">
+                parcels
+              </span>
+            </div>
+            <div className="w-7 h-7 rounded-full bg-[#FAF7F2] border border-[#ECE5DA] flex items-center justify-center text-[#9CA3AF] group-hover:bg-[#B45309] group-hover:text-white group-hover:border-[#B45309] group-hover:translate-x-0.5 transition-all duration-200 flex-shrink-0 shadow-2xs">
+              <ChevronRight className="w-3.5 h-3.5 stroke-[2.2]" />
             </div>
           </div>
-          <ChevronRight className="w-4 h-4 text-[#D1D5DB] flex-shrink-0" />
+
+          {/* Row 3: Trend & Context Footer */}
+          <div className="pt-3 border-t border-[#F5EFE6]/80 flex flex-col gap-0.5">
+            <div className="flex items-center gap-1.5 text-[12px] font-semibold text-[#B45309]">
+              <Truck className="w-3.5 h-3.5 text-[#B45309] stroke-[2.2]" />
+              <span>Ready for carrier</span>
+            </div>
+            <span className="text-[11.5px] font-normal text-[#9CA3AF]">
+              Armoured courier &amp; pickup
+            </span>
+          </div>
         </div>
       </div>
 
@@ -540,7 +643,7 @@ export default function AdminOrdersPage({
       {/* ================= 4. ORDERS & RESERVATIONS TABLE ================= */}
       <div className="bg-white border border-[#E5E7EB] rounded-2xl shadow-sm overflow-hidden">
         <div className="overflow-x-auto min-h-[400px]">
-          <table className="w-full text-left border-collapse text-[13.5px]">
+          <table className="w-full text-left border-collapse text-[13.5px] tabular-nums">
             {/* Table Header */}
             <thead>
               <tr className="border-b border-[#E5E7EB] bg-[#FCFBF9] text-[#6B7280] text-[12.5px] font-medium">
@@ -590,10 +693,6 @@ export default function AdminOrdersPage({
                     <span>Status</span>
                     <ArrowUpDown className="w-3 h-3 text-[#9CA3AF]" />
                   </div>
-                </th>
-
-                <th className="py-3.5 px-3 font-semibold text-[#4B5563] min-w-[180px]">
-                  Next Action
                 </th>
 
                 <th className="py-3.5 pr-4 pl-3 font-semibold text-[#4B5563] text-right min-w-[140px]">
@@ -757,11 +856,6 @@ export default function AdminOrdersPage({
                       {statusBadge}
                     </td>
 
-                    {/* Next Action Column */}
-                    <td className="py-3.5 px-3 text-[12.5px] text-[#4B5563]">
-                      {order.nextAction || 'Review order details'}
-                    </td>
-
                     {/* Actions Column */}
                     <td className="py-3.5 pr-4 pl-3 text-right whitespace-nowrap">
                       <div className="flex items-center justify-end gap-1.5">
@@ -867,7 +961,7 @@ export default function AdminOrdersPage({
               {/* Empty state */}
               {currentItems.length === 0 && (
                 <tr>
-                  <td colSpan={8} className="py-16 text-center">
+                  <td colSpan={7} className="py-16 text-center">
                     <div className="max-w-sm mx-auto space-y-3">
                       <div className="w-12 h-12 rounded-full bg-[#FAF7F2] border border-[#E5E7EB] mx-auto flex items-center justify-center text-[#B38E46]">
                         <Search className="w-5 h-5" />

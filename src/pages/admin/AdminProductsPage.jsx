@@ -304,10 +304,13 @@ export default function AdminProductsPage({
       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
         {/* Left: Title & Subtitle */}
         <div>
-          <h1 className="font-admin-heading text-[36px] sm:text-[40px] font-bold text-[#292521] tracking-tight leading-none">
+          <span className="inline-block px-2.5 py-0.5 rounded-md bg-[#5C1D27] text-white text-[11px] font-semibold font-admin-body tracking-widest uppercase">
+            SCREEN 2 • INVENTORY
+          </span>
+          <h1 className="font-admin-heading text-[28px] sm:text-[32px] font-semibold text-[#1C1917] tracking-tight leading-tight mt-1">
             Products
           </h1>
-          <p className="text-[14px] sm:text-[15px] text-[#736B63] mt-1 font-normal">
+          <p className="text-[14px] text-[#6B7280] mt-0.5 font-normal font-admin-body">
             Manage gallery and availability.
           </p>
         </div>
@@ -426,7 +429,7 @@ export default function AdminProductsPage({
         <div className="flex-shrink-0 self-end">
           <button
             onClick={handleOpenAdd}
-            className="px-5 py-2 rounded-lg bg-[#8D6725] hover:bg-[#78551B] active:bg-[#684914] text-white text-[13.5px] font-medium shadow-2xs flex items-center justify-center gap-1.5 transition duration-150 h-[38px] whitespace-nowrap"
+            className="px-5 py-2 rounded-lg bg-[#8D6725] hover:bg-[#78551B] active:bg-[#684914] text-white text-[14px] font-semibold font-admin-body shadow-2xs flex items-center justify-center gap-1.5 transition duration-150 h-[38px] whitespace-nowrap"
           >
             <Plus className="w-4 h-4 stroke-[2.5]" />
             <span>Add product</span>
@@ -457,7 +460,7 @@ export default function AdminProductsPage({
       {/* ================= 3. PRODUCT INVENTORY TABLE CARD ================= */}
       <div className="bg-[#FFFFFF] border border-[#EDE8E1] rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.03)] overflow-hidden">
         <div className="overflow-x-auto min-h-[360px]">
-          <table className="w-full text-left border-collapse text-[13.5px]">
+          <table className="w-full text-left border-collapse text-[13.5px] tabular-nums">
             {/* Table Header */}
             <thead>
               <tr className="border-b border-[#EDE8E1] bg-[#FCFBF9] text-[#736B63] text-[13px] font-medium">
@@ -727,7 +730,7 @@ export default function AdminProductsPage({
                       <div className="w-12 h-12 rounded-full bg-[#FAF7F2] border border-[#E5E0D8] mx-auto flex items-center justify-center text-[#96702E]">
                         <Search className="w-5 h-5" />
                       </div>
-                      <h4 className="font-admin-heading text-[20px] font-semibold text-[#292521]">
+                      <h4 className="font-admin-body text-[18px] sm:text-[20px] font-semibold text-[#292521]">
                         No Jewellery Items Found
                       </h4>
                       <p className="text-[13.5px] text-[#736B63]">
@@ -821,7 +824,7 @@ export default function AdminProductsPage({
             <div className="bg-[#35151B] text-white px-6 py-4 flex items-center justify-between flex-shrink-0">
               <div className="flex items-center gap-2.5">
                 <Gem className="w-5 h-5 text-[#C49A45]" />
-                <h3 className="font-admin-heading font-semibold text-[22px] text-white">
+                <h3 className="font-admin-body font-semibold text-[20px] sm:text-[22px] text-white">
                   {editingProduct ? `Edit Piece — ${editingProduct.sku}` : 'Register New Jewellery Piece'}
                 </h3>
               </div>
@@ -1040,7 +1043,7 @@ export default function AdminProductsPage({
             <div className="p-4 bg-[#35151B] text-white flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Gem className="w-5 h-5 text-[#C49A45]" />
-                <span className="font-admin-heading font-semibold text-[22px]">Piece Specifications</span>
+                <span className="font-admin-body font-semibold text-[20px]">Piece Specifications</span>
               </div>
               <button 
                 onClick={() => setIsDetailDrawerOpen(false)}
@@ -1071,10 +1074,10 @@ export default function AdminProductsPage({
                     </span>
                   )}
                 </div>
-                <h3 className="font-admin-heading font-bold text-[24px] text-[#292521] mt-1.5 leading-snug">
+                <h3 className="font-admin-body font-semibold text-[20px] sm:text-[22px] text-[#292521] mt-1.5 leading-snug">
                   {selectedDetailProduct.name}
                 </h3>
-                <p className="text-[20px] font-semibold text-[#8D6725] mt-0.5">
+                <p className="text-[20px] font-semibold text-[#8D6725] mt-0.5 tabular-nums">
                   ₹ {renderPrice(selectedDetailProduct)}
                 </p>
               </div>
