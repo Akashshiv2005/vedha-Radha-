@@ -1,51 +1,100 @@
 import React from 'react';
-import { ArrowRight } from 'lucide-react';
-import { collections } from '../data/products';
+
+const collectionCategories = [
+  {
+    id: 'gold-chains',
+    title: 'Gold Chains',
+    description: 'Classic styles for every occasion.',
+    image: '/images/products/gold/chains.jpg',
+    categoryKey: 'chains'
+  },
+  {
+    id: 'rings',
+    title: 'Rings',
+    description: 'Elegant details made to treasure.',
+    image: '/images/products/gold/rings.jpg',
+    categoryKey: 'rings'
+  },
+  {
+    id: 'bangles',
+    title: 'Bangles',
+    description: 'Timeless gold for your everyday look.',
+    image: '/images/product_bangles.jpg',
+    categoryKey: 'bangles'
+  },
+  {
+    id: 'necklaces',
+    title: 'Necklaces',
+    description: 'Beautiful designs to complete your look.',
+    image: '/images/product_necklace.jpg',
+    categoryKey: 'necklaces'
+  },
+  {
+    id: 'temple-jewellery',
+    title: 'Temple Jewellery',
+    description: 'Heritage-inspired statement pieces.',
+    image: '/images/col_handcrafted.jpg',
+    categoryKey: 'temple'
+  },
+  {
+    id: 'silver-pooja',
+    title: 'Silver Pooja',
+    description: 'Meaningful silver pieces for your rituals.',
+    image: '/images/col_pooja.jpg',
+    categoryKey: 'silver'
+  }
+];
 
 export default function ShopByCollection({ onSelectCategory }) {
   return (
-    <section className="bg-[#FAF7F2] py-8 sm:py-10 border-b border-[#EAE2D5]">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-8">
+    <section className="bg-[#F8F4EC] py-14 sm:py-18 lg:py-24 border-b border-[#EAE2D5] select-none">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-12">
         
-        {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-5 sm:mb-6">
-          <h2 className="font-serif text-2xl sm:text-[26px] font-semibold text-[#241716] tracking-tight">
-            Shop by collection
+        {/* Top Center Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12 lg:mb-14">
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-[42px] font-semibold text-[#651F2B] tracking-tight leading-tight">
+            Shop by Collection
           </h2>
-          <span className="text-xs sm:text-[13px] text-[#73655C] font-sans">
-            Discover jewellery for every occasion
-          </span>
+          <p className="font-sans text-sm sm:text-base text-[#5A4840] font-normal tracking-wide mt-2 sm:mt-2.5">
+            Find something special for every occasion.
+          </p>
+          <div className="flex items-center justify-center gap-3 mt-3 sm:mt-3.5">
+            <span className="w-10 sm:w-12 h-[1px] bg-[#C49A45]/45" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#C49A45]" />
+            <span className="w-10 sm:w-12 h-[1px] bg-[#C49A45]/45" />
+          </div>
         </div>
 
-        {/* 4 Collection Photo Tiles */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
-          {collections.map((item) => (
+        {/* 3-Column by 2-Row Balanced Grid of 6 Spacious Rounded Rectangular Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-7">
+          {collectionCategories.map((item) => (
             <div
               key={item.id}
-              onClick={() => onSelectCategory(item.name)}
-              className="group relative h-36 sm:h-44 md:h-48 lg:h-52 rounded-lg overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition-all duration-300 border border-[#E8DFC0]/60 bg-[#2C1D18]"
+              onClick={() => onSelectCategory && onSelectCategory(item.categoryKey || item.title)}
+              className="group relative bg-[#FFFDF9] hover:bg-white rounded-full border border-[#C49A45]/35 hover:border-[#218F95] p-3 sm:p-3.5 lg:p-4 flex items-center gap-4 sm:gap-5 shadow-[0_2px_12px_rgba(101,31,43,0.03)] hover:shadow-[0_8px_24px_rgba(33,143,149,0.12)] hover:-translate-y-0.5 transition-all duration-300 cursor-pointer"
             >
-              {/* Background Image */}
-              <img
-                src={item.image}
-                alt={`${item.name} Jewellery Collection`}
-                className="w-full h-full object-cover object-center transform transition-transform duration-700 ease-out group-hover:scale-105 opacity-90 group-hover:opacity-100"
-                loading="lazy"
-              />
-
-              {/* Gradient Overlay for Text Readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent transition-opacity duration-300" />
-
-              {/* Title & Arrow */}
-              <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4 flex items-center justify-between text-white z-10">
-                <span className="font-serif text-base sm:text-lg lg:text-xl font-medium tracking-wide drop-shadow-sm group-hover:text-[#F3E6CB] transition-colors">
-                  {item.name}
-                </span>
-                <ArrowRight className="w-4 h-4 text-white/90 group-hover:text-[#F3E6CB] group-hover:translate-x-1 transition-all duration-200" />
+              {/* Product Thumbnail on the Left */}
+              <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-[82px] lg:h-[82px] rounded-full bg-[#FAF7F2] border border-[#C49A45]/30 group-hover:border-[#218F95]/50 overflow-hidden shrink-0 flex items-center justify-center p-1 transition-colors duration-300">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-full object-cover rounded-full group-hover:scale-108 transition-transform duration-500"
+                  loading="lazy"
+                />
               </div>
 
-              {/* Top Accent Border on Hover */}
-              <div className="absolute top-0 left-0 right-0 h-[2px] bg-[#C5A059] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              {/* Title & Description on the Right */}
+              <div className="flex flex-col justify-center min-w-0 pr-4 sm:pr-6">
+                <h3 className="font-serif text-[17px] sm:text-[18px] lg:text-[19px] font-bold text-[#651F2B] group-hover:text-[#218F95] transition-colors duration-200 leading-snug">
+                  {item.title}
+                </h3>
+                <p className="font-sans text-xs sm:text-[13px] text-[#55453E] leading-relaxed mt-1 font-normal">
+                  {item.description}
+                </p>
+              </div>
+
+              {/* Subtle Teal Highlight on Hover */}
+              <span className="absolute right-5 w-1.5 h-1.5 rounded-full bg-[#218F95] opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true" />
             </div>
           ))}
         </div>

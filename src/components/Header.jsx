@@ -1,50 +1,50 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import { 
-  Truck, 
-  ShieldCheck, 
-  Phone, 
-  Globe, 
-  ChevronDown, 
-  ChevronRight, 
-  X, 
-  Search, 
-  User, 
-  Heart, 
-  ShoppingBag, 
+import {
+  Truck,
+  ShieldCheck,
+  Phone,
+  Globe,
+  ChevronDown,
+  ChevronRight,
+  X,
+  Search,
+  User,
+  Heart,
+  ShoppingBag,
   TrendingUp,
   Sparkles,
   Coins
 } from 'lucide-react';
 import GoldRateModal from './header/GoldRateModal';
 import { usePreciousRates } from '../hooks/usePreciousRates';
-import { 
-  coinsBarsNavItems, 
-  collectionsNavItems 
+import {
+  coinsBarsNavItems,
+  collectionsNavItems
 } from '../data/navigationData';
 
 export default function Header({
   searchQuery = '',
-  setSearchQuery = () => {},
+  setSearchQuery = () => { },
   cartCount = 0,
   wishlistCount = 0,
-  onOpenCart = () => {},
-  onOpenAccount = () => {},
-  onOpenWishlist = () => {}
+  onOpenCart = () => { },
+  onOpenAccount = () => { },
+  onOpenWishlist = () => { }
 }) {
   const location = useLocation();
   const navigate = useNavigate();
 
   // Precious metal rates
-  const { 
-    rates, 
-    status, 
-    isLoading, 
-    isLive, 
-    isStale, 
-    disclaimer, 
-    refreshRates, 
-    updateManualRates 
+  const {
+    rates,
+    status,
+    isLoading,
+    isLive,
+    isStale,
+    disclaimer,
+    refreshRates,
+    updateManualRates
   } = usePreciousRates();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -146,13 +146,13 @@ export default function Header({
 
   return (
     <header className="sticky top-0 z-50 w-full select-none font-sans shadow-xs">
-      
+
       {/* ========================================================================= */}
       {/* 1. TOP UTILITY BAR (Deep Maroon Row)                                      */}
       {/* ========================================================================= */}
       <div className="bg-[#3B1117] text-[#EAD8D8] text-[11px] sm:text-[11.5px] border-b border-[#521B24] px-3 sm:px-8 py-1.5">
         <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-2 lg:gap-4 flex-wrap lg:flex-nowrap">
-          
+
           {/* Left: Free Shipping */}
           <div className="flex items-center gap-2 shrink-0">
             <Truck className="w-3.5 h-3.5 text-[#E5C278] shrink-0" aria-hidden="true" />
@@ -204,18 +204,16 @@ export default function Header({
 
               {/* Daily Change Indicator */}
               {rates.change && (
-                <span className={`text-[9.5px] font-semibold flex items-center gap-0.5 px-1.5 py-0.2 rounded-full hidden sm:inline-flex ${
-                  rates.isUp ? 'bg-emerald-100/90 text-[#167034] border border-emerald-200' : 'bg-red-100/90 text-red-700 border border-red-200'
-                }`}>
+                <span className={`text-[9.5px] font-semibold flex items-center gap-0.5 px-1.5 py-0.2 rounded-full hidden sm:inline-flex ${rates.isUp ? 'bg-emerald-100/90 text-[#167034] border border-emerald-200' : 'bg-red-100/90 text-red-700 border border-red-200'
+                  }`}>
                   <span>{rates.isUp ? '↑' : '↓'}</span> {rates.change}
                 </span>
               )}
 
               {/* Status Dot */}
-              <span 
-                className={`w-1.5 h-1.5 rounded-full shrink-0 ${
-                  isLive ? 'bg-emerald-600 animate-pulse' : isStale ? 'bg-amber-600' : 'bg-[#9E7324]'
-                }`} 
+              <span
+                className={`w-1.5 h-1.5 rounded-full shrink-0 ${isLive ? 'bg-emerald-600 animate-pulse' : isStale ? 'bg-amber-600' : 'bg-[#9E7324]'
+                  }`}
                 title={isLive ? 'Live spot rate' : isStale ? 'Cached rate' : 'Indicative benchmark'}
               />
 
@@ -227,7 +225,7 @@ export default function Header({
 
           {/* Right: Hallmark + Showroom Phone + Language Selector */}
           <div className="hidden lg:flex items-center gap-3.5 xl:gap-4.5 text-[11px] text-[#EAD8D8] shrink-0">
-            
+
             <div className="flex items-center gap-1.5">
               <ShieldCheck className="w-3.5 h-3.5 text-[#E5C278] shrink-0" aria-hidden="true" />
               <span className="tracking-wide">100% Hallmark Gold</span>
@@ -235,8 +233,8 @@ export default function Header({
 
             <div className="h-3.5 w-px bg-[#692F39] shrink-0" />
 
-            <a 
-              href="tel:+914428341999" 
+            <a
+              href="tel:+914428341999"
               className="flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer"
               title="Call Mylapore Showroom"
             >
@@ -273,7 +271,7 @@ export default function Header({
               </button>
 
               {langDropdownOpen && (
-                <div 
+                <div
                   className="absolute right-0 top-full mt-1.5 bg-[#FAF7F2] text-[#2C1D18] rounded-md shadow-xl border border-[#DECDBB] py-1 w-32 z-50 text-xs animate-fadeIn"
                   role="menu"
                   aria-label="Languages"
@@ -288,9 +286,8 @@ export default function Header({
                           setLanguage(shortName);
                           setLangDropdownOpen(false);
                         }}
-                        className={`w-full text-left px-3 py-1.5 hover:bg-[#F3EAD3] text-[11px] transition-colors ${
-                          isSelected ? 'font-bold text-[#581923] bg-[#F3EAD3]/70' : 'text-[#3D332D]'
-                        }`}
+                        className={`w-full text-left px-3 py-1.5 hover:bg-[#F3EAD3] text-[11px] transition-colors ${isSelected ? 'font-bold text-[#581923] bg-[#F3EAD3]/70' : 'text-[#3D332D]'
+                          }`}
                         role="menuitem"
                       >
                         {l}
@@ -311,13 +308,13 @@ export default function Header({
       {/* ========================================================================= */}
       <div className="bg-[#FAF7F2] border-b border-[#E8DFC0]/90 py-3 sm:py-3.5 px-4 sm:px-8 relative">
         <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-4">
-          
+
           {/* Left: Brand Logo & Wordmark */}
           <div className="flex items-center gap-3 sm:gap-4 shrink-0">
-            
+
             {/* Vedha Radha Logo & Wordmark */}
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className="flex items-center gap-2.5 sm:gap-3 group cursor-pointer"
               aria-label="Vedha Radha Thanga Maaligai Homepage"
             >
@@ -345,7 +342,7 @@ export default function Header({
           </div>
 
           {/* Center: Main Navigation: Home | Gold | Silver | Coins & Bars ▼ | New Arrivals | Collections ▼ */}
-          <nav 
+          <nav
             ref={dropdownRef}
             className="hidden xl:flex items-center gap-6 2xl:gap-8 text-[13.5px] font-medium text-[#3A2E28]"
             aria-label="Main Navigation"
@@ -353,9 +350,8 @@ export default function Header({
             {/* 0. HOME */}
             <Link
               to="/"
-              className={`relative py-1 transition-colors cursor-pointer focus:outline-none ${
-                isHome ? 'text-[#581923] font-semibold' : 'hover:text-[#581923]'
-              }`}
+              className={`relative py-1 transition-colors cursor-pointer focus:outline-none ${isHome ? 'text-[#581923] font-semibold' : 'hover:text-[#581923]'
+                }`}
             >
               <span>Home</span>
               {isHome && (
@@ -366,9 +362,8 @@ export default function Header({
             {/* 1. GOLD */}
             <Link
               to="/gold"
-              className={`relative py-1 transition-colors cursor-pointer focus:outline-none ${
-                isGold ? 'text-[#581923] font-semibold' : 'hover:text-[#581923]'
-              }`}
+              className={`relative py-1 transition-colors cursor-pointer focus:outline-none ${isGold ? 'text-[#581923] font-semibold' : 'hover:text-[#581923]'
+                }`}
             >
               <span>Gold</span>
               {isGold && (
@@ -379,9 +374,8 @@ export default function Header({
             {/* 2. SILVER */}
             <Link
               to="/silver"
-              className={`relative py-1 transition-colors cursor-pointer focus:outline-none ${
-                isSilver ? 'text-[#581923] font-semibold' : 'hover:text-[#581923]'
-              }`}
+              className={`relative py-1 transition-colors cursor-pointer focus:outline-none ${isSilver ? 'text-[#581923] font-semibold' : 'hover:text-[#581923]'
+                }`}
             >
               <span>Silver</span>
               {isSilver && (
@@ -390,7 +384,7 @@ export default function Header({
             </Link>
 
             {/* 3. COINS & BARS ▼ */}
-            <div 
+            <div
               className="relative"
               onMouseEnter={() => handleMouseEnter('coins-bars')}
               onMouseLeave={handleMouseLeave}
@@ -400,11 +394,10 @@ export default function Header({
                 onKeyDown={(e) => handleKeyDownMenu(e, 'coins-bars', '/coins-bars')}
                 aria-expanded={activeDropdown === 'coins-bars'}
                 aria-haspopup="true"
-                className={`flex items-center gap-1 py-1 transition-colors cursor-pointer focus:outline-none ${
-                  isCoinsBars || activeDropdown === 'coins-bars'
-                    ? 'text-[#581923] font-semibold' 
+                className={`flex items-center gap-1 py-1 transition-colors cursor-pointer focus:outline-none ${isCoinsBars || activeDropdown === 'coins-bars'
+                    ? 'text-[#581923] font-semibold'
                     : 'hover:text-[#581923]'
-                }`}
+                  }`}
               >
                 <span>Coins & Bars</span>
                 <ChevronDown className={`w-3.5 h-3.5 text-[#8C6D2D] transition-transform duration-200 ${activeDropdown === 'coins-bars' ? 'rotate-180 text-[#581923]' : ''}`} />
@@ -416,7 +409,7 @@ export default function Header({
 
               {/* Coins & Bars Dropdown Content */}
               {activeDropdown === 'coins-bars' && (
-                <div 
+                <div
                   className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-72 bg-[#FAF7F2] rounded-2xl shadow-2xl border border-[#DECDBB] p-3 z-50 animate-fadeIn text-xs"
                   role="menu"
                   aria-label="Coins and Bars Menu"
@@ -473,9 +466,8 @@ export default function Header({
             {/* 4. NEW ARRIVALS */}
             <Link
               to="/new-arrivals"
-              className={`relative py-1 transition-colors cursor-pointer focus:outline-none ${
-                isNewArrivals ? 'text-[#241716] font-semibold' : 'hover:text-[#581923]'
-              }`}
+              className={`relative py-1 transition-colors cursor-pointer focus:outline-none ${isNewArrivals ? 'text-[#241716] font-semibold' : 'hover:text-[#581923]'
+                }`}
             >
               <span className="flex items-center gap-1">
                 <span>New Arrivals</span>
@@ -487,7 +479,7 @@ export default function Header({
             </Link>
 
             {/* 5. COLLECTIONS ▼ */}
-            <div 
+            <div
               className="relative"
               onMouseEnter={() => handleMouseEnter('collections')}
               onMouseLeave={handleMouseLeave}
@@ -497,11 +489,10 @@ export default function Header({
                 onKeyDown={(e) => handleKeyDownMenu(e, 'collections', '/collections')}
                 aria-expanded={activeDropdown === 'collections'}
                 aria-haspopup="true"
-                className={`flex items-center gap-1 py-1 transition-colors cursor-pointer focus:outline-none ${
-                  isCollections || activeDropdown === 'collections'
-                    ? 'text-[#581923] font-semibold' 
+                className={`flex items-center gap-1 py-1 transition-colors cursor-pointer focus:outline-none ${isCollections || activeDropdown === 'collections'
+                    ? 'text-[#581923] font-semibold'
                     : 'hover:text-[#581923]'
-                }`}
+                  }`}
               >
                 <span>Collections</span>
                 <ChevronDown className={`w-3.5 h-3.5 text-[#8C6D2D] transition-transform duration-200 ${activeDropdown === 'collections' ? 'rotate-180 text-[#581923]' : ''}`} />
@@ -513,7 +504,7 @@ export default function Header({
 
               {/* Collections Image-Led Mega Menu Dropdown */}
               {activeDropdown === 'collections' && (
-                <div 
+                <div
                   className="absolute top-full right-0 lg:-right-24 xl:-right-16 mt-3 w-[92vw] max-w-[680px] bg-[#FAF7F2] rounded-2xl shadow-2xl border border-[#DECDBB] p-5 sm:p-6 z-50 animate-fadeIn text-xs"
                   role="menu"
                   aria-label="Collections Mega Menu"
@@ -548,20 +539,20 @@ export default function Header({
                     <div className="flex items-center gap-3 min-w-0">
                       {/* Small jewellery collage preview */}
                       <div className="flex -space-x-2 shrink-0 overflow-hidden py-0.5">
-                        <img 
-                          src="/images/col_wedding.jpg" 
-                          alt="Signature Collection" 
-                          className="w-9 h-9 rounded-full object-cover border-2 border-white shadow-xs" 
+                        <img
+                          src="/images/col_wedding.jpg"
+                          alt="Signature Collection"
+                          className="w-9 h-9 rounded-full object-cover border-2 border-white shadow-xs"
                         />
-                        <img 
-                          src="/images/col_girls.jpg" 
-                          alt="Signature Collection" 
-                          className="w-9 h-9 rounded-full object-cover border-2 border-white shadow-xs" 
+                        <img
+                          src="/images/col_girls.jpg"
+                          alt="Signature Collection"
+                          className="w-9 h-9 rounded-full object-cover border-2 border-white shadow-xs"
                         />
-                        <img 
-                          src="/images/col_silver_idol.jpg" 
-                          alt="Signature Collection" 
-                          className="w-9 h-9 rounded-full object-cover border-2 border-white shadow-xs" 
+                        <img
+                          src="/images/col_silver_idol.jpg"
+                          alt="Signature Collection"
+                          className="w-9 h-9 rounded-full object-cover border-2 border-white shadow-xs"
                         />
                       </div>
                       <div className="min-w-0">
@@ -590,7 +581,7 @@ export default function Header({
 
           {/* Right: Fine-line Search, Account, Wishlist, Shopping-Bag Icons */}
           <div className="flex items-center gap-2.5 sm:gap-4 text-[#2C1D18]">
-            
+
             <button
               onClick={() => setIsSearchOpen(!isSearchOpen)}
               className="p-2 hover:text-[#581923] rounded-full hover:bg-[#F3EAD3]/60 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30"
@@ -713,7 +704,7 @@ export default function Header({
       {/* ========================================================================= */}
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex justify-start animate-fadeIn xl:hidden">
-          <div 
+          <div
             className="bg-[#FAF7F2] w-full max-w-sm h-full shadow-2xl flex flex-col justify-between overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
             role="dialog"
@@ -736,7 +727,7 @@ export default function Header({
                     <span className="text-[9px] text-[#E5C278] tracking-widest uppercase">Thanga Maaligai</span>
                   </div>
                 </div>
-                <button 
+                <button
                   onClick={() => setMobileMenuOpen(false)}
                   className="p-1.5 rounded-full text-white/80 hover:text-white hover:bg-white/10 cursor-pointer"
                   aria-label="Close navigation"
@@ -769,16 +760,15 @@ export default function Header({
 
               {/* Mobile Navigation Links */}
               <div className="p-4 space-y-1 text-xs font-medium text-[#2C1D18]">
-                
+
                 {/* 0. Home */}
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false);
                     navigate('/');
                   }}
-                  className={`w-full text-left px-3 py-2.5 rounded-md transition-colors ${
-                    isHome ? 'bg-[#581923] text-white font-semibold' : 'hover:bg-[#F3EAD3]'
-                  }`}
+                  className={`w-full text-left px-3 py-2.5 rounded-md transition-colors ${isHome ? 'bg-[#581923] text-white font-semibold' : 'hover:bg-[#F3EAD3]'
+                    }`}
                 >
                   Home
                 </button>
@@ -789,9 +779,8 @@ export default function Header({
                     setMobileMenuOpen(false);
                     navigate('/gold');
                   }}
-                  className={`w-full text-left px-3 py-2.5 rounded-md transition-colors ${
-                    isGold ? 'bg-[#581923] text-white font-semibold' : 'hover:bg-[#F3EAD3]'
-                  }`}
+                  className={`w-full text-left px-3 py-2.5 rounded-md transition-colors ${isGold ? 'bg-[#581923] text-white font-semibold' : 'hover:bg-[#F3EAD3]'
+                    }`}
                 >
                   Gold
                 </button>
@@ -802,9 +791,8 @@ export default function Header({
                     setMobileMenuOpen(false);
                     navigate('/silver');
                   }}
-                  className={`w-full text-left px-3 py-2.5 rounded-md transition-colors ${
-                    isSilver ? 'bg-[#581923] text-white font-semibold' : 'hover:bg-[#F3EAD3]'
-                  }`}
+                  className={`w-full text-left px-3 py-2.5 rounded-md transition-colors ${isSilver ? 'bg-[#581923] text-white font-semibold' : 'hover:bg-[#F3EAD3]'
+                    }`}
                 >
                   Silver
                 </button>
@@ -869,9 +857,8 @@ export default function Header({
                     setMobileMenuOpen(false);
                     navigate('/new-arrivals');
                   }}
-                  className={`w-full text-left px-3 py-2.5 rounded-md transition-colors ${
-                    isNewArrivals ? 'bg-[#581923] text-white font-semibold' : 'hover:bg-[#F3EAD3]'
-                  }`}
+                  className={`w-full text-left px-3 py-2.5 rounded-md transition-colors ${isNewArrivals ? 'bg-[#581923] text-white font-semibold' : 'hover:bg-[#F3EAD3]'
+                    }`}
                 >
                   New Arrivals
                 </button>

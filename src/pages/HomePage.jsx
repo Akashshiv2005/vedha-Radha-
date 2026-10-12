@@ -2,6 +2,9 @@ import React from 'react';
 import HeroBanner from '../components/HeroBanner';
 import ShopByCollection from '../components/ShopByCollection';
 import FeaturedJewellery from '../components/FeaturedJewellery';
+import BridalHeroBanner from '../components/BridalHeroBanner';
+import SacredHeroBanner from '../components/SacredHeroBanner';
+import VedhaRadhaExperience from '../components/VedhaRadhaExperience';
 import AssuranceStrip from '../components/AssuranceStrip';
 import DeliveryCheck from '../components/DeliveryCheck';
 import { useNavigate } from 'react-router-dom';
@@ -18,14 +21,20 @@ export default function HomePage({
 
   const handleCategoryNav = (cat) => {
     const lower = cat.toLowerCase();
-    if (lower === 'gold') {
+    if (lower.includes('chain')) {
       navigate('/gold');
-    } else if (lower === 'silver') {
-      navigate('/silver');
-    } else if (lower === 'bridal' || lower === 'wedding') {
+    } else if (lower.includes('ring')) {
+      navigate('/gold');
+    } else if (lower.includes('bangle')) {
+      navigate('/gold');
+    } else if (lower.includes('necklace')) {
+      navigate('/gold');
+    } else if (lower.includes('temple')) {
       navigate('/collections/wedding');
-    } else if (lower === 'handcrafted') {
-      navigate('/collections');
+    } else if (lower.includes('silver')) {
+      navigate('/silver');
+    } else if (lower === 'gold') {
+      navigate('/gold');
     } else {
       navigate('/collections');
     }
@@ -42,16 +51,30 @@ export default function HomePage({
       {/* 3. Featured Jewellery */}
       <div id="featured-section">
         <FeaturedJewellery
-          searchQuery={searchQuery}
-          onViewDetails={onViewProduct}
-          onViewAllClick={() => navigate('/new-arrivals')}
+          onSelectCollection={(coll) => navigate('/collections')}
         />
       </div>
 
-      {/* 4. Assurance Strip */}
+      {/* 4. Bridal Collection Campaign Hero */}
+      <BridalHeroBanner onExploreClick={() => navigate('/collections/wedding')} />
+
+      {/* 5. Sacred Collection Campaign Banner */}
+      <SacredHeroBanner onExploreClick={() => navigate('/silver')} />
+
+      {/* 6. The Vedha Radha Experience Section */}
+      <VedhaRadhaExperience
+        onTileClick={(id) => {
+          if (id === 'showroom') navigate('/contact');
+          else if (id === 'bridal-styling') navigate('/collections/wedding');
+          else if (id === 'stories-inspiration') navigate('/collections');
+          else navigate('/contact');
+        }}
+      />
+
+      {/* 7. Assurance Strip */}
       <AssuranceStrip />
 
-      {/* 5. Delivery & Footer Info */}
+      {/* 6. Delivery & Footer Info */}
       <DeliveryCheck />
     </div>
   );

@@ -49,43 +49,43 @@ export default function BridalPage({
           <span className="font-semibold text-[#581923]">Bridal Trousseau</span>
         </div>
 
-        {/* Hero Section */}
-        <div className="relative rounded-2xl overflow-hidden mb-10 border border-[#E8DFC0] shadow-xl">
-          <div className="aspect-21/9 min-h-[340px] relative">
-            <img 
-              src="/images/col_bridal.jpg" 
-              alt="Vedha Radha Bridal Trousseau"
-              className="w-full h-full object-cover object-center"
+        {/* Wide Desktop Bridal Collection Hero Banner */}
+        <div className="mb-10">
+          <div className="relative w-full aspect-[21/9] min-h-[360px] sm:min-h-[420px] lg:min-h-[460px] rounded-2xl overflow-hidden border border-[#C49A45]/40 shadow-[0_12px_36px_rgba(101,31,43,0.12)] bg-[#450F18]">
+            <img
+              src="/images/bridal_hero_clean.jpg"
+              alt="South Indian bridal temple jewellery collection on rich maroon silk"
+              className="absolute inset-0 w-full h-full object-cover object-right sm:object-center"
+              loading="eager"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#2C0A10]/90 via-[#48141C]/75 to-transparent flex items-center p-6 sm:p-12">
-              <div className="max-w-xl text-white space-y-3">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E5C278]/20 border border-[#E5C278]/40 text-[#F5DFAB] text-[11px] font-semibold uppercase tracking-wider">
-                  <Sparkles className="w-3.5 h-3.5 text-[#E5C278]" />
-                  Auspicious Muhurtham Collection
+            <div className="absolute inset-0 bg-gradient-to-r from-[#380911]/90 via-[#450F18]/60 to-transparent pointer-events-none" />
+            <div className="relative z-10 h-full flex flex-col justify-center px-6 sm:px-12 lg:px-16 xl:px-20 max-w-xl lg:max-w-2xl py-8">
+              <div className="flex items-center gap-3 mb-3 sm:mb-4">
+                <span className="h-[1px] w-8 sm:w-10 bg-[#C49A45]"></span>
+                <span className="text-[#C49A45] text-[10.5px] sm:text-xs font-semibold tracking-[0.22em] uppercase font-sans">
+                  BRIDAL COLLECTION
                 </span>
-                <h1 className="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-white leading-tight">
-                  Royal South Indian Bridal Jewellery
-                </h1>
-                <p className="text-xs sm:text-sm text-[#F0E4E6] leading-relaxed">
-                  Handcrafted for the unforgettable bride. Intricately sculpted Goddess Lakshmi motifs, traditional Kasu Malas, antique bridal vankis, and heavy wedding harams passed down generations.
-                </p>
-                <div className="pt-2 flex flex-wrap gap-3">
-                  <button
-                    onClick={() => {
-                      const el = document.getElementById('bridal-products');
-                      if (el) el.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                    className="bg-[#D4AF37] hover:bg-[#C29D29] text-[#2C1810] font-bold px-5 py-2.5 rounded-lg text-xs tracking-wide shadow-md transition-all cursor-pointer"
-                  >
-                    View Bridal Catalogue
-                  </button>
-                  <button
-                    onClick={() => navigate('/contact')}
-                    className="bg-white/15 hover:bg-white/25 text-white border border-white/30 font-semibold px-5 py-2.5 rounded-lg text-xs transition-all cursor-pointer"
-                  >
-                    Book Bridal Consultation
-                  </button>
-                </div>
+              </div>
+              <h1 className="font-serif text-2xl sm:text-4xl lg:text-[44px] xl:text-[48px] font-normal text-[#F8F4EC] leading-[1.16] tracking-tight">
+                Where Every Bride<br />
+                Becomes a Tradition
+              </h1>
+              <p className="text-[#F8F4EC]/90 font-sans text-xs sm:text-sm lg:text-[14.5px] font-normal leading-relaxed mt-3 sm:mt-4 max-w-md sm:max-w-lg">
+                Heirloom-inspired gold jewellery, designed to shine through sacred rituals and timeless celebrations.
+              </p>
+              <div className="mt-6 sm:mt-7">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const el = document.getElementById('bridal-products');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="group inline-flex items-center justify-center px-5 sm:px-7 py-2.5 sm:py-3 rounded border border-[#C49A45] bg-[#3B0B14]/40 hover:bg-[#651F2B] hover:border-[#E5C278] text-[#F8F4EC] hover:text-white transition-all duration-300 shadow-sm cursor-pointer"
+                >
+                  <span className="text-[10.5px] sm:text-[11.5px] font-medium tracking-[0.2em] uppercase font-sans">
+                    EXPLORE COLLECTION
+                  </span>
+                </button>
               </div>
             </div>
           </div>
