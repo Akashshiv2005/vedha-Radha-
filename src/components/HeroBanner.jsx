@@ -128,8 +128,8 @@ export default function HeroBanner({ onExploreClick }) {
         {/* ========================================================================= */}
         <div className="relative z-10 w-full h-full flex items-start md:items-center justify-center md:justify-start px-4 xs:px-6 sm:px-10 md:px-12 lg:px-16 xl:px-20 pointer-events-auto pt-10 xs:pt-12 sm:pt-14 md:pt-0">
 
-          {/* Content Wrapper: Center-aligned on Mobile, Left-aligned on Desktop with subtle luxury ambient sheen */}
-          <div className="w-full max-w-[350px] xs:max-w-[390px] sm:max-w-[460px] md:max-w-[440px] lg:max-w-[480px] xl:max-w-[540px] flex flex-col items-center md:items-start text-center md:text-left mx-auto md:mx-0 md:bg-gradient-to-r md:from-[#FAF7F2]/85 md:via-[#FAF7F2]/45 md:to-transparent md:p-6 md:-ml-6 md:rounded-2xl">
+          {/* Content Wrapper: Center-aligned on Mobile, Left-aligned on Desktop */}
+          <div className="w-full max-w-[350px] xs:max-w-[390px] sm:max-w-[460px] md:max-w-[440px] lg:max-w-[480px] xl:max-w-[540px] flex flex-col items-center md:items-start text-center md:text-left mx-auto md:mx-0">
 
             {/* Top Eyebrow: VEDHA RADHA SIGNATURE COLLECTION with Gold Lotus */}
             <div className="flex flex-col items-center md:items-start gap-1.5 sm:gap-2 mb-3 xs:mb-3.5 sm:mb-4">
