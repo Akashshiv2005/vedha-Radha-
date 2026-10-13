@@ -2416,9 +2416,11 @@ export const products = [
     "details": "92.5 Pure Silver Payal (Pair)",
     "price": "₹ 4,950",
     "numericPrice": 4950,
-    "image": "/images/products/silver/silver-anklets-payal-01.jpg",
+    "image": "/images/products/silver/silver-bracelets-bestseller-chain-01.jpg",
     "images": [
-      "/images/products/silver/silver-anklets-payal-01.jpg"
+      "/images/products/silver/silver-bracelets-bestseller-chain-01.jpg",
+      "/images/products/silver/silver-bracelets-bestseller-chain-02.jpg",
+      "/images/products/silver/silver-bracelets-bestseller-chain-03.jpg"
     ],
     "altText": "Traditional Salem handcrafted 925 pure silver bridal payal anklet with musical ghungroo bells",
     "description": "Authentic Salem handcrafted silver payal pair adorned with musical chiming ghungroo bells, woven chain links, and S-hook clasp.",
@@ -3972,7 +3974,7 @@ export const products = [
     "category": "Silver",
     "subCategory": "anklets",
     "subCategorySlug": "anklets",
-    "subType": "chain-bracelets",
+    "subType": "anklets",
     "occasion": "traditional-wear",
     "badge": "New Arrival",
     "badgeType": "in-stock",
