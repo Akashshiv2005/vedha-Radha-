@@ -151,7 +151,7 @@ export default function Header({
       {/* ========================================================================= */}
       {/* 1. TOP UTILITY BAR (Deep Maroon Row)                                      */}
       {/* ========================================================================= */}
-      <div className="bg-[#3B1117] text-[#EAD8D8] text-[10.5px] xs:text-[11px] sm:text-[11.5px] border-b border-[#521B24] px-3 sm:px-6 lg:px-8 py-1 sm:py-1.5">
+      <div className="bg-[#3B1117] text-[#EAD8D8] text-[10px] xs:text-[11px] sm:text-[11.5px] border-b border-[#521B24] px-2.5 xs:px-3 sm:px-6 lg:px-8 py-1 sm:py-1.5">
         <div className="max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-1 sm:gap-3 lg:gap-4">
 
           {/* Left: Free Shipping */}
@@ -168,7 +168,7 @@ export default function Header({
           <div className="flex items-center justify-center my-0.5 sm:my-0 w-full sm:w-auto overflow-hidden">
             <button
               onClick={() => setIsGoldRateModalOpen(true)}
-              className="relative inline-flex items-center gap-1.5 xs:gap-2 sm:gap-2.5 px-2.5 xs:px-3 sm:px-3.5 py-0.5 sm:py-1 rounded-full bg-gradient-to-r from-[#FFF4DF] via-[#FDF0D5] to-[#F7E1B5] text-[#2C1D18] border border-[#D4AF37]/80 shadow-[0_0_12px_rgba(212,175,55,0.25)] hover:shadow-[0_0_16px_rgba(212,175,55,0.5)] hover:scale-[1.01] transition-all duration-200 cursor-pointer group max-w-full text-[10px] xs:text-[11px] sm:text-[11.5px]"
+              className="relative inline-flex items-center gap-1 xs:gap-1.5 sm:gap-2.5 px-2 xs:px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded-full bg-gradient-to-r from-[#FFF4DF] via-[#FDF0D5] to-[#F7E1B5] text-[#2C1D18] border border-[#D4AF37]/80 shadow-[0_0_12px_rgba(212,175,55,0.25)] hover:shadow-[0_0_16px_rgba(212,175,55,0.5)] hover:scale-[1.01] transition-all duration-200 cursor-pointer group max-w-full text-[9.5px] xs:text-[10.5px] sm:text-[11.5px] shrink-0"
               title={`Click for multi-purity rates & conversion details. ${disclaimer}`}
               aria-label={`Today's 22K Gold: ₹${rates.gold22k}/g, Silver: ₹${rates.silver1g}/g. Last updated ${rates.lastUpdated}.`}
             >
@@ -182,24 +182,24 @@ export default function Header({
               </div>
 
               {/* Gold Rate */}
-              <div className="flex items-center gap-1">
-                <span className="font-normal text-[9.5px] xs:text-[10px] sm:text-[11px] text-[#554133]">
+              <div className="flex items-center gap-0.5 xs:gap-1">
+                <span className="font-normal text-[9px] xs:text-[10px] sm:text-[11px] text-[#554133]">
                   Gold (22K):
                 </span>
-                <span className="font-bold text-[10px] xs:text-[11px] sm:text-[11.5px] text-[#1F1511]">
-                  ₹{rates.gold22k} <span className="font-normal text-[8.5px] sm:text-[9.5px] text-[#695444]">/g</span>
+                <span className="font-bold text-[9.5px] xs:text-[10.5px] sm:text-[11.5px] text-[#1F1511]">
+                  ₹{rates.gold22k} <span className="font-normal text-[8px] xs:text-[8.5px] sm:text-[9.5px] text-[#695444]">/g</span>
                 </span>
               </div>
 
               <span className="text-[#C5A059]/70 font-light">|</span>
 
               {/* Silver Rate */}
-              <div className="flex items-center gap-1">
-                <span className="font-normal text-[9.5px] xs:text-[10px] sm:text-[11px] text-[#554133]">
+              <div className="flex items-center gap-0.5 xs:gap-1">
+                <span className="font-normal text-[9px] xs:text-[10px] sm:text-[11px] text-[#554133]">
                   Silver:
                 </span>
-                <span className="font-bold text-[10px] xs:text-[11px] sm:text-[11.5px] text-[#1F1511]">
-                  ₹{rates.silver1g} <span className="font-normal text-[8.5px] sm:text-[9.5px] text-[#695444]">/g</span>
+                <span className="font-bold text-[9.5px] xs:text-[10.5px] sm:text-[11.5px] text-[#1F1511]">
+                  ₹{rates.silver1g} <span className="font-normal text-[8px] xs:text-[8.5px] sm:text-[9.5px] text-[#695444]">/g</span>
                 </span>
               </div>
 
@@ -307,16 +307,16 @@ export default function Header({
       {/* ========================================================================= */}
       {/* 2. MAIN NAVIGATION ROW (Warm Ivory Row with New Navigation Structure)      */}
       {/* ========================================================================= */}
-      <div className="bg-[#FAF7F2] border-b border-[#E8DFC0]/90 py-2 sm:py-3 px-3 sm:px-6 lg:px-8 relative">
-        <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-1.5 sm:gap-4">
+      <div className="bg-[#FAF7F2] border-b border-[#E8DFC0]/90 py-2 sm:py-3 px-2.5 xs:px-3 sm:px-6 lg:px-8 relative">
+        <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-1 xs:gap-1.5 sm:gap-4">
 
           {/* Left: Brand Logo & Wordmark + Mobile Hamburger (< lg) */}
-          <div className="flex items-center gap-1 xs:gap-2.5 sm:gap-4 shrink-0">
+          <div className="flex items-center gap-1 xs:gap-2 sm:gap-4 shrink-0 min-w-0">
 
             {/* Mobile Hamburger Menu Button (< lg) */}
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden p-1.5 xs:p-2 -ml-1 text-[#2C1D18] hover:text-[#581923] hover:bg-[#F3EAD3]/60 rounded-lg transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 shrink-0"
+              className="lg:hidden p-1 xs:p-1.5 sm:p-2 -ml-1 text-[#2C1D18] hover:text-[#581923] hover:bg-[#F3EAD3]/60 rounded-lg transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 shrink-0"
               aria-label="Open mobile navigation menu"
               title="Open Navigation Menu"
             >
@@ -326,7 +326,7 @@ export default function Header({
             {/* Vedha Radha Logo & Wordmark */}
             <Link
               to="/"
-              className="flex items-center gap-1.5 xs:gap-2.5 sm:gap-3 group cursor-pointer"
+              className="flex items-center gap-1 xs:gap-2 sm:gap-3 group cursor-pointer min-w-0"
               aria-label="Vedha Radha Thanga Maaligai Homepage"
             >
               <div className="w-7 h-7 xs:w-8 xs:h-8 sm:w-10 sm:h-10 text-[#B8924B] shrink-0 transition-transform duration-300 group-hover:scale-105">
@@ -341,10 +341,10 @@ export default function Header({
               </div>
 
               <div className="flex flex-col justify-center min-w-0">
-                <span className="font-serif text-[16px] xs:text-[19px] sm:text-[23px] font-bold text-[#241716] leading-none tracking-tight group-hover:text-[#581923] transition-colors whitespace-nowrap">
+                <span className="font-serif text-[15px] xs:text-[18px] sm:text-[23px] font-bold text-[#241716] leading-none tracking-tight group-hover:text-[#581923] transition-colors whitespace-nowrap">
                   Vedha Radha
                 </span>
-                <span className="font-sans text-[6.5px] xs:text-[7.5px] sm:text-[9px] font-semibold tracking-[0.22em] xs:tracking-[0.26em] text-[#7A6252] uppercase mt-0.5 sm:mt-1 whitespace-nowrap">
+                <span className="font-sans text-[6px] xs:text-[7.5px] sm:text-[9px] font-semibold tracking-[0.2em] xs:tracking-[0.26em] text-[#7A6252] uppercase mt-0.5 sm:mt-1 whitespace-nowrap">
                   THANGAMAALIGAI
                 </span>
               </div>
@@ -591,11 +591,11 @@ export default function Header({
           </nav>
 
           {/* Right: Fine-line Search, Account, Wishlist, Shopping-Bag Icons */}
-          <div className="flex items-center gap-0.5 xs:gap-1.5 sm:gap-3 text-[#2C1D18] shrink-0 pr-1 sm:pr-0">
+          <div className="flex items-center gap-0.5 xs:gap-1 sm:gap-2.5 text-[#2C1D18] shrink-0 pr-0.5 sm:pr-0">
 
             <button
               onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="p-1.5 xs:p-2 hover:text-[#581923] rounded-full hover:bg-[#F3EAD3]/60 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 min-w-[34px] min-h-[34px] sm:min-w-[38px] sm:min-h-[38px] flex items-center justify-center"
+              className="p-1 xs:p-1.5 sm:p-2 hover:text-[#581923] rounded-full hover:bg-[#F3EAD3]/60 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 min-w-[32px] min-h-[32px] xs:min-w-[36px] xs:min-h-[36px] sm:min-w-[38px] sm:min-h-[38px] flex items-center justify-center"
               aria-label="Search jewellery collection"
               title="Search collection"
             >
@@ -604,7 +604,7 @@ export default function Header({
 
             <button
               onClick={onOpenAccount}
-              className="p-1.5 xs:p-2 hover:text-[#581923] rounded-full hover:bg-[#F3EAD3]/60 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 min-w-[34px] min-h-[34px] sm:min-w-[38px] sm:min-h-[38px] flex items-center justify-center"
+              className="p-1 xs:p-1.5 sm:p-2 hover:text-[#581923] rounded-full hover:bg-[#F3EAD3]/60 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 min-w-[32px] min-h-[32px] xs:min-w-[36px] xs:min-h-[36px] sm:min-w-[38px] sm:min-h-[38px] flex items-center justify-center"
               aria-label="My Account and Privilege Club"
               title="Vedha Radha Privilege Club"
             >
@@ -613,13 +613,13 @@ export default function Header({
 
             <button
               onClick={onOpenWishlist}
-              className="relative p-1.5 xs:p-2 hover:text-[#581923] rounded-full hover:bg-[#F3EAD3]/60 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 min-w-[34px] min-h-[34px] sm:min-w-[38px] sm:min-h-[38px] flex items-center justify-center"
+              className="relative p-1 xs:p-1.5 sm:p-2 hover:text-[#581923] rounded-full hover:bg-[#F3EAD3]/60 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 min-w-[32px] min-h-[32px] xs:min-w-[36px] xs:min-h-[36px] sm:min-w-[38px] sm:min-h-[38px] flex items-center justify-center"
               aria-label={`Wishlist containing ${wishlistCount} saved items`}
               title={`Saved Wishlist (${wishlistCount})`}
             >
               <Heart className="w-4 h-4 xs:w-4.5 xs:h-4.5 sm:w-5 sm:h-5 stroke-[1.75]" />
               {wishlistCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 xs:top-0 xs:right-0 bg-[#D32F2F] text-white text-[8.5px] xs:text-[9.5px] font-bold w-3.5 h-3.5 xs:w-4 xs:h-4 rounded-full flex items-center justify-center shadow-xs animate-scaleIn pointer-events-none leading-none z-10">
+                <span className="absolute -top-0.5 -right-0.5 xs:top-0 xs:right-0 bg-[#D32F2F] text-white text-[8px] xs:text-[9.5px] font-bold w-3.5 h-3.5 xs:w-4 xs:h-4 rounded-full flex items-center justify-center shadow-xs animate-scaleIn pointer-events-none leading-none z-10">
                   {wishlistCount}
                 </span>
               )}
@@ -627,13 +627,13 @@ export default function Header({
 
             <button
               onClick={onOpenCart}
-              className="relative p-1.5 xs:p-2 hover:text-[#581923] rounded-full hover:bg-[#F3EAD3]/60 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 min-w-[34px] min-h-[34px] sm:min-w-[38px] sm:min-h-[38px] flex items-center justify-center"
+              className="relative p-1 xs:p-1.5 sm:p-2 hover:text-[#581923] rounded-full hover:bg-[#F3EAD3]/60 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 min-w-[32px] min-h-[32px] xs:min-w-[36px] xs:min-h-[36px] sm:min-w-[38px] sm:min-h-[38px] flex items-center justify-center"
               aria-label={`Shopping bag containing ${cartCount} items`}
               title={`Shopping Bag (${cartCount})`}
             >
               <ShoppingBag className="w-4 h-4 xs:w-4.5 xs:h-4.5 sm:w-5 sm:h-5 stroke-[1.75]" />
               {cartCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 xs:top-0 xs:right-0 bg-[#D32F2F] text-white text-[8.5px] xs:text-[9.5px] font-bold w-3.5 h-3.5 xs:w-4 xs:h-4 rounded-full flex items-center justify-center shadow-xs animate-scaleIn pointer-events-none leading-none z-10">
+                <span className="absolute -top-0.5 -right-0.5 xs:top-0 xs:right-0 bg-[#D32F2F] text-white text-[8px] xs:text-[9.5px] font-bold w-3.5 h-3.5 xs:w-4 xs:h-4 rounded-full flex items-center justify-center shadow-xs animate-scaleIn pointer-events-none leading-none z-10">
                   {cartCount}
                 </span>
               )}

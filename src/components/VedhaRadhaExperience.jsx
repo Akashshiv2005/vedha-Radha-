@@ -51,23 +51,23 @@ export default function VedhaRadhaExperience({ onTileClick }) {
   ];
 
   return (
-    <section className="bg-[#F8F4EC] py-14 sm:py-20 lg:py-24 border-b border-[#E8DFC0]/80 select-none">
-      <div className="max-w-[1360px] mx-auto px-4 sm:px-8 lg:px-12">
+    <section className="bg-[#F8F4EC] py-10 sm:py-16 lg:py-24 border-b border-[#E8DFC0]/80 select-none">
+      <div className="max-w-[1360px] mx-auto px-3.5 xs:px-6 sm:px-8 lg:px-12">
         
         {/* Section Header: Centered Heading, Ornamental Motif & Subtitle */}
-        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-14">
           {/* Main Heading */}
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-[44px] font-normal text-[#651F2B] tracking-tight leading-[1.15]">
+          <h2 className="font-serif text-2xl sm:text-4xl lg:text-[44px] font-normal text-[#651F2B] tracking-tight leading-[1.15]">
             The Vedha Radha Experience
           </h2>
 
           {/* Center Decorative Accent: Antique Gold #C49A45 lines with Restrained Teal #218F95 lotus emblem */}
-          <div className="flex items-center justify-center gap-3.5 my-3.5 sm:my-4">
-            <span className="h-[1px] w-12 sm:w-16 bg-[#C49A45]/70" />
+          <div className="flex items-center justify-center gap-2.5 sm:gap-3.5 my-2.5 sm:my-4">
+            <span className="h-[1px] w-8 sm:w-16 bg-[#C49A45]/70" />
             
             {/* Teal Lotus/Botanical Accent */}
             <svg 
-              className="w-5 h-4 text-[#218F95] shrink-0 fill-current opacity-90" 
+              className="w-4 h-3.5 sm:w-5 sm:h-4 text-[#218F95] shrink-0 fill-current opacity-90" 
               viewBox="0 0 24 16" 
               aria-hidden="true"
             >
@@ -85,17 +85,17 @@ export default function VedhaRadhaExperience({ onTileClick }) {
               <circle cx="12" cy="15" r="0.9" />
             </svg>
 
-            <span className="h-[1px] w-12 sm:w-16 bg-[#C49A45]/70" />
+            <span className="h-[1px] w-8 sm:w-16 bg-[#C49A45]/70" />
           </div>
 
           {/* Subtitle */}
-          <p className="font-serif text-sm sm:text-base lg:text-[17px] text-[#651F2B]/90 font-normal leading-relaxed">
+          <p className="font-serif text-xs sm:text-base lg:text-[17px] text-[#651F2B]/90 font-normal leading-relaxed">
             Thoughtful moments, guided by tradition and care.
           </p>
         </div>
 
-        {/* 6 Photo Tiles Grid: 3 Columns x 2 Rows */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 sm:gap-x-8 lg:gap-x-10 gap-y-8 sm:gap-y-10 lg:gap-y-12">
+        {/* 6 Photo Tiles Grid: 2 Columns on mobile, 3 Columns on Tablet/Desktop */}
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-3.5 xs:gap-x-4 sm:gap-x-8 lg:gap-x-10 gap-y-5 xs:gap-y-6 sm:gap-y-10 lg:gap-y-12">
           {experiences.map((exp) => (
             <div
               key={exp.id}
@@ -103,7 +103,7 @@ export default function VedhaRadhaExperience({ onTileClick }) {
               className="group flex flex-col items-center cursor-pointer"
             >
               {/* Softly Rounded Photo Tile Container with Antique Gold Frame */}
-              <div className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden border border-[#C49A45]/40 bg-[#FAF7F2] shadow-[0_6px_20px_rgba(101,31,43,0.06)] group-hover:shadow-[0_12px_28px_rgba(101,31,43,0.14)] group-hover:border-[#C49A45]/80 transition-all duration-300 transform group-hover:-translate-y-1">
+              <div className="relative w-full aspect-[16/10] rounded-xl sm:rounded-2xl overflow-hidden border border-[#C49A45]/40 bg-[#FAF7F2] shadow-[0_4px_16px_rgba(101,31,43,0.06)] group-hover:shadow-[0_12px_28px_rgba(101,31,43,0.14)] group-hover:border-[#C49A45]/80 transition-all duration-300 transform group-hover:-translate-y-1">
                 
                 {/* Full-Color Photo */}
                 <img
@@ -118,7 +118,7 @@ export default function VedhaRadhaExperience({ onTileClick }) {
               </div>
 
               {/* Exact Caption Centered Below Photo (Not Overlaid) */}
-              <h3 className="font-serif text-base sm:text-lg lg:text-[18.5px] font-medium text-[#651F2B] text-center mt-3.5 sm:mt-4 tracking-normal group-hover:text-[#8B2637] transition-colors duration-200">
+              <h3 className="font-serif text-xs xs:text-sm sm:text-lg lg:text-[18.5px] font-medium text-[#651F2B] text-center mt-2 xs:mt-2.5 sm:mt-4 tracking-normal group-hover:text-[#8B2637] transition-colors duration-200">
                 {exp.title}
               </h3>
             </div>
