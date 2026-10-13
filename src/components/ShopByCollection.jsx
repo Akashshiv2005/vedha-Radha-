@@ -71,10 +71,10 @@ export default function ShopByCollection({ onSelectCategory }) {
             <div
               key={item.id}
               onClick={() => onSelectCategory && onSelectCategory(item.categoryKey || item.title)}
-              className="group relative bg-[#FFFDF9] hover:bg-white rounded-2xl sm:rounded-full border border-[#C49A45]/35 hover:border-[#218F95] p-2 xs:p-2.5 sm:p-3.5 lg:p-4 flex items-center gap-2.5 xs:gap-3.5 sm:gap-5 shadow-[0_2px_12px_rgba(101,31,43,0.03)] hover:shadow-[0_8px_24px_rgba(33,143,149,0.12)] hover:-translate-y-0.5 transition-all duration-300 cursor-pointer"
+              className="group relative bg-[#FFFDF9] hover:bg-white rounded-2xl sm:rounded-full border border-[#C49A45]/35 hover:border-[#218F95] p-2.5 sm:p-3.5 lg:p-4 flex items-center gap-3 sm:gap-5 shadow-[0_2px_12px_rgba(101,31,43,0.03)] hover:shadow-[0_8px_24px_rgba(33,143,149,0.12)] hover:-translate-y-0.5 transition-all duration-300 cursor-pointer overflow-hidden"
             >
               {/* Product Thumbnail on the Left */}
-              <div className="w-13 h-13 xs:w-16 xs:h-16 sm:w-20 sm:h-20 lg:w-[82px] lg:h-[82px] rounded-full bg-[#FAF7F2] border border-[#C49A45]/30 group-hover:border-[#218F95]/50 overflow-hidden shrink-0 flex items-center justify-center p-0.5 sm:p-1 transition-colors duration-300">
+              <div className="w-14 h-14 xs:w-16 xs:h-16 sm:w-20 sm:h-20 lg:w-[82px] lg:h-[82px] rounded-full bg-[#FAF7F2] border border-[#C49A45]/30 group-hover:border-[#218F95]/50 overflow-hidden shrink-0 flex items-center justify-center p-0.5 sm:p-1 transition-colors duration-300">
                 <img
                   src={item.image}
                   alt={item.title}
