@@ -74,6 +74,16 @@ export default function CollectionsPage({
       image: '/images/collections/collections-silver-idol-exclusive-01.jpg',
       artisan: 'Devalaya Iconographic Sculptors',
       productId: 'collections-silver-idol-exclusive-01'
+    },
+    {
+      id: 'gift-collection',
+      slug: 'gift-collection',
+      title: 'Gift Collection',
+      subtitle: 'Cherished Pure 925 Hallmarked Silver Keepsakes',
+      description: 'An auspicious pure 92.5 hallmarked silver bowl and spoon presentation set in royal red velvet and satin casing, handcrafted for timeless celebrations.',
+      image: '/images/collections/collections-gift-02.jpg',
+      artisan: 'Vedic Uphar Silversmith Guild',
+      productId: 'collections-gift-exclusive-01'
     }
   ];
 
@@ -96,6 +106,15 @@ export default function CollectionsPage({
 
     if (activeCollectionTab === 'All') {
       return exclusiveProductIds.includes(item.id);
+    }
+
+    if (activeCollectionTab === 'gift-collection' || activeCollectionTab === 'Gift Collection') {
+      return (
+        item.collection === 'gift-collection' ||
+        item.subCategory === 'Gift Collection' ||
+        item.subCategorySlug === 'gift-collection' ||
+        item.id.startsWith('collections-gift-')
+      );
     }
 
     const targetLine = collectionLines.find(c => c.id === activeCollectionTab || c.title === activeCollectionTab);
@@ -231,8 +250,8 @@ export default function CollectionsPage({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProducts.map((item) => {
               const isWishlisted = wishlistItems.some(w => w.id === item.id);
-              const imgIndex = activeCardImages[item.id] || 0;
-              const images = item.images && item.images.length > 0 ? item.images : [item.image];
+              const isGiftCard = item.collection === 'gift-collection' || item.subCategory === 'Gift Collection' || !!item.suitableFor;
+              const images = (!isGiftCard && item.images && item.images.length > 0) ? item.images : [item.image];
               const displayImage = images[imgIndex] || item.image;
 
               return (
@@ -304,42 +323,74 @@ export default function CollectionsPage({
                     )}
                   </div>
 
-                  <div className="p-5 flex-1 flex flex-col justify-between">
-                    <div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C6D2D]">
-                        {item.purity || item.details || item.material}
-                      </span>
-                      <h3 className="font-serif text-base font-bold text-[#241716] mt-1">{item.name}</h3>
-                      <p className="text-xs text-[#63574F] line-clamp-2 mt-1 leading-relaxed">{item.description}</p>
-                      
-                      {/* Weight / Dimension Tags */}
-                      <div className="flex items-center gap-2 mt-2 text-[11px] text-[#7A6E65]">
+                  <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between gap-3">
+                    <div className="space-y-2">
+                      {/* Category/Purity & Weight Header Row */}
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C6D2D] bg-[#FAF3E3] px-2 py-0.5 rounded border border-[#E8DFC0]/70 truncate">
+                          {item.purity || item.details || item.material}
+                        </span>
                         {item.weight && (
-                          <span className="bg-[#FAF7F2] px-2 py-0.5 rounded border border-[#EAE2D5]">
+                          <span className="text-[10.5px] font-semibold text-[#581923] bg-[#FAF0E1] px-2 py-0.5 rounded border border-[#E0D2C0] shrink-0 whitespace-nowrap">
                             {item.weight}
                           </span>
                         )}
-                        {item.dimensions && (
-                          <span className="bg-[#FAF7F2] px-2 py-0.5 rounded border border-[#EAE2D5] line-clamp-1">
+                      </div>
+
+                      {/* Product Title */}
+                      <h3 
+                        onClick={() => onViewProduct(item)}
+                        className="font-serif text-[15px] sm:text-base font-bold text-[#241716] group-hover:text-[#581923] transition-colors line-clamp-2 leading-snug cursor-pointer pt-0.5"
+                        title={item.name}
+                      >
+                        {item.name}
+                      </h3>
+
+                      {/* Product Description */}
+                      <p className="text-xs text-[#63574F] line-clamp-2 leading-relaxed">
+                        {item.description}
+                      </p>
+
+                      {/* Suitable For Label - ONLY on relevant gift collection cards */}
+                      {item.suitableFor && (
+                        <div className="pt-1 flex items-center gap-2">
+                          <span className="text-[10.5px] font-bold uppercase tracking-wider text-[#8C6D2D] shrink-0">
+                            Suitable For:
+                          </span>
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#FAF0E1] text-[#581923] border border-[#E0D2C0]">
+                            {item.suitableFor}
+                          </span>
+                        </div>
+                      )}
+
+                      {/* Dimensions Specs Tag */}
+                      {item.dimensions && (
+                        <div className="pt-0.5">
+                          <span className="inline-block text-[11px] text-[#63574F] bg-[#F7F2EA] px-2.5 py-0.5 rounded border border-[#E8DFC0]/70 max-w-full truncate" title={item.dimensions}>
+                            <span className="font-semibold text-[#8C6D2D] mr-1">Dimensions:</span>
                             {item.dimensions}
                           </span>
-                        )}
-                      </div>
+                        </div>
+                      )}
                     </div>
 
-                    <div className="mt-4 pt-3 border-t border-[#EAE2D5] flex items-center justify-between">
-                      <span className="font-serif text-lg font-bold text-[#48161E]">{item.price}</span>
-                      <div className="flex gap-2">
+                    {/* Pricing & CTA Controls */}
+                    <div className="mt-3 pt-3 border-t border-[#EAE2D5] flex items-center justify-between gap-2">
+                      <div>
+                        <span className="text-[10px] text-[#7A6E65] block font-medium">Showroom Price</span>
+                        <span className="font-serif text-lg font-bold text-[#48161E]">{item.price}</span>
+                      </div>
+                      <div className="flex items-center gap-2 shrink-0">
                         <button
                           onClick={() => onViewProduct(item)}
-                          className="px-3 py-1.5 rounded-md border border-[#581923] text-[#581923] hover:bg-[#FAF0E1] text-xs font-semibold cursor-pointer flex items-center gap-1"
+                          className="px-3 py-1.5 rounded-lg border border-[#581923] text-[#581923] hover:bg-[#FAF0E1] text-xs font-semibold cursor-pointer flex items-center gap-1 transition-colors"
                         >
                           <Layers className="w-3.5 h-3.5" />
                           <span>Details</span>
                         </button>
                         <button
                           onClick={() => onAddToCart(item)}
-                          className="px-3 py-1.5 rounded-md bg-[#581923] text-white hover:bg-[#431219] text-xs font-semibold flex items-center gap-1 cursor-pointer"
+                          className="px-3 py-1.5 rounded-lg bg-[#581923] text-white hover:bg-[#431219] text-xs font-semibold flex items-center gap-1 cursor-pointer shadow-xs transition-colors"
                         >
                           <ShoppingBag className="w-3.5 h-3.5" />
                           <span>Add</span>

@@ -516,12 +516,12 @@ export default function Header({
               {/* Collections Image-Led Mega Menu Dropdown */}
               {activeDropdown === 'collections' && (
                 <div
-                  className="absolute top-full right-0 lg:-right-24 xl:-right-16 mt-3 w-[92vw] max-w-[680px] bg-[#FAF7F2] rounded-2xl shadow-2xl border border-[#DECDBB] p-5 sm:p-6 z-50 animate-fadeIn text-xs"
+                  className="absolute top-full right-0 lg:-right-24 xl:-right-16 mt-3 w-[92vw] max-w-[760px] bg-[#FAF7F2] rounded-2xl shadow-2xl border border-[#DECDBB] p-5 sm:p-6 z-50 animate-fadeIn text-xs"
                   role="menu"
                   aria-label="Collections Mega Menu"
                 >
-                  {/* 6 Collection Image-Led Cards Grid (3 cols x 2 rows) */}
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5">
+                  {/* Curated Collection Image-Led Cards Grid */}
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5">
                     {collectionsNavItems.filter(item => !item.isAll).map((item) => (
                       <Link
                         key={item.name}

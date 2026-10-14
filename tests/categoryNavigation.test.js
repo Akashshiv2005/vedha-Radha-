@@ -1,6 +1,8 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { silverCategories } from '../src/data/categoryData.js';
+import fs from 'node:fs';
+import path from 'node:path';
+import { silverCategories, goldCategories } from '../src/data/categoryData.js';
 import { products } from '../src/data/products.js';
 
 describe('Silver Category Navigation & Filtering', () => {
@@ -114,5 +116,163 @@ describe('Silver Category Navigation & Filtering', () => {
     assert.ok(!banglesOnlyProducts.some(p => p.subType === 'cuff-bracelets'), 'Bangles only must NOT contain cuffs');
     assert.ok(!banglesOnlyProducts.some(p => p.subType === 'chain-bracelets'), 'Bangles only must NOT contain chain bracelets');
   });
+
+  it('includes Coins in silverCategories with correct path and slug', () => {
+    const coinsCat = silverCategories.find(c => c.slug === 'coins');
+    assert.ok(coinsCat, 'Coins category must exist in silverCategories');
+    assert.equal(coinsCat.name, 'Coins');
+    assert.equal(coinsCat.path, '/silver/coins');
+  });
+
+  it('filters silver coins products correctly and returns exactly 3 reference coin products with images, weights, and purity', () => {
+    const silverProducts = products.filter(p => p.category === 'Silver');
+    const coinProducts = silverProducts.filter(item => (
+      item.subCategory === 'coins' ||
+      item.subCategorySlug === 'coins' ||
+      item.subType === 'coins'
+    ));
+
+    assert.equal(coinProducts.length, 3, 'Should have exactly 3 silver coin products');
+    assert.ok(coinProducts.some(p => p.id === 'silver-coin-lotus-01'), 'Lotus coin must exist');
+    assert.ok(coinProducts.some(p => p.id === 'silver-coin-lakshmi-02'), 'Gajalakshmi coin must exist');
+    assert.ok(coinProducts.some(p => p.id === 'silver-coin-peacock-03'), 'Peacock coin must exist');
+
+    // Verify all 3 have required fields
+    for (const coin of coinProducts) {
+      assert.ok(coin.image, `Coin ${coin.id} must have product image`);
+      assert.ok(coin.name, `Coin ${coin.id} must have product name`);
+      assert.ok(coin.weight, `Coin ${coin.id} must have weight`);
+      assert.ok(coin.purity, `Coin ${coin.id} must have purity`);
+      assert.ok(coin.price, `Coin ${coin.id} must have price`);
+    }
+  });
 });
+
+describe('Gold Category Navigation & Filtering', () => {
+  it('includes Anklets and Toe Rings in goldCategories', () => {
+    const ankletsCat = goldCategories.find(c => c.slug === 'anklets');
+    const toeRingsCat = goldCategories.find(c => c.slug === 'toe-rings');
+
+    assert.ok(ankletsCat, 'Anklets category must exist in goldCategories');
+    assert.equal(ankletsCat.name, 'Anklets');
+    assert.equal(ankletsCat.path, '/gold/anklets');
+
+    assert.ok(toeRingsCat, 'Toe Rings category must exist in goldCategories');
+    assert.equal(toeRingsCat.name, 'Toe Rings');
+    assert.equal(toeRingsCat.path, '/gold/toe-rings');
+  });
+
+  it('orders Anklets and Toe Rings right after Pendant in goldCategories', () => {
+    const pendantIndex = goldCategories.findIndex(c => c.slug === 'pendants');
+    const ankletsIndex = goldCategories.findIndex(c => c.slug === 'anklets');
+    const toeRingsIndex = goldCategories.findIndex(c => c.slug === 'toe-rings');
+
+    assert.ok(pendantIndex !== -1, 'Pendant category must exist');
+    assert.equal(ankletsIndex, pendantIndex + 1, 'Anklets must immediately follow Pendant');
+    assert.equal(toeRingsIndex, ankletsIndex + 1, 'Toe Rings must immediately follow Anklets');
+  });
+
+  it('filters gold anklets products correctly', () => {
+    const goldProducts = products.filter(p => p.category === 'Gold');
+    const ankletProducts = goldProducts.filter(item => (
+      item.subCategory === 'anklets' ||
+      item.subCategorySlug === 'anklets' ||
+      item.subType === 'anklets' ||
+      item.id?.includes('anklet') ||
+      item.name?.toLowerCase().includes('anklet') ||
+      item.name?.toLowerCase().includes('payal')
+    ));
+
+    assert.equal(ankletProducts.length, 3, 'Should find 3 gold anklet / payal products');
+    assert.ok(ankletProducts.some(p => p.id === 'gold-anklet-93-heritage-beaded-mani'));
+    assert.ok(ankletProducts.some(p => p.id === 'gold-anklet-94-delicate-bell-charm-pair'));
+    assert.ok(ankletProducts.some(p => p.id === 'gold-anklet-95-royal-antique-ghungroo-pair'));
+  });
+
+  it('filters gold toe rings products correctly', () => {
+    const goldProducts = products.filter(p => p.category === 'Gold');
+    const toeRingProducts = goldProducts.filter(item => (
+      item.subCategory === 'toe-rings' ||
+      item.subCategorySlug === 'toe-rings' ||
+      item.subType === 'toe-rings' ||
+      item.id?.includes('toe-ring') ||
+      item.name?.toLowerCase().includes('toe ring') ||
+      item.name?.toLowerCase().includes('metti')
+    ));
+
+    assert.equal(toeRingProducts.length, 3, 'Should find 3 gold toe ring / metti products');
+    assert.ok(toeRingProducts.some(p => p.id === 'gold-toe-ring-91-floral-filigree'));
+    assert.ok(toeRingProducts.some(p => p.id === 'gold-toe-ring-92-classic-metti-pair'));
+    assert.ok(toeRingProducts.some(p => p.id === 'gold-toe-ring-96-minimalist-band'));
+  });
+
+  it('does not leak gold anklets or toe rings into bangles or finger rings', () => {
+    const goldProducts = products.filter(p => p.category === 'Gold');
+    const banglesProducts = goldProducts.filter(item => (
+      item.subCategory === 'bangles' || item.subCategorySlug === 'bangles'
+    ));
+    const ringsProducts = goldProducts.filter(item => (
+      item.subCategory === 'rings' || item.subCategorySlug === 'rings'
+    ));
+
+    assert.ok(banglesProducts.every(p => !p.id.includes('anklet') && !p.id.includes('payal')), 'Bangles should not include anklets');
+    assert.ok(ringsProducts.every(p => !p.id.includes('toe-ring') && !p.id.includes('metti')), 'Rings should not include toe rings');
+  });
+
+  it('verifies that all gold anklets and toe rings reference images exist', () => {
+    const goldProducts = products.filter(p => p.category === 'Gold');
+    const newItems = goldProducts.filter(p => p.subCategory === 'anklets' || p.subCategory === 'toe-rings');
+    assert.equal(newItems.length, 6, 'Must have 6 new gold products');
+
+    for (const item of newItems) {
+      assert.ok(item.image, `${item.id} must have image`);
+      const fullPath = path.join(process.cwd(), 'public', item.image);
+      assert.ok(fs.existsSync(fullPath), `Image file must exist: ${item.image}`);
+    }
+  });
+
+  it('includes Occasion in goldCategories with correct slug and path', () => {
+    const occasionCat = goldCategories.find(c => c.slug === 'occasion');
+    assert.ok(occasionCat, 'Occasion category must exist in goldCategories');
+    assert.equal(occasionCat.name, 'Occasion');
+    assert.equal(occasionCat.path, '/gold/occasion');
+  });
+
+  it('orders Occasion right after Nosepin and before Chains in goldCategories', () => {
+    const nosepinIndex = goldCategories.findIndex(c => c.slug === 'nosepin');
+    const occasionIndex = goldCategories.findIndex(c => c.slug === 'occasion');
+    const chainsIndex = goldCategories.findIndex(c => c.slug === 'chains');
+
+    assert.ok(nosepinIndex !== -1, 'Nosepin category must exist');
+    assert.ok(chainsIndex !== -1, 'Chains category must exist');
+    assert.equal(occasionIndex, nosepinIndex + 1, 'Occasion must immediately follow Nosepin');
+    assert.equal(chainsIndex, occasionIndex + 1, 'Chains must immediately follow Occasion');
+  });
+
+  it('configures Occasion subcategories for Casual Wear, Party Wear, and Traditional Wear', () => {
+    const occasionCat = goldCategories.find(c => c.slug === 'occasion');
+    assert.ok(occasionCat.subcategories, 'Occasion must have subcategories');
+    assert.equal(occasionCat.subcategories.length, 3);
+    const subSlugs = occasionCat.subcategories.map(s => s.slug);
+    assert.deepEqual(subSlugs, ['casual-wear', 'party-wear', 'traditional-wear']);
+  });
+
+  it('filters gold occasion products correctly for View All and sub-styles', () => {
+    const goldProducts = products.filter(p => p.category === 'Gold');
+    const occasionAll = goldProducts.filter(item => (
+      item.subCategory === 'occasion' || item.occasion || item.isBridal
+    ));
+    assert.ok(occasionAll.length >= 50, 'View all occasion gold should return all occasion wear gold products');
+
+    const casualWear = goldProducts.filter(item => item.occasion === 'casual-wear');
+    const partyWear = goldProducts.filter(item => item.occasion === 'party-wear');
+    const traditionalWear = goldProducts.filter(item => item.occasion === 'traditional-wear');
+
+    assert.ok(casualWear.length > 0, 'Casual wear gold products must exist');
+    assert.ok(partyWear.length > 0, 'Party wear gold products must exist');
+    assert.ok(traditionalWear.length > 0, 'Traditional wear gold products must exist');
+    assert.equal(casualWear.length + partyWear.length + traditionalWear.length, goldProducts.length);
+  });
+});
+
 

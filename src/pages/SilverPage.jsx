@@ -166,6 +166,11 @@ const SILVER_CATEGORY_MAP = {
     desc: 'Traditional South Indian bridal metti and contemporary sterling silver toe rings.',
     parent: null
   },
+  'coins': { 
+    title: '999 Pure Silver Coins', 
+    desc: 'Certified 999 fine pure silver coins embossed with sacred Goddess Lakshmi, royal peacock, and blooming lotus motifs for puja, gifting, and prosperity.',
+    parent: null
+  },
   'handcrafted-silver': { 
     title: 'Handcrafted Heritage Silver', 
     desc: 'Chettinad antique finish tribal payals, oxidized silver jewelry, and artisan silverware.',
@@ -291,6 +296,15 @@ function getSilverCategoryIcon(slug, isActive = false) {
           <path d="M12 8.5V9.5" />
         </svg>
       );
+    case 'coins':
+      return (
+        <svg className={`w-4 h-4 shrink-0 ${iconColor}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="9" />
+          <circle cx="12" cy="12" r="6.5" strokeWidth="1" />
+          <circle cx="12" cy="12" r="3" fill="currentColor" fillOpacity="0.2" />
+          <path d="M12 7.5V8.5M12 15.5V16.5M7.5 12H8.5M15.5 12H16.5" strokeWidth="1.2" />
+        </svg>
+      );
     default:
       return <Sparkles className={`w-4 h-4 shrink-0 ${iconColor}`} />;
   }
@@ -365,6 +379,13 @@ export default function SilverPage({
     if (!pillTrackRef.current) return;
     if (activeKey === 'all') {
       pillTrackRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      setTimeout(() => {
+        const activePill = pillTrackRef.current?.querySelector('[data-active="true"]');
+        if (activePill) {
+          activePill.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      }, 50);
     }
     checkPillScroll();
   }, [activeKey, activeMainCat]);
@@ -476,8 +497,14 @@ export default function SilverPage({
       matchesCategory = (item.subCategory === 'pooja-items' || item.subCategorySlug === 'pooja-items');
     } else if (activeMainCat === 'silver-idols') {
       matchesCategory = (item.subCategory === 'silver-idols' || item.subCategorySlug === 'silver-idols');
-    } else if (activeMainCat === 'coins-bars') {
-      matchesCategory = (item.subCategory === 'coins-bars' || item.subCategory === 'coins' || item.subCategorySlug === 'coins-bars');
+    } else if (activeMainCat === 'coins' || activeMainCat === 'coins-bars') {
+      matchesCategory = (
+        item.subCategory === 'coins' ||
+        item.subCategorySlug === 'coins' ||
+        item.subType === 'coins' ||
+        item.subCategory === 'coins-bars' ||
+        item.subCategorySlug === 'coins-bars'
+      );
     } else if (activeMainCat === 'occasion') {
       matchesCategory = (item.subCategory === 'occasion' || item.occasion || item.isBridal);
     } else {
@@ -866,9 +893,16 @@ export default function SilverPage({
 
                   <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
                     <div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#64748B]">
-                        {item.purity || item.details}
-                      </span>
+                      <div className="flex items-center justify-between gap-2 mb-1">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-[#64748B]">
+                          {item.purity || item.details}
+                        </span>
+                        {item.weight && (
+                          <span className="text-[10px] font-semibold text-[#1E293B] bg-[#F1F5F9] px-2 py-0.5 rounded border border-[#E2E8F0] shrink-0">
+                            {item.weight}
+                          </span>
+                        )}
+                      </div>
                       <h3 
                         onClick={() => onViewProduct(item)}
                         className="font-serif text-base font-bold text-[#0F172A] group-hover:text-[#1E293B] transition-colors line-clamp-1 mt-1 cursor-pointer"

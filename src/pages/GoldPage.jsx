@@ -5,6 +5,7 @@ import { goldCategories } from '../data/categoryData';
 import {
   Sparkles,
   ChevronRight,
+  ChevronLeft,
   Heart,
   ShoppingBag,
   ShieldCheck,
@@ -149,9 +150,24 @@ const CATEGORY_MAP = {
     desc: 'Sacred temple deities, peacock medallions, and floral repoussé lockets in 22K gold.',
     parent: null
   },
+  'anklets': {
+    title: '22K Gold Anklets & Payals',
+    desc: 'Melodic gold ghungroo payals, heritage Mani beaded kolusus, and bridal bell-charm anklets in 22K hallmarked gold.',
+    parent: null
+  },
+  'toe-rings': {
+    title: '22K Gold Toe Rings (Metti)',
+    desc: 'Auspicious South Indian bridal 22K gold metti pairs and ornate floral filigree toe rings in 22K hallmarked gold.',
+    parent: null
+  },
   'bridal-jewellery': {
     title: 'Bridal Gold Jewellery',
     desc: 'Complete auspicious Muhurtham wedding trousseau sets and temple bridal jewelry.',
+    parent: null
+  },
+  'coins': {
+    title: '24K 999 Pure Gold Coins',
+    desc: 'Certified 24K pure gold coins and sacred temple medallions for auspicious gifting and puja.',
     parent: null
   }
 };
@@ -250,6 +266,39 @@ function getCategoryIcon(slug, isActive = false) {
           <circle cx="12" cy="16" r="1.5" fill="currentColor" />
         </svg>
       );
+    case 'anklets':
+      return (
+        <svg className={`w-4 h-4 shrink-0 ${iconColor}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M3 10C7 16.5 17 16.5 21 10" />
+          <path d="M8 14.5V17" />
+          <circle cx="8" cy="18" r="1" fill="currentColor" />
+          <path d="M12 15.2V18" />
+          <circle cx="12" cy="19" r="1" fill="currentColor" />
+          <path d="M16 14.5V17" />
+          <circle cx="16" cy="18" r="1" fill="currentColor" />
+          <circle cx="3.5" cy="10" r="1" fill="currentColor" />
+          <circle cx="20.5" cy="10" r="1" fill="currentColor" />
+        </svg>
+      );
+    case 'toe-rings':
+      return (
+        <svg className={`w-4 h-4 shrink-0 ${iconColor}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <ellipse cx="12" cy="14" rx="7" ry="5" />
+          <ellipse cx="12" cy="14" rx="4.5" ry="3" />
+          <circle cx="12" cy="6" r="2.5" />
+          <circle cx="12" cy="6" r="1" fill="currentColor" />
+          <path d="M12 8.5V9.5" />
+        </svg>
+      );
+    case 'coins':
+      return (
+        <svg className={`w-4 h-4 shrink-0 ${iconColor}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="9" />
+          <circle cx="12" cy="12" r="6.5" strokeWidth="1" />
+          <circle cx="12" cy="12" r="3" fill="currentColor" fillOpacity="0.2" />
+          <path d="M12 7.5V8.5M12 15.5V16.5M7.5 12H8.5M15.5 12H16.5" strokeWidth="1.2" />
+        </svg>
+      );
     default:
       return <Gem className={`w-4 h-4 shrink-0 ${iconColor}`} />;
   }
@@ -268,11 +317,13 @@ export default function GoldPage({
   const [sortBy, setSortBy] = useState('featured');
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
   const [priceFilter, setPriceFilter] = useState('all'); // 'all' | 'under50k' | '50k-100k' | 'above100k'
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(false);
+  const pillTrackRef = React.useRef(null);
 
   // Identify active category key from either single-level or nested route
   const isBanglesSubStyle = Boolean(subType) && (subType.toLowerCase() === 'bangles' || subType.toLowerCase() === 'bangle-bracelets');
   const activeKey = (subType || subCategory || category || 'all').toLowerCase();
-  const activeMainCat = (category || subCategory || 'all').toLowerCase();
 
   let categoryInfo = CATEGORY_MAP[activeKey];
   if (isBanglesSubStyle) {
@@ -288,6 +339,49 @@ export default function GoldPage({
       parent: null
     };
   }
+  const activeMainCat = (category || (categoryInfo.parent ? categoryInfo.parent.slug : subCategory) || 'all').toLowerCase();
+
+  const checkPillScroll = () => {
+    if (!pillTrackRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = pillTrackRef.current;
+    setShowLeftArrow(scrollLeft > 10);
+    setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 10);
+  };
+
+  React.useEffect(() => {
+    const el = pillTrackRef.current;
+    if (el) {
+      checkPillScroll();
+      el.addEventListener('scroll', checkPillScroll, { passive: true });
+      window.addEventListener('resize', checkPillScroll);
+      return () => {
+        el.removeEventListener('scroll', checkPillScroll);
+        window.removeEventListener('resize', checkPillScroll);
+      };
+    }
+  }, []);
+
+  const handlePillScroll = (direction) => {
+    if (pillTrackRef.current) {
+      const scrollAmount = direction === 'left' ? -260 : 260;
+      pillTrackRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
+  React.useEffect(() => {
+    if (!pillTrackRef.current) return;
+    if (activeKey === 'all') {
+      pillTrackRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      setTimeout(() => {
+        const activePill = pillTrackRef.current?.querySelector('[data-active="true"]');
+        if (activePill) {
+          activePill.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      }, 50);
+    }
+    checkPillScroll();
+  }, [activeKey, activeMainCat]);
 
   // Smooth scroll helper to navigate directly to catalog products instead of jumping to hero
   const isInitialMount = React.useRef(true);
@@ -312,7 +406,7 @@ export default function GoldPage({
 
   // Filter products matching category or subcategory
   const filteredProducts = products.filter(item => {
-    if (item.category !== 'Gold') return false;
+    if (item.category !== 'Gold' && !(activeMainCat === 'coins' && item.category === 'Coins & Bars' && item.subCategory === 'gold-coins')) return false;
 
     // Search query filter
     if (searchQuery && searchQuery.trim() !== '') {
@@ -360,6 +454,12 @@ export default function GoldPage({
       matchesCategory = (item.subCategory === 'chains' || item.subCategorySlug === 'chains' || item.subType === 'chains');
     } else if (activeMainCat === 'pendants') {
       matchesCategory = (item.subCategory === 'pendants' || item.subCategorySlug === 'pendants' || item.subType === 'pendants');
+    } else if (activeMainCat === 'anklets') {
+      matchesCategory = (item.subCategory === 'anklets' || item.subCategorySlug === 'anklets' || item.subType === 'anklets' || item.id?.includes('anklet') || item.name?.toLowerCase().includes('anklet') || item.name?.toLowerCase().includes('payal'));
+    } else if (activeMainCat === 'toe-rings') {
+      matchesCategory = (item.subCategory === 'toe-rings' || item.subCategorySlug === 'toe-rings' || item.subType === 'toe-rings' || item.id?.includes('toe-ring') || item.name?.toLowerCase().includes('toe ring') || item.name?.toLowerCase().includes('metti'));
+    } else if (activeMainCat === 'coins') {
+      matchesCategory = (item.subCategory === 'coins' || item.subCategory === 'gold-coins' || item.subType === 'coins' || item.name.toLowerCase().includes('gold coin'));
     } else {
       matchesCategory = (
         item.subType === activeKey ||
@@ -522,17 +622,36 @@ export default function GoldPage({
         {/* ========================================================================= */}
         {/* CATEGORY FILTERS: Exact Reference Pill Design & Custom Gold Vector Icons  */}
         {/* ========================================================================= */}
-        <div className="mb-6">
-          <div className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto scrollbar-none pb-2 sm:pb-0 px-1 sm:justify-center">
+        {/* ========================================================================= */}
+        {/* CATEGORY FILTERS: Compact Rounded White Pills + Dark Navy Filter Button    */}
+        {/* ========================================================================= */}
+        <div className="relative mb-6">
+          {/* Desktop Left Scroll Control */}
+          {showLeftArrow && (
+            <button
+              onClick={() => handlePillScroll('left')}
+              className="hidden md:flex absolute -left-3 sm:-left-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 items-center justify-center rounded-full bg-white/95 border border-[#DECDBB] text-[#1E293B] shadow-md hover:bg-[#F1F5F9] hover:scale-105 transition-all cursor-pointer focus:outline-none"
+              aria-label="Scroll categories left"
+            >
+              <ChevronLeft className="w-4 h-4 stroke-[2.2]" />
+            </button>
+          )}
 
+          <div
+            ref={pillTrackRef}
+            className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto scrollbar-none pb-2 sm:pb-0 px-1 justify-start scroll-smooth"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
             {/* "All Gold (N)" Pill */}
             <Link
               to="/gold"
               onClick={scrollToCatalog}
-              className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-xs shrink-0 ${activeKey === 'all'
-                ? 'bg-[#4D141C] text-white border border-[#4D141C] shadow-md'
-                : 'bg-white text-[#1C273C] hover:text-[#581923] hover:border-[#C8A058] border border-[#E7DFD3]'
-                }`}
+              data-active={activeKey === 'all'}
+              className={`px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-xs shrink-0 ${
+                activeKey === 'all'
+                  ? 'bg-[#1E293B] text-white border border-[#1E293B] shadow-md'
+                  : 'bg-white text-[#1C273C] hover:text-[#1E293B] hover:border-[#C8A058] border border-[#E2E8F0]'
+              }`}
             >
               {getCategoryIcon('all', activeKey === 'all')}
               <span>All Gold ({products.filter(p => p.category === 'Gold').length})</span>
@@ -546,10 +665,12 @@ export default function GoldPage({
                   key={cat.id}
                   to={cat.path}
                   onClick={scrollToCatalog}
-                  className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-xs shrink-0 ${isActive
-                    ? 'bg-[#4D141C] text-white border border-[#4D141C] shadow-md'
-                    : 'bg-white text-[#1C273C] hover:text-[#581923] hover:border-[#C8A058] border border-[#E7DFD3]'
-                    }`}
+                  data-active={isActive}
+                  className={`px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-xs shrink-0 ${
+                    isActive
+                      ? 'bg-[#1E293B] text-white border border-[#1E293B] shadow-md'
+                      : 'bg-white text-[#1C273C] hover:text-[#1E293B] hover:border-[#C8A058] border border-[#E2E8F0]'
+                  }`}
                 >
                   {getCategoryIcon(cat.slug, isActive)}
                   <span>{cat.name}</span>
@@ -560,20 +681,32 @@ export default function GoldPage({
             {/* Dark Navy "Filter" Button with Filter Icon */}
             <button
               onClick={() => setIsFilterDrawerOpen(!isFilterDrawerOpen)}
-              className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-xs shrink-0 ${isFilterDrawerOpen || priceFilter !== 'all'
-                ? 'bg-[#121B28] text-[#E5C278] border border-[#E5C278] shadow-md'
-                : 'bg-[#1A2536] hover:bg-[#111A27] text-white border border-[#1A2536]'
-                }`}
+              className={`px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-xs shrink-0 ${
+                isFilterDrawerOpen || priceFilter !== 'all'
+                  ? 'bg-[#0F172A] text-[#E5C278] border border-[#E5C278] shadow-md'
+                  : 'bg-[#1E293B] hover:bg-[#0F172A] text-white border border-[#1E293B]'
+              }`}
               title="Toggle Price & Purity Filter"
               aria-label="Filter products"
             >
-              <SlidersHorizontal className="w-3.5 h-3.5 text-[#E5C278] shrink-0" />
+              <Sparkles className="w-3.5 h-3.5 text-[#E5C278] shrink-0" />
               <span>Filter</span>
               {priceFilter !== 'all' && (
                 <span className="w-2 h-2 rounded-full bg-[#E5C278]" />
               )}
             </button>
           </div>
+
+          {/* Desktop Right Scroll Control */}
+          {showRightArrow && (
+            <button
+              onClick={() => handlePillScroll('right')}
+              className="hidden md:flex absolute -right-3 sm:-right-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 items-center justify-center rounded-full bg-white/95 border border-[#DECDBB] text-[#1E293B] shadow-md hover:bg-[#F1F5F9] hover:scale-105 transition-all cursor-pointer focus:outline-none"
+              aria-label="Scroll categories right"
+            >
+              <ChevronRight className="w-4 h-4 stroke-[2.2]" />
+            </button>
+          )}
         </div>
 
         {/* Collapsible Filter Panel (When Filter is toggled) */}
@@ -619,19 +752,19 @@ export default function GoldPage({
         )}
 
         {/* Secondary Subcategory Sub-pills (When inside a category with subcategories) */}
-        {activeSubcategories.length > 0 && (
-          <div className="bg-[#FAF3E3] p-3 rounded-xl border border-[#E8DFC0] mb-6 flex items-center gap-2 overflow-x-auto scrollbar-none">
-            <span className="text-[11px] font-bold text-[#8C6D2D] uppercase tracking-wider pl-1 shrink-0">
+        {activeSubcategories.length > 0 && !['nosepin', 'chains', 'pendants', 'anklets', 'toe-rings', 'coins'].includes(currentCategoryData?.slug) && (
+          <div className="bg-[#F1F5F9] p-3 rounded-2xl border border-[#CBD5E1] mb-6 flex items-center gap-2 overflow-x-auto scrollbar-none">
+            <span className="text-[11px] font-bold text-[#475569] uppercase tracking-wider pl-1 shrink-0">
               {currentCategoryData.name} Styles:
             </span>
             <Link
               to={currentCategoryData.path}
               id="gold-style-filter-view-all"
               onClick={scrollToCatalog}
-              className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
                 !subType
-                  ? 'bg-[#581923] text-white'
-                  : 'bg-white/80 text-[#3A2E28] hover:bg-white border border-[#DECDBB]'
+                  ? 'bg-[#1E293B] text-white shadow-xs'
+                  : 'bg-white text-[#334155] hover:bg-white border border-[#CBD5E1]'
               }`}
             >
               View All
@@ -644,10 +777,10 @@ export default function GoldPage({
                   id={`gold-style-filter-${sub.slug}`}
                   to={sub.path}
                   onClick={scrollToCatalog}
-                  className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
+                  className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
                     isSubActive
-                      ? 'bg-[#581923] text-white'
-                      : 'bg-white/80 text-[#3A2E28] hover:bg-white border border-[#DECDBB]'
+                      ? 'bg-[#1E293B] text-white shadow-xs'
+                      : 'bg-white text-[#334155] hover:bg-white border border-[#CBD5E1]'
                   }`}
                 >
                   {sub.name}
@@ -747,7 +880,9 @@ export default function GoldPage({
                           {item.purity || item.details || '22K BIS 916'}
                         </span>
                         <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-[#F4EFE6] text-[#63574F] capitalize">
-                          {item.subType ? item.subType.replace(/-/g, ' ') : item.subCategory}
+                          {activeMainCat === 'occasion' && item.occasion
+                            ? item.occasion.replace(/-/g, ' ')
+                            : (item.subType ? item.subType.replace(/-/g, ' ') : item.subCategory)}
                         </span>
                       </div>
 

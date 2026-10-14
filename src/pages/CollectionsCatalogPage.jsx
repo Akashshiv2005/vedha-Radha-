@@ -40,6 +40,14 @@ const COLLECTIONS_MAP = {
   'silver-idol': { 
     title: 'Artisanal Pure Silver Idols (Murtis)', 
     desc: 'Sacred cast 92.5 solid silver murtis of Lord Siddhi Anjaneya, Ganesha, Goddess Lakshmi, and Balaji on double-lotus pedestals.' 
+  },
+  'gift-collection': { 
+    title: 'Artisanal Pure Silver Gift Collection', 
+    desc: 'Cherished pure 92.5 hallmarked silver bowl sets, royal dinnerware, and auspicious presentation gifts tailored for life’s grand celebrations.' 
+  },
+  'gift': { 
+    title: 'Artisanal Pure Silver Gift Collection', 
+    desc: 'Cherished pure 92.5 hallmarked silver bowl sets, royal dinnerware, and auspicious presentation gifts tailored for life’s grand celebrations.' 
   }
 };
 
@@ -53,7 +61,9 @@ const COLLECTION_EXCLUSIVE_PRODUCT_MAP = {
   'girls-accessories': 'collections-girls-exclusive-01',
   'pooja-items': 'collections-pooja-exclusive-01',
   'silver-idols': 'collections-silver-idol-exclusive-01',
-  'silver-idol': 'collections-silver-idol-exclusive-01'
+  'silver-idol': 'collections-silver-idol-exclusive-01',
+  'gift-collection': 'collections-gift-exclusive-01',
+  'gift': 'collections-gift-exclusive-01'
 };
 
 const EXCLUSIVE_PRODUCT_IDS = Object.values(COLLECTION_EXCLUSIVE_PRODUCT_MAP);
@@ -62,7 +72,8 @@ const EXCLUSIVE_PRODUCT_IDS = Object.values(COLLECTION_EXCLUSIVE_PRODUCT_MAP);
 function CollectionProductCard({ item, wishlistItems, onAddToCart, onAddToWishlist, onViewProduct }) {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const isWishlisted = wishlistItems.some(w => w.id === item.id);
-  const images = item.images && item.images.length > 0 ? item.images : [item.image];
+  const isGiftCard = item.collection === 'gift-collection' || item.subCategory === 'Gift Collection' || !!item.suitableFor;
+  const images = (!isGiftCard && item.images && item.images.length > 0) ? item.images : [item.image];
   const currentImage = images[activeImageIndex] || item.image;
 
   return (
@@ -77,15 +88,15 @@ function CollectionProductCard({ item, wishlistItems, onAddToCart, onAddToWishli
         />
 
         {/* Collection Badge */}
-        <div className="absolute top-3 left-3">
-          <span className="inline-block px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-[#DCF0DF] text-[#1E5C2D] border border-[#C1E3C6]">
+        <div className="absolute top-3 left-3 z-10">
+          <span className="inline-block px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-[#FAF3E3] text-[#581923] border border-[#E8DFC0] shadow-xs">
             {item.badge}
           </span>
         </div>
 
         {/* View Index Badge */}
         {images.length > 1 && (
-          <div className="absolute top-3 left-1/2 -translate-x-1/2">
+          <div className="absolute top-3 left-1/2 -translate-x-1/2 z-10">
             <span className="bg-black/60 text-[#E5C278] text-[10px] font-medium px-2 py-0.5 rounded-full backdrop-blur-xs flex items-center gap-1">
               <Eye className="w-3 h-3" />
               View {activeImageIndex + 1} of {images.length}
@@ -96,7 +107,7 @@ function CollectionProductCard({ item, wishlistItems, onAddToCart, onAddToWishli
         {/* Wishlist Button */}
         <button
           onClick={() => onAddToWishlist(item)}
-          className="absolute top-3 right-3 p-2 rounded-full bg-white/90 hover:bg-white text-[#581923] shadow-md transition-transform active:scale-95 cursor-pointer"
+          className="absolute top-3 right-3 p-2 rounded-full bg-white/90 hover:bg-white text-[#581923] shadow-md transition-transform active:scale-95 cursor-pointer z-10"
           title={isWishlisted ? "Item in Wishlist" : "Add to Wishlist"}
           aria-label={isWishlisted ? "Item in Wishlist" : "Add to Wishlist"}
         >
@@ -105,7 +116,7 @@ function CollectionProductCard({ item, wishlistItems, onAddToCart, onAddToWishli
 
         {/* Interactive 3-Image Thumbnail Strip at bottom of preview */}
         {images.length > 1 && (
-          <div className="absolute bottom-2 inset-x-0 flex justify-center gap-1.5 px-3 py-1 bg-black/40 backdrop-blur-xs rounded-full max-w-fit mx-auto">
+          <div className="absolute bottom-2 inset-x-0 flex justify-center gap-1.5 px-3 py-1 bg-black/40 backdrop-blur-xs rounded-full max-w-fit mx-auto z-10">
             {images.map((imgSrc, idx) => (
               <button
                 key={idx}
@@ -134,53 +145,77 @@ function CollectionProductCard({ item, wishlistItems, onAddToCart, onAddToWishli
       </div>
 
       {/* Product Details Section */}
-      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
-        <div>
-          <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C6D2D]">
-            {item.purity || item.details || item.material}
-          </span>
-          <h3 className="font-serif text-base font-bold text-[#241716] group-hover:text-[#581923] transition-colors line-clamp-1 mt-1">
-            {item.name}
-          </h3>
-          <p className="text-xs text-[#63574F] line-clamp-2 mt-1 leading-relaxed">
-            {item.description}
-          </p>
-
-          {/* Key Specs Pills */}
-          <div className="flex items-center gap-2 mt-2.5 text-[11px] text-[#7A6E65]">
+      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between gap-3">
+        <div className="space-y-2">
+          {/* Category/Purity & Weight Header Row */}
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C6D2D] bg-[#FAF3E3] px-2 py-0.5 rounded border border-[#E8DFC0]/70 truncate">
+              {item.purity || item.details || item.material}
+            </span>
             {item.weight && (
-              <span className="bg-[#F3EAD3]/60 px-2 py-0.5 rounded border border-[#E8DFC0]/60">
-                Weight: {item.weight}
-              </span>
-            )}
-            {item.dimensions && (
-              <span className="bg-[#F3EAD3]/60 px-2 py-0.5 rounded border border-[#E8DFC0]/60 line-clamp-1">
-                {item.dimensions}
+              <span className="text-[10.5px] font-semibold text-[#581923] bg-[#FAF0E1] px-2 py-0.5 rounded border border-[#E0D2C0] shrink-0 whitespace-nowrap">
+                {item.weight}
               </span>
             )}
           </div>
+
+          {/* Product Title */}
+          <h3 
+            onClick={() => onViewProduct(item)}
+            className="font-serif text-[15px] sm:text-base font-bold text-[#241716] group-hover:text-[#581923] transition-colors line-clamp-2 leading-snug cursor-pointer pt-0.5"
+            title={item.name}
+          >
+            {item.name}
+          </h3>
+
+          {/* Product Description */}
+          <p className="text-xs text-[#63574F] line-clamp-2 leading-relaxed">
+            {item.description}
+          </p>
+
+          {/* Suitable For Label - ONLY on relevant gift collection cards */}
+          {item.suitableFor && (
+            <div className="pt-1 flex items-center gap-2">
+              <span className="text-[10.5px] font-bold uppercase tracking-wider text-[#8C6D2D] shrink-0">
+                Suitable For:
+              </span>
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#FAF0E1] text-[#581923] border border-[#E0D2C0]">
+                {item.suitableFor}
+              </span>
+            </div>
+          )}
+
+          {/* Dimensions Specs Tag */}
+          {item.dimensions && (
+            <div className="pt-0.5">
+              <span className="inline-block text-[11px] text-[#63574F] bg-[#F7F2EA] px-2.5 py-0.5 rounded border border-[#E8DFC0]/70 max-w-full truncate" title={item.dimensions}>
+                <span className="font-semibold text-[#8C6D2D] mr-1">Dimensions:</span>
+                {item.dimensions}
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Pricing & CTA Controls */}
-        <div className="mt-4 pt-3 border-t border-[#EAE2D5] flex items-center justify-between">
+        <div className="mt-3 pt-3 border-t border-[#EAE2D5] flex items-center justify-between gap-2">
           <div>
-            <span className="text-[10px] text-[#7A6E65] block">Showroom Price</span>
+            <span className="text-[10px] text-[#7A6E65] block font-medium">Showroom Price</span>
             <span className="font-serif text-lg font-bold text-[#48161E]">
               {item.price}
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={() => onViewProduct(item)}
-              className="px-3 py-1.5 rounded-md border border-[#581923] text-[#581923] hover:bg-[#FAF0E1] text-xs font-semibold transition-colors cursor-pointer flex items-center gap-1"
+              className="px-3 py-1.5 rounded-lg border border-[#581923] text-[#581923] hover:bg-[#FAF0E1] text-xs font-semibold transition-colors cursor-pointer flex items-center gap-1"
             >
               <Layers className="w-3.5 h-3.5" />
               <span>Details</span>
             </button>
             <button
               onClick={() => onAddToCart(item)}
-              className="px-3 py-1.5 rounded-md bg-[#581923] hover:bg-[#431219] text-white text-xs font-semibold flex items-center gap-1 transition-colors cursor-pointer"
+              className="px-3 py-1.5 rounded-lg bg-[#581923] hover:bg-[#431219] text-white text-xs font-semibold flex items-center gap-1 transition-colors cursor-pointer shadow-xs"
             >
               <ShoppingBag className="w-3.5 h-3.5" />
               <span>Add</span>
@@ -227,6 +262,16 @@ export default function CollectionsCatalogPage({
     // 2. Collection Route Filter: Each collection displays its exact 1 exclusive product
     if (!subCategory || activeSlug === 'all') {
       return item.id.startsWith('collections-') && item.id.includes('-exclusive-');
+    }
+
+    // Gift Collection displays all gift collection products
+    if (activeSlug === 'gift-collection' || activeSlug === 'gift') {
+      return (
+        item.collection === 'gift-collection' ||
+        item.subCategory === 'Gift Collection' ||
+        item.subCategorySlug === 'gift-collection' ||
+        item.id.startsWith('collections-gift-')
+      );
     }
 
     const assignedId = COLLECTION_EXCLUSIVE_PRODUCT_MAP[activeSlug];
@@ -318,7 +363,7 @@ export default function CollectionsCatalogPage({
           </div>
 
           <div className="flex items-center gap-3 shrink-0 self-end lg:self-auto text-xs">
-            <span className="text-[#7A6E65]">Showing {sortedProducts.length} exclusive designs</span>
+            <span className="text-[#7A6E65]">Showing {sortedProducts.length} {sortedProducts.length === 1 ? 'exclusive design' : 'curated designs'}</span>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}

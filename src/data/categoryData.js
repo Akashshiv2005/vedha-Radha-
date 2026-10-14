@@ -58,17 +58,15 @@ export const goldCategories = [
     path: '/gold/nosepin',
     image: '/images/products/gold/gold_nosepin_61.svg',
     description: 'Traditional South Indian mookuthi, stone nosepins, and press-on studs.',
-    subcategories: [
-      { name: 'Nose Pin', slug: 'nosepin', path: '/gold/nosepin' }
-    ]
+    subcategories: []
   },
   {
     id: 'occasion',
     name: 'Occasion',
     slug: 'occasion',
     path: '/gold/occasion',
-    image: '/images/products/gold/gold_traditional_wear_76.svg',
-    description: 'Curated styling for casual daily wear, parties, and wedding rituals.',
+    image: '/images/col_gold.jpg',
+    description: 'Curated 22K jewellery ensembles tailored for casual days, celebrations, and wedding muhurthams.',
     subcategories: [
       { name: 'Casual Wear', slug: 'casual-wear', path: '/gold/occasion/casual-wear' },
       { name: 'Party Wear', slug: 'party-wear', path: '/gold/occasion/party-wear' },
@@ -82,9 +80,7 @@ export const goldCategories = [
     path: '/gold/chains',
     image: '/images/products/gold/gold_chains_81.svg',
     description: 'Hand-woven mugappu chains, hollow rope links, and daily 22K chains.',
-    subcategories: [
-      { name: 'Chains', slug: 'chains', path: '/gold/chains' }
-    ]
+    subcategories: []
   },
   {
     id: 'pendants',
@@ -93,9 +89,34 @@ export const goldCategories = [
     path: '/gold/pendants',
     image: '/images/products/gold/gold_pendants_86.svg',
     description: 'Ganesha medallions, Lakshmi motifs, and ruby floral lockets.',
-    subcategories: [
-      { name: 'Pendant', slug: 'pendants', path: '/gold/pendants' }
-    ]
+    subcategories: []
+  },
+  {
+    id: 'anklets',
+    name: 'Anklets',
+    slug: 'anklets',
+    path: '/gold/anklets',
+    image: '/images/products/gold/gold_anklets_01.jpg',
+    description: 'Melodic gold ghungroo payals, heritage Mani beaded kolusus, and bridal bell-charm anklets in 22K hallmarked gold.',
+    subcategories: []
+  },
+  {
+    id: 'toe-rings',
+    name: 'Toe Rings',
+    slug: 'toe-rings',
+    path: '/gold/toe-rings',
+    image: '/images/products/gold/gold_toe_rings_01.jpg',
+    description: 'Auspicious South Indian bridal 22K gold metti pairs and ornate floral filigree toe rings.',
+    subcategories: []
+  },
+  {
+    id: 'coins',
+    name: 'Coins',
+    slug: 'coins',
+    path: '/gold/coins',
+    image: '/images/coin_gold.jpg',
+    description: 'Certified 24K 999 pure fine gold coins and sacred temple medallions for auspicious gifting and puja.',
+    subcategories: []
   }
 ];
 
@@ -208,6 +229,15 @@ export const silverCategories = [
     path: '/silver/toe-rings',
     image: '/images/products/silver/silver-rings-metti-01.jpg',
     description: 'Traditional South Indian bridal metti and contemporary sterling silver toe rings.',
+    subcategories: []
+  },
+  {
+    id: 'coins',
+    name: 'Coins',
+    slug: 'coins',
+    path: '/silver/coins',
+    image: '/images/products/silver/silver-coin-lakshmi-card.jpg',
+    description: 'Certified 999 pure fine silver coins embossed with sacred Lakshmi, royal peacock, and blooming lotus motifs for puja and gifting.',
     subcategories: []
   }
 ];

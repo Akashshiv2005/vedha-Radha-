@@ -4,7 +4,10 @@ export const goldNavItems = [
   { name: 'Pendants', path: '/gold/pendants', count: '24 designs' },
   { name: 'Bangles', path: '/gold/bangles', count: '52 designs' },
   { name: 'Necklaces', path: '/gold/necklaces', count: '40 designs' },
+  { name: 'Occasion', path: '/gold/occasion', count: '51 designs' },
   { name: 'Chains', path: '/gold/chains', count: '30 designs' },
+  { name: 'Anklets', path: '/gold/anklets', count: '18 designs' },
+  { name: 'Toe Rings', path: '/gold/toe-rings', count: '12 designs' },
   { name: 'Bridal Jewellery', path: '/gold/bridal-jewellery', count: '65 sets', highlight: true },
   { name: 'View All Gold', path: '/gold', isAll: true }
 ];
@@ -77,6 +80,14 @@ export const collectionsNavItems = [
     desc: 'Sacred Balaji, Ganesha, and Lakshmi murtis in pure 92.5 solid silver.'
   },
   { 
+    name: 'Gift Collection', 
+    slug: 'gift-collection',
+    path: '/collections/gift-collection', 
+    image: '/images/col_gift.jpg',
+    tag: 'Auspicious Silver Gift Keepsakes',
+    desc: 'Pure 92.5 silver bowls, dinner sets, and presentation boxes for cherished celebrations.'
+  },
+  { 
     name: 'View All Collections', 
     path: '/collections', 
     isAll: true 
@@ -94,3 +105,6 @@ export const initialPreciousRates = {
   silver1g: '94.50',
   lastUpdated: 'Today, 10:30 AM'
 };
+
+export const goldCategories = goldNavItems;
+export const silverCategories = silverNavItems;
