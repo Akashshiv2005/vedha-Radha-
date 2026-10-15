@@ -71,7 +71,7 @@ export default function AdminSidebar({
       <aside 
         aria-label="Admin Navigation Sidebar"
         className={`
-          fixed top-0 bottom-0 left-0 z-50 w-72 bg-[#073F3B] text-[#F5F3EA] flex flex-col border-r border-[#0D5953] transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:h-screen lg:sticky lg:top-0 lg:self-start lg:flex-shrink-0
+          fixed inset-y-0 left-0 z-40 w-72 bg-[#073F3B] text-[#F5F3EA] flex flex-col border-r border-[#0D5953] transition-transform duration-300 ease-in-out lg:translate-x-0
           ${isOpen ? 'translate-x-0' : '-translate-x-full'}
         `}
       >
@@ -131,9 +131,9 @@ export default function AdminSidebar({
         {/* Navigation List */}
         <nav 
           aria-label="Admin Navigation"
-          className="flex-1 min-h-0 px-3 py-3 space-y-1.5 overflow-y-auto"
+          className="flex-1 min-h-0 px-3.5 py-3 space-y-1.5 overflow-y-auto"
         >
-          <div className="px-3 pt-1 pb-2 text-[11px] font-admin-body uppercase tracking-wider text-[#91AAA4] font-semibold select-none">
+          <div className="px-3.5 pt-1 pb-2 text-[11px] font-admin-body uppercase tracking-wider text-[#91AAA4] font-semibold select-none">
             ADMIN SCREENS
           </div>
 
@@ -148,10 +148,10 @@ export default function AdminSidebar({
                   setCurrentTab(item.id);
                   onClose();
                 }}
-                className={`w-full text-left px-4 py-3 rounded-xl relative block transition-colors duration-150 cursor-pointer text-[14px] font-admin-body focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D6A84B] focus-visible:ring-inset ${
+                className={`w-full text-left px-3.5 py-2.5 rounded-xl relative flex items-center transition-colors duration-150 cursor-pointer text-[13.5px] font-admin-body focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D6A84B] focus-visible:ring-inset ${
                   isActive
                     ? 'bg-[#0D5953] text-[#D6A84B] font-semibold shadow-xs'
-                    : 'text-[#F5F3EA] hover:text-[#D6A84B] hover:bg-[#0D5953] font-medium'
+                    : 'text-[#F5F3EA] hover:text-[#D6A84B] hover:bg-[#0D5953]/60 font-medium'
                 }`}
               >
                 {/* Active Gold Left-Edge Indicator */}
@@ -171,22 +171,23 @@ export default function AdminSidebar({
         </nav>
 
         {/* Staff Profile & Logout */}
-        <div className="p-3 border-t border-[#0D5953] bg-[#073F3B] space-y-2 flex-shrink-0 mt-auto">
-          <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#0D5953] border border-[#0D5953] shadow-xs">
-            <div className="min-w-0 pr-2">
-              <span className="text-[14px] font-admin-body font-semibold text-[#F5F3EA] block truncate">
+        <div className="px-3.5 pt-3.5 pb-4 border-t border-[#0D5953] bg-[#073F3B] space-y-3 flex-shrink-0 mt-auto">
+          <div className="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-[#0D5953] border border-[#0D5953] shadow-xs">
+            <div className="min-w-0 pr-2 flex flex-col justify-center">
+              <span className="text-[13.5px] font-admin-body font-semibold text-[#F5F3EA] block truncate leading-tight">
                 {user?.name || 'Admin'}
               </span>
-              <span className="text-[12px] font-admin-body text-[#D6A84B] block truncate font-medium">
+              <span className="text-[11.5px] font-admin-body text-[#D6A84B] block truncate font-medium mt-1 leading-tight">
                 {user?.role || 'Administrator'}
               </span>
             </div>
             <button
+              type="button"
               onClick={async () => {
                 await logout();
                 window.location.href = '/admin/login';
               }}
-              className="p-1.5 text-[#91AAA4] hover:text-[#F5F3EA] hover:bg-[#073F3B] rounded-lg transition cursor-pointer"
+              className="w-8 h-8 flex items-center justify-center text-[#91AAA4] hover:text-[#F5F3EA] hover:bg-[#073F3B]/60 rounded-lg transition-colors cursor-pointer flex-shrink-0"
               title="Sign out of staff session"
               aria-label="Sign out"
             >
@@ -194,9 +195,9 @@ export default function AdminSidebar({
             </button>
           </div>
 
-          <div className="flex items-center gap-1.5 text-[#D6A84B] text-[12px] font-admin-body font-medium px-1">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#D6A84B] flex-shrink-0" />
-            <span>Showroom Guard Active</span>
+          <div className="flex items-center gap-2 text-[#D6A84B] text-[12px] font-admin-body font-medium px-2">
+            <ShieldCheck className="w-4 h-4 text-[#D6A84B] flex-shrink-0" />
+            <span className="leading-none tracking-wide">Showroom Guard Active</span>
           </div>
         </div>
       </aside>

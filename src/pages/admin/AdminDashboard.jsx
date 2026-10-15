@@ -53,7 +53,7 @@ function AdminDashboardInner() {
   }, []);
 
   return (
-    <div className={`min-h-screen ${currentTab === 'products' ? 'bg-[#FAF7F2]' : 'bg-[#F5F6F8]'} text-[#292521] flex font-admin-body text-[14px] leading-relaxed selection:bg-[#651F2B] selection:text-white antialiased transition-colors duration-150`}>
+    <div className={`min-h-screen ${currentTab === 'products' ? 'bg-[#FAF7F2]' : 'bg-[#F5F6F8]'} text-[#292521] flex flex-col lg:pl-72 font-admin-body text-[14px] leading-relaxed selection:bg-[#651F2B] selection:text-white antialiased transition-colors duration-150`}>
       {/* 1. Sidebar Navigation */}
       <AdminSidebar
         currentTab={currentTab}

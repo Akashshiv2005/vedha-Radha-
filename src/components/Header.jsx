@@ -4,7 +4,6 @@ import {
   Truck,
   ShieldCheck,
   Phone,
-  Globe,
   ChevronDown,
   ChevronRight,
   X,
@@ -52,8 +51,6 @@ export default function Header({
   const [activeDropdown, setActiveDropdown] = useState(null); // 'gold' | 'silver' | 'coins-bars' | 'collections' | null
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isGoldRateModalOpen, setIsGoldRateModalOpen] = useState(false);
-  const [language, setLanguage] = useState('English');
-  const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const [mobileAccordion, setMobileAccordion] = useState(null);
 
   // Active route tracking
@@ -66,7 +63,6 @@ export default function Header({
   const isCollections = currentPath.startsWith('/collections');
 
   const dropdownRef = useRef(null);
-  const langRef = useRef(null);
   const hoverTimeoutRef = useRef(null);
   const searchInputRef = useRef(null);
 
@@ -97,15 +93,11 @@ export default function Header({
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setActiveDropdown(null);
       }
-      if (langRef.current && !langRef.current.contains(e.target)) {
-        setLangDropdownOpen(false);
-      }
     };
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
         setActiveDropdown(null);
         setIsSearchOpen(false);
-        setLangDropdownOpen(false);
         setMobileMenuOpen(false);
       }
     };
@@ -242,63 +234,6 @@ export default function Header({
               <Phone className="w-3.5 h-3.5 text-[#E5C278] shrink-0" aria-hidden="true" />
               <span>+91 44 2834 1999</span>
             </a>
-
-            <div className="h-3.5 w-px bg-[#692F39] shrink-0" />
-
-            {/* Staff Admin Portal Link */}
-            <Link
-              to="/admin"
-              className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#E5C278]/20 hover:bg-[#E5C278]/30 text-[#E5C278] border border-[#E5C278]/40 font-semibold text-[10.5px] transition"
-              title="Open Staff Admin & Reservation Management"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Staff Admin</span>
-            </Link>
-
-            <div className="h-3.5 w-px bg-[#692F39] shrink-0" />
-
-            {/* Language Selector */}
-            <div className="relative" ref={langRef}>
-              <button
-                onClick={() => setLangDropdownOpen(!langDropdownOpen)}
-                className="flex items-center gap-1.5 hover:text-white cursor-pointer py-0.5 focus:outline-none focus:ring-1 focus:ring-[#E5C278]/50 rounded"
-                aria-expanded={langDropdownOpen}
-                aria-haspopup="true"
-                aria-label={`Select Language, currently ${language}`}
-              >
-                <Globe className="w-3.5 h-3.5 text-[#E5C278] shrink-0" aria-hidden="true" />
-                <span>{language}</span>
-                <ChevronDown className={`w-3 h-3 text-[#E5C278] transition-transform duration-200 ${langDropdownOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
-              </button>
-
-              {langDropdownOpen && (
-                <div
-                  className="absolute right-0 top-full mt-1.5 bg-[#FAF7F2] text-[#2C1D18] rounded-md shadow-xl border border-[#DECDBB] py-1 w-32 z-50 text-xs animate-fadeIn"
-                  role="menu"
-                  aria-label="Languages"
-                >
-                  {['English', 'தமிழ் (Tamil)', 'తెలుగు (Telugu)', 'हिन्दी (Hindi)'].map((l) => {
-                    const shortName = l.split(' ')[0];
-                    const isSelected = language === shortName;
-                    return (
-                      <button
-                        key={l}
-                        onClick={() => {
-                          setLanguage(shortName);
-                          setLangDropdownOpen(false);
-                        }}
-                        className={`w-full text-left px-3 py-1.5 hover:bg-[#F3EAD3] text-[11px] transition-colors ${isSelected ? 'font-bold text-[#581923] bg-[#F3EAD3]/70' : 'text-[#3D332D]'
-                          }`}
-                        role="menuitem"
-                      >
-                        {l}
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-
           </div>
 
         </div>

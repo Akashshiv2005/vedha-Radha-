@@ -72,6 +72,17 @@ export const authClient = {
 
       clearTimeout(timeoutId);
 
+      // If the server returns HTML it means the backend API isn't running
+      // (Nginx serving the SPA index.html as a fallback for /api/* routes)
+      const contentType = response.headers.get('content-type') || '';
+      if (!contentType.includes('application/json')) {
+        console.error('[authClient] /api/auth/login returned non-JSON response. Backend server may not be running. Status:', response.status);
+        return {
+          success: false,
+          error: 'Authentication service is unavailable. Please contact the system administrator.'
+        };
+      }
+
       const data = await response.json().catch(() => null);
 
       if (!response.ok || !data?.success) {
