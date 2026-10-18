@@ -147,7 +147,7 @@ export default function CategoryShortcutRow() {
                     role="menu"
                     aria-label={`${cat.name} subcategories`}
                   >
-                    <div className="px-2.5 py-1.5 font-serif font-bold text-[#8C6D2D] border-b border-[#EAE2D5] text-[11px] uppercase tracking-wider flex items-center justify-between">
+                    <div className="px-2.5 py-1.5 font-bold text-[#8C6D2D] border-b border-[#EAE2D5] text-[11px] uppercase tracking-wider flex items-center justify-between">
                       <span>{cat.name} Styles</span>
                       <span className="text-[10px] text-[#7A6E65] font-normal">{cat.subcategories.length} Types</span>
                     </div>

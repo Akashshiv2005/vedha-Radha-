@@ -86,7 +86,7 @@ export default function GoldRateModal({
               <TrendingUp className="w-5 h-5" />
             </div>
             <div>
-              <h3 id="gold-rate-title" className="font-serif text-lg font-bold">Today’s Board Rate</h3>
+              <h3 id="gold-rate-title" className="text-lg font-bold">Today’s Board Rate</h3>
               <p className="text-[11px] text-[#E6C37A]">Vedha Radha Thanga Maaligai &bull; Chennai Benchmark</p>
             </div>
           </div>
@@ -120,7 +120,7 @@ export default function GoldRateModal({
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="w-3 h-3 rounded-full bg-[#C5A059]" />
-                    <span className="font-serif text-base font-bold text-[#241716]">22K Jewellery Gold</span>
+                    <span className="text-base font-bold text-[#241716]">22K Jewellery Gold</span>
                     <span className="text-[10px] font-bold bg-[#FAF2DF] text-[#7A5826] px-1.5 py-0.2 rounded border border-[#E8D6B0]">
                       BIS 916
                     </span>
@@ -130,7 +130,7 @@ export default function GoldRateModal({
                   </span>
                 </div>
                 <div className="text-right">
-                  <span className="font-serif text-xl font-bold text-[#581923]">₹ {rates.gold22k}</span>
+                  <span className="text-xl font-bold text-[#581923]">₹ {rates.gold22k}</span>
                   <span className="text-[10.5px] text-[#7A6E65] block font-mono">/ 1 gram</span>
                 </div>
               </div>
@@ -140,13 +140,13 @@ export default function GoldRateModal({
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-[#E5C278]" />
-                    <span className="font-serif text-sm font-bold text-[#241716]">24K Pure Gold</span>
+                    <span className="text-sm font-bold text-[#241716]">24K Pure Gold</span>
                     <span className="text-[10px] bg-neutral-100 text-neutral-700 px-1.5 py-0.2 rounded">99.9% Bullion</span>
                   </div>
                   <span className="text-[11px] text-[#7A6E65] block">Spot Benchmark Gold Ingot</span>
                 </div>
                 <div className="text-right">
-                  <span className="font-serif text-base font-bold text-[#351218]">₹ {rates.gold24k || '7,355'}</span>
+                  <span className="text-base font-bold text-[#351218]">₹ {rates.gold24k || '7,355'}</span>
                   <span className="text-[10px] text-[#7A6E65] block font-mono">/ 1 gram</span>
                 </div>
               </div>
@@ -157,12 +157,12 @@ export default function GoldRateModal({
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="w-2.5 h-2.5 rounded-full bg-[#DECDBB]" />
-                      <span className="font-serif text-sm font-bold text-[#241716]">18K Diamond Jewellery Gold</span>
+                      <span className="text-sm font-bold text-[#241716]">18K Diamond Jewellery Gold</span>
                     </div>
                     <span className="text-[11px] text-[#7A6E65] block">75.0% Fine Purity</span>
                   </div>
                   <div className="text-right">
-                    <span className="font-serif text-base font-bold text-[#351218]">₹ {rates.gold18k}</span>
+                    <span className="text-base font-bold text-[#351218]">₹ {rates.gold18k}</span>
                     <span className="text-[10px] text-[#7A6E65] block font-mono">/ 1 gram</span>
                   </div>
                 </div>
@@ -173,7 +173,7 @@ export default function GoldRateModal({
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="w-3 h-3 rounded-full bg-[#A89F91]" />
-                    <span className="font-serif text-base font-bold text-[#241716]">92.5 Pure Silver</span>
+                    <span className="text-base font-bold text-[#241716]">92.5 Pure Silver</span>
                     <span className="text-[10px] font-bold bg-neutral-100 text-neutral-700 px-1.5 py-0.2 rounded border border-neutral-300">
                       Sterling
                     </span>
@@ -183,7 +183,7 @@ export default function GoldRateModal({
                   </span>
                 </div>
                 <div className="text-right">
-                  <span className="font-serif text-xl font-bold text-[#48161E]">₹ {rates.silver1g}</span>
+                  <span className="text-xl font-bold text-[#48161E]">₹ {rates.silver1g}</span>
                   <span className="text-[10.5px] text-[#7A6E65] block font-mono">/ 1 gram</span>
                 </div>
               </div>

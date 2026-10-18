@@ -37,7 +37,7 @@ export default function TrackOrderModal({ isOpen, onClose }) {
               <Package className="w-4 h-4" />
             </div>
             <div>
-              <h3 id="track-order-title" className="font-serif text-lg font-bold">Track Your Jewellery Order</h3>
+              <h3 id="track-order-title" className="text-lg font-bold">Track Your Jewellery Order</h3>
               <p className="text-[11px] text-[#E6C37A]">Vedha Radha Thanga Maaligai</p>
             </div>
           </div>

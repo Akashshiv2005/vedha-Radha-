@@ -44,7 +44,7 @@ export default function ContactPage() {
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-10">
           <span className="text-[11px] font-bold uppercase tracking-[0.28em] text-[#8C6D2D]">We Are Here For You</span>
-          <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#241716] mt-1">
+          <h1 className="text-3xl sm:text-4xl font-bold text-[#241716] mt-1">
             Contact & Showroom Concierge
           </h1>
           <p className="text-xs sm:text-sm text-[#73655C] mt-2 leading-relaxed">
@@ -65,7 +65,7 @@ export default function ContactPage() {
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-serif text-sm font-bold text-[#241716]">Mylapore Flagship Showroom</h3>
+                  <h3 className="text-sm font-bold text-[#241716]">Mylapore Flagship Showroom</h3>
                   <p className="text-xs text-[#63574F] mt-1 leading-relaxed">
                     48, South Mada Street, Mylapore,<br />
                     Chennai, Tamil Nadu &ndash; 600004
@@ -84,7 +84,7 @@ export default function ContactPage() {
                   <Phone className="w-5 h-5" />
                 </div>
                 <div className="space-y-1">
-                  <h3 className="font-serif text-sm font-bold text-[#241716]">Direct Concierge & Orders</h3>
+                  <h3 className="text-sm font-bold text-[#241716]">Direct Concierge & Orders</h3>
                   <p className="text-xs text-[#63574F]">
                     Phone: <a href="tel:+914428341999" className="text-[#581923] font-semibold hover:underline">+91 44 2834 1999</a>
                   </p>
@@ -102,7 +102,7 @@ export default function ContactPage() {
                   <Clock className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-serif text-sm font-bold text-[#241716]">Showroom Timings</h3>
+                  <h3 className="text-sm font-bold text-[#241716]">Showroom Timings</h3>
                   <p className="text-xs text-[#63574F] mt-1">
                     Monday to Sunday (All 7 Days)
                   </p>
@@ -120,7 +120,7 @@ export default function ContactPage() {
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-serif text-sm font-bold text-[#241716]">Email Inquiries</h3>
+                  <h3 className="text-sm font-bold text-[#241716]">Email Inquiries</h3>
                   <p className="text-xs text-[#63574F] mt-1">
                     <a href="mailto:care@vedharadhajewellery.com" className="text-[#581923] font-semibold hover:underline">
                       care@vedharadhajewellery.com
@@ -140,7 +140,7 @@ export default function ContactPage() {
                 <span className="text-[10.5px] font-bold uppercase tracking-wider text-[#8C6D2D] bg-[#FAF3E6] px-2.5 py-0.5 rounded">
                   VIP Appointment
                 </span>
-                <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#241716] mt-2">
+                <h2 className="text-xl sm:text-2xl font-bold text-[#241716] mt-2">
                   Book a Dedicated Showroom Appointment
                 </h2>
                 <p className="text-xs text-[#63574F] mt-1">
@@ -151,7 +151,7 @@ export default function ContactPage() {
               {isSubmitted ? (
                 <div className="p-6 bg-emerald-50 border border-emerald-200 rounded-xl text-center space-y-2 animate-fadeIn">
                   <CheckCircle2 className="w-10 h-10 text-emerald-600 mx-auto" />
-                  <h3 className="font-serif text-base font-bold text-emerald-900">
+                  <h3 className="text-base font-bold text-emerald-900">
                     Appointment Requested Successfully!
                   </h3>
                   <p className="text-xs text-emerald-800 max-w-sm mx-auto">

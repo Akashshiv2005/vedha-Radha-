@@ -5,14 +5,14 @@ const collectionCategories = [
     id: 'gold-chains',
     title: 'Gold Chains',
     description: 'Classic styles for every occasion.',
-    image: '/images/products/gold/chains.jpg',
+    image: '/images/products/gold/chains/chains.jpg',
     categoryKey: 'chains'
   },
   {
     id: 'rings',
     title: 'Rings',
     description: 'Elegant details made to treasure.',
-    image: '/images/products/gold/rings.jpg',
+    image: '/images/products/gold/rings/rings.jpg',
     categoryKey: 'rings'
   },
   {
@@ -52,7 +52,7 @@ export default function ShopByCollection({ onSelectCategory }) {
         
         {/* Top Center Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12 lg:mb-14">
-          <h2 className="font-serif text-2xl sm:text-4xl lg:text-[42px] font-semibold text-[#651F2B] tracking-tight leading-tight">
+          <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-semibold text-[#651F2B] tracking-tight leading-tight">
             Shop by Collection
           </h2>
           <p className="font-sans text-xs sm:text-base text-[#5A4840] font-normal tracking-wide mt-1.5 sm:mt-2.5">
@@ -85,7 +85,7 @@ export default function ShopByCollection({ onSelectCategory }) {
 
               {/* Title & Description on the Right */}
               <div className="flex flex-col justify-center min-w-0 pr-2 xs:pr-3 sm:pr-6">
-                <h3 className="font-serif text-[15px] xs:text-[17px] sm:text-[18px] lg:text-[19px] font-bold text-[#651F2B] group-hover:text-[#218F95] transition-colors duration-200 leading-snug">
+                <h3 className="text-[15px] xs:text-[17px] sm:text-[18px] lg:text-[19px] font-bold text-[#651F2B] group-hover:text-[#218F95] transition-colors duration-200 leading-snug">
                   {item.title}
                 </h3>
                 <p className="font-sans text-[11px] xs:text-xs sm:text-[13px] text-[#55453E] leading-relaxed mt-0.5 font-normal line-clamp-2">

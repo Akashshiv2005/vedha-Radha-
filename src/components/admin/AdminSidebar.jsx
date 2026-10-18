@@ -94,10 +94,10 @@ export default function AdminSidebar({
 
             {/* Brand Title & Subtitle matching reference */}
             <div className="min-w-0">
-              <h1 className="font-serif tracking-wide font-bold text-[17px] text-[#F5F3EA] uppercase leading-tight truncate">
+              <h1 className="tracking-wide font-bold text-[17px] text-[#F5F3EA] uppercase leading-tight truncate">
                 VEDA RADHA
               </h1>
-              <span className="text-[11px] tracking-[0.2em] uppercase font-serif text-[#D6A84B] font-semibold block mt-0.5">
+              <span className="text-[11px] tracking-[0.2em] uppercase text-[#D6A84B] font-semibold block mt-0.5">
                 JEWELLERY
               </span>
             </div>

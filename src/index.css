@@ -56,11 +56,11 @@
     position: relative;
   }
 
-  /* Main page heading: Playfair Display, 32px (responsive 28-32px), weight 600 */
+  /* Main page heading: Inter, 32px (responsive 28-32px), weight 700 (Bold) */
   h1 {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-size: clamp(28px, 2.5vw, 32px);
-    font-weight: 600;
+    font-weight: 700;
     line-height: 1.25;
     letter-spacing: -0.015em;
   }
@@ -149,6 +149,61 @@
 }
 
 @layer components {
+  /* ========================================================
+     BRAND TYPOGRAPHY HIERARCHY SYSTEM (Inter Sans-Serif)
+     ======================================================== */
+  /* Main Headings: 700 (Bold) */
+  .font-main-heading,
+  .brand-main-heading {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 700;
+  }
+
+  /* Section Headings: 600 (SemiBold) */
+  .font-section-heading,
+  .brand-section-heading {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 600;
+  }
+
+  /* Product Names: 600 (SemiBold) */
+  .font-product-name,
+  .product-name,
+  .product-card-title {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 600;
+  }
+
+  /* Body Text: 400 (Regular) */
+  .font-body-text,
+  .body-regular {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 400;
+  }
+
+  /* Buttons: 600 (SemiBold) */
+  .font-btn-text,
+  .btn-semibold {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 600;
+  }
+
+  /* Prices: 700 (Bold) */
+  .font-price-text,
+  .product-price,
+  .price-bold {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+
+  /* Labels: 500 (Medium) */
+  .font-label-text,
+  .label-medium {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 500;
+  }
+
   /* Main page heading: 32px, weight 600, Inter */
   .font-admin-heading,
   .font-admin-page-title,
@@ -353,5 +408,20 @@ body,
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Voice recording audio wave animation */
+@keyframes audioWaveBar {
+  0%, 100% {
+    transform: scaleY(0.35);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.animate-audio-wave {
+  transform-origin: center;
+  animation: audioWaveBar 0.75s ease-in-out infinite alternate;
 }
 

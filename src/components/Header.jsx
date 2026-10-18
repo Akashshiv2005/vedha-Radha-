@@ -276,7 +276,7 @@ export default function Header({
               </div>
 
               <div className="flex flex-col justify-center min-w-0">
-                <span className="font-serif text-[15px] xs:text-[18px] sm:text-[23px] font-bold text-[#241716] leading-none tracking-tight group-hover:text-[#581923] transition-colors whitespace-nowrap">
+                <span className="text-[15px] xs:text-[18px] sm:text-[23px] font-bold text-[#241716] leading-none tracking-tight group-hover:text-[#581923] transition-colors whitespace-nowrap">
                   Vedha Radha
                 </span>
                 <span className="font-sans text-[6px] xs:text-[7.5px] sm:text-[9px] font-semibold tracking-[0.2em] xs:tracking-[0.26em] text-[#7A6252] uppercase mt-0.5 sm:mt-1 whitespace-nowrap">
@@ -360,7 +360,7 @@ export default function Header({
                   role="menu"
                   aria-label="Coins and Bars Menu"
                 >
-                  <div className="px-2.5 py-1.5 font-serif font-bold text-[#8C6D2D] border-b border-[#EAE2D5] text-[11px] uppercase tracking-wider flex items-center justify-between">
+                  <div className="px-2.5 py-1.5 font-bold text-[#8C6D2D] border-b border-[#EAE2D5] text-[11px] uppercase tracking-wider flex items-center justify-between">
                     <span>Bullion & Investment</span>
                     <span className="text-[10px] text-[#7A6E65] font-semibold bg-[#EFE7D8] px-1.5 py-0.5 rounded">999.9 Fine</span>
                   </div>
@@ -383,7 +383,7 @@ export default function Header({
                             />
                           </div>
                           <div className="min-w-0">
-                            <span className="font-serif text-[12.5px] font-semibold text-[#2C2420] group-hover:text-[#581923] transition-colors block truncate">
+                            <span className="text-[12.5px] font-semibold text-[#2C2420] group-hover:text-[#581923] transition-colors block truncate">
                               {item.name}
                             </span>
                             <span className="text-[10.5px] text-[#7A6E65] block truncate">
@@ -473,7 +473,7 @@ export default function Header({
                             loading="lazy"
                           />
                         </div>
-                        <span className="font-serif text-[13px] sm:text-[13.5px] font-semibold text-[#2C2420] group-hover:text-[#581923] transition-colors line-clamp-1">
+                        <span className="text-[13px] sm:text-[13.5px] font-semibold text-[#2C2420] group-hover:text-[#581923] transition-colors line-clamp-1">
                           {item.name}
                         </span>
                       </Link>
@@ -502,7 +502,7 @@ export default function Header({
                         />
                       </div>
                       <div className="min-w-0">
-                        <h4 className="font-serif text-[13px] sm:text-[13.5px] font-bold text-[#2C2420] leading-tight truncate">
+                        <h4 className="text-[13px] sm:text-[13.5px] font-bold text-[#2C2420] leading-tight truncate">
                           Curated Collections — Just for You.
                         </h4>
                         <p className="text-[11px] sm:text-[11.5px] text-[#7A6E65] truncate mt-0.5">
@@ -672,7 +672,7 @@ export default function Header({
                     </svg>
                   </div>
                   <div>
-                    <span className="font-serif text-base font-bold text-white leading-tight block">Vedha Radha</span>
+                    <span className="text-base font-bold text-white leading-tight block">Vedha Radha</span>
                     <span className="text-[9px] text-[#E5C278] tracking-widest uppercase">Thanga Maaligai</span>
                   </div>
                 </div>
@@ -852,7 +852,7 @@ export default function Header({
                       {/* Mobile Curated Promo Strip */}
                       <div className="bg-[#FAF3E3] rounded-xl p-2.5 border border-[#E8DFC0] flex items-center justify-between gap-2">
                         <div className="min-w-0 text-left">
-                          <span className="font-serif font-bold text-xs text-[#2C2420] block truncate">
+                          <span className="font-bold text-xs text-[#2C2420] block truncate">
                             Curated Collections
                           </span>
                           <span className="text-[10px] text-[#7A6E65] block truncate">

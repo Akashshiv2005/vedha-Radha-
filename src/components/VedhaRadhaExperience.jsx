@@ -57,7 +57,7 @@ export default function VedhaRadhaExperience({ onTileClick }) {
         {/* Section Header: Centered Heading, Ornamental Motif & Subtitle */}
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-14">
           {/* Main Heading */}
-          <h2 className="font-serif text-2xl sm:text-4xl lg:text-[44px] font-normal text-[#651F2B] tracking-tight leading-[1.15]">
+          <h2 className="text-2xl sm:text-4xl lg:text-[44px] font-normal text-[#651F2B] tracking-tight leading-[1.15]">
             The Vedha Radha Experience
           </h2>
 
@@ -89,7 +89,7 @@ export default function VedhaRadhaExperience({ onTileClick }) {
           </div>
 
           {/* Subtitle */}
-          <p className="font-serif text-xs sm:text-base lg:text-[17px] text-[#651F2B]/90 font-normal leading-relaxed">
+          <p className="text-xs sm:text-base lg:text-[17px] text-[#651F2B]/90 font-normal leading-relaxed">
             Thoughtful moments, guided by tradition and care.
           </p>
         </div>
@@ -118,7 +118,7 @@ export default function VedhaRadhaExperience({ onTileClick }) {
               </div>
 
               {/* Exact Caption Centered Below Photo (Not Overlaid) */}
-              <h3 className="font-serif text-xs xs:text-sm sm:text-lg lg:text-[18.5px] font-medium text-[#651F2B] text-center mt-2 xs:mt-2.5 sm:mt-4 tracking-normal group-hover:text-[#8B2637] transition-colors duration-200">
+              <h3 className="text-xs xs:text-sm sm:text-lg lg:text-[18.5px] font-medium text-[#651F2B] text-center mt-2 xs:mt-2.5 sm:mt-4 tracking-normal group-hover:text-[#8B2637] transition-colors duration-200">
                 {exp.title}
               </h3>
             </div>

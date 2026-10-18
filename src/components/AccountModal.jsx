@@ -22,7 +22,7 @@ export default function AccountModal({ isOpen, onClose }) {
             <UserCheck className="w-6 h-6" />
           </div>
 
-          <h3 className="font-serif text-lg font-bold text-[#241716]">Vedha Radha Privilege Club</h3>
+          <h3 className="text-lg font-bold text-[#241716]">Vedha Radha Privilege Club</h3>
           <p className="text-xs text-[#73655C] mt-1">
             Exclusive loyalty benefits, bespoke preview invitations, and gold rate alerts.
           </p>

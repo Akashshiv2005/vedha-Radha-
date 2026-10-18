@@ -44,12 +44,12 @@ export default function SacredHeroBanner({ onExploreClick }) {
             </div>
 
             {/* Headline: Warm Ivory #F8F4EC serif with generous spacing */}
-            <h2 className="font-serif text-[19px] xs:text-[21px] sm:text-3xl md:text-4xl lg:text-[46px] xl:text-[52px] font-normal text-[#F8F4EC] leading-[1.2] sm:leading-[1.24] tracking-normal mb-1 xs:mb-1.5 sm:mb-4">
+            <h2 className="text-[19px] xs:text-[21px] sm:text-3xl md:text-4xl lg:text-[46px] xl:text-[52px] font-normal text-[#F8F4EC] leading-[1.2] sm:leading-[1.24] tracking-normal mb-1 xs:mb-1.5 sm:mb-4">
               Silver Idols
             </h2>
 
             {/* Description: Warm Ivory #F8F4EC with open leading and ample bottom margin */}
-            <p className="text-[#F8F4EC]/90 font-serif sm:font-sans text-[10px] xs:text-[11px] sm:text-sm lg:text-[15px] font-normal leading-[1.45] sm:leading-[1.8] max-w-xs xs:max-w-sm sm:max-w-md mx-auto md:mx-0 mb-2.5 xs:mb-3.5 sm:mb-7">
+            <p className="text-[#F8F4EC]/90 sm:font-sans text-[10px] xs:text-[11px] sm:text-sm lg:text-[15px] font-normal leading-[1.45] sm:leading-[1.8] max-w-xs xs:max-w-sm sm:max-w-md mx-auto md:mx-0 mb-2.5 xs:mb-3.5 sm:mb-7">
               Sacred idols crafted in fine silver, designed to elevate every sacred space.
             </p>
 

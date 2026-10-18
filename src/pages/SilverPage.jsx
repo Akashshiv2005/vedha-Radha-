@@ -596,7 +596,7 @@ export default function SilverPage({
             </span>
 
             {/* Main Heading */}
-            <h1 className="font-serif text-2xl sm:text-4xl lg:text-[44px] font-bold text-white tracking-tight leading-[1.15] drop-shadow-md">
+            <h1 className="text-2xl sm:text-4xl lg:text-[44px] font-bold text-white tracking-tight leading-[1.15] drop-shadow-md">
               Timeless radiance in pure silver.
             </h1>
 
@@ -622,7 +622,7 @@ export default function SilverPage({
         
         {/* CENTERED SECTION HEADING & LOTUS FLOURISH */}
         <div className="text-center mb-6">
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-[40px] font-bold text-[#0F172A] tracking-tight mb-2.5">
+          <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-bold text-[#0F172A] tracking-tight mb-2.5">
             Silver Collections
           </h2>
 
@@ -758,7 +758,7 @@ export default function SilverPage({
             <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3 mb-3">
               <div className="flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-[#1E293B]" />
-                <h3 className="font-serif text-sm font-bold text-[#0F172A]">
+                <h3 className="text-sm font-bold text-[#0F172A]">
                   Filter Silver Articles
                 </h3>
               </div>
@@ -905,7 +905,7 @@ export default function SilverPage({
                       </div>
                       <h3 
                         onClick={() => onViewProduct(item)}
-                        className="font-serif text-base font-bold text-[#0F172A] group-hover:text-[#1E293B] transition-colors line-clamp-1 mt-1 cursor-pointer"
+                        className="text-base font-bold text-[#0F172A] group-hover:text-[#1E293B] transition-colors line-clamp-1 mt-1 cursor-pointer"
                       >
                         {item.name}
                       </h3>
@@ -917,7 +917,7 @@ export default function SilverPage({
                     <div className="mt-4 pt-3 border-t border-[#E2E8F0] flex items-center justify-between">
                       <div>
                         <span className="text-[10px] text-[#64748B] block">Showroom Price</span>
-                        <span className="font-serif text-lg font-bold text-[#0F172A]">
+                        <span className="text-lg font-bold text-[#0F172A]">
                           {item.price}
                         </span>
                       </div>
@@ -949,7 +949,7 @@ export default function SilverPage({
             <div className="w-14 h-14 rounded-full bg-[#F1F5F9] text-[#475569] flex items-center justify-center mx-auto border border-[#CBD5E1]">
               <Sparkles className="w-7 h-7 text-[#475569]" />
             </div>
-            <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#0F172A]">
+            <h2 className="text-xl sm:text-2xl font-bold text-[#0F172A]">
               {categoryInfo.title} Catalog
             </h2>
             <p className="text-xs sm:text-sm text-[#475569] leading-relaxed max-w-md mx-auto">

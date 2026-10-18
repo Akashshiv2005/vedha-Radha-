@@ -74,11 +74,11 @@ export default {
       },
       fontFamily: {
         sans: ['"Inter"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
-        serif: ['"Playfair Display"', 'Georgia', 'serif'],
-        display: ['"Playfair Display"', '"Cinzel"', 'serif'],
+        serif: ['"Inter"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+        display: ['"Inter"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
-        'admin-heading': ['var(--admin-font-heading)', '"Inter"', 'system-ui', 'sans-serif'],
-        'admin-body': ['var(--admin-font-body)', '"Inter"', 'system-ui', 'sans-serif'],
+        'admin-heading': ['"Inter"', 'system-ui', 'sans-serif'],
+        'admin-body': ['"Inter"', 'system-ui', 'sans-serif'],
         'admin-mono': ['var(--admin-font-mono)', '"JetBrains Mono"', 'monospace'],
       },
       boxShadow: {

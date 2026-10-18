@@ -1,5 +1,35 @@
 export const products = [
   {
+    "id": "gold-stud-1-floral-ruby",
+    "name": "Delicate Floral Ruby Gold Studs",
+    "category": "Gold",
+    "subCategory": "earrings",
+    "subCategorySlug": "earrings",
+    "subType": "studs",
+    "occasion": "casual-wear",
+    "badge": "Bestseller",
+    "badgeType": "in-stock",
+    "details": "22K BIS 916 Hallmarked Gold",
+    "price": "₹ 24,500",
+    "numericPrice": 24500,
+    "image": "/images/products/gold/earrings/gold_studs_1-01.jpg",
+    "altText": "Delicate floral gold stud earring with a small ruby-red centre and fine petal detailing",
+    "description": "A delicate floral gold stud with a small ruby-red centre and fine petal detailing, handcrafted in 22K hallmarked gold with micro-engraved petals.",
+    "weight": "6.2 grams",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "14 mm diameter with secure Bombay screw back",
+    "craftsmanship": "South Indian Floral Filigree Mastercraft",
+    "certification": "BIS Hallmark & Vedha Radha Authenticity Certificate",
+    "isBridal": false,
+    "isNewArrival": true,
+    "collection": "gold",
+    "images": [
+      "/images/products/gold/earrings/gold_studs_1-01.jpg",
+      "/images/products/gold/earrings/gold_studs_1-02.jpg",
+      "/images/products/gold/earrings/gold_studs_1-03.jpg"
+    ]
+  },
+  {
     "id": "gold-stud-2-peacock-green",
     "name": "Peacock Motif Emerald Gold Studs",
     "category": "Gold",
@@ -12,7 +42,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold",
     "price": "₹ 28,200",
     "numericPrice": 28200,
-    "image": "/images/products/gold/gold_studs_2-01.jpg",
+    "image": "/images/products/gold/earrings/gold_studs_2-01.jpg",
     "altText": "Compact peacock-inspired gold stud earring with tiny green emerald accents and engraved feather details",
     "description": "A compact peacock-inspired gold stud with tiny green accents and engraved feather details, capturing South Indian temple Mayil motifs.",
     "weight": "7.1 grams",
@@ -24,9 +54,9 @@ export const products = [
     "isNewArrival": true,
     "collection": "gold",
     "images": [
-      "/images/products/gold/gold_studs_2-01.jpg",
-      "/images/products/gold/gold_studs_2-02.jpg",
-      "/images/products/gold/gold_studs_2-03.jpg"
+      "/images/products/gold/earrings/gold_studs_2-01.jpg",
+      "/images/products/gold/earrings/gold_studs_2-02.jpg",
+      "/images/products/gold/earrings/gold_studs_2-03.jpg"
     ]
   },
   {
@@ -42,7 +72,7 @@ export const products = [
     "details": "22K BIS 916 Antique Gold",
     "price": "₹ 31,800",
     "numericPrice": 31800,
-    "image": "/images/products/gold/gold_studs_3-01.jpg",
+    "image": "/images/products/gold/earrings/gold_studs_3-01.jpg",
     "altText": "Traditional temple-style gold stud earring featuring a Lakshmi-inspired motif and beaded border",
     "description": "A small traditional temple-style stud featuring a Lakshmi-inspired motif and beaded border, invoking divine prosperity with antique patina.",
     "weight": "8.0 grams",
@@ -54,39 +84,9 @@ export const products = [
     "isNewArrival": false,
     "collection": "wedding",
     "images": [
-      "/images/products/gold/gold_studs_3-01.jpg",
-      "/images/products/gold/gold_studs_3-02.jpg",
-      "/images/products/gold/gold_studs_3-03.jpg"
-    ]
-  },
-  {
-    "id": "gold-stud-4-floral-filigree",
-    "name": "Floral Filigree 22K Gold Studs",
-    "category": "Gold",
-    "subCategory": "earrings",
-    "subCategorySlug": "earrings",
-    "subType": "studs",
-    "occasion": "casual-wear",
-    "badge": "New Arrival",
-    "badgeType": "in-stock",
-    "details": "22K BIS 916 Hallmarked Gold",
-    "price": "₹ 24,500",
-    "numericPrice": 24500,
-    "image": "/images/products/gold/gold_studs_4-01.jpg",
-    "altText": "Elegant floral filigree 22K gold stud earrings with delicate petal work and bead detailing",
-    "description": "Exquisitely handcrafted 22K gold floral filigree stud earrings featuring delicate open-lattice petal work, beaded border accents, and a classic South Indian screw-back clasp.",
-    "weight": "5.8 grams",
-    "purity": "916 BIS Hallmarked 22 Karat Gold",
-    "dimensions": "14 mm diameter with South Indian screw pin",
-    "craftsmanship": "Traditional Filigree Goldsmithing",
-    "certification": "BIS Hallmark & Certified Laser Inscription",
-    "isBridal": false,
-    "isNewArrival": true,
-    "collection": "gold",
-    "images": [
-      "/images/products/gold/gold_studs_4-01.jpg",
-      "/images/products/gold/gold_studs_4-02.jpg",
-      "/images/products/gold/gold_studs_4-03.jpg"
+      "/images/products/gold/earrings/gold_studs_3-01.jpg",
+      "/images/products/gold/earrings/gold_studs_3-02.jpg",
+      "/images/products/gold/earrings/gold_studs_3-03.jpg"
     ]
   },
   {
@@ -102,7 +102,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold",
     "price": "₹ 44,500",
     "numericPrice": 44500,
-    "image": "/images/products/gold/gold_hangings_6-01.jpg",
+    "image": "/images/products/gold/earrings/gold_hangings_6-01.jpg",
     "altText": "Long floral gold hanging earrings with delicate engraved petals and small bead drops",
     "description": "Long floral gold hanging earrings with delicate engraved petals and small bead drops, offering graceful movement and radiance.",
     "weight": "11.2 grams",
@@ -114,9 +114,9 @@ export const products = [
     "isNewArrival": true,
     "collection": "gold",
     "images": [
-      "/images/products/gold/gold_hangings_6-01.jpg",
-      "/images/products/gold/gold_hangings_6-02.jpg",
-      "/images/products/gold/gold_hangings_6-03.jpg"
+      "/images/products/gold/earrings/gold_hangings_6-01.jpg",
+      "/images/products/gold/earrings/gold_hangings_6-02.jpg",
+      "/images/products/gold/earrings/gold_hangings_6-03.jpg"
     ]
   },
   {
@@ -132,7 +132,7 @@ export const products = [
     "details": "22K BIS 916 Antique Gold",
     "price": "₹ 52,000",
     "numericPrice": 52000,
-    "image": "/images/products/gold/gold_hangings_7-01.jpg",
+    "image": "/images/products/gold/earrings/gold_hangings_7-01.jpg",
     "altText": "Traditional temple-motif hanging earrings with a sculpted central ornament",
     "description": "Traditional temple-motif hanging earrings with a sculpted central ornament, featuring temple mantapam silhouettes and pearl droplets.",
     "weight": "13.0 grams",
@@ -144,9 +144,9 @@ export const products = [
     "isNewArrival": false,
     "collection": "wedding",
     "images": [
-      "/images/products/gold/gold_hangings_7-01.jpg",
-      "/images/products/gold/gold_hangings_7-02.jpg",
-      "/images/products/gold/gold_hangings_7-03.jpg"
+      "/images/products/gold/earrings/gold_hangings_7-01.jpg",
+      "/images/products/gold/earrings/gold_hangings_7-02.jpg",
+      "/images/products/gold/earrings/gold_hangings_7-03.jpg"
     ]
   },
   {
@@ -162,7 +162,7 @@ export const products = [
     "details": "22K Gold with Natural Kemp Stones",
     "price": "₹ 48,600",
     "numericPrice": 48600,
-    "image": "/images/products/gold/gold_hangings_8-01.jpg",
+    "image": "/images/products/gold/earrings/gold_hangings_8-01.jpg",
     "altText": "Elegant gold hangings with a red-and-green stone-inspired floral arrangement",
     "description": "Elegant gold hangings with a red-and-green stone-inspired floral arrangement, set with brilliant cabochon rubies and emerald drops.",
     "weight": "12.1 grams",
@@ -174,9 +174,9 @@ export const products = [
     "isNewArrival": true,
     "collection": "gold",
     "images": [
-      "/images/products/gold/gold_hangings_8-01.jpg",
-      "/images/products/gold/gold_hangings_8-02.jpg",
-      "/images/products/gold/gold_hangings_8-03.jpg"
+      "/images/products/gold/earrings/gold_hangings_8-01.jpg",
+      "/images/products/gold/earrings/gold_hangings_8-02.jpg",
+      "/images/products/gold/earrings/gold_hangings_8-03.jpg"
     ]
   },
   {
@@ -192,7 +192,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold",
     "price": "₹ 36,500",
     "numericPrice": 36500,
-    "image": "/images/products/gold/gold_drops_11-01.jpg",
+    "image": "/images/products/gold/earrings/gold_drops_11-01.jpg",
     "altText": "Teardrop-shaped gold drop earrings with a ruby-red centre and fine beaded edges",
     "description": "Teardrop-shaped gold drop earrings with a ruby-red centre and fine beaded edges, crowned with a micro-beaded aureole.",
     "weight": "9.1 grams",
@@ -204,9 +204,9 @@ export const products = [
     "isNewArrival": true,
     "collection": "gold",
     "images": [
-      "/images/products/gold/gold_drops_11-01.jpg",
-      "/images/products/gold/gold_drops_11-02.jpg",
-      "/images/products/gold/gold_drops_11-03.jpg"
+      "/images/products/gold/earrings/gold_drops_11-01.jpg",
+      "/images/products/gold/earrings/gold_drops_11-02.jpg",
+      "/images/products/gold/earrings/gold_drops_11-03.jpg"
     ]
   },
   {
@@ -222,7 +222,7 @@ export const products = [
     "details": "22K Gold & Natural South Sea Pearl",
     "price": "₹ 34,200",
     "numericPrice": 34200,
-    "image": "/images/products/gold/gold_drops_12-01.jpg",
+    "image": "/images/products/gold/earrings/gold_drops_12-01.jpg",
     "altText": "Pearl-accent gold drop earrings with an elegant curved frame",
     "description": "Pearl-accent gold drop earrings with an elegant curved frame that suspends a lustrous natural pearl within a sculptural gold arc.",
     "weight": "8.5 grams",
@@ -234,9 +234,9 @@ export const products = [
     "isNewArrival": false,
     "collection": "gold",
     "images": [
-      "/images/products/gold/gold_drops_12-01.jpg",
-      "/images/products/gold/gold_drops_12-02.jpg",
-      "/images/products/gold/gold_drops_12-03.jpg"
+      "/images/products/gold/earrings/gold_drops_12-01.jpg",
+      "/images/products/gold/earrings/gold_drops_12-02.jpg",
+      "/images/products/gold/earrings/gold_drops_12-03.jpg"
     ]
   },
   {
@@ -252,7 +252,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold",
     "price": "₹ 29,900",
     "numericPrice": 29900,
-    "image": "/images/products/gold/gold_drops_13-01.jpg",
+    "image": "/images/products/gold/earrings/gold_drops_13-01.jpg",
     "altText": "Small floral gold top with a single engraved leaf-shaped drop",
     "description": "A small floral gold top with a single engraved leaf-shaped drop, finished with satin engraving and polished gold highlights.",
     "weight": "7.4 grams",
@@ -264,9 +264,9 @@ export const products = [
     "isNewArrival": true,
     "collection": "gold",
     "images": [
-      "/images/products/gold/gold_drops_13-01.jpg",
-      "/images/products/gold/gold_drops_13-02.jpg",
-      "/images/products/gold/gold_drops_13-03.jpg"
+      "/images/products/gold/earrings/gold_drops_13-01.jpg",
+      "/images/products/gold/earrings/gold_drops_13-02.jpg",
+      "/images/products/gold/earrings/gold_drops_13-03.jpg"
     ]
   },
   {
@@ -282,7 +282,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold",
     "price": "₹ 58,900",
     "numericPrice": 58900,
-    "image": "/images/products/gold/gold_jhumkas_19-01.jpg",
+    "image": "/images/products/gold/earrings/gold_jhumkas_19-01.jpg",
     "altText": "Peacock-inspired gold jhumkas with engraved feather patterns and a delicate fringe",
     "description": "Peacock-inspired gold jhumkas with engraved feather patterns and a delicate fringe, crowned with an emerald crest.",
     "weight": "14.7 grams",
@@ -294,9 +294,9 @@ export const products = [
     "isNewArrival": true,
     "collection": "wedding",
     "images": [
-      "/images/products/gold/gold_jhumkas_19-01.jpg",
-      "/images/products/gold/gold_jhumkas_19-02.jpg",
-      "/images/products/gold/gold_jhumkas_19-03.jpg"
+      "/images/products/gold/earrings/gold_jhumkas_19-01.jpg",
+      "/images/products/gold/earrings/gold_jhumkas_19-02.jpg",
+      "/images/products/gold/earrings/gold_jhumkas_19-03.jpg"
     ]
   },
   {
@@ -312,7 +312,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold",
     "price": "₹ 42,500",
     "numericPrice": 42500,
-    "image": "/images/products/gold/gold_jhumkas_20-01.jpg",
+    "image": "/images/products/gold/earrings/gold_jhumkas_20-01.jpg",
     "altText": "Petite gold jhumkas with layered filigree and tiny dangling beads",
     "description": "Petite gold jhumkas with layered filigree and tiny dangling beads, perfect for festive poojas and comfortable daily wear.",
     "weight": "10.6 grams",
@@ -324,9 +324,39 @@ export const products = [
     "isNewArrival": false,
     "collection": "gold",
     "images": [
-      "/images/products/gold/gold_jhumkas_20-01.jpg",
-      "/images/products/gold/gold_jhumkas_20-02.jpg",
-      "/images/products/gold/gold_jhumkas_20-03.jpg"
+      "/images/products/gold/earrings/gold_jhumkas_20-01.jpg",
+      "/images/products/gold/earrings/gold_jhumkas_20-02.jpg",
+      "/images/products/gold/earrings/gold_jhumkas_20-03.jpg"
+    ]
+  },
+  {
+    "id": "gold-hoops-21-classic-bali",
+    "name": "Classic Polished Rounded Gold Balis",
+    "category": "Gold",
+    "subCategory": "earrings",
+    "subCategorySlug": "earrings",
+    "subType": "hoops-bali",
+    "occasion": "casual-wear",
+    "badge": "Daily Classic",
+    "badgeType": "in-stock",
+    "details": "22K BIS 916 Hallmarked Gold",
+    "price": "₹ 22,800",
+    "numericPrice": 22800,
+    "image": "/images/products/gold/earrings/gold_hoops_21-01.jpg",
+    "altText": "Pair of classic rounded gold bali hoops with a smooth polished surface",
+    "description": "A pair of classic rounded gold bali hoops with a smooth polished surface and secure hinged latch for effortless everyday comfort.",
+    "weight": "5.7 grams",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "Diameter: 22 mm; Tube thickness: 3.5 mm",
+    "craftsmanship": "Seamless Mirror-Polished Gold Tubing",
+    "certification": "BIS Hallmark Certified",
+    "isBridal": false,
+    "isNewArrival": true,
+    "collection": "gold",
+    "images": [
+      "/images/products/gold/earrings/gold_hoops_21-01.jpg",
+      "/images/products/gold/earrings/gold_hoops_21-02.jpg",
+      "/images/products/gold/earrings/gold_hoops_21-03.jpg"
     ]
   },
   {
@@ -342,7 +372,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold",
     "price": "₹ 27,500",
     "numericPrice": 27500,
-    "image": "/images/products/gold/gold_hoops_22-01.jpg",
+    "image": "/images/products/gold/earrings/gold_hoops_22-01.jpg",
     "altText": "Engraved gold hoops with fine traditional floral patterns",
     "description": "Engraved gold hoops with fine traditional floral patterns and micro-kemp stone studs around the circular silhouette.",
     "weight": "6.8 grams",
@@ -354,9 +384,9 @@ export const products = [
     "isNewArrival": false,
     "collection": "gold",
     "images": [
-      "/images/products/gold/gold_hoops_22-01.jpg",
-      "/images/products/gold/gold_hoops_22-02.jpg",
-      "/images/products/gold/gold_hoops_22-03.jpg"
+      "/images/products/gold/earrings/gold_hoops_22-01.jpg",
+      "/images/products/gold/earrings/gold_hoops_22-02.jpg",
+      "/images/products/gold/earrings/gold_hoops_22-03.jpg"
     ]
   },
   {
@@ -372,7 +402,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold",
     "price": "₹ 29,400",
     "numericPrice": 29400,
-    "image": "/images/products/gold/gold_hoops_23-01.jpg",
+    "image": "/images/products/gold/earrings/gold_hoops_23-01.jpg",
     "altText": "Twisted-rope gold hoops with a delicate beaded edge",
     "description": "Twisted-rope gold hoops with a delicate beaded edge, catching ambient light with high-relief reflective textures.",
     "weight": "7.3 grams",
@@ -384,39 +414,9 @@ export const products = [
     "isNewArrival": true,
     "collection": "gold",
     "images": [
-      "/images/products/gold/gold_hoops_23-01.jpg",
-      "/images/products/gold/gold_hoops_23-02.jpg",
-      "/images/products/gold/gold_hoops_23-03.jpg"
-    ]
-  },
-  {
-    "id": "gold-hoops-24-classic-bali-charm",
-    "name": "Classic Bali Charm Gold Hoops",
-    "category": "Gold",
-    "subCategory": "earrings",
-    "subCategorySlug": "earrings",
-    "subType": "hoops-bali",
-    "occasion": "casual-wear",
-    "badge": "New Arrival",
-    "badgeType": "in-stock",
-    "details": "22K BIS 916 Hallmarked Gold",
-    "price": "₹ 22,800",
-    "numericPrice": 22800,
-    "image": "/images/products/gold/gold_hoops_24-01.jpg",
-    "altText": "Classic 22K gold hoop bali earrings with decorative charm drop and gold bead dangles",
-    "description": "Timeless 22K gold hoop bali earrings featuring a decorative charm with cascading gold bead drops — perfect for everyday elegance and festive styling.",
-    "weight": "5.4 grams",
-    "purity": "916 BIS Hallmarked 22 Karat Gold",
-    "dimensions": "Diameter: 22 mm with secure click-lock clasp",
-    "craftsmanship": "South Indian Bali Goldsmithing",
-    "certification": "BIS Hallmark & Certified Laser Inscription",
-    "isBridal": false,
-    "isNewArrival": true,
-    "collection": "gold",
-    "images": [
-      "/images/products/gold/gold_hoops_24-01.jpg",
-      "/images/products/gold/gold_hoops_24-02.jpg",
-      "/images/products/gold/gold_hoops_24-03.jpg"
+      "/images/products/gold/earrings/gold_hoops_23-01.jpg",
+      "/images/products/gold/earrings/gold_hoops_23-02.jpg",
+      "/images/products/gold/earrings/gold_hoops_23-03.jpg"
     ]
   },
   {
@@ -432,7 +432,7 @@ export const products = [
     "details": "22K BIS 916 Gold with Brilliant Solitaire",
     "price": "₹ 32,000",
     "numericPrice": 32000,
-    "image": "/images/products/gold/gold_engagement_rings_26-01.jpg",
+    "image": "/images/products/gold/rings/gold_engagement_rings_26-01.jpg",
     "altText": "Elegant gold engagement ring with a raised clear centre stone and a simple band",
     "description": "An elegant gold engagement ring with a raised clear centre stone and a simple band, crafted in 22K yellow gold with six-prong setting.",
     "weight": "5.3 grams",
@@ -444,9 +444,9 @@ export const products = [
     "isNewArrival": true,
     "collection": "wedding",
     "images": [
-      "/images/products/gold/gold_engagement_rings_26-01.jpg",
-      "/images/products/gold/gold_engagement_rings_26-02.jpg",
-      "/images/products/gold/gold_engagement_rings_26-03.jpg"
+      "/images/products/gold/rings/gold_engagement_rings_26-01.jpg",
+      "/images/products/gold/rings/gold_engagement_rings_26-02.jpg",
+      "/images/products/gold/rings/gold_engagement_rings_26-03.jpg"
     ]
   },
   {
@@ -462,7 +462,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold",
     "price": "₹ 35,500",
     "numericPrice": 35500,
-    "image": "/images/products/gold/gold_engagement_rings_27-01.jpg",
+    "image": "/images/products/gold/rings/gold_engagement_rings_27-01.jpg",
     "altText": "Gold ring with a square clear centre stone and delicate side details",
     "description": "A gold ring with a square clear centre stone and delicate side details, featuring corner chevron gold clasps and polished tapered shoulders.",
     "weight": "5.8 grams",
@@ -474,9 +474,9 @@ export const products = [
     "isNewArrival": false,
     "collection": "wedding",
     "images": [
-      "/images/products/gold/gold_engagement_rings_27-01.jpg",
-      "/images/products/gold/gold_engagement_rings_27-02.jpg",
-      "/images/products/gold/gold_engagement_rings_27-03.jpg"
+      "/images/products/gold/rings/gold_engagement_rings_27-01.jpg",
+      "/images/products/gold/rings/gold_engagement_rings_27-02.jpg",
+      "/images/products/gold/rings/gold_engagement_rings_27-03.jpg"
     ]
   },
   {
@@ -492,7 +492,7 @@ export const products = [
     "details": "22K Gold with Micro Pavé Accents",
     "price": "₹ 38,900",
     "numericPrice": 38900,
-    "image": "/images/products/gold/gold_engagement_rings_28-01.jpg",
+    "image": "/images/products/gold/rings/gold_engagement_rings_28-01.jpg",
     "altText": "Gold ring with a round centre stone and a fine pavé-style band",
     "description": "A gold ring with a round centre stone and a fine pavé-style band, adorned with channel-set stones across the crown arc.",
     "weight": "6.2 grams",
@@ -504,9 +504,39 @@ export const products = [
     "isNewArrival": true,
     "collection": "wedding",
     "images": [
-      "/images/products/gold/gold_engagement_rings_28-01.jpg",
-      "/images/products/gold/gold_engagement_rings_28-02.jpg",
-      "/images/products/gold/gold_engagement_rings_28-03.jpg"
+      "/images/products/gold/rings/gold_engagement_rings_28-01.jpg",
+      "/images/products/gold/rings/gold_engagement_rings_28-02.jpg",
+      "/images/products/gold/rings/gold_engagement_rings_28-03.jpg"
+    ]
+  },
+  {
+    "id": "gold-ring-30-bezel-minimal",
+    "name": "Minimal Bezel-Set Gold Engagement Ring",
+    "category": "Gold",
+    "subCategory": "rings",
+    "subCategorySlug": "rings",
+    "subType": "engagement-rings",
+    "occasion": "casual-wear",
+    "badge": "Contemporary",
+    "badgeType": "in-stock",
+    "details": "22K BIS 916 Hallmarked Gold",
+    "price": "₹ 29,800",
+    "numericPrice": 29800,
+    "image": "/images/products/gold/rings/gold_engagement_rings_30-01.jpg",
+    "altText": "Minimal gold engagement ring with a bezel-set clear centre stone",
+    "description": "A minimal gold engagement ring with a bezel-set clear centre stone, flush with the smooth gold rim for snag-free daily luxury.",
+    "weight": "4.9 grams",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "Standard Indian Size 12",
+    "craftsmanship": "Flush Bezel Encasement Goldsmithing",
+    "certification": "BIS Hallmark Certified",
+    "isBridal": true,
+    "isNewArrival": true,
+    "collection": "wedding",
+    "images": [
+      "/images/products/gold/rings/gold_engagement_rings_30-01.jpg",
+      "/images/products/gold/rings/gold_engagement_rings_30-02.jpg",
+      "/images/products/gold/rings/gold_engagement_rings_30-03.jpg"
     ]
   },
   {
@@ -522,7 +552,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold",
     "price": "₹ 21,000",
     "numericPrice": 21000,
-    "image": "/images/products/gold/gold_casual_rings_33-01.jpg",
+    "image": "/images/products/gold/rings/gold_casual_rings_33-01.jpg",
     "altText": "Open-ended gold ring with two small leaf motifs",
     "description": "An open-ended gold ring with two small leaf motifs, wrapping comfortably around the finger with satin-engraved botanical detailing.",
     "weight": "4.1 grams",
@@ -534,9 +564,9 @@ export const products = [
     "isNewArrival": true,
     "collection": "gold",
     "images": [
-      "/images/products/gold/gold_casual_rings_33-01.jpg",
-      "/images/products/gold/gold_casual_rings_33-02.jpg",
-      "/images/products/gold/gold_casual_rings_33-03.jpg"
+      "/images/products/gold/rings/gold_casual_rings_33-01.jpg",
+      "/images/products/gold/rings/gold_casual_rings_33-02.jpg",
+      "/images/products/gold/rings/gold_casual_rings_33-03.jpg"
     ]
   },
   {
@@ -552,7 +582,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold",
     "price": "₹ 19,500",
     "numericPrice": 19500,
-    "image": "/images/products/gold/gold_casual_rings_34-01.jpg",
+    "image": "/images/products/gold/rings/gold_casual_rings_34-01.jpg",
     "altText": "Modern, softly curved gold band with a polished finish",
     "description": "A modern, softly curved gold band with a polished finish, featuring aerodynamic wave contours and supreme comfort fit.",
     "weight": "3.8 grams",
@@ -564,9 +594,9 @@ export const products = [
     "isNewArrival": false,
     "collection": "gold",
     "images": [
-      "/images/products/gold/gold_casual_rings_34-01.jpg",
-      "/images/products/gold/gold_casual_rings_34-02.jpg",
-      "/images/products/gold/gold_casual_rings_34-03.jpg"
+      "/images/products/gold/rings/gold_casual_rings_34-01.jpg",
+      "/images/products/gold/rings/gold_casual_rings_34-02.jpg",
+      "/images/products/gold/rings/gold_casual_rings_34-03.jpg"
     ]
   },
   {
@@ -582,7 +612,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold",
     "price": "₹ 17,400",
     "numericPrice": 17400,
-    "image": "/images/products/gold/gold_casual_rings_35-01.jpg",
+    "image": "/images/products/gold/rings/casual ring 1.png",
     "altText": "Delicate gold ring with a small engraved flower at the centre",
     "description": "A delicate gold ring with a small engraved flower at the centre, hand-engraved with Thanjavur botanical flourishes.",
     "weight": "3.4 grams",
@@ -594,9 +624,9 @@ export const products = [
     "isNewArrival": true,
     "collection": "gold",
     "images": [
-      "/images/products/gold/gold_casual_rings_35-01.jpg",
-      "/images/products/gold/gold_casual_rings_35-02.jpg",
-      "/images/products/gold/gold_casual_rings_35-03.jpg"
+      "/images/products/gold/rings/casual ring 1.png",
+      "/images/products/gold/rings/casual ring 1.png",
+      "/images/products/gold/rings/casual ring 1.png"
     ]
   },
   {
@@ -612,7 +642,7 @@ export const products = [
     "details": "22K Solid Hallmarked Gold",
     "price": "₹ 1,12,000",
     "numericPrice": 112000,
-    "image": "/images/products/gold/gold_cuff_bracelets_36-01.jpg",
+    "image": "/images/products/gold/bangles/gold_cuff_bracelets_36-01.jpg",
     "altText": "Wide open gold cuff with traditional engraved floral details",
     "description": "A wide open gold cuff with traditional engraved floral details and heavy screw pin clasp, sculpted in 22K solid gold.",
     "weight": "24.5 grams",
@@ -624,9 +654,9 @@ export const products = [
     "isNewArrival": true,
     "collection": "wedding",
     "images": [
-      "/images/products/gold/gold_cuff_bracelets_36-01.jpg",
-      "/images/products/gold/gold_cuff_bracelets_36-02.jpg",
-      "/images/products/gold/gold_cuff_bracelets_36-03.jpg"
+      "/images/products/gold/bangles/gold_cuff_bracelets_36-01.jpg",
+      "/images/products/gold/bangles/gold_cuff_bracelets_36-02.jpg",
+      "/images/products/gold/bangles/gold_cuff_bracelets_36-03.jpg"
     ]
   },
   {
@@ -642,7 +672,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold",
     "price": "₹ 68,000",
     "numericPrice": 68000,
-    "image": "/images/products/gold/gold_cuff_bracelets_37-01.jpg",
+    "image": "/images/products/gold/bangles/gold_cuff_bracelets_37-01.jpg",
     "altText": "Slim gold cuff with a clean, modern sculptural curve",
     "description": "A slim gold cuff with a clean, modern sculptural curve, offering minimalist wrist contouring and sleek flexibility.",
     "weight": "15.0 grams",
@@ -654,9 +684,39 @@ export const products = [
     "isNewArrival": false,
     "collection": "gold",
     "images": [
-      "/images/products/gold/gold_cuff_bracelets_37-01.jpg",
-      "/images/products/gold/gold_cuff_bracelets_37-02.jpg",
-      "/images/products/gold/gold_cuff_bracelets_37-03.jpg"
+      "/images/products/gold/bangles/gold_cuff_bracelets_37-01.jpg",
+      "/images/products/gold/bangles/gold_cuff_bracelets_37-02.jpg",
+      "/images/products/gold/bangles/gold_cuff_bracelets_37-03.jpg"
+    ]
+  },
+  {
+    "id": "gold-cuff-38-temple-beaded",
+    "name": "Temple Motif Beaded Border Gold Cuff",
+    "category": "Gold",
+    "subCategory": "bangles",
+    "subCategorySlug": "bangles",
+    "subType": "cuff-bracelets",
+    "occasion": "traditional-wear",
+    "badge": "Auspicious",
+    "badgeType": "in-stock",
+    "details": "22K Antique Hallmarked Gold",
+    "price": "₹ 98,500",
+    "numericPrice": 98500,
+    "image": "/images/products/gold/bangles/gold_cuff_bracelets_38-01.jpg",
+    "altText": "Temple-inspired cuff with a raised central motif and beaded edging",
+    "description": "A temple-inspired cuff with a raised central motif and beaded edging, depicting Goddess Lakshmi flanked by sacred elephants.",
+    "weight": "21.5 grams",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "Width: 22 mm; Size: 2.4 / 2.6",
+    "craftsmanship": "Chettinad Temple Kada Art",
+    "certification": "BIS Hallmark Certified",
+    "isBridal": true,
+    "isNewArrival": true,
+    "collection": "wedding",
+    "images": [
+      "/images/products/gold/bangles/gold_cuff_bracelets_38-01.jpg",
+      "/images/products/gold/bangles/gold_cuff_bracelets_38-02.jpg",
+      "/images/products/gold/bangles/gold_cuff_bracelets_38-03.jpg"
     ]
   },
   {
@@ -672,7 +732,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold",
     "price": "₹ 86,000",
     "numericPrice": 86000,
-    "image": "/images/products/gold/gold_cuff_bracelets_39-01.jpg",
+    "image": "/images/products/gold/bangles/gold_cuff_bracelets_39-01.jpg",
     "altText": "Gold cuff with repeating leaf patterns and subtle textured detailing",
     "description": "A gold cuff with repeating leaf patterns and subtle textured detailing, with alternating satin-brushed and polished highlights.",
     "weight": "18.8 grams",
@@ -684,9 +744,39 @@ export const products = [
     "isNewArrival": false,
     "collection": "gold",
     "images": [
-      "/images/products/gold/gold_cuff_bracelets_39-01.jpg",
-      "/images/products/gold/gold_cuff_bracelets_39-02.jpg",
-      "/images/products/gold/gold_cuff_bracelets_39-03.jpg"
+      "/images/products/gold/bangles/gold_cuff_bracelets_39-01.jpg",
+      "/images/products/gold/bangles/gold_cuff_bracelets_39-02.jpg",
+      "/images/products/gold/bangles/gold_cuff_bracelets_39-03.jpg"
+    ]
+  },
+  {
+    "id": "gold-cuff-40-hinged-floral",
+    "name": "Hinged Floral Centrepiece Gold Cuff",
+    "category": "Gold",
+    "subCategory": "bangles",
+    "subCategorySlug": "bangles",
+    "subType": "cuff-bracelets",
+    "occasion": "traditional-wear",
+    "badge": "Bridal Choice",
+    "badgeType": "in-stock",
+    "details": "22K BIS 916 Hallmarked Gold",
+    "price": "₹ 92,000",
+    "numericPrice": 92000,
+    "image": "/images/products/gold/bangles/gold_cuff_bracelets_40-01.jpg",
+    "altText": "Hinged-look gold cuff with a central floral ornament and clean silhouette",
+    "description": "A hinged-look gold cuff with a central floral ornament and clean silhouette, featuring side-locking security clasp.",
+    "weight": "20.2 grams",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "Width: 18 mm; Size: 2.6",
+    "craftsmanship": "Hinged Precision Goldsmithing",
+    "certification": "BIS Hallmark Certified",
+    "isBridal": true,
+    "isNewArrival": true,
+    "collection": "wedding",
+    "images": [
+      "/images/products/gold/bangles/gold_cuff_bracelets_40-01.jpg",
+      "/images/products/gold/bangles/gold_cuff_bracelets_40-02.jpg",
+      "/images/products/gold/bangles/gold_cuff_bracelets_40-03.jpg"
     ]
   },
   {
@@ -702,7 +792,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold",
     "price": "₹ 28,500",
     "numericPrice": 28500,
-    "image": "/images/products/gold/gold_chain_bracelets_41-01.jpg",
+    "image": "/images/products/gold/bangles/gold_chain_bracelets_41-01.jpg",
     "altText": "Fine gold chain bracelet with a tiny floral charm",
     "description": "A fine gold chain bracelet with a tiny floral charm, hand-threaded with 22K links and lobster-claw clasp.",
     "weight": "6.0 grams",
@@ -714,9 +804,9 @@ export const products = [
     "isNewArrival": true,
     "collection": "gold",
     "images": [
-      "/images/products/gold/gold_chain_bracelets_41-01.jpg",
-      "/images/products/gold/gold_chain_bracelets_41-02.jpg",
-      "/images/products/gold/gold_chain_bracelets_41-03.jpg"
+      "/images/products/gold/bangles/gold_chain_bracelets_41-01.jpg",
+      "/images/products/gold/bangles/gold_chain_bracelets_41-02.jpg",
+      "/images/products/gold/bangles/gold_chain_bracelets_41-03.jpg"
     ]
   },
   {
@@ -732,7 +822,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold",
     "price": "₹ 42,000",
     "numericPrice": 42000,
-    "image": "/images/products/gold/gold_chain_bracelets_42-01.jpg",
+    "image": "/images/products/gold/bangles/gold_chain_bracelets_42-01.jpg",
     "altText": "Linked gold bracelet with alternating polished and textured links",
     "description": "A linked gold bracelet with alternating polished and textured links, offering timeless unisex appeal and fluid wrist movement.",
     "weight": "9.2 grams",
@@ -744,9 +834,39 @@ export const products = [
     "isNewArrival": false,
     "collection": "gold",
     "images": [
-      "/images/products/gold/gold_chain_bracelets_42-01.jpg",
-      "/images/products/gold/gold_chain_bracelets_42-02.jpg",
-      "/images/products/gold/gold_chain_bracelets_42-03.jpg"
+      "/images/products/gold/bangles/gold_chain_bracelets_42-01.jpg",
+      "/images/products/gold/bangles/gold_chain_bracelets_42-02.jpg",
+      "/images/products/gold/bangles/gold_chain_bracelets_42-03.jpg"
+    ]
+  },
+  {
+    "id": "gold-chain-brac-43-circular-motif",
+    "name": "Circular Medallion Delicate Gold Chain Bracelet",
+    "category": "Gold",
+    "subCategory": "bangles",
+    "subCategorySlug": "bangles",
+    "subType": "chain-bracelets",
+    "occasion": "party-wear",
+    "badge": "Signature",
+    "badgeType": "in-stock",
+    "details": "22K BIS 916 Hallmarked Gold",
+    "price": "₹ 31,500",
+    "numericPrice": 31500,
+    "image": "/images/products/gold/bangles/gold_chain_bracelets_43-01.jpg",
+    "altText": "Delicate gold chain bracelet with a small circular centre motif",
+    "description": "A delicate gold chain bracelet with a small circular centre motif and kemp stone center, framed by micro-granulated gold.",
+    "weight": "6.8 grams",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "Length: 7.2 inches",
+    "craftsmanship": "Micro-Filigree Centerpiece Craft",
+    "certification": "BIS Hallmark Certified",
+    "isBridal": false,
+    "isNewArrival": true,
+    "collection": "gold",
+    "images": [
+      "/images/products/gold/bangles/gold_chain_bracelets_43-01.jpg",
+      "/images/products/gold/bangles/gold_chain_bracelets_43-02.jpg",
+      "/images/products/gold/bangles/gold_chain_bracelets_43-03.jpg"
     ]
   },
   {
@@ -762,7 +882,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold",
     "price": "₹ 36,000",
     "numericPrice": 36000,
-    "image": "/images/products/gold/gold_chain_bracelets_44-01.jpg",
+    "image": "/images/products/gold/bangles/gold_chain_bracelets_44-01.jpg",
     "altText": "Traditional gold bracelet with tiny bead details along the chain",
     "description": "A traditional gold bracelet with tiny bead details along the chain, crafted with South Indian gold Mani spheres.",
     "weight": "7.8 grams",
@@ -774,9 +894,39 @@ export const products = [
     "isNewArrival": false,
     "collection": "gold",
     "images": [
-      "/images/products/gold/gold_chain_bracelets_44-01.jpg",
-      "/images/products/gold/gold_chain_bracelets_44-02.jpg",
-      "/images/products/gold/gold_chain_bracelets_44-03.jpg"
+      "/images/products/gold/bangles/gold_chain_bracelets_44-01.jpg",
+      "/images/products/gold/bangles/gold_chain_bracelets_44-02.jpg",
+      "/images/products/gold/bangles/gold_chain_bracelets_44-03.jpg"
+    ]
+  },
+  {
+    "id": "gold-chain-brac-45-minimal-clasp",
+    "name": "Minimal Geometric Link Clasp Gold Bracelet",
+    "category": "Gold",
+    "subCategory": "bangles",
+    "subCategorySlug": "bangles",
+    "subType": "chain-bracelets",
+    "occasion": "casual-wear",
+    "badge": "Modern Chic",
+    "badgeType": "in-stock",
+    "details": "22K BIS 916 Hallmarked Gold",
+    "price": "₹ 34,000",
+    "numericPrice": 34000,
+    "image": "/images/products/gold/bangles/gold_chain_bracelets_45-01.jpg",
+    "altText": "Minimal gold link bracelet with a small decorative clasp",
+    "description": "A minimal gold link bracelet with a small decorative clasp, finished with geometric locking links.",
+    "weight": "7.4 grams",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "Length: 7.25 inches",
+    "craftsmanship": "Precision Geometric Linkage",
+    "certification": "BIS Hallmark Certified",
+    "isBridal": false,
+    "isNewArrival": true,
+    "collection": "gold",
+    "images": [
+      "/images/products/gold/bangles/gold_chain_bracelets_45-01.jpg",
+      "/images/products/gold/bangles/gold_chain_bracelets_45-02.jpg",
+      "/images/products/gold/bangles/gold_chain_bracelets_45-03.jpg"
     ]
   },
   {
@@ -792,7 +942,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold (Pair)",
     "price": "₹ 64,000",
     "numericPrice": 64000,
-    "image": "/images/products/gold/gold_bangle_bracelets_46-01.jpg",
+    "image": "/images/products/gold/bangles/gold_bangle_bracelets_46-01.jpg",
     "altText": "Pair of slim polished gold bangles with a simple everyday design",
     "description": "A pair of slim polished gold bangles with a simple everyday design and rounded comfort edges.",
     "weight": "14.0 grams (Pair)",
@@ -804,9 +954,99 @@ export const products = [
     "isNewArrival": true,
     "collection": "gold",
     "images": [
-      "/images/products/gold/gold_bangle_bracelets_46-01.jpg",
-      "/images/products/gold/gold_bangle_bracelets_46-02.jpg",
-      "/images/products/gold/gold_bangle_bracelets_46-03.jpg"
+      "/images/products/gold/bangles/gold_bangle_bracelets_46-01.jpg",
+      "/images/products/gold/bangles/gold_bangle_bracelets_46-02.jpg",
+      "/images/products/gold/bangles/gold_bangle_bracelets_46-03.jpg"
+    ]
+  },
+  {
+    "id": "gold-bangle-47-textured-engraved",
+    "name": "Repeating Chevron Engraved Gold Bangle",
+    "category": "Gold",
+    "subCategory": "bangles",
+    "subCategorySlug": "bangles",
+    "subType": "bangle-bracelets",
+    "occasion": "traditional-wear",
+    "badge": "In stock",
+    "badgeType": "in-stock",
+    "details": "22K BIS 916 Hallmarked Gold",
+    "price": "₹ 58,000",
+    "numericPrice": 58000,
+    "image": "/images/products/gold/bangles/gold_bangle_bracelets_47-01.jpg",
+    "altText": "Textured gold bangle with repeating engraved motifs",
+    "description": "A textured gold bangle with repeating engraved motifs and micro-facets creating a shimmering light dispersion.",
+    "weight": "12.8 grams",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "Size 2.6",
+    "craftsmanship": "Diamond-Cut Geometric Chasing",
+    "certification": "BIS Hallmark Certified",
+    "isBridal": true,
+    "isNewArrival": false,
+    "collection": "wedding",
+    "images": [
+      "/images/products/gold/bangles/gold_bangle_bracelets_47-01.jpg",
+      "/images/products/gold/bangles/gold_bangle_bracelets_47-02.jpg",
+      "/images/products/gold/bangles/gold_bangle_bracelets_47-03.jpg"
+    ]
+  },
+  {
+    "id": "gold-bangle-48-spaced-floral",
+    "name": "Spaced Floral Motif Gold Bangle",
+    "category": "Gold",
+    "subCategory": "bangles",
+    "subCategorySlug": "bangles",
+    "subType": "bangle-bracelets",
+    "occasion": "traditional-wear",
+    "badge": "Festive",
+    "badgeType": "in-stock",
+    "details": "22K Gold with Kemp Accents",
+    "price": "₹ 62,500",
+    "numericPrice": 62500,
+    "image": "/images/products/gold/bangles/gold_bangle_bracelets_48-01.jpg",
+    "altText": "Gold bangle with small floral elements spaced around the band",
+    "description": "A gold bangle with small floral elements spaced around the band, set with natural kemp rubies and granulation borders.",
+    "weight": "13.6 grams",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "Size 2.4 / 2.6",
+    "craftsmanship": "Handcrafted Floral Repoussé",
+    "certification": "BIS Hallmark Certified",
+    "isBridal": true,
+    "isNewArrival": true,
+    "collection": "wedding",
+    "images": [
+      "/images/products/gold/bangles/gold_bangle_bracelets_48-01.jpg",
+      "/images/products/gold/bangles/gold_bangle_bracelets_48-02.jpg",
+      "/images/products/gold/bangles/gold_bangle_bracelets_48-03.jpg"
+    ]
+  },
+  {
+    "id": "gold-bangle-49-beaded-border",
+    "name": "Traditional Beaded Edge Gold Valayal",
+    "category": "Gold",
+    "subCategory": "bangles",
+    "subCategorySlug": "bangles",
+    "subType": "bangle-bracelets",
+    "occasion": "traditional-wear",
+    "badge": "Chettinad Classic",
+    "badgeType": "in-stock",
+    "details": "22K BIS 916 Hallmarked Gold",
+    "price": "₹ 55,000",
+    "numericPrice": 55000,
+    "image": "/images/products/gold/bangles/gold_bangle_bracelets_49-01.jpg",
+    "altText": "Traditional gold bangle with a fine beaded border",
+    "description": "A traditional gold bangle with a fine beaded border, inspired by historic South Indian Chettinad valayal craftsmanship.",
+    "weight": "12.0 grams",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "Size 2.6",
+    "craftsmanship": "Traditional Granulation Valayal Art",
+    "certification": "BIS Hallmark Certified",
+    "isBridal": true,
+    "isNewArrival": false,
+    "collection": "wedding",
+    "images": [
+      "/images/products/gold/bangles/gold_bangle_bracelets_49-01.jpg",
+      "/images/products/gold/bangles/gold_bangle_bracelets_49-02.jpg",
+      "/images/products/gold/bangles/gold_bangle_bracelets_49-03.jpg"
     ]
   },
   {
@@ -822,7 +1062,7 @@ export const products = [
     "details": "22K Antique Hallmarked Gold",
     "price": "₹ 78,000",
     "numericPrice": 78000,
-    "image": "/images/products/gold/gold_bangle_bracelets_50-01.jpg",
+    "image": "/images/products/gold/bangles/gold_bangle_bracelets_50-01.jpg",
     "altText": "Wider gold bangle with a central decorative panel and engraved sides",
     "description": "A wider gold bangle with a central decorative panel and engraved sides, featuring antique temple filigree.",
     "weight": "17.2 grams",
@@ -834,9 +1074,39 @@ export const products = [
     "isNewArrival": true,
     "collection": "wedding",
     "images": [
-      "/images/products/gold/gold_bangle_bracelets_50-01.jpg",
-      "/images/products/gold/gold_bangle_bracelets_50-02.jpg",
-      "/images/products/gold/gold_bangle_bracelets_50-03.jpg"
+      "/images/products/gold/bangles/gold_bangle_bracelets_50-01.jpg",
+      "/images/products/gold/bangles/gold_bangle_bracelets_50-02.jpg",
+      "/images/products/gold/bangles/gold_bangle_bracelets_50-03.jpg"
+    ]
+  },
+  {
+    "id": "gold-neck-51-floral-matching",
+    "name": "Delicate Floral Centrepiece Short Gold Necklace",
+    "category": "Gold",
+    "subCategory": "necklaces",
+    "subCategorySlug": "necklaces",
+    "subType": "short-necklace",
+    "occasion": "traditional-wear",
+    "badge": "Bestseller",
+    "badgeType": "in-stock",
+    "details": "22K BIS 916 Hallmarked Gold",
+    "price": "₹ 96,000",
+    "numericPrice": 96000,
+    "image": "/images/products/gold/necklaces/gold_short_necklace_51-01.jpg",
+    "altText": "Short gold necklace with a delicate floral centrepiece and fine matching links",
+    "description": "A short gold necklace with a delicate floral centrepiece and fine matching links, accented with untreated ruby droplets and gold dori.",
+    "weight": "21.0 grams",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "Length: 16 inches + adjustable gold dori",
+    "craftsmanship": "South Indian Floral Collar Art",
+    "certification": "BIS Hallmark Certified",
+    "isBridal": true,
+    "isNewArrival": true,
+    "collection": "wedding",
+    "images": [
+      "/images/products/gold/necklaces/gold_short_necklace_51-01.jpg",
+      "/images/products/gold/necklaces/gold_short_necklace_51-02.jpg",
+      "/images/products/gold/necklaces/gold_short_necklace_51-03.jpg"
     ]
   },
   {
@@ -852,7 +1122,7 @@ export const products = [
     "details": "22K Antique Hallmarked Gold",
     "price": "₹ 1,18,000",
     "numericPrice": 118000,
-    "image": "/images/products/gold/gold_short_necklace_52-01.jpg",
+    "image": "/images/products/gold/necklaces/gold_short_necklace_52-01.jpg",
     "altText": "Traditional short necklace with repeating small temple-inspired motifs",
     "description": "A traditional short necklace with repeating small temple-inspired motifs, featuring Lakshmi and elephant repoussé units.",
     "weight": "26.0 grams",
@@ -864,9 +1134,39 @@ export const products = [
     "isNewArrival": false,
     "collection": "wedding",
     "images": [
-      "/images/products/gold/gold_short_necklace_52-01.jpg",
-      "/images/products/gold/gold_short_necklace_52-02.jpg",
-      "/images/products/gold/gold_short_necklace_52-03.jpg"
+      "/images/products/gold/necklaces/gold_short_necklace_52-01.jpg",
+      "/images/products/gold/necklaces/gold_short_necklace_52-02.jpg",
+      "/images/products/gold/necklaces/gold_short_necklace_52-03.jpg"
+    ]
+  },
+  {
+    "id": "gold-neck-53-geometric-pendant",
+    "name": "Minimal Geometric Centre Short Gold Necklace",
+    "category": "Gold",
+    "subCategory": "necklaces",
+    "subCategorySlug": "necklaces",
+    "subType": "short-necklace",
+    "occasion": "casual-wear",
+    "badge": "Modern",
+    "badgeType": "in-stock",
+    "details": "22K BIS 916 Hallmarked Gold",
+    "price": "₹ 74,000",
+    "numericPrice": 74000,
+    "image": "/images/products/gold/necklaces/gold_short_necklace_53-01.jpg",
+    "altText": "Minimal short gold necklace with a neat geometric pendant-like centre",
+    "description": "A minimal short gold necklace with a neat geometric pendant-like centre, offering clean contemporary luxury.",
+    "weight": "16.2 grams",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "Length: 16 inches with gold link chain",
+    "craftsmanship": "Precision CNC Facet Finish",
+    "certification": "BIS Hallmark Certified",
+    "isBridal": false,
+    "isNewArrival": true,
+    "collection": "gold",
+    "images": [
+      "/images/products/gold/necklaces/gold_short_necklace_53-01.jpg",
+      "/images/products/gold/necklaces/gold_short_necklace_53-02.jpg",
+      "/images/products/gold/necklaces/gold_short_necklace_53-03.jpg"
     ]
   },
   {
@@ -882,7 +1182,7 @@ export const products = [
     "details": "22K Gold with Kemp Rubies & Emeralds",
     "price": "₹ 1,08,000",
     "numericPrice": 108000,
-    "image": "/images/products/gold/gold_short_necklace_54-01.jpg",
+    "image": "/images/products/gold/necklaces/gold_short_necklace_54-01.jpg",
     "altText": "Short gold necklace with ruby-red and green stone-inspired floral accents",
     "description": "A short gold necklace with ruby-red and green stone-inspired floral accents, adorned with lustrous seed pearl drops.",
     "weight": "23.8 grams",
@@ -894,9 +1194,9 @@ export const products = [
     "isNewArrival": false,
     "collection": "wedding",
     "images": [
-      "/images/products/gold/gold_short_necklace_54-01.jpg",
-      "/images/products/gold/gold_short_necklace_54-02.jpg",
-      "/images/products/gold/gold_short_necklace_54-03.jpg"
+      "/images/products/gold/necklaces/gold_short_necklace_54-01.jpg",
+      "/images/products/gold/necklaces/gold_short_necklace_54-02.jpg",
+      "/images/products/gold/necklaces/gold_short_necklace_54-03.jpg"
     ]
   },
   {
@@ -912,7 +1212,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold",
     "price": "₹ 1,25,000",
     "numericPrice": 125000,
-    "image": "/images/products/gold/gold_short_necklace_55-01.jpg",
+    "image": "/images/products/gold/necklaces/gold_short_necklace_55-01.jpg",
     "altText": "Layered-look short necklace with tiny gold motifs and a subtle beaded edge",
     "description": "A layered-look short necklace with tiny gold motifs and a subtle beaded edge, creating the appearance of dual heritage malas.",
     "weight": "27.5 grams",
@@ -924,9 +1224,99 @@ export const products = [
     "isNewArrival": true,
     "collection": "wedding",
     "images": [
-      "/images/products/gold/gold_short_necklace_55-01.jpg",
-      "/images/products/gold/gold_short_necklace_55-02.jpg",
-      "/images/products/gold/gold_short_necklace_55-03.jpg"
+      "/images/products/gold/necklaces/gold_short_necklace_55-01.jpg",
+      "/images/products/gold/necklaces/gold_short_necklace_55-02.jpg",
+      "/images/products/gold/necklaces/gold_short_necklace_55-03.jpg"
+    ]
+  },
+  {
+    "id": "gold-neck-56-traditional-pendant",
+    "name": "Heirloom Engraved Long Gold Haram",
+    "category": "Gold",
+    "subCategory": "necklaces",
+    "subCategorySlug": "necklaces",
+    "subType": "long-necklace",
+    "occasion": "traditional-wear",
+    "badge": "Grand Haram",
+    "badgeType": "in-stock",
+    "details": "22K BIS 916 Hallmarked Gold",
+    "price": "₹ 1,75,000",
+    "numericPrice": 175000,
+    "image": "/images/products/gold/necklaces/gold_long_necklace_56-01.jpg",
+    "altText": "Long traditional gold necklace with repeating engraved motifs and a small central pendant",
+    "description": "A long traditional gold necklace with repeating engraved motifs and a small central pendant, measuring 24 inches for bridal grandeur.",
+    "weight": "38.5 grams",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "Length: 24 inches Long Bridal Haram",
+    "craftsmanship": "Master Goldsmith Thanjavur Haram Art",
+    "certification": "BIS Hallmark & Guarantee",
+    "isBridal": true,
+    "isNewArrival": true,
+    "collection": "wedding",
+    "images": [
+      "/images/products/gold/necklaces/gold_long_necklace_56-01.jpg",
+      "/images/products/gold/necklaces/gold_long_necklace_56-02.jpg",
+      "/images/products/gold/necklaces/gold_long_necklace_56-03.jpg"
+    ]
+  },
+  {
+    "id": "gold-neck-57-lakshmi-temple-haram",
+    "name": "Grand Temple Lakshmi Bridal Gold Haram",
+    "category": "Gold",
+    "subCategory": "necklaces",
+    "subCategorySlug": "necklaces",
+    "subType": "long-necklace",
+    "occasion": "traditional-wear",
+    "badge": "Bridal Masterpiece",
+    "badgeType": "in-stock",
+    "details": "22K Antique Hallmarked Gold (54 Kasu Coins)",
+    "price": "₹ 2,10,000",
+    "numericPrice": 210000,
+    "image": "/images/products/gold/necklaces/gold_long_necklace_57-01.jpg",
+    "altText": "Long temple-style necklace with a detailed Lakshmi-inspired centrepiece",
+    "description": "A long temple-style necklace with a detailed Lakshmi-inspired centrepiece and auspicious Kasu coin borders.",
+    "weight": "46.0 grams",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "Length: 26 inches Long Haram + adjustable dori",
+    "craftsmanship": "Royal Chettinad Kasu Mala Masterwork",
+    "certification": "BIS Hallmark & Lifetime Certificate",
+    "isBridal": true,
+    "isNewArrival": false,
+    "collection": "wedding",
+    "images": [
+      "/images/products/gold/necklaces/gold_long_necklace_57-01.jpg",
+      "/images/products/gold/necklaces/gold_long_necklace_57-02.jpg",
+      "/images/products/gold/necklaces/gold_long_necklace_57-03.jpg"
+    ]
+  },
+  {
+    "id": "gold-neck-58-floral-bead-drops",
+    "name": "Floral Link Mani Droplet Long Gold Necklace",
+    "category": "Gold",
+    "subCategory": "necklaces",
+    "subCategorySlug": "necklaces",
+    "subType": "long-necklace",
+    "occasion": "traditional-wear",
+    "badge": "In stock",
+    "badgeType": "in-stock",
+    "details": "22K BIS 916 Hallmarked Gold",
+    "price": "₹ 1,88,000",
+    "numericPrice": 188000,
+    "image": "/images/products/gold/necklaces/gold_long_necklace_58-01.jpg",
+    "altText": "Long gold necklace with alternating floral links and small bead drops",
+    "description": "A long gold necklace with alternating floral links and small bead drops, rhythmically arranged with hanging gold pearls.",
+    "weight": "41.2 grams",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "Length: 24 inches",
+    "craftsmanship": "Articulated Floral Link Goldsmithing",
+    "certification": "BIS Hallmark Certified",
+    "isBridal": true,
+    "isNewArrival": true,
+    "collection": "wedding",
+    "images": [
+      "/images/products/gold/necklaces/gold_long_necklace_58-01.jpg",
+      "/images/products/gold/necklaces/gold_long_necklace_58-02.jpg",
+      "/images/products/gold/necklaces/gold_long_necklace_58-03.jpg"
     ]
   },
   {
@@ -942,7 +1332,7 @@ export const products = [
     "details": "22K Gold with Natural Emeralds & Kemp",
     "price": "₹ 1,95,000",
     "numericPrice": 195000,
-    "image": "/images/products/gold/gold_long_necklace_59-01.jpg",
+    "image": "/images/products/gold/necklaces/gold_long_necklace_59-01.jpg",
     "altText": "Long South Indian necklace with peacock-inspired details and green accents",
     "description": "A long South Indian necklace with peacock-inspired details and green accents, featuring side Mayil mugappu motifs.",
     "weight": "42.8 grams",
@@ -954,9 +1344,9 @@ export const products = [
     "isNewArrival": false,
     "collection": "wedding",
     "images": [
-      "/images/products/gold/gold_long_necklace_59-01.jpg",
-      "/images/products/gold/gold_long_necklace_59-02.jpg",
-      "/images/products/gold/gold_long_necklace_59-03.jpg"
+      "/images/products/gold/necklaces/gold_long_necklace_59-01.jpg",
+      "/images/products/gold/necklaces/gold_long_necklace_59-02.jpg",
+      "/images/products/gold/necklaces/gold_long_necklace_59-03.jpg"
     ]
   },
   {
@@ -972,7 +1362,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold",
     "price": "₹ 1,62,000",
     "numericPrice": 162000,
-    "image": "/images/products/gold/gold_long_necklace_60-01.jpg",
+    "image": "/images/products/gold/necklaces/gold_long_necklace_60-01.jpg",
     "altText": "Long, elegant gold chain necklace with a finely detailed central medallion",
     "description": "A long, elegant gold chain necklace with a finely detailed central medallion, surrounded by micro-granulated gold sunburst halo.",
     "weight": "35.5 grams",
@@ -984,9 +1374,69 @@ export const products = [
     "isNewArrival": true,
     "collection": "wedding",
     "images": [
-      "/images/products/gold/gold_long_necklace_60-01.jpg",
-      "/images/products/gold/gold_long_necklace_60-02.jpg",
-      "/images/products/gold/gold_long_necklace_60-03.jpg"
+      "/images/products/gold/necklaces/gold_long_necklace_60-01.jpg",
+      "/images/products/gold/necklaces/gold_long_necklace_60-02.jpg",
+      "/images/products/gold/necklaces/gold_long_necklace_60-03.jpg"
+    ]
+  },
+  {
+    "id": "gold-nosepin-61-floral-ruby",
+    "name": "Delicate Floral Ruby Gold Mookuthi",
+    "category": "Gold",
+    "subCategory": "nosepin",
+    "subCategorySlug": "nosepin",
+    "subType": "nosepin",
+    "occasion": "casual-wear",
+    "badge": "Auspicious",
+    "badgeType": "in-stock",
+    "details": "22K BIS 916 Gold with Kemp Ruby",
+    "price": "₹ 4,800",
+    "numericPrice": 4800,
+    "image": "/images/products/gold/nosepin/gold_nosepin_61-01.jpg",
+    "altText": "Delicate floral gold nose pin with a tiny ruby-red centre",
+    "description": "A delicate floral gold nose pin with a tiny ruby-red centre and fine petal detailing, crafted with a smooth screw stem.",
+    "weight": "0.90 grams",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "6 mm diameter; Screw stem backing",
+    "craftsmanship": "Micro-Setting South Indian Mookuthi Art",
+    "certification": "BIS Hallmark Certified",
+    "isBridal": false,
+    "isNewArrival": true,
+    "collection": "gold",
+    "images": [
+      "/images/products/gold/nosepin/gold_nosepin_61-01.jpg",
+      "/images/products/gold/nosepin/gold_nosepin_61-02.jpg",
+      "/images/products/gold/nosepin/gold_nosepin_61-03.jpg"
+    ]
+  },
+  {
+    "id": "gold-nosepin-62-clear-solitaire",
+    "name": "Solitaire Diamond-Cut Gold Nose Pin",
+    "category": "Gold",
+    "subCategory": "nosepin",
+    "subCategorySlug": "nosepin",
+    "subType": "nosepin",
+    "occasion": "casual-wear",
+    "badge": "Daily Pick",
+    "badgeType": "in-stock",
+    "details": "22K BIS 916 Hallmarked Gold",
+    "price": "₹ 4,200",
+    "numericPrice": 4200,
+    "image": "/images/products/gold/nosepin/gold_nosepin_62-01.jpg",
+    "altText": "Minimal gold nose pin with a small clear stone-inspired centre",
+    "description": "A minimal gold nose pin with a small clear stone-inspired centre, bezel-set for maximum sparkle and comfort.",
+    "weight": "0.80 grams",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "4.5 mm diameter",
+    "craftsmanship": "Bezel Prong Encasement",
+    "certification": "BIS Hallmark Certified",
+    "isBridal": false,
+    "isNewArrival": false,
+    "collection": "gold",
+    "images": [
+      "/images/products/gold/nosepin/gold_nosepin_62-01.jpg",
+      "/images/products/gold/nosepin/gold_nosepin_62-02.jpg",
+      "/images/products/gold/nosepin/gold_nosepin_62-03.jpg"
     ]
   },
   {
@@ -1002,7 +1452,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold",
     "price": "₹ 4,500",
     "numericPrice": 4500,
-    "image": "/images/products/gold/gold_nosepin_63-01.jpg",
+    "image": "/images/products/gold/nosepin/gold_nosepin_63-01.jpg",
     "altText": "Traditional gold nose pin with a tiny leaf-shaped ornament",
     "description": "A traditional gold nose pin with a tiny leaf-shaped ornament, featuring hand-chased botanical engraving.",
     "weight": "0.85 grams",
@@ -1014,9 +1464,9 @@ export const products = [
     "isNewArrival": true,
     "collection": "gold",
     "images": [
-      "/images/products/gold/gold_nosepin_63-01.jpg",
-      "/images/products/gold/gold_nosepin_63-02.jpg",
-      "/images/products/gold/gold_nosepin_63-03.jpg"
+      "/images/products/gold/nosepin/gold_nosepin_63-01.jpg",
+      "/images/products/gold/nosepin/gold_nosepin_63-02.jpg",
+      "/images/products/gold/nosepin/gold_nosepin_63-03.jpg"
     ]
   },
   {
@@ -1032,7 +1482,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold",
     "price": "₹ 5,100",
     "numericPrice": 5100,
-    "image": "/images/products/gold/gold_nosepin_64-01.jpg",
+    "image": "/images/products/gold/nosepin/gold_nosepin_64-01.jpg",
     "altText": "Small round gold nose pin with a fine beaded border",
     "description": "A small round gold nose pin with a fine beaded border, encircling a brilliant cabochon ruby in traditional Thanjavur fashion.",
     "weight": "1.00 grams",
@@ -1044,9 +1494,39 @@ export const products = [
     "isNewArrival": false,
     "collection": "gold",
     "images": [
-      "/images/products/gold/gold_nosepin_64-01.jpg",
-      "/images/products/gold/gold_nosepin_64-02.jpg",
-      "/images/products/gold/gold_nosepin_64-03.jpg"
+      "/images/products/gold/nosepin/gold_nosepin_64-01.jpg",
+      "/images/products/gold/nosepin/gold_nosepin_64-02.jpg",
+      "/images/products/gold/nosepin/gold_nosepin_64-03.jpg"
+    ]
+  },
+  {
+    "id": "gold-nosepin-65-flower-dangling-bead",
+    "name": "Flower Charm Dangling Bead Gold Mookuthi",
+    "category": "Gold",
+    "subCategory": "nosepin",
+    "subCategorySlug": "nosepin",
+    "subType": "nosepin",
+    "occasion": "traditional-wear",
+    "badge": "Bridal Choice",
+    "badgeType": "in-stock",
+    "details": "22K BIS 916 Hallmarked Gold",
+    "price": "₹ 5,600",
+    "numericPrice": 5600,
+    "image": "/images/products/gold/nosepin/gold_nosepin_65-01.jpg",
+    "altText": "Subtle gold nose pin with a miniature flower and one tiny dangling bead",
+    "description": "A subtle gold nose pin with a miniature flower and one tiny dangling bead, designed for bridal muhurtham adornment.",
+    "weight": "1.10 grams",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "Length: 10 mm with dangling Mani pearl",
+    "craftsmanship": "Articulated Micro-Drop Goldsmithing",
+    "certification": "BIS Hallmark Certified",
+    "isBridal": true,
+    "isNewArrival": true,
+    "collection": "wedding",
+    "images": [
+      "/images/products/gold/nosepin/gold_nosepin_65-01.jpg",
+      "/images/products/gold/nosepin/gold_nosepin_65-02.jpg",
+      "/images/products/gold/nosepin/gold_nosepin_65-03.jpg"
     ]
   },
   {
@@ -1062,7 +1542,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold",
     "price": "₹ 46,000",
     "numericPrice": 46000,
-    "image": "/images/products/gold/gold_chains_81-01.jpg",
+    "image": "/images/products/gold/chains/gold_chains_81-01.jpg",
     "altText": "Fine cable-link gold chain with a delicate, classic profile",
     "description": "A fine cable-link gold chain with a delicate, classic profile, hand-woven with durable interlocked round wire links.",
     "weight": "10.0 grams",
@@ -1074,9 +1554,39 @@ export const products = [
     "isNewArrival": true,
     "collection": "gold",
     "images": [
-      "/images/products/gold/gold_chains_81-01.jpg",
-      "/images/products/gold/gold_chains_81-02.jpg",
-      "/images/products/gold/gold_chains_81-03.jpg"
+      "/images/products/gold/chains/gold_chains_81-01.jpg",
+      "/images/products/gold/chains/gold_chains_81-02.jpg",
+      "/images/products/gold/chains/gold_chains_81-03.jpg"
+    ]
+  },
+  {
+    "id": "gold-chain-82-rope-chain",
+    "name": "Diamond-Cut Twisted Rope 22K Gold Chain",
+    "category": "Gold",
+    "subCategory": "chains",
+    "subCategorySlug": "chains",
+    "subType": "chains",
+    "occasion": "casual-wear",
+    "badge": "Bestseller",
+    "badgeType": "in-stock",
+    "details": "22K BIS 916 Hallmarked Gold",
+    "price": "₹ 68,000",
+    "numericPrice": 68000,
+    "image": "/images/products/gold/chains/gold_chains_82-01.jpg",
+    "altText": "Gold rope chain with a twisted, reflective texture",
+    "description": "A gold rope chain with a twisted, reflective texture, diamond-cut facets shimmering brilliantly in every light angle.",
+    "weight": "15.0 grams",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "Length: 22 inches; Width: 3.5 mm",
+    "craftsmanship": "Diamond-Cut Helical Goldsmithing",
+    "certification": "BIS Hallmark Certified",
+    "isBridal": false,
+    "isNewArrival": false,
+    "collection": "gold",
+    "images": [
+      "/images/products/gold/chains/gold_chains_82-01.jpg",
+      "/images/products/gold/chains/gold_chains_82-02.jpg",
+      "/images/products/gold/chains/gold_chains_82-03.jpg"
     ]
   },
   {
@@ -1092,7 +1602,7 @@ export const products = [
     "details": "22K Solid Hallmarked Gold",
     "price": "₹ 82,000",
     "numericPrice": 82000,
-    "image": "/images/products/gold/gold_chains_83-01.jpg",
+    "image": "/images/products/gold/chains/gold_chains_83-01.jpg",
     "altText": "Curb-link gold chain with smooth, closely connected links",
     "description": "A curb-link gold chain with smooth, closely connected links, lying flat comfortably on the neckline with mirror finish.",
     "weight": "18.0 grams",
@@ -1104,9 +1614,39 @@ export const products = [
     "isNewArrival": true,
     "collection": "mens-accessories",
     "images": [
-      "/images/products/gold/gold_chains_83-01.jpg",
-      "/images/products/gold/gold_chains_83-02.jpg",
-      "/images/products/gold/gold_chains_83-03.jpg"
+      "/images/products/gold/chains/gold_chains_83-01.jpg",
+      "/images/products/gold/chains/gold_chains_83-02.jpg",
+      "/images/products/gold/chains/gold_chains_83-03.jpg"
+    ]
+  },
+  {
+    "id": "gold-chain-84-box-link",
+    "name": "Crisp Geometric Box Link 22K Gold Chain",
+    "category": "Gold",
+    "subCategory": "chains",
+    "subCategorySlug": "chains",
+    "subType": "chains",
+    "occasion": "casual-wear",
+    "badge": "In stock",
+    "badgeType": "in-stock",
+    "details": "22K BIS 916 Hallmarked Gold",
+    "price": "₹ 54,000",
+    "numericPrice": 54000,
+    "image": "/images/products/gold/chains/gold_chains_84-01.jpg",
+    "altText": "Fine box-link gold chain with crisp geometric links",
+    "description": "A fine box-link gold chain with crisp geometric links, providing superior tensile strength for heavy pendants.",
+    "weight": "11.8 grams",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "Length: 20 inches",
+    "craftsmanship": "Seamless Four-Sided Box Assembly",
+    "certification": "BIS Hallmark Certified",
+    "isBridal": false,
+    "isNewArrival": false,
+    "collection": "gold",
+    "images": [
+      "/images/products/gold/chains/gold_chains_84-01.jpg",
+      "/images/products/gold/chains/gold_chains_84-02.jpg",
+      "/images/products/gold/chains/gold_chains_84-03.jpg"
     ]
   },
   {
@@ -1122,7 +1662,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold",
     "price": "₹ 75,000",
     "numericPrice": 75000,
-    "image": "/images/products/gold/gold_chains_85-01.jpg",
+    "image": "/images/products/gold/chains/gold_chains_85-01.jpg",
     "altText": "Traditional gold chain with repeating small decorative links",
     "description": "A traditional gold chain with repeating small decorative links, crafted in Madurai artisan chain guild traditions.",
     "weight": "16.5 grams",
@@ -1134,9 +1674,9 @@ export const products = [
     "isNewArrival": true,
     "collection": "gold",
     "images": [
-      "/images/products/gold/gold_chains_85-01.jpg",
-      "/images/products/gold/gold_chains_85-02.jpg",
-      "/images/products/gold/gold_chains_85-03.jpg"
+      "/images/products/gold/chains/gold_chains_85-01.jpg",
+      "/images/products/gold/chains/gold_chains_85-02.jpg",
+      "/images/products/gold/chains/gold_chains_85-03.jpg"
     ]
   },
   {
@@ -1152,7 +1692,7 @@ export const products = [
     "details": "22K Gold with Natural Kemp Ruby",
     "price": "₹ 22,500",
     "numericPrice": 22500,
-    "image": "/images/products/gold/gold_pendants_86-01.jpg",
+    "image": "/images/products/gold/pendants/gold_pendants_86-01.jpg",
     "altText": "Small floral gold pendant with a ruby-red centre on a fine chain",
     "description": "A small floral gold pendant with a ruby-red centre on a fine chain, encircled by eight micro-granulated gold petals.",
     "weight": "4.5 grams",
@@ -1164,9 +1704,69 @@ export const products = [
     "isNewArrival": true,
     "collection": "gold",
     "images": [
-      "/images/products/gold/gold_pendants_86-01.jpg",
-      "/images/products/gold/gold_pendants_86-02.jpg",
-      "/images/products/gold/gold_pendants_86-03.jpg"
+      "/images/products/gold/pendants/gold_pendants_86-01.jpg",
+      "/images/products/gold/pendants/gold_pendants_86-02.jpg",
+      "/images/products/gold/pendants/gold_pendants_86-03.jpg"
+    ]
+  },
+  {
+    "id": "gold-pendant-87-temple-round-engraved",
+    "name": "Round Temple Engraved Heritage Gold Pendant",
+    "category": "Gold",
+    "subCategory": "pendants",
+    "subCategorySlug": "pendants",
+    "subType": "pendants",
+    "occasion": "traditional-wear",
+    "badge": "Auspicious Locket",
+    "badgeType": "in-stock",
+    "details": "22K BIS 916 Antique Gold",
+    "price": "₹ 34,000",
+    "numericPrice": 34000,
+    "image": "/images/products/gold/pendants/gold_pendants_87-01.jpg",
+    "altText": "Round temple-inspired gold pendant with a detailed engraved motif",
+    "description": "A round temple-inspired gold pendant with a detailed engraved motif of Goddess Lakshmi with elephant carvings.",
+    "weight": "7.2 grams",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "28 mm diameter",
+    "craftsmanship": "Thanjavur Temple Coin Goldsmithing",
+    "certification": "BIS Hallmark Certified",
+    "isBridal": true,
+    "isNewArrival": false,
+    "collection": "wedding",
+    "images": [
+      "/images/products/gold/pendants/gold_pendants_87-01.jpg",
+      "/images/products/gold/pendants/gold_pendants_87-02.jpg",
+      "/images/products/gold/pendants/gold_pendants_87-03.jpg"
+    ]
+  },
+  {
+    "id": "gold-pendant-88-peacock-filigree",
+    "name": "Mayil Peacock Filigree 22K Gold Pendant",
+    "category": "Gold",
+    "subCategory": "pendants",
+    "subCategorySlug": "pendants",
+    "subType": "pendants",
+    "occasion": "traditional-wear",
+    "badge": "Signature",
+    "badgeType": "in-stock",
+    "details": "22K Gold & Emerald Eye Accent",
+    "price": "₹ 29,800",
+    "numericPrice": 29800,
+    "image": "/images/products/gold/pendants/gold_pendants_88-01.jpg",
+    "altText": "Gold pendant with a delicate peacock silhouette and fine filigree",
+    "description": "A gold pendant with a delicate peacock silhouette and fine filigree, showcasing hand-twisted 22K wirework and pearl droplets.",
+    "weight": "6.1 grams",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "32 mm × 22 mm",
+    "craftsmanship": "Chettinad Peacock Filigree Art",
+    "certification": "BIS Hallmark Certified",
+    "isBridal": false,
+    "isNewArrival": true,
+    "collection": "gold",
+    "images": [
+      "/images/products/gold/pendants/gold_pendants_88-01.jpg",
+      "/images/products/gold/pendants/gold_pendants_88-02.jpg",
+      "/images/products/gold/pendants/gold_pendants_88-03.jpg"
     ]
   },
   {
@@ -1182,7 +1782,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold",
     "price": "₹ 24,000",
     "numericPrice": 24000,
-    "image": "/images/products/gold/gold_pendants_89-01.jpg",
+    "image": "/images/products/gold/pendants/gold_pendants_89-01.jpg",
     "altText": "Modern geometric gold pendant with a clean, polished surface",
     "description": "A modern geometric gold pendant with a clean, polished surface, featuring sharp rhombus contours and diamond crystal center.",
     "weight": "5.0 grams",
@@ -1194,9 +1794,9 @@ export const products = [
     "isNewArrival": false,
     "collection": "gold",
     "images": [
-      "/images/products/gold/gold_pendants_89-01.jpg",
-      "/images/products/gold/gold_pendants_89-02.jpg",
-      "/images/products/gold/gold_pendants_89-03.jpg"
+      "/images/products/gold/pendants/gold_pendants_89-01.jpg",
+      "/images/products/gold/pendants/gold_pendants_89-02.jpg",
+      "/images/products/gold/pendants/gold_pendants_89-03.jpg"
     ]
   },
   {
@@ -1212,7 +1812,7 @@ export const products = [
     "details": "22K Antique Hallmarked Gold",
     "price": "₹ 37,500",
     "numericPrice": 37500,
-    "image": "/images/products/gold/gold_pendants_90-01.jpg",
+    "image": "/images/products/gold/pendants/gold_pendants_90-01.jpg",
     "altText": "Traditional gold medallion pendant with a beaded border and engraved centre",
     "description": "A traditional gold medallion pendant with a beaded border and engraved centre, suspended with a lustrous South Sea pearl droplet.",
     "weight": "8.0 grams",
@@ -1224,177 +1824,9 @@ export const products = [
     "isNewArrival": true,
     "collection": "wedding",
     "images": [
-      "/images/products/gold/gold_pendants_90-01.jpg",
-      "/images/products/gold/gold_pendants_90-02.jpg",
-      "/images/products/gold/gold_pendants_90-03.jpg"
-    ]
-  },
-  {
-    "id": "gold-toe-ring-91-floral-filigree",
-    "name": "Floral Carved Filigree 22K Gold Toe Ring",
-    "category": "Gold",
-    "subCategory": "toe-rings",
-    "subCategorySlug": "toe-rings",
-    "subType": "toe-rings",
-    "occasion": "traditional-wear",
-    "badge": "Bestseller",
-    "badgeType": "in-stock",
-    "details": "22K BIS 916 Hallmarked Gold",
-    "price": "₹ 14,800",
-    "numericPrice": 14800,
-    "image": "/images/products/gold/gold_toe_rings_01.jpg",
-    "altText": "Floral carved filigree 22K gold toe ring with open adjustable band",
-    "description": "An open-ended adjustable 22K gold toe ring adorned with an exquisite 6-petal floral motif and delicate filigree scrollwork band.",
-    "weight": "2.4 grams",
-    "purity": "916 BIS Hallmarked 22 Karat Gold",
-    "dimensions": "Adjustable open-band comfort fit",
-    "craftsmanship": "Handcrafted Floral Repoussé & Filigree",
-    "certification": "BIS Hallmark Certified",
-    "isBridal": false,
-    "isNewArrival": true,
-    "collection": "gold",
-    "images": [
-      "/images/products/gold/gold_toe_rings_01.jpg"
-    ]
-  },
-  {
-    "id": "gold-toe-ring-92-classic-metti-pair",
-    "name": "Classic South Indian Gold Metti Toe Rings (Pair)",
-    "category": "Gold",
-    "subCategory": "toe-rings",
-    "subCategorySlug": "toe-rings",
-    "subType": "toe-rings",
-    "occasion": "traditional-wear",
-    "badge": "Auspicious",
-    "badgeType": "in-stock",
-    "details": "22K BIS 916 Hallmarked Gold (Pair)",
-    "price": "₹ 21,500",
-    "numericPrice": 21500,
-    "image": "/images/products/gold/gold_toe_rings_02.jpg",
-    "altText": "Traditional South Indian 22K solid gold metti toe rings pair",
-    "description": "Auspicious traditional South Indian bridal 22K gold metti pair featuring smooth polished convex bands with adjustable split shanks for daily comfort.",
-    "weight": "3.6 grams (pair)",
-    "purity": "916 BIS Hallmarked 22 Karat Gold",
-    "dimensions": "Adjustable split band (Pair)",
-    "craftsmanship": "Traditional Solid Gold Casting & High Polish",
-    "certification": "BIS Hallmark Certified",
-    "isBridal": true,
-    "isNewArrival": false,
-    "collection": "wedding",
-    "images": [
-      "/images/products/gold/gold_toe_rings_02.jpg"
-    ]
-  },
-  {
-    "id": "gold-toe-ring-96-minimalist-band",
-    "name": "Sleek Minimalist 22K Gold Adjustable Toe Ring",
-    "category": "Gold",
-    "subCategory": "toe-rings",
-    "subCategorySlug": "toe-rings",
-    "subType": "toe-rings",
-    "occasion": "casual-wear",
-    "badge": "Modern Classic",
-    "badgeType": "in-stock",
-    "details": "22K BIS 916 Hallmarked Gold",
-    "price": "₹ 12,200",
-    "numericPrice": 12200,
-    "image": "/images/products/gold/gold_toe_rings_03.jpg",
-    "altText": "Sleek minimalist 22K yellow gold adjustable toe ring band with high polish finish",
-    "description": "A timeless minimalist 22K gold toe ring featuring a smooth domed band with a mirror-finish polish and comfortable open-cuff silhouette for everyday elegance.",
-    "weight": "1.85 grams",
-    "purity": "916 BIS Hallmarked 22 Karat Gold",
-    "dimensions": "Adjustable open cuff comfort fit",
-    "craftsmanship": "High-Precision Seamless Goldsmithing & Mirror Buffing",
-    "certification": "BIS Hallmark Certified",
-    "isBridal": false,
-    "isNewArrival": true,
-    "collection": "gold",
-    "images": [
-      "/images/products/gold/gold_toe_rings_03.jpg"
-    ]
-  },
-  {
-    "id": "gold-anklet-93-heritage-beaded-mani",
-    "name": "Heritage Beaded Mani 22K Gold Anklet",
-    "category": "Gold",
-    "subCategory": "anklets",
-    "subCategorySlug": "anklets",
-    "subType": "anklets",
-    "occasion": "traditional-wear",
-    "badge": "Bestseller",
-    "badgeType": "in-stock",
-    "details": "22K BIS 916 Hallmarked Gold",
-    "price": "₹ 68,500",
-    "numericPrice": 68500,
-    "image": "/images/products/gold/gold_anklets_01.jpg",
-    "altText": "Heritage beaded mani 22K gold kolusu payal with dangling bead drops",
-    "description": "Exquisite South Indian 22K gold kolusu payal featuring triple rows of shimmering gold mani beads and dangling droplet charms with a secure S-hook clasp.",
-    "weight": "11.2 grams",
-    "purity": "916 BIS Hallmarked 22 Karat Gold",
-    "dimensions": "10.2 inches with adjustable loop",
-    "craftsmanship": "South Indian Mani Weave & Hand-Chased Beads",
-    "certification": "BIS Hallmark Certified",
-    "isBridal": false,
-    "isNewArrival": true,
-    "collection": "gold",
-    "images": [
-      "/images/products/gold/gold_anklets_01.jpg"
-    ]
-  },
-  {
-    "id": "gold-anklet-94-delicate-bell-charm-pair",
-    "name": "Delicate Bell Charm 22K Gold Anklets (Pair)",
-    "category": "Gold",
-    "subCategory": "anklets",
-    "subCategorySlug": "anklets",
-    "subType": "anklets",
-    "occasion": "traditional-wear",
-    "badge": "New Arrival",
-    "badgeType": "in-stock",
-    "details": "22K BIS 916 Hallmarked Gold (Pair)",
-    "price": "₹ 82,000",
-    "numericPrice": 82000,
-    "image": "/images/products/gold/gold_anklets_02.jpg",
-    "altText": "Delicate bell charm 22K gold anklets payal pair on silk",
-    "description": "Graceful pair of 22K gold payal anklets with box chain links and rhythmic hanging mini bell ghungroo drops that chime softly with every step.",
-    "weight": "13.5 grams (pair)",
-    "purity": "916 BIS Hallmarked 22 Karat Gold",
-    "dimensions": "10.5 inches length with secure hook",
-    "craftsmanship": "Artisan Box Link Weave with Ghungroo Charms",
-    "certification": "BIS Hallmark Certified",
-    "isBridal": true,
-    "isNewArrival": true,
-    "collection": "gold",
-    "images": [
-      "/images/products/gold/gold_anklets_02.jpg"
-    ]
-  },
-  {
-    "id": "gold-anklet-95-royal-antique-ghungroo-pair",
-    "name": "Royal Antique Ghungroo Bridal Gold Payal (Pair)",
-    "category": "Gold",
-    "subCategory": "anklets",
-    "subCategorySlug": "anklets",
-    "subType": "anklets",
-    "occasion": "traditional-wear",
-    "badge": "Bridal Exclusive",
-    "badgeType": "in-stock",
-    "details": "22K BIS 916 Antique Gold (Pair)",
-    "price": "₹ 1,12,000",
-    "numericPrice": 112000,
-    "image": "/images/products/gold/gold_anklets_03.jpg",
-    "altText": "Royal antique ghungroo bridal 22K gold payal pair on cream silk",
-    "description": "Grand bridal 22K antique gold payal pair adorned with intricate floral filigree lattice, stone-studded border work, and clusters of chiming gold ghungroos.",
-    "weight": "18.8 grams (pair)",
-    "purity": "916 BIS Hallmarked 22 Karat Gold",
-    "dimensions": "10.5 inches bridal cuff length",
-    "craftsmanship": "Chettinad Temple Bridal Payal Art",
-    "certification": "BIS Hallmark Certified",
-    "isBridal": true,
-    "isNewArrival": true,
-    "collection": "wedding",
-    "images": [
-      "/images/products/gold/gold_anklets_03.jpg"
+      "/images/products/gold/pendants/gold_pendants_90-01.jpg",
+      "/images/products/gold/pendants/gold_pendants_90-02.jpg",
+      "/images/products/gold/pendants/gold_pendants_90-03.jpg"
     ]
   },
   {
@@ -1498,9 +1930,9 @@ export const products = [
     "details": "92.5 BIS Hallmarked Silver",
     "price": "₹ 1,850",
     "numericPrice": 1850,
-    "image": "/images/products/silver/silver-studs-floral-01.jpg",
+    "image": "/images/products/silver/earrings/silver-studs-floral-01.jpg",
     "images": [
-      "/images/products/silver/silver-studs-floral-01.jpg"
+      "/images/products/silver/earrings/silver-studs-floral-01.jpg"
     ],
     "altText": "Realistic floral 925 Sterling Silver stud earrings with sparkling cubic zirconia center and micro-pave petals",
     "description": "Handcrafted in 92.5 sterling silver with sparkling cubic zirconia center and micro-pave petals, featuring rhodium anti-tarnish plating and secure screw backs.",
@@ -1527,9 +1959,9 @@ export const products = [
     "details": "92.5 Antique Oxidized Silver",
     "price": "₹ 2,100",
     "numericPrice": 2100,
-    "image": "/images/products/silver/silver-studs-peacock-02.jpg",
+    "image": "/images/products/silver/earrings/silver-studs-peacock-02.jpg",
     "images": [
-      "/images/products/silver/silver-studs-peacock-02.jpg"
+      "/images/products/silver/earrings/silver-studs-peacock-02.jpg"
     ],
     "altText": "Antique oxidized 925 silver Mayil peacock stud earrings with emerald green stone accents",
     "description": "Traditional Chettinad Mayil peacock motif in oxidized 92.5 silver with emerald green stone accents and intricate repoussé feather engraving.",
@@ -1556,9 +1988,9 @@ export const products = [
     "details": "92.5 High-Polish Silver",
     "price": "₹ 1,450",
     "numericPrice": 1450,
-    "image": "/images/products/silver/silver-studs-geometric-03.jpg",
+    "image": "/images/products/silver/earrings/silver-studs-geometric-03.jpg",
     "images": [
-      "/images/products/silver/silver-studs-geometric-03.jpg"
+      "/images/products/silver/earrings/silver-studs-geometric-03.jpg"
     ],
     "altText": "Minimal geometric hexagon faceted 925 sterling silver daily wear stud earrings",
     "description": "Sleek faceted hexagon studs in 92.5 sterling silver with a mirror-finish rhodium coat, designed for modern everyday office elegance.",
@@ -1573,6 +2005,174 @@ export const products = [
     "designType": "stud-geometric"
   },
   {
+    "id": "gold-toe-ring-91-floral-filigree",
+    "name": "Floral Carved Filigree 22K Gold Toe Ring",
+    "category": "Gold",
+    "subCategory": "toe-rings",
+    "subCategorySlug": "toe-rings",
+    "subType": "toe-rings",
+    "occasion": "traditional-wear",
+    "badge": "Bestseller",
+    "badgeType": "in-stock",
+    "details": "22K BIS 916 Hallmarked Gold",
+    "price": "₹ 14,800",
+    "numericPrice": 14800,
+    "image": "/images/products/gold/rings/gold_toe_rings_01.jpg",
+    "altText": "Floral carved filigree 22K gold toe ring with open adjustable band",
+    "description": "An open-ended adjustable 22K gold toe ring adorned with an exquisite 6-petal floral motif and delicate filigree scrollwork band.",
+    "weight": "2.4 grams",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "Adjustable open-band comfort fit",
+    "craftsmanship": "Handcrafted Floral Repoussé & Filigree",
+    "certification": "BIS Hallmark Certified",
+    "isBridal": false,
+    "isNewArrival": true,
+    "collection": "gold",
+    "images": [
+      "/images/products/gold/rings/gold_toe_rings_01.jpg"
+    ]
+  },
+  {
+    "id": "gold-toe-ring-92-classic-metti-pair",
+    "name": "Classic South Indian Gold Metti Toe Rings (Pair)",
+    "category": "Gold",
+    "subCategory": "toe-rings",
+    "subCategorySlug": "toe-rings",
+    "subType": "toe-rings",
+    "occasion": "traditional-wear",
+    "badge": "Auspicious",
+    "badgeType": "in-stock",
+    "details": "22K BIS 916 Hallmarked Gold (Pair)",
+    "price": "₹ 21,500",
+    "numericPrice": 21500,
+    "image": "/images/products/gold/rings/gold_toe_rings_02.jpg",
+    "altText": "Traditional South Indian 22K solid gold metti toe rings pair",
+    "description": "Auspicious traditional South Indian bridal 22K gold metti pair featuring smooth polished convex bands with adjustable split shanks for daily comfort.",
+    "weight": "3.6 grams (pair)",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "Adjustable split band (Pair)",
+    "craftsmanship": "Traditional Solid Gold Casting & High Polish",
+    "certification": "BIS Hallmark Certified",
+    "isBridal": true,
+    "isNewArrival": false,
+    "collection": "wedding",
+    "images": [
+      "/images/products/gold/rings/gold_toe_rings_02.jpg"
+    ]
+  },
+  {
+    "id": "gold-toe-ring-96-minimalist-band",
+    "name": "Sleek Minimalist 22K Gold Adjustable Toe Ring",
+    "category": "Gold",
+    "subCategory": "toe-rings",
+    "subCategorySlug": "toe-rings",
+    "subType": "toe-rings",
+    "occasion": "casual-wear",
+    "badge": "Modern Classic",
+    "badgeType": "in-stock",
+    "details": "22K BIS 916 Hallmarked Gold",
+    "price": "₹ 12,200",
+    "numericPrice": 12200,
+    "image": "/images/products/gold/rings/gold_toe_rings_03.jpg",
+    "altText": "Sleek minimalist 22K yellow gold adjustable toe ring band with high polish finish",
+    "description": "A timeless minimalist 22K gold toe ring featuring a smooth domed band with a mirror-finish polish and comfortable open-cuff silhouette for everyday elegance.",
+    "weight": "1.85 grams",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "Adjustable open cuff comfort fit",
+    "craftsmanship": "High-Precision Seamless Goldsmithing & Mirror Buffing",
+    "certification": "BIS Hallmark Certified",
+    "isBridal": false,
+    "isNewArrival": true,
+    "collection": "gold",
+    "images": [
+      "/images/products/gold/rings/gold_toe_rings_03.jpg"
+    ]
+  },
+  {
+    "id": "gold-anklet-93-heritage-beaded-mani",
+    "name": "Heritage Beaded Mani 22K Gold Anklet",
+    "category": "Gold",
+    "subCategory": "anklets",
+    "subCategorySlug": "anklets",
+    "subType": "anklets",
+    "occasion": "traditional-wear",
+    "badge": "Bestseller",
+    "badgeType": "in-stock",
+    "details": "22K BIS 916 Hallmarked Gold",
+    "price": "₹ 68,500",
+    "numericPrice": 68500,
+    "image": "/images/products/gold/anklets/gold_anklets_01.jpg",
+    "altText": "Heritage beaded mani 22K gold kolusu payal with dangling bead drops",
+    "description": "Exquisite South Indian 22K gold kolusu payal featuring triple rows of shimmering gold mani beads and dangling droplet charms with a secure S-hook clasp.",
+    "weight": "11.2 grams",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "10.2 inches with adjustable loop",
+    "craftsmanship": "South Indian Mani Weave & Hand-Chased Beads",
+    "certification": "BIS Hallmark Certified",
+    "isBridal": false,
+    "isNewArrival": true,
+    "collection": "gold",
+    "images": [
+      "/images/products/gold/anklets/gold_anklets_01.jpg"
+    ]
+  },
+  {
+    "id": "gold-anklet-94-delicate-bell-charm-pair",
+    "name": "Delicate Bell Charm 22K Gold Anklets (Pair)",
+    "category": "Gold",
+    "subCategory": "anklets",
+    "subCategorySlug": "anklets",
+    "subType": "anklets",
+    "occasion": "traditional-wear",
+    "badge": "New Arrival",
+    "badgeType": "in-stock",
+    "details": "22K BIS 916 Hallmarked Gold (Pair)",
+    "price": "₹ 82,000",
+    "numericPrice": 82000,
+    "image": "/images/products/gold/anklets/gold_anklets_02.jpg",
+    "altText": "Delicate bell charm 22K gold anklets payal pair on silk",
+    "description": "Graceful pair of 22K gold payal anklets with box chain links and rhythmic hanging mini bell ghungroo drops that chime softly with every step.",
+    "weight": "13.5 grams (pair)",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "10.5 inches length with secure hook",
+    "craftsmanship": "Artisan Box Link Weave with Ghungroo Charms",
+    "certification": "BIS Hallmark Certified",
+    "isBridal": true,
+    "isNewArrival": true,
+    "collection": "gold",
+    "images": [
+      "/images/products/gold/anklets/gold_anklets_02.jpg"
+    ]
+  },
+  {
+    "id": "gold-anklet-95-royal-antique-ghungroo-pair",
+    "name": "Royal Antique Ghungroo Bridal Gold Payal (Pair)",
+    "category": "Gold",
+    "subCategory": "anklets",
+    "subCategorySlug": "anklets",
+    "subType": "anklets",
+    "occasion": "traditional-wear",
+    "badge": "Bridal Exclusive",
+    "badgeType": "in-stock",
+    "details": "22K BIS 916 Antique Gold (Pair)",
+    "price": "₹ 1,12,000",
+    "numericPrice": 112000,
+    "image": "/images/products/gold/anklets/gold_anklets_03.jpg",
+    "altText": "Royal antique ghungroo bridal 22K gold payal pair on cream silk",
+    "description": "Grand bridal 22K antique gold payal pair adorned with intricate floral filigree lattice, stone-studded border work, and clusters of chiming gold ghungroos.",
+    "weight": "18.8 grams (pair)",
+    "purity": "916 BIS Hallmarked 22 Karat Gold",
+    "dimensions": "10.5 inches bridal cuff length",
+    "craftsmanship": "Chettinad Temple Bridal Payal Art",
+    "certification": "BIS Hallmark Certified",
+    "isBridal": true,
+    "isNewArrival": true,
+    "collection": "wedding",
+    "images": [
+      "/images/products/gold/anklets/gold_anklets_03.jpg"
+    ]
+  },
+  {
     "id": "silver-hangings-filigree-01",
     "name": "Chandelier Filigree 925 Silver Hangings",
     "category": "Silver",
@@ -1585,9 +2185,9 @@ export const products = [
     "details": "92.5 Sterling Silver",
     "price": "₹ 3,400",
     "numericPrice": 3400,
-    "image": "/images/products/silver/silver-hangings-filigree-01.jpg",
+    "image": "/images/products/silver/earrings/silver-hangings-filigree-01.jpg",
     "images": [
-      "/images/products/silver/silver-hangings-filigree-01.jpg"
+      "/images/products/silver/earrings/silver-hangings-filigree-01.jpg"
     ],
     "altText": "Chandelier filigree 925 sterling silver hanging earrings with cascading silver beads",
     "description": "Graceful multi-tier filigree chandelier earrings in pure 92.5 silver with shimmering open-lattice lace and hanging silver ball droplets.",
@@ -1614,9 +2214,9 @@ export const products = [
     "details": "92.5 Antique Silver & Synthetic Ruby",
     "price": "₹ 3,850",
     "numericPrice": 3850,
-    "image": "/images/products/silver/silver-hangings-ruby-02.jpg",
+    "image": "/images/products/silver/earrings/silver-hangings-ruby-02.jpg",
     "images": [
-      "/images/products/silver/silver-hangings-ruby-02.jpg"
+      "/images/products/silver/earrings/silver-hangings-ruby-02.jpg"
     ],
     "altText": "Antique oxidized 925 silver hanging earrings adorned with ruby-red stones and floral motifs",
     "description": "Ornate temple-inspired hanging earrings featuring deep ruby-red faceted stones framed by oxidized 925 silver scrollwork and seed pearls.",
@@ -1643,9 +2243,9 @@ export const products = [
     "details": "92.5 Pure Sterling Silver",
     "price": "₹ 2,950",
     "numericPrice": 2950,
-    "image": "/images/products/silver/silver-hangings-beads-03.jpg",
+    "image": "/images/products/silver/earrings/silver-hangings-beads-03.jpg",
     "images": [
-      "/images/products/silver/silver-hangings-beads-03.jpg"
+      "/images/products/silver/earrings/silver-hangings-beads-03.jpg"
     ],
     "altText": "Tribal multi-chain tassel 925 sterling silver dangling hanging earrings",
     "description": "Dramatic multi-strand silver curb chain tassels suspended from an embossed crescent medallion in pure 92.5 sterling silver.",
@@ -1672,9 +2272,9 @@ export const products = [
     "details": "92.5 Sterling Silver & Emerald Cabochon",
     "price": "₹ 2,600",
     "numericPrice": 2600,
-    "image": "/images/products/silver/silver-drops-teardrop-01.jpg",
+    "image": "/images/products/silver/earrings/silver-drops-teardrop-01.jpg",
     "images": [
-      "/images/products/silver/silver-drops-teardrop-01.jpg"
+      "/images/products/silver/earrings/silver-drops-teardrop-01.jpg"
     ],
     "altText": "Heirloom teardrop emerald cabochon 925 sterling silver drop earrings with granulated border",
     "description": "A polished pear-shaped green emerald cabochon framed by delicate 92.5 sterling silver granulation beads and a lever-back closure.",
@@ -1701,9 +2301,9 @@ export const products = [
     "details": "92.5 Silver & Cultured Pearl",
     "price": "₹ 2,900",
     "numericPrice": 2900,
-    "image": "/images/products/silver/silver-drops-pearl-02.jpg",
+    "image": "/images/products/silver/earrings/silver-drops-pearl-02.jpg",
     "images": [
-      "/images/products/silver/silver-drops-pearl-02.jpg"
+      "/images/products/silver/earrings/silver-drops-pearl-02.jpg"
     ],
     "altText": "Lustrous white freshwater pearl 925 sterling silver drop earrings with floral cap",
     "description": "Lustrous teardrop pearls suspended from an antique oxidized silver floral stud top in certified 92.5 sterling silver.",
@@ -1730,9 +2330,9 @@ export const products = [
     "details": "92.5 Rhodium-Plated Silver",
     "price": "₹ 1,950",
     "numericPrice": 1950,
-    "image": "/images/products/silver/silver-drops-leaf-03.jpg",
+    "image": "/images/products/silver/earrings/silver-drops-leaf-03.jpg",
     "images": [
-      "/images/products/silver/silver-drops-leaf-03.jpg"
+      "/images/products/silver/earrings/silver-drops-leaf-03.jpg"
     ],
     "altText": "Graceful curved willow leaf 925 sterling silver drop earrings with satin and mirror finish",
     "description": "Sculpted twin willow leaves with contrasting satin-matte and mirror-polished silver finishes for effortless daily styling.",
@@ -1759,9 +2359,9 @@ export const products = [
     "details": "92.5 Sterling Silver",
     "price": "₹ 4,500",
     "numericPrice": 4500,
-    "image": "/images/products/silver/silver-jhumkas-temple-01.jpg",
+    "image": "/images/products/silver/earrings/silver-jhumkas-temple-01.jpg",
     "images": [
-      "/images/products/silver/silver-jhumkas-temple-01.jpg"
+      "/images/products/silver/earrings/silver-jhumkas-temple-01.jpg"
     ],
     "altText": "Grand South Indian temple bell 925 sterling silver jhumkas with hanging ghungroo bells",
     "description": "Traditional South Indian multi-tier temple dome jhumkas hand-crafted in 92.5 silver with delicate floral stamping and chiming silver ghungroos.",
@@ -1788,9 +2388,9 @@ export const products = [
     "details": "92.5 Oxidized Silver",
     "price": "₹ 4,800",
     "numericPrice": 4800,
-    "image": "/images/products/silver/silver-jhumkas-peacock-02.jpg",
+    "image": "/images/products/silver/earrings/silver-jhumkas-peacock-02.jpg",
     "images": [
-      "/images/products/silver/silver-jhumkas-peacock-02.jpg"
+      "/images/products/silver/earrings/silver-jhumkas-peacock-02.jpg"
     ],
     "altText": "Chettinad peacock stud bell jhumka earrings in antique oxidized 925 silver with ruby accents",
     "description": "Royal Mayil peacock top stud with an antique oxidized bell dome fringed with dangling silver beads and synthetic ruby center stones.",
@@ -1817,9 +2417,9 @@ export const products = [
     "details": "92.5 Lightweight Silver",
     "price": "₹ 2,400",
     "numericPrice": 2400,
-    "image": "/images/products/silver/silver-jhumkas-oxidized-03.jpg",
+    "image": "/images/products/silver/earrings/silver-jhumkas-oxidized-03.jpg",
     "images": [
-      "/images/products/silver/silver-jhumkas-oxidized-03.jpg"
+      "/images/products/silver/earrings/silver-jhumkas-oxidized-03.jpg"
     ],
     "altText": "Lightweight petite bell jhumkas in oxidized 925 sterling silver for daily festive wear",
     "description": "Understated lightweight 92.5 silver mini bell jhumkas designed for comfortable all-day wear with ethnic kurtis and sarees.",
@@ -1846,9 +2446,9 @@ export const products = [
     "details": "92.5 Sterling Silver",
     "price": "₹ 1,750",
     "numericPrice": 1750,
-    "image": "/images/products/silver/silver-hoops-twisted-01.jpg",
+    "image": "/images/products/silver/earrings/silver-hoops-twisted-01.jpg",
     "images": [
-      "/images/products/silver/silver-hoops-twisted-01.jpg"
+      "/images/products/silver/earrings/silver-hoops-twisted-01.jpg"
     ],
     "altText": "Classic hollow twisted rope 925 sterling silver circular hoop bali earrings",
     "description": "Classic circular hollow balis crafted from twisted 92.5 silver wires with a high-polish mirror sheen and secure latch clasp.",
@@ -1875,9 +2475,9 @@ export const products = [
     "details": "92.5 Antique Silver",
     "price": "₹ 2,650",
     "numericPrice": 2650,
-    "image": "/images/products/silver/silver-hoops-filigree-02.jpg",
+    "image": "/images/products/silver/earrings/silver-hoops-filigree-02.jpg",
     "images": [
-      "/images/products/silver/silver-hoops-filigree-02.jpg"
+      "/images/products/silver/earrings/silver-hoops-filigree-02.jpg"
     ],
     "altText": "Traditional wide Chettinad filigree 925 silver hoop balis with floral lattice pattern",
     "description": "Broad traditional South Indian ear balis featuring intricate filigree scrollwork and antique oxidized recessed shading.",
@@ -1904,9 +2504,9 @@ export const products = [
     "details": "92.5 Rhodium Silver & AAA CZ",
     "price": "₹ 2,200",
     "numericPrice": 2200,
-    "image": "/images/products/silver/silver-hoops-cz-03.jpg",
+    "image": "/images/products/silver/earrings/silver-hoops-cz-03.jpg",
     "images": [
-      "/images/products/silver/silver-hoops-cz-03.jpg"
+      "/images/products/silver/earrings/silver-hoops-cz-03.jpg"
     ],
     "altText": "Sparkling channel-set AAA cubic zirconia stones on rhodium plated 925 silver huggie earrings",
     "description": "Channel-set brilliant cubic zirconia stones glistening along the front curve of a rhodium-plated 92.5 silver clicker huggie hoop.",
@@ -1933,9 +2533,9 @@ export const products = [
     "details": "92.5 Silver & 1.5 Carat AAA CZ",
     "price": "₹ 2,250",
     "numericPrice": 2250,
-    "image": "/images/products/silver/silver-rings-solitaire-01.jpg",
+    "image": "/images/products/silver/rings/silver-rings-solitaire-01.jpg",
     "images": [
-      "/images/products/silver/silver-rings-solitaire-01.jpg"
+      "/images/products/silver/rings/silver-rings-solitaire-01.jpg"
     ],
     "altText": "Classic 6-prong solitaire 925 sterling silver proposal engagement ring with brilliant round stone",
     "description": "A brilliant 1.5 carat equivalent round-cut cubic zirconia solitaire securely held in a 6-prong silver crown with a tapered comfort band.",
@@ -1962,9 +2562,9 @@ export const products = [
     "details": "92.5 Rhodium Sterling Silver",
     "price": "₹ 1,950",
     "numericPrice": 1950,
-    "image": "/images/products/silver/silver-rings-eternity-02.jpg",
+    "image": "/images/products/silver/rings/silver-rings-eternity-02.jpg",
     "images": [
-      "/images/products/silver/silver-rings-eternity-02.jpg"
+      "/images/products/silver/rings/silver-rings-eternity-02.jpg"
     ],
     "altText": "Full eternity band in 925 sterling silver with sparkling pave set stones all around",
     "description": "A continuous circle of micro-pavé set sparkling stones set in high-polish anti-tarnish rhodium-finished 92.5 sterling silver.",
@@ -1991,9 +2591,9 @@ export const products = [
     "details": "92.5 Antique Filigree Silver",
     "price": "₹ 2,600",
     "numericPrice": 2600,
-    "image": "/images/products/silver/silver-rings-filigree-03.jpg",
+    "image": "/images/products/silver/rings/silver-rings-filigree-03.jpg",
     "images": [
-      "/images/products/silver/silver-rings-filigree-03.jpg"
+      "/images/products/silver/rings/silver-rings-filigree-03.jpg"
     ],
     "altText": "Vintage antique floral filigree 925 silver ring with ruby center stone and milgrain border",
     "description": "An heirloom proposal ring inspired by Chettinad royal jewels with a radiant ruby center surrounded by hand-carved floral filigree.",
@@ -2011,8 +2611,8 @@ export const products = [
     "id": "silver-rings-metti-01",
     "name": "Auspicious Traditional Silver Metti Toe Rings",
     "category": "Silver",
-    "subCategory": "toe-rings",
-    "subCategorySlug": "toe-rings",
+    "subCategory": "rings",
+    "subCategorySlug": "rings",
     "subType": "casual-rings",
     "occasion": "traditional-wear",
     "badge": "Auspicious",
@@ -2020,9 +2620,9 @@ export const products = [
     "details": "92.5 Pure Silver (Pair)",
     "price": "₹ 1,350",
     "numericPrice": 1350,
-    "image": "/images/products/silver/silver-rings-metti-01.jpg",
+    "image": "/images/products/silver/rings/silver-rings-metti-01.jpg",
     "images": [
-      "/images/products/silver/silver-rings-metti-01.jpg"
+      "/images/products/silver/rings/silver-rings-metti-01.jpg"
     ],
     "altText": "Traditional South Indian bridal 925 pure silver metti toe rings pair with double band swirl",
     "description": "Sacred bridal toe rings (pair) crafted in pure 92.5 silver with smooth hypoallergenic edges, traditional spiral bands, and auspicious engravings.",
@@ -2049,9 +2649,9 @@ export const products = [
     "details": "92.5 Sterling Silver",
     "price": "₹ 1,150",
     "numericPrice": 1150,
-    "image": "/images/products/silver/silver-rings-leaf-02.jpg",
+    "image": "/images/products/silver/rings/silver-rings-leaf-02.jpg",
     "images": [
-      "/images/products/silver/silver-rings-leaf-02.jpg"
+      "/images/products/silver/rings/silver-rings-leaf-02.jpg"
     ],
     "altText": "Minimalist open adjustable feather leaf wraparound ring in 925 sterling silver",
     "description": "A delicate wraparound silver feather ring with detailed quill textures and an adjustable comfort shank for everyday styling.",
@@ -2078,9 +2678,9 @@ export const products = [
     "details": "92.5 Antique Oxidized Silver",
     "price": "₹ 1,600",
     "numericPrice": 1600,
-    "image": "/images/products/silver/silver-rings-oxidized-03.jpg",
+    "image": "/images/products/silver/rings/silver-rings-oxidized-03.jpg",
     "images": [
-      "/images/products/silver/silver-rings-oxidized-03.jpg"
+      "/images/products/silver/rings/silver-rings-oxidized-03.jpg"
     ],
     "altText": "Tribal square geometric signet ring in oxidized 925 sterling silver with black patina",
     "description": "Bold square signet ring featuring antique tribal geometric stamping and brushed vintage silver finish.",
@@ -2107,9 +2707,9 @@ export const products = [
     "details": "92.5 Sterling Silver Solid Kada",
     "price": "₹ 8,500",
     "numericPrice": 8500,
-    "image": "/images/products/silver/silver-cuffs-peacock-01.jpg",
+    "image": "/images/products/silver/bangles/silver-cuffs-peacock-01.jpg",
     "images": [
-      "/images/products/silver/silver-cuffs-peacock-01.jpg"
+      "/images/products/silver/bangles/silver-cuffs-peacock-01.jpg"
     ],
     "altText": "Heavy 925 sterling silver peacock embossed temple kada cuff with screw lock mechanism",
     "description": "Solid 92.5 sterling silver kada with twin peacock repoussé heads, antique oxidized background, and traditional side screw fastening.",
@@ -2136,9 +2736,9 @@ export const products = [
     "details": "92.5 Oxidized Silver",
     "price": "₹ 6,200",
     "numericPrice": 6200,
-    "image": "/images/products/silver/silver-cuffs-tribal-02.jpg",
+    "image": "/images/products/silver/bangles/silver-cuffs-tribal-02.jpg",
     "images": [
-      "/images/products/silver/silver-cuffs-tribal-02.jpg"
+      "/images/products/silver/bangles/silver-cuffs-tribal-02.jpg"
     ],
     "altText": "Hand-hammered open cuff bracelet in 925 sterling silver with coiled ball terminals",
     "description": "Hand-hammered open cuff wristlet in 92.5 silver featuring tribal chevron engravings and twin spherical ball terminals.",
@@ -2165,9 +2765,9 @@ export const products = [
     "details": "92.5 Rhodium Mirror Polish",
     "price": "₹ 5,400",
     "numericPrice": 5400,
-    "image": "/images/products/silver/silver-cuffs-sleek-03.jpg",
+    "image": "/images/products/silver/bangles/silver-cuffs-sleek-03.jpg",
     "images": [
-      "/images/products/silver/silver-cuffs-sleek-03.jpg"
+      "/images/products/silver/bangles/silver-cuffs-sleek-03.jpg"
     ],
     "altText": "Minimalist wide mirror-polished 925 sterling silver wrist cuff bracelet",
     "description": "Sleek mirror-polished 15mm broad cuff bracelet in 92.5 silver with smooth curved edges and anti-tarnish rhodium protection.",
@@ -2194,9 +2794,9 @@ export const products = [
     "details": "92.5 Pure Silver Payal (Pair)",
     "price": "₹ 4,950",
     "numericPrice": 4950,
-    "image": "/images/products/silver/silver-anklets-payal-01.jpg",
+    "image": "/images/products/silver/anklets/silver-anklets-payal-01.jpg",
     "images": [
-      "/images/products/silver/silver-anklets-payal-01.jpg"
+      "/images/products/silver/anklets/silver-anklets-payal-01.jpg"
     ],
     "altText": "Traditional Salem handcrafted 925 pure silver bridal payal anklet with musical ghungroo bells",
     "description": "Authentic Salem handcrafted silver payal pair adorned with musical chiming ghungroo bells, woven chain links, and S-hook clasp.",
@@ -2223,9 +2823,9 @@ export const products = [
     "details": "92.5 Solid Sterling Silver",
     "price": "₹ 3,600",
     "numericPrice": 3600,
-    "image": "/images/products/silver/silver-bracelets-link-02.jpg",
+    "image": "/images/products/silver/bangles/silver-bracelets-link-02.jpg",
     "images": [
-      "/images/products/silver/silver-bracelets-link-02.jpg"
+      "/images/products/silver/bangles/silver-bracelets-link-02.jpg"
     ],
     "altText": "Heavy diamond-cut curb link 925 sterling silver wrist bracelet with lobster claw clasp",
     "description": "Classic 7mm diamond-cut curb chain bracelet in solid 92.5 sterling silver with a heavy-duty box clasp and high shine.",
@@ -2252,9 +2852,9 @@ export const products = [
     "details": "92.5 Silver & Glass Enamel",
     "price": "₹ 1,850",
     "numericPrice": 1850,
-    "image": "/images/products/silver/silver-bracelets-charm-03.jpg",
+    "image": "/images/products/silver/bangles/silver-bracelets-charm-03.jpg",
     "images": [
-      "/images/products/silver/silver-bracelets-charm-03.jpg"
+      "/images/products/silver/bangles/silver-bracelets-charm-03.jpg"
     ],
     "altText": "Dainty protective blue evil eye and silver bell charm wristlet in 925 sterling silver",
     "description": "Auspicious protective blue enamel evil eye charm paired with tiny silver bells on a flexible cable chain with an adjustable extension.",
@@ -2281,9 +2881,9 @@ export const products = [
     "details": "92.5 Pure Silver Set",
     "price": "₹ 7,800",
     "numericPrice": 7800,
-    "image": "/images/products/silver/silver-bangles-valayal-01.jpg",
+    "image": "/images/products/silver/bangles/silver-bangles-valayal-01.jpg",
     "images": [
-      "/images/products/silver/silver-bangles-valayal-01.jpg"
+      "/images/products/silver/bangles/silver-bangles-valayal-01.jpg"
     ],
     "altText": "Set of 4 diamond-faceted traditional South Indian 925 pure silver valayal bangles",
     "description": "Set of 4 traditional South Indian valayal bangles in 92.5 silver with diamond-cut faceted borders and chime resonance.",
@@ -2310,9 +2910,9 @@ export const products = [
     "details": "92.5 Antique Silver",
     "price": "₹ 5,200",
     "numericPrice": 5200,
-    "image": "/images/products/silver/silver-bangles-hinged-02.jpg",
+    "image": "/images/products/silver/bangles/silver-bangles-hinged-02.jpg",
     "images": [
-      "/images/products/silver/silver-bangles-hinged-02.jpg"
+      "/images/products/silver/bangles/silver-bangles-hinged-02.jpg"
     ],
     "altText": "Hinged antique floral filigree 925 silver bangle bracelet with secure screw lock",
     "description": "Comfortable oval hinged bangle bracelet in 92.5 silver featuring antique floral embossing and a concealed screw lock pin.",
@@ -2339,9 +2939,9 @@ export const products = [
     "details": "92.5 Silver & Lakshmi Kasu",
     "price": "₹ 5,900",
     "numericPrice": 5900,
-    "image": "/images/products/silver/silver-bangles-kasu-03.jpg",
+    "image": "/images/products/silver/bangles/silver-bangles-kasu-03.jpg",
     "images": [
-      "/images/products/silver/silver-bangles-kasu-03.jpg"
+      "/images/products/silver/bangles/silver-bangles-kasu-03.jpg"
     ],
     "altText": "Traditional South Indian Lakshmi Kasu coin embossed 925 silver single kada bangle",
     "description": "Rigid 92.5 silver kada bordered with continuous embossed Lakshmi Kasu coins and antique darkened patina.",
@@ -2368,9 +2968,9 @@ export const products = [
     "details": "92.5 Oxidized Silver",
     "price": "₹ 8,900",
     "numericPrice": 8900,
-    "image": "/images/products/silver/silver-necklaces-choker-01.jpg",
+    "image": "/images/products/silver/necklaces/silver-necklaces-choker-01.jpg",
     "images": [
-      "/images/products/silver/silver-necklaces-choker-01.jpg"
+      "/images/products/silver/necklaces/silver-necklaces-choker-01.jpg"
     ],
     "altText": "Grand oxidized 925 sterling silver floral collar choker necklace with hanging silver droplet beads",
     "description": "Close-fitting floral lattice choker necklace in oxidized 92.5 silver accented with dangling silver bead fringe and adjustable dori rope.",
@@ -2397,9 +2997,9 @@ export const products = [
     "details": "92.5 Solid Silver Torque",
     "price": "₹ 7,500",
     "numericPrice": 7500,
-    "image": "/images/products/silver/silver-necklaces-hasli-02.jpg",
+    "image": "/images/products/silver/necklaces/silver-necklaces-hasli-02.jpg",
     "images": [
-      "/images/products/silver/silver-necklaces-hasli-02.jpg"
+      "/images/products/silver/necklaces/silver-necklaces-hasli-02.jpg"
     ],
     "altText": "Traditional solid torque hasli 925 silver collar necklace with peacock finial heads",
     "description": "Solid tribal torque hasli collar in 92.5 silver with hand-chased twin peacock finial terminals and high-mirror neck contour.",
@@ -2426,9 +3026,9 @@ export const products = [
     "details": "92.5 Rhodium Plated & AAA CZ",
     "price": "₹ 6,800",
     "numericPrice": 6800,
-    "image": "/images/products/silver/silver-necklaces-cz-03.jpg",
+    "image": "/images/products/silver/necklaces/silver-necklaces-cz-03.jpg",
     "images": [
-      "/images/products/silver/silver-necklaces-cz-03.jpg"
+      "/images/products/silver/necklaces/silver-necklaces-cz-03.jpg"
     ],
     "altText": "Brilliant prong-set cubic zirconia tennis choker necklace in anti-tarnish rhodium 925 silver",
     "description": "Continuous line of sparkling round-cut cubic zirconia stones in 4-prong basket settings with double safety clasp in 92.5 silver.",
@@ -2455,9 +3055,9 @@ export const products = [
     "details": "92.5 Sterling Silver",
     "price": "₹ 14,500",
     "numericPrice": 14500,
-    "image": "/images/products/silver/silver-harams-kasu-01.jpg",
+    "image": "/images/products/silver/necklaces/silver-harams-kasu-01.jpg",
     "images": [
-      "/images/products/silver/silver-harams-kasu-01.jpg"
+      "/images/products/silver/necklaces/silver-harams-kasu-01.jpg"
     ],
     "altText": "Grand 26-inch traditional South Indian Lakshmi Kasu coin 925 silver wedding haram necklace",
     "description": "Grand 26-inch long bridal wedding haram featuring 54 stamped Lakshmi Kasu coins leading to an auspicious goddess centerpiece in pure 92.5 silver.",
@@ -2484,9 +3084,9 @@ export const products = [
     "details": "92.5 Antique Oxidized Silver",
     "price": "₹ 12,800",
     "numericPrice": 12800,
-    "image": "/images/products/silver/silver-harams-temple-02.jpg",
+    "image": "/images/products/silver/necklaces/silver-harams-temple-02.jpg",
     "images": [
-      "/images/products/silver/silver-harams-temple-02.jpg"
+      "/images/products/silver/necklaces/silver-harams-temple-02.jpg"
     ],
     "altText": "Antique temple arch pendant long haram mala in 925 sterling silver with pearl tassels",
     "description": "Heavy multi-link long silver haram terminating in an ornate temple arch pendant with ruby accents and South Sea pearl droplets.",
@@ -2513,9 +3113,9 @@ export const products = [
     "details": "92.5 Silver & Natural Spinel",
     "price": "₹ 9,400",
     "numericPrice": 9400,
-    "image": "/images/products/silver/silver-harams-beaded-03.jpg",
+    "image": "/images/products/silver/necklaces/silver-harams-beaded-03.jpg",
     "images": [
-      "/images/products/silver/silver-harams-beaded-03.jpg"
+      "/images/products/silver/necklaces/silver-harams-beaded-03.jpg"
     ],
     "altText": "Multi-layered natural black spinel and fluted 925 silver bead long mala necklace",
     "description": "Contemporary three-strand long mala alternating faceted black spinel beads with hand-fluted 92.5 sterling silver spheres.",
@@ -2542,9 +3142,9 @@ export const products = [
     "details": "92.5 Sterling Silver & CZ",
     "price": "₹ 450",
     "numericPrice": 450,
-    "image": "/images/products/silver/silver-nosepins-single-01.jpg",
+    "image": "/images/products/silver/nosepin/silver-nosepins-single-01.jpg",
     "images": [
-      "/images/products/silver/silver-nosepins-single-01.jpg"
+      "/images/products/silver/nosepin/silver-nosepins-single-01.jpg"
     ],
     "altText": "Single solitaire sparkling cubic zirconia 925 sterling silver daily wear nose pin",
     "description": "Dainty 2mm sparkling cubic zirconia stone in a 4-prong 92.5 sterling silver basket with a skin-safe curved L-pin stem.",
@@ -2571,9 +3171,9 @@ export const products = [
     "details": "92.5 Silver & CZ Cluster",
     "price": "₹ 750",
     "numericPrice": 750,
-    "image": "/images/products/silver/silver-nosepins-floral-02.jpg",
+    "image": "/images/products/silver/nosepin/silver-nosepins-floral-02.jpg",
     "images": [
-      "/images/products/silver/silver-nosepins-floral-02.jpg"
+      "/images/products/silver/nosepin/silver-nosepins-floral-02.jpg"
     ],
     "altText": "Traditional 7-stone flower cluster 925 sterling silver South Indian mookuthi nose stud",
     "description": "Traditional South Indian floral mookuthi with 7 brilliant stones clustered in 92.5 silver with a secure threaded screw back.",
@@ -2600,9 +3200,9 @@ export const products = [
     "details": "92.5 Antique Silver Clip-on",
     "price": "₹ 550",
     "numericPrice": 550,
-    "image": "/images/products/silver/silver-nosepins-clipon-03.jpg",
+    "image": "/images/products/silver/nosepin/silver-nosepins-clipon-03.jpg",
     "images": [
-      "/images/products/silver/silver-nosepins-clipon-03.jpg"
+      "/images/products/silver/nosepin/silver-nosepins-clipon-03.jpg"
     ],
     "altText": "Non-piercing clip-on tribal oxidized 925 silver nose ring nath with red enamel bead",
     "description": "Convenient clip-on oxidized 92.5 silver nose ring featuring tribal wire spirals and a synthetic red ruby bead, requiring no piercing.",
@@ -2629,9 +3229,9 @@ export const products = [
     "details": "92.5 Sterling Solid Silver",
     "price": "₹ 3,200",
     "numericPrice": 3200,
-    "image": "/images/products/silver/silver-chains-rope-01.jpg",
+    "image": "/images/products/silver/chains/silver-chains-rope-01.jpg",
     "images": [
-      "/images/products/silver/silver-chains-rope-01.jpg"
+      "/images/products/silver/chains/silver-chains-rope-01.jpg"
     ],
     "altText": "Solid 4mm diamond-cut 925 sterling silver rope chain necklace with lobster clasp",
     "description": "Heavy 4mm diamond-cut rope link chain in 92.5 sterling silver with high facet light-reflection and a sturdy lobster claw clasp.",
@@ -2658,9 +3258,9 @@ export const products = [
     "details": "92.5 Rhodium Anti-Tarnish",
     "price": "₹ 2,400",
     "numericPrice": 2400,
-    "image": "/images/products/silver/silver-chains-box-02.jpg",
+    "image": "/images/products/silver/chains/silver-chains-box-02.jpg",
     "images": [
-      "/images/products/silver/silver-chains-box-02.jpg"
+      "/images/products/silver/chains/silver-chains-box-02.jpg"
     ],
     "altText": "Smooth rounded Italian box link 925 sterling silver pendant chain necklace",
     "description": "Silky smooth 2mm rounded box link chain in 92.5 silver with anti-tarnish rhodium plating, perfect for carrying heavy silver pendants.",
@@ -2687,9 +3287,9 @@ export const products = [
     "details": "92.5 Sterling Silver",
     "price": "₹ 2,850",
     "numericPrice": 2850,
-    "image": "/images/products/silver/silver-chains-figaro-03.jpg",
+    "image": "/images/products/silver/chains/silver-chains-figaro-03.jpg",
     "images": [
-      "/images/products/silver/silver-chains-figaro-03.jpg"
+      "/images/products/silver/chains/silver-chains-figaro-03.jpg"
     ],
     "altText": "Classic 3+1 pattern flat beveled Figaro link 925 sterling silver chain",
     "description": "Classic 3+1 alternating link Figaro chain in high-mirror polished 92.5 sterling silver with beveled diamond-cut edges.",
@@ -2716,9 +3316,9 @@ export const products = [
     "details": "92.5 Solid Sterling Silver",
     "price": "₹ 1,750",
     "numericPrice": 1750,
-    "image": "/images/products/silver/silver-pendants-ganesha-01.jpg",
+    "image": "/images/products/silver/pendants/silver-pendants-ganesha-01.jpg",
     "images": [
-      "/images/products/silver/silver-pendants-ganesha-01.jpg"
+      "/images/products/silver/pendants/silver-pendants-ganesha-01.jpg"
     ],
     "altText": "Sculpted sacred Lord Ganesha Vinayagar medallion pendant in 925 sterling silver",
     "description": "Sculpted deity medallion of Lord Siddhi Vinayagar in 92.5 silver with realistic trunk details, Modak, and high-shine back bail ring.",
@@ -2745,9 +3345,9 @@ export const products = [
     "details": "92.5 Antique Silver",
     "price": "₹ 2,200",
     "numericPrice": 2200,
-    "image": "/images/products/silver/silver-pendants-lakshmi-02.jpg",
+    "image": "/images/products/silver/pendants/silver-pendants-lakshmi-02.jpg",
     "images": [
-      "/images/products/silver/silver-pendants-lakshmi-02.jpg"
+      "/images/products/silver/pendants/silver-pendants-lakshmi-02.jpg"
     ],
     "altText": "Antique temple Lakshmi seated on lotus circular 925 silver locket pendant with pearl droplet",
     "description": "Auspicious circular locket pendant depicting Goddess Mahalakshmi seated on a blossoming lotus, adorned with emerald stones and a hanging pearl.",
@@ -2774,9 +3374,9 @@ export const products = [
     "details": "92.5 Oxidized Silver & Ruby",
     "price": "₹ 1,950",
     "numericPrice": 1950,
-    "image": "/images/products/silver/silver-pendants-peacock-03.jpg",
+    "image": "/images/products/silver/pendants/silver-pendants-peacock-03.jpg",
     "images": [
-      "/images/products/silver/silver-pendants-peacock-03.jpg"
+      "/images/products/silver/pendants/silver-pendants-peacock-03.jpg"
     ],
     "altText": "Openwork filigree Mayil peacock feather pendant in oxidized 925 silver with ruby accent",
     "description": "Artistic openwork peacock feather pendant in oxidized 92.5 silver with a bezel-set ruby-red gemstone center and beaded perimeter.",
@@ -2803,9 +3403,9 @@ export const products = [
     "details": "92.5 Sterling Silver Puja Plate",
     "price": "₹ 18,500",
     "numericPrice": 18500,
-    "image": "/images/products/silver/silver-pooja-thali-01.jpg",
+    "image": "/images/products/silver/pooja-items/silver-pooja-thali-01.jpg",
     "images": [
-      "/images/products/silver/silver-pooja-thali-01.jpg"
+      "/images/products/silver/pooja-items/silver-pooja-thali-01.jpg"
     ],
     "altText": "10-inch handcrafted 925 sterling silver puja thali plate with embossed Ashtalakshmi border",
     "description": "Ceremonial 10-inch 92.5 sterling silver pooja thali featuring the 8 divine forms of Goddess Lakshmi embossed along the mirror-polished border.",
@@ -2832,9 +3432,9 @@ export const products = [
     "details": "92.5 Solid Silver Oil Lamp",
     "price": "₹ 11,200",
     "numericPrice": 11200,
-    "image": "/images/products/silver/silver-pooja-lamp-02.jpg",
+    "image": "/images/products/silver/pooja-items/silver-pooja-lamp-02.jpg",
     "images": [
-      "/images/products/silver/silver-pooja-lamp-02.jpg"
+      "/images/products/silver/pooja-items/silver-pooja-lamp-02.jpg"
     ],
     "altText": "Solid 925 sterling silver Kamakshi Deepam oil lamp vilakku with Gajalakshmi crest",
     "description": "Auspicious South Indian Kamakshi Deepam vilakku in solid 92.5 silver with Goddess Gajalakshmi, sacred elephants, and heavy circular base.",
@@ -2861,9 +3461,9 @@ export const products = [
     "details": "92.5 Pure Silver Aarti Bell",
     "price": "₹ 6,400",
     "numericPrice": 6400,
-    "image": "/images/products/silver/silver-pooja-bell-03.jpg",
+    "image": "/images/products/silver/pooja-items/silver-pooja-bell-03.jpg",
     "images": [
-      "/images/products/silver/silver-pooja-bell-03.jpg"
+      "/images/products/silver/pooja-items/silver-pooja-bell-03.jpg"
     ],
     "altText": "Handcrafted 925 silver sacred puja bell with sculpted Nandi bull handle and clear chime",
     "description": "Clear-ringing ceremonial prayer bell hand-sculpted in 92.5 silver with a sacred Nandi bull finial handle and resonant sound.",
@@ -2890,9 +3490,9 @@ export const products = [
     "details": "92.5 Pure Silver Solid Cast",
     "price": "₹ 24,800",
     "numericPrice": 24800,
-    "image": "/images/products/silver/silver-idols-balaji-01.jpg",
+    "image": "/images/products/silver/silver-idols/silver-idols-balaji-01.jpg",
     "images": [
-      "/images/products/silver/silver-idols-balaji-01.jpg"
+      "/images/products/silver/silver-idols/silver-idols-balaji-01.jpg"
     ],
     "altText": "Handcrafted solid 925 sterling silver idol of Lord Venkateswara Tirupati Balaji on lotus pedestal",
     "description": "Handcrafted solid 92.5 silver idol of Lord Venkateswara / Tirupati Balaji with intricate Shankha, Chakra, and gold-plated tilak accents.",
@@ -2919,9 +3519,9 @@ export const products = [
     "details": "92.5 Solid Sterling Silver",
     "price": "₹ 21,500",
     "numericPrice": 21500,
-    "image": "/images/products/silver/silver-idols-lakshmi-02.jpg",
+    "image": "/images/products/silver/silver-idols/silver-idols-lakshmi-02.jpg",
     "images": [
-      "/images/products/silver/silver-idols-lakshmi-02.jpg"
+      "/images/products/silver/silver-idols/silver-idols-lakshmi-02.jpg"
     ],
     "altText": "Solid 925 silver seated Goddess Mahalakshmi murti idol holding gold vermeil lotuses",
     "description": "Seated four-armed Goddess Mahalakshmi in solid 92.5 silver holding lotuses, with Abhaya mudra blessing and gold vermeil accents.",
@@ -2948,9 +3548,9 @@ export const products = [
     "details": "92.5 Solid Sterling Silver",
     "price": "₹ 19,800",
     "numericPrice": 19800,
-    "image": "/images/products/silver/silver-idols-ganapathi-03.jpg",
+    "image": "/images/products/silver/silver-idols/silver-idols-ganapathi-03.jpg",
     "images": [
-      "/images/products/silver/silver-idols-ganapathi-03.jpg"
+      "/images/products/silver/silver-idols/silver-idols-ganapathi-03.jpg"
     ],
     "altText": "Hand-sculpted solid 925 silver Lord Siddhi Vinayagar Ganesha idol on circular pedestal",
     "description": "Detailed solid 92.5 silver Ganesha idol seated on a circular throne with Modak, sacred Mooshika vehicle, and prabhavali arch.",
@@ -2977,10 +3577,10 @@ export const products = [
     "details": "99.9% Fine Pure Silver",
     "price": "₹ 2,200",
     "numericPrice": 2200,
-    "image": "/images/products/silver/silver-coin-lotus-card.jpg",
+    "image": "/images/products/silver/coins/silver-coin-lotus-card.jpg",
     "images": [
-      "/images/products/silver/silver-coin-lotus-card.jpg",
-      "/images/products/silver/silver-coin-lotus.jpg"
+      "/images/products/silver/coins/silver-coin-lotus-card.jpg",
+      "/images/products/silver/coins/silver-coin-lotus.jpg"
     ],
     "altText": "20 gram 999 fine pure silver coin with ornate high-relief blooming lotus medallion and baroque filigree rim",
     "description": "Certified 999 fine pure silver coin featuring a masterfully sculpted blooming lotus blossom bordered by ornate baroque repoussé swirls. Ideal for Lakshmi pooja and auspicious gifting.",
@@ -3007,10 +3607,10 @@ export const products = [
     "details": "99.9% Fine Pure Silver",
     "price": "₹ 5,400",
     "numericPrice": 5400,
-    "image": "/images/products/silver/silver-coin-lakshmi-card.jpg",
+    "image": "/images/products/silver/coins/silver-coin-lakshmi-card.jpg",
     "images": [
-      "/images/products/silver/silver-coin-lakshmi-card.jpg",
-      "/images/products/silver/silver-coin-lakshmi.jpg"
+      "/images/products/silver/coins/silver-coin-lakshmi-card.jpg",
+      "/images/products/silver/coins/silver-coin-lakshmi.jpg"
     ],
     "altText": "50 gram 999 fine pure silver coin embossed with Goddess Gajalakshmi seated on lotus with elephants showering coins",
     "description": "Divine Gajalakshmi silver coin depicting the goddess of wealth seated upon a grand lotus pedestal, flanked by sacred elephants showering gold and prosperity under an ornamental temple prabhavali arch.",
@@ -3037,10 +3637,10 @@ export const products = [
     "details": "99.9% Fine Pure Silver",
     "price": "₹ 2,750",
     "numericPrice": 2750,
-    "image": "/images/products/silver/silver-coin-peacock-card.jpg",
+    "image": "/images/products/silver/coins/silver-coin-peacock-card.jpg",
     "images": [
-      "/images/products/silver/silver-coin-peacock-card.jpg",
-      "/images/products/silver/silver-coin-peacock.jpg"
+      "/images/products/silver/coins/silver-coin-peacock-card.jpg",
+      "/images/products/silver/coins/silver-coin-peacock.jpg"
     ],
     "altText": "25 gram 999 pure fine silver coin embossed with a majestic royal peacock with fanned feathers and floral rim",
     "description": "Artisan-minted pure silver coin showcasing South India's royal Mayil (peacock) standing proudly with intricate textured feathers, encircled by an auspicious lotus bud garland rim.",
@@ -3067,9 +3667,9 @@ export const products = [
     "details": "92.5 Rhodium Plated Set",
     "price": "₹ 3,800",
     "numericPrice": 3800,
-    "image": "/images/products/silver/silver-occasion-casual-01.jpg",
+    "image": "/images/products/silver/occasion/silver-occasion-casual-01.jpg",
     "images": [
-      "/images/products/silver/silver-occasion-casual-01.jpg"
+      "/images/products/silver/occasion/silver-occasion-casual-01.jpg"
     ],
     "altText": "Everyday matching 925 silver pendant necklace and stud earrings set with anti-tarnish rhodium finish",
     "description": "Coordinated daily wear set featuring a solitaire crystal silver pendant with chain and matching stud earrings in 92.5 sterling silver.",
@@ -3096,9 +3696,9 @@ export const products = [
     "details": "92.5 Antique Oxidized Ensemble",
     "price": "₹ 9,800",
     "numericPrice": 9800,
-    "image": "/images/products/silver/silver-occasion-party-02.jpg",
+    "image": "/images/products/silver/occasion/silver-occasion-party-02.jpg",
     "images": [
-      "/images/products/silver/silver-occasion-party-02.jpg"
+      "/images/products/silver/occasion/silver-occasion-party-02.jpg"
     ],
     "altText": "Statement party-wear oxidized 925 silver choker necklace with matching cocktail ring",
     "description": "Striking festive ensemble comprising a broad oxidized silver tribal choker with coin tassels and a matching bold signet cocktail ring.",
@@ -3125,9 +3725,9 @@ export const products = [
     "details": "92.5 Pure Silver Bridal Ensemble",
     "price": "₹ 15,200",
     "numericPrice": 15200,
-    "image": "/images/products/silver/silver-occasion-traditional-03.jpg",
+    "image": "/images/products/silver/occasion/silver-occasion-traditional-03.jpg",
     "images": [
-      "/images/products/silver/silver-occasion-traditional-03.jpg"
+      "/images/products/silver/occasion/silver-occasion-traditional-03.jpg"
     ],
     "altText": "Complete South Indian traditional wedding bridal 925 silver payals, metti toe rings, and hasli set",
     "description": "Complete auspicious Muhurtham trousseau set including a pair of Salem musical ghungroo payals, dual-strand metti toe rings, and torque hasli.",
@@ -3640,14 +4240,45 @@ export const products = [
     "dimensions": "52 mm drop length × 20 mm dome diameter",
     "craftsmanship": "Three-Tier Chased Filigree Domes & Chiming Gold Beads",
     "certification": "BIS Hallmarked & 100% Purity Assay Certificate",
-    "image": "/images/products/gold/gold-new-arrival-kalyani-jhumka-01.jpg",
+    "image": "/images/products/gold/earrings/gold-new-arrival-kalyani-jhumka-01.jpg",
     "images": [
-      "/images/products/gold/gold-new-arrival-kalyani-jhumka-01.jpg",
-      "/images/products/gold/gold-new-arrival-kalyani-jhumka-02.jpg",
-      "/images/products/gold/gold-new-arrival-kalyani-jhumka-03.jpg"
+      "/images/products/gold/earrings/gold-new-arrival-kalyani-jhumka-01.jpg",
+      "/images/products/gold/earrings/gold-new-arrival-kalyani-jhumka-02.jpg",
+      "/images/products/gold/earrings/gold-new-arrival-kalyani-jhumka-03.jpg"
     ],
     "altText": "Realistic 22K gold Kalyani filigree tiered bell jhumkas with hanging seed pearls",
     "description": "An authentic three-tiered South Indian 22K gold jhumka featuring a floral ear-stud, filigree bell domes, and musical hanging gold drop beads with screw-back fastening.",
+    "isBridal": true,
+    "isNewArrival": true,
+    "collection": "gold"
+  },
+  {
+    "id": "gold-new-arrival-solitaire-crown-ring-01",
+    "name": "Aura Solitaire Crown 22K Gold Filigree Ring",
+    "category": "Gold",
+    "subCategory": "rings",
+    "subCategorySlug": "rings",
+    "subType": "engagement-rings",
+    "occasion": "party-wear",
+    "badge": "New Arrival",
+    "badgeType": "in-stock",
+    "details": "22 Karat 916 BIS Hallmarked Gold",
+    "price": "₹ 38,500",
+    "numericPrice": 38500,
+    "material": "22K Gold & VVS CZ Solitaire",
+    "purity": "916 BIS Hallmarked Gold (22K)",
+    "weight": "5.20 grams",
+    "dimensions": "20 mm ring crown height (Comfort Fit Band)",
+    "craftsmanship": "Six-Prong Elevated Solitaire Setting with Milgrain Shoulders",
+    "certification": "BIS Hallmarked & Gemological Certificate",
+    "image": "/images/products/gold/rings/gold-new-arrival-solitaire-crown-ring-01.jpg",
+    "images": [
+      "/images/products/gold/rings/gold-new-arrival-solitaire-crown-ring-01.jpg",
+      "/images/products/gold/rings/gold-new-arrival-solitaire-crown-ring-02.jpg",
+      "/images/products/gold/rings/gold-new-arrival-solitaire-crown-ring-03.jpg"
+    ],
+    "altText": "Realistic 22K gold Aura solitaire crown filigree engagement ring",
+    "description": "An elevated 22K yellow gold engagement ring featuring a sparkling central solitaire nestled in an intricate cathedral crown with milgrain-engraved gold shoulders.",
     "isBridal": true,
     "isNewArrival": true,
     "collection": "gold"
@@ -3671,11 +4302,11 @@ export const products = [
     "dimensions": "Length: 26 inches with adjustable gold link chain",
     "craftsmanship": "Authentic 54-Coin Kasu Die-Striking & Nakshi Pendant",
     "certification": "BIS Hallmarked & Master Goldsmith Assay",
-    "image": "/images/products/gold/gold-new-arrival-ashtalakshmi-haram-01.jpg",
+    "image": "/images/products/gold/necklaces/gold-new-arrival-ashtalakshmi-haram-01.jpg",
     "images": [
-      "/images/products/gold/gold-new-arrival-ashtalakshmi-haram-01.jpg",
-      "/images/products/gold/gold-new-arrival-ashtalakshmi-haram-02.jpg",
-      "/images/products/gold/gold-new-arrival-ashtalakshmi-haram-03.jpg"
+      "/images/products/gold/necklaces/gold-new-arrival-ashtalakshmi-haram-01.jpg",
+      "/images/products/gold/necklaces/gold-new-arrival-ashtalakshmi-haram-02.jpg",
+      "/images/products/gold/necklaces/gold-new-arrival-ashtalakshmi-haram-03.jpg"
     ],
     "altText": "Realistic 22K gold grand Ashtalakshmi Kasu Mala long haram with ruby pendant",
     "description": "Heirloom 26-inch 22K gold Kasu Mala comprising 54 individually struck Ashtalakshmi gold coins anchored by an elaborate temple Ganesha-Lakshmi repoussé center pendant.",
@@ -3702,15 +4333,77 @@ export const products = [
     "dimensions": "2.6 Size (Inner Diameter: 60 mm × Thickness: 10 mm)",
     "craftsmanship": "Sculpted Twin Peacock Finials with Screw-Lock Clasp",
     "certification": "BIS Hallmarked & 100% Weight Verification",
-    "image": "/images/products/gold/gold-new-arrival-mayil-kada-bangle-01.jpg",
+    "image": "/images/products/gold/bangles/gold-new-arrival-mayil-kada-bangle-01.jpg",
     "images": [
-      "/images/products/gold/gold-new-arrival-mayil-kada-bangle-01.jpg",
-      "/images/products/gold/gold-new-arrival-mayil-kada-bangle-02.jpg",
-      "/images/products/gold/gold-new-arrival-mayil-kada-bangle-03.jpg"
+      "/images/products/gold/bangles/gold-new-arrival-mayil-kada-bangle-01.jpg",
+      "/images/products/gold/bangles/gold-new-arrival-mayil-kada-bangle-02.jpg",
+      "/images/products/gold/bangles/gold-new-arrival-mayil-kada-bangle-03.jpg"
     ],
     "altText": "Realistic 22K solid gold twin peacock Mayil carved kada bangle with emerald accents",
     "description": "Regal solid 22K gold bangle kada featuring sculpted twin peacocks meeting at the center with natural emerald eye accents and a concealed precision screw mechanism.",
     "isBridal": true,
+    "isNewArrival": true,
+    "collection": "gold"
+  },
+  {
+    "id": "gold-new-arrival-nawabi-rope-chain-01",
+    "name": "Nawabi Fluted 22K Gold Mugappu Neck Chain",
+    "category": "Gold",
+    "subCategory": "chains",
+    "subCategorySlug": "chains",
+    "subType": "chains",
+    "occasion": "casual-wear",
+    "badge": "New Arrival",
+    "badgeType": "in-stock",
+    "details": "22 Karat 916 BIS Hallmarked Gold",
+    "price": "₹ 112,000",
+    "numericPrice": 112000,
+    "material": "22K Solid Yellow Gold",
+    "purity": "916 BIS Hallmarked Gold (22K)",
+    "weight": "15.50 grams",
+    "dimensions": "Length: 24 inches × Width: 3.8 mm",
+    "craftsmanship": "Hand-Interlinked Hollow Rope Links with Floral Mugappu Side-Piece",
+    "certification": "BIS Hallmarked with S-Hook Hallmark Stamp",
+    "image": "/images/products/gold/chains/gold-new-arrival-nawabi-rope-chain-01.jpg",
+    "images": [
+      "/images/products/gold/chains/gold-new-arrival-nawabi-rope-chain-01.jpg",
+      "/images/products/gold/chains/gold-new-arrival-nawabi-rope-chain-02.jpg",
+      "/images/products/gold/chains/gold-new-arrival-nawabi-rope-chain-03.jpg"
+    ],
+    "altText": "Realistic 22K solid gold Nawabi fluted rope chain with traditional floral mugappu",
+    "description": "Classic 24-inch 22K gold rope chain enhanced with a handcrafted South Indian floral side-mugappu, offering fluid flexibility and high-luster diamond-cut facets.",
+    "isBridal": false,
+    "isNewArrival": true,
+    "collection": "gold"
+  },
+  {
+    "id": "gold-new-arrival-kamakshi-locket-01",
+    "name": "Kamakshi Vilakku 22K Gold Temple Medallion",
+    "category": "Gold",
+    "subCategory": "pendants",
+    "subCategorySlug": "pendants",
+    "subType": "pendants",
+    "occasion": "traditional-wear",
+    "badge": "New Arrival",
+    "badgeType": "in-stock",
+    "details": "22 Karat 916 BIS Hallmarked Gold",
+    "price": "₹ 44,500",
+    "numericPrice": 44500,
+    "material": "22K Gold & Cabochon Ruby",
+    "purity": "916 BIS Hallmarked Gold (22K)",
+    "weight": "6.15 grams",
+    "dimensions": "36 mm height × 22 mm width with heavy chain bail",
+    "craftsmanship": "Devalaya Arch Repoussé & Chased Prabhavali Rays",
+    "certification": "BIS Hallmarked Assay Certified",
+    "image": "/images/products/gold/pendants/gold-new-arrival-kamakshi-locket-01.jpg",
+    "images": [
+      "/images/products/gold/pendants/gold-new-arrival-kamakshi-locket-01.jpg",
+      "/images/products/gold/pendants/gold-new-arrival-kamakshi-locket-02.jpg",
+      "/images/products/gold/pendants/gold-new-arrival-kamakshi-locket-03.jpg"
+    ],
+    "altText": "Realistic 22K gold Kamakshi vilakku temple medallion pendant with ruby",
+    "description": "Sacred 22K gold devotional pendant depicting Goddess Kamakshi with a lighted Deepam motif in high relief, surrounded by a radiant halo and beaded gold perimeter.",
+    "isBridal": false,
     "isNewArrival": true,
     "collection": "gold"
   },
@@ -3733,11 +4426,11 @@ export const products = [
     "dimensions": "7.5 mm diameter floral motif with 0.8 mm post",
     "craftsmanship": "Micro-Prong Precision Setting with Screw-Back Post",
     "certification": "BIS Hallmarked & Authenticity Assurance",
-    "image": "/images/products/gold/gold-new-arrival-mookuthi-cluster-01.jpg",
+    "image": "/images/products/gold/nosepin/gold-new-arrival-mookuthi-cluster-01.jpg",
     "images": [
-      "/images/products/gold/gold-new-arrival-mookuthi-cluster-01.jpg",
-      "/images/products/gold/gold-new-arrival-mookuthi-cluster-02.jpg",
-      "/images/products/gold/gold-new-arrival-mookuthi-cluster-03.jpg"
+      "/images/products/gold/nosepin/gold-new-arrival-mookuthi-cluster-01.jpg",
+      "/images/products/gold/nosepin/gold-new-arrival-mookuthi-cluster-02.jpg",
+      "/images/products/gold/nosepin/gold-new-arrival-mookuthi-cluster-03.jpg"
     ],
     "altText": "Realistic 22K gold Star Constellation 7-stone cluster traditional South Indian mookuthi",
     "description": "Traditional South Indian 7-stone floral star mookuthi in 22K yellow gold with high-clarity prong-set stones and a comfortable screw-back post for daily wear.",
@@ -3764,11 +4457,11 @@ export const products = [
     "dimensions": "Length: 10.5 inches with S-hook adjustable lock",
     "craftsmanship": "Hand-Strung Dual-Line Silver Beads & Resonant Ghungroos",
     "certification": "925 BIS Silver Assay Certificate",
-    "image": "/images/products/silver/silver-new-arrival-salem-ghungroo-payal-01.jpg",
+    "image": "/images/products/silver/anklets/silver-new-arrival-salem-ghungroo-payal-01.jpg",
     "images": [
-      "/images/products/silver/silver-new-arrival-salem-ghungroo-payal-01.jpg",
-      "/images/products/silver/silver-new-arrival-salem-ghungroo-payal-02.jpg",
-      "/images/products/silver/silver-new-arrival-salem-ghungroo-payal-03.jpg"
+      "/images/products/silver/anklets/silver-new-arrival-salem-ghungroo-payal-01.jpg",
+      "/images/products/silver/anklets/silver-new-arrival-salem-ghungroo-payal-02.jpg",
+      "/images/products/silver/anklets/silver-new-arrival-salem-ghungroo-payal-03.jpg"
     ],
     "altText": "Realistic 925 sterling silver Salem melodic musical ghungroo bridal payals pair",
     "description": "Authentic Salem silversmith handcrafted pair of bridal payals in 92.5 sterling silver with double-layered chain links and melodic chiming silver ghungroo bells.",
@@ -3795,9 +4488,9 @@ export const products = [
     "dimensions": "Length: 9.5 inches with 1 inch extension loop",
     "craftsmanship": "Italian Flexible Snake Chain & Polished Sphere Beads",
     "certification": "925 BIS Silver Assay Certificate",
-    "image": "/images/products/silver/silver-anklets-beaded-03.jpg",
+    "image": "/images/products/silver/anklets/silver-anklets-beaded-03.jpg",
     "images": [
-      "/images/products/silver/silver-anklets-beaded-03.jpg"
+      "/images/products/silver/anklets/silver-anklets-beaded-03.jpg"
     ],
     "altText": "Pair of contemporary 925 sterling silver sleek snake chain anklets with polished faceted bead accents",
     "description": "Minimalist daily-wear pair of 92.5 sterling silver snake chain anklets featuring polished and faceted silver bead accents with adjustable spring-ring clasps.",
@@ -3824,11 +4517,11 @@ export const products = [
     "dimensions": "Height: 4.8 inches × Diameter: 4.0 inches",
     "craftsmanship": "Hand-Embossed 8 Goddess Lakshmi Forms & Mirror Polish",
     "certification": "925 Assay Hallmarked Certificate",
-    "image": "/images/products/silver/silver-new-arrival-ashtalakshmi-kalash-01.jpg",
+    "image": "/images/products/silver/pooja-items/silver-new-arrival-ashtalakshmi-kalash-01.jpg",
     "images": [
-      "/images/products/silver/silver-new-arrival-ashtalakshmi-kalash-01.jpg",
-      "/images/products/silver/silver-new-arrival-ashtalakshmi-kalash-02.jpg",
-      "/images/products/silver/silver-new-arrival-ashtalakshmi-kalash-03.jpg"
+      "/images/products/silver/pooja-items/silver-new-arrival-ashtalakshmi-kalash-01.jpg",
+      "/images/products/silver/pooja-items/silver-new-arrival-ashtalakshmi-kalash-02.jpg",
+      "/images/products/silver/pooja-items/silver-new-arrival-ashtalakshmi-kalash-03.jpg"
     ],
     "altText": "Realistic 925 pure solid silver Ashtalakshmi sacred kalash pot with mango leaf rim",
     "description": "Sacred 92.5 solid silver puja kalash pot intricately embossed with the eight divine manifestations of Goddess Lakshmi, featuring a mirror-polished body and beaded rim.",
@@ -3855,11 +4548,11 @@ export const products = [
     "dimensions": "48 mm length × 22 mm dome diameter",
     "craftsmanship": "Hand-Chased Lotus Petals & Suspended Silver Bead Fringe",
     "certification": "925 BIS Silver Assay Certificate",
-    "image": "/images/products/silver/silver-new-arrival-tribal-lotus-jhumka-01.jpg",
+    "image": "/images/products/silver/earrings/silver-new-arrival-tribal-lotus-jhumka-01.jpg",
     "images": [
-      "/images/products/silver/silver-new-arrival-tribal-lotus-jhumka-01.jpg",
-      "/images/products/silver/silver-new-arrival-tribal-lotus-jhumka-02.jpg",
-      "/images/products/silver/silver-new-arrival-tribal-lotus-jhumka-03.jpg"
+      "/images/products/silver/earrings/silver-new-arrival-tribal-lotus-jhumka-01.jpg",
+      "/images/products/silver/earrings/silver-new-arrival-tribal-lotus-jhumka-02.jpg",
+      "/images/products/silver/earrings/silver-new-arrival-tribal-lotus-jhumka-03.jpg"
     ],
     "altText": "Realistic oxidized 925 sterling silver tribal lotus dome jhumkas with bead fringe",
     "description": "Striking oxidized 92.5 sterling silver bell jhumkas carved with blooming lotus petals, vintage antique shading, and a chiming cascade of micro silver beads.",
@@ -3886,11 +4579,11 @@ export const products = [
     "dimensions": "Adjustable Free-Size Coil Bands (14 mm Motif)",
     "craftsmanship": "South Indian Sunflower Embossing & Comfort Edging",
     "certification": "925 BIS Silver Assay Certificate",
-    "image": "/images/products/silver/silver-new-arrival-floral-metti-rings-01.jpg",
+    "image": "/images/products/silver/rings/silver-new-arrival-floral-metti-rings-01.jpg",
     "images": [
-      "/images/products/silver/silver-new-arrival-floral-metti-rings-01.jpg",
-      "/images/products/silver/silver-new-arrival-floral-metti-rings-02.jpg",
-      "/images/products/silver/silver-new-arrival-floral-metti-rings-03.jpg"
+      "/images/products/silver/rings/silver-new-arrival-floral-metti-rings-01.jpg",
+      "/images/products/silver/rings/silver-new-arrival-floral-metti-rings-02.jpg",
+      "/images/products/silver/rings/silver-new-arrival-floral-metti-rings-03.jpg"
     ],
     "altText": "Realistic 925 sterling silver bridal Surya Kanthi sunflower metti toe rings pair",
     "description": "Auspicious pair of traditional South Indian bridal metti (toe rings) crafted in 92.5 sterling silver with blooming sunflower motifs and flexible spiral comfort bands.",
@@ -3917,9 +4610,9 @@ export const products = [
     "dimensions": "Adjustable Free-Size Bands (13 mm Motif)",
     "craftsmanship": "Authentic Meenakari Enameling & Halo CZ Setting",
     "certification": "925 BIS Silver Assay Certificate",
-    "image": "/images/products/silver/silver-rings-meenakari-metti-03.jpg",
+    "image": "/images/products/silver/rings/silver-rings-meenakari-metti-03.jpg",
     "images": [
-      "/images/products/silver/silver-rings-meenakari-metti-03.jpg"
+      "/images/products/silver/rings/silver-rings-meenakari-metti-03.jpg"
     ],
     "altText": "Traditional South Indian 925 silver meenakari floral toe rings pair with green and gold enamel",
     "description": "Exquisite bridal toe rings (pair) crafted in pure 92.5 sterling silver showcasing royal green and amber meenakari enamel flowers with sparkling cubic zirconia halo settings.",
@@ -4009,11 +4702,11 @@ export const products = [
     "dimensions": "Waist Size: 28 to 38 inches (Adjustable Gold Link Belt)",
     "craftsmanship": "Chettinad Deep Relief Nakshi & Cluster Pearl Bells",
     "certification": "BIS Hallmarked & Master Goldsmith Heirloom Certificate",
-    "image": "/images/products/gold/collections-new-arrival-bridal-peacock-vaddanam-01.jpg",
+    "image": "/images/products/gold/necklaces/collections-new-arrival-bridal-peacock-vaddanam-01.jpg",
     "images": [
-      "/images/products/gold/collections-new-arrival-bridal-peacock-vaddanam-01.jpg",
-      "/images/products/gold/collections-new-arrival-bridal-peacock-vaddanam-02.jpg",
-      "/images/products/gold/collections-new-arrival-bridal-peacock-vaddanam-03.jpg"
+      "/images/products/gold/necklaces/collections-new-arrival-bridal-peacock-vaddanam-01.jpg",
+      "/images/products/gold/necklaces/collections-new-arrival-bridal-peacock-vaddanam-02.jpg",
+      "/images/products/gold/necklaces/collections-new-arrival-bridal-peacock-vaddanam-03.jpg"
     ],
     "altText": "Realistic 22K antique gold Kanchipuram royal peacock bridal waist belt vaddanam with rubies",
     "description": "Magnificent South Indian bridal waist belt (vaddanam) hand-forged in 22K antique gold with sculpted dancing peacocks, temple arch Gajalakshmi crest, natural rubies, and hanging pearl bells.",

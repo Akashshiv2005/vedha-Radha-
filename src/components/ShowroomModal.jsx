@@ -13,7 +13,7 @@ export default function ShowroomModal({ isOpen, onClose }) {
         {/* Header */}
         <div className="bg-[#581923] text-white p-5 flex items-center justify-between">
           <div>
-            <h3 className="font-serif text-lg font-bold">Our Heritage Showroom</h3>
+            <h3 className="text-lg font-bold">Our Heritage Showroom</h3>
             <p className="text-xs text-[#E6C37A] mt-0.5">Vedha Radha Thanga Maaligai</p>
           </div>
           <button

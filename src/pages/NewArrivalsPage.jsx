@@ -64,7 +64,7 @@ export default function NewArrivalsPage({
               <Sparkles className="w-3.5 h-3.5 text-[#E5C278]" />
               2026 Festive Collection
             </span>
-            <h1 className="font-serif text-2xl sm:text-4xl font-bold text-white tracking-tight">
+            <h1 className="text-2xl sm:text-4xl font-bold text-white tracking-tight">
               Fresh New Arrivals & Master Creations
             </h1>
             <p className="text-xs sm:text-sm text-[#E6D4D6] mt-2 leading-relaxed">
@@ -144,7 +144,7 @@ export default function NewArrivalsPage({
                     <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C6D2D]">
                       {item.purity || item.details}
                     </span>
-                    <h3 className="font-serif text-base font-bold text-[#241716] group-hover:text-[#581923] transition-colors line-clamp-1 mt-1">
+                    <h3 className="text-base font-bold text-[#241716] group-hover:text-[#581923] transition-colors line-clamp-1 mt-1">
                       {item.name}
                     </h3>
                     <p className="text-xs text-[#63574F] line-clamp-2 mt-1 leading-relaxed">
@@ -155,7 +155,7 @@ export default function NewArrivalsPage({
                   <div className="mt-4 pt-3 border-t border-[#EAE2D5] flex items-center justify-between">
                     <div>
                       <span className="text-[10px] text-[#7A6E65] block">Showroom Price</span>
-                      <span className="font-serif text-lg font-bold text-[#48161E]">
+                      <span className="text-lg font-bold text-[#48161E]">
                         {item.price}
                       </span>
                     </div>

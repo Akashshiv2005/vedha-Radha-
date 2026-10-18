@@ -41,7 +41,7 @@ export default function AssuranceStrip() {
                   <Icon className="w-5 h-5 stroke-[1.5]" />
                 </div>
                 <div>
-                  <h4 className="font-serif text-[13.5px] sm:text-[14px] font-semibold text-[#241716] leading-tight">
+                  <h4 className="text-[13.5px] sm:text-[14px] font-semibold text-[#241716] leading-tight">
                     {item.title}
                   </h4>
                   <p className="text-[11.5px] sm:text-xs text-[#73655C] font-sans mt-0.5 leading-normal">

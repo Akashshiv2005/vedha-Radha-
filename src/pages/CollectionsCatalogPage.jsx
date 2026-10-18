@@ -162,7 +162,7 @@ function CollectionProductCard({ item, wishlistItems, onAddToCart, onAddToWishli
           {/* Product Title */}
           <h3 
             onClick={() => onViewProduct(item)}
-            className="font-serif text-[15px] sm:text-base font-bold text-[#241716] group-hover:text-[#581923] transition-colors line-clamp-2 leading-snug cursor-pointer pt-0.5"
+            className="text-[15px] sm:text-base font-bold text-[#241716] group-hover:text-[#581923] transition-colors line-clamp-2 leading-snug cursor-pointer pt-0.5"
             title={item.name}
           >
             {item.name}
@@ -200,7 +200,7 @@ function CollectionProductCard({ item, wishlistItems, onAddToCart, onAddToWishli
         <div className="mt-3 pt-3 border-t border-[#EAE2D5] flex items-center justify-between gap-2">
           <div>
             <span className="text-[10px] text-[#7A6E65] block font-medium">Showroom Price</span>
-            <span className="font-serif text-lg font-bold text-[#48161E]">
+            <span className="text-lg font-bold text-[#48161E]">
               {item.price}
             </span>
           </div>
@@ -315,7 +315,7 @@ export default function CollectionsCatalogPage({
             <span className="inline-block text-[11px] uppercase tracking-[0.25em] text-[#E6C37A] font-semibold mb-2">
               Curated Theme Collections
             </span>
-            <h1 className="font-serif text-2xl sm:text-4xl font-bold text-white tracking-tight">
+            <h1 className="text-2xl sm:text-4xl font-bold text-white tracking-tight">
               {categoryInfo.title}
             </h1>
             <p className="text-xs sm:text-sm text-[#E6D4D6] mt-2 leading-relaxed">
@@ -395,7 +395,7 @@ export default function CollectionsCatalogPage({
             <div className="w-14 h-14 rounded-full bg-[#F3EAD3] text-[#581923] flex items-center justify-center mx-auto">
               <Sparkles className="w-7 h-7 text-[#8C6D2D]" />
             </div>
-            <h3 className="font-serif text-xl font-bold text-[#241716]">
+            <h3 className="text-xl font-bold text-[#241716]">
               {categoryInfo.title} Catalog Expanding
             </h3>
             <p className="text-xs text-[#63574F] leading-relaxed max-w-md mx-auto">

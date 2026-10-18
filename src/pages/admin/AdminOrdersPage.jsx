@@ -218,7 +218,7 @@ export default function AdminOrdersPage({
       productName: selProd?.name || 'Diamond Ring',
       productPrice: selProd?.price || '₹ 2,48,000',
       numericPrice: selProd?.numericPrice || 248000,
-      productImage: selProd?.image || '/images/products/gold/gold_studs_1_photo.jpg',
+      productImage: selProd?.image || '/images/products/gold/earrings/gold_studs_1_photo.jpg',
       isUniqueItem: selProd?.isUnique ?? true,
       orderType: 'reservation',
       fulfilmentType: reservationForm.channel === 'Showroom' ? 'showroom_pickup' : 'home_delivery',

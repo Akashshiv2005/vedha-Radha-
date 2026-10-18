@@ -31,7 +31,7 @@ export default function BridalHeroBanner({ onExploreClick }) {
             </div>
 
             {/* Headline: Elegant Serif in Ivory */}
-            <h2 className="font-serif text-[17px] xs:text-[20px] sm:text-3xl md:text-4xl lg:text-[44px] xl:text-[48px] font-normal text-[#F8F4EC] leading-[1.22] sm:leading-[1.28] tracking-tight">
+            <h2 className="text-[17px] xs:text-[20px] sm:text-3xl md:text-4xl lg:text-[44px] xl:text-[48px] font-normal text-[#F8F4EC] leading-[1.22] sm:leading-[1.28] tracking-tight">
               Where Every Bride<br className="hidden xs:inline sm:inline" /> Becomes a Tradition
             </h2>
 

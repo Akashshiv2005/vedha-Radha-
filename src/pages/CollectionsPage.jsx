@@ -146,7 +146,7 @@ export default function CollectionsPage({
         {/* Page Title & Intro */}
         <div className="text-center max-w-2xl mx-auto mb-10">
           <span className="text-[11px] font-bold uppercase tracking-[0.28em] text-[#8C6D2D]">Artisanal Legacy</span>
-          <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#241716] mt-1">
+          <h1 className="text-3xl sm:text-4xl font-bold text-[#241716] mt-1">
             Signature Design Collections
           </h1>
           <p className="text-xs sm:text-sm text-[#73655C] mt-2 leading-relaxed">
@@ -181,7 +181,7 @@ export default function CollectionsPage({
                   <span className="text-xs font-semibold text-[#8C6D2D] uppercase tracking-wider">
                     {col.subtitle}
                   </span>
-                  <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#241716]">
+                  <h2 className="text-2xl sm:text-3xl font-bold text-[#241716]">
                     {col.title}
                   </h2>
                   <p className="text-xs sm:text-sm text-[#63574F] leading-relaxed pt-1">
@@ -211,7 +211,7 @@ export default function CollectionsPage({
         <div id="collection-items" className="pt-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-[#DECDBB]">
             <div>
-              <h3 className="font-serif text-2xl font-bold text-[#241716]">
+              <h3 className="text-2xl font-bold text-[#241716]">
                 {activeCollectionTab === 'All' ? 'All Exclusive Collection Pieces' : collectionLines.find(c => c.id === activeCollectionTab)?.title || activeCollectionTab}
               </h3>
               <p className="text-xs text-[#7A6E65] mt-0.5">
@@ -340,7 +340,7 @@ export default function CollectionsPage({
                       {/* Product Title */}
                       <h3 
                         onClick={() => onViewProduct(item)}
-                        className="font-serif text-[15px] sm:text-base font-bold text-[#241716] group-hover:text-[#581923] transition-colors line-clamp-2 leading-snug cursor-pointer pt-0.5"
+                        className="text-[15px] sm:text-base font-bold text-[#241716] group-hover:text-[#581923] transition-colors line-clamp-2 leading-snug cursor-pointer pt-0.5"
                         title={item.name}
                       >
                         {item.name}
@@ -378,7 +378,7 @@ export default function CollectionsPage({
                     <div className="mt-3 pt-3 border-t border-[#EAE2D5] flex items-center justify-between gap-2">
                       <div>
                         <span className="text-[10px] text-[#7A6E65] block font-medium">Showroom Price</span>
-                        <span className="font-serif text-lg font-bold text-[#48161E]">{item.price}</span>
+                        <span className="text-lg font-bold text-[#48161E]">{item.price}</span>
                       </div>
                       <div className="flex items-center gap-2 shrink-0">
                         <button
