@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { X, MapPin, Phone, Clock, Mail, Compass } from 'lucide-react';
 
 export default function ShowroomModal({ isOpen, onClose }) {
@@ -13,7 +13,7 @@ export default function ShowroomModal({ isOpen, onClose }) {
         {/* Header */}
         <div className="bg-[#581923] text-white p-5 flex items-center justify-between">
           <div>
-            <h3 className="font-serif text-lg font-bold">Our Heritage Showroom</h3>
+            <h3 className="text-lg font-bold">Our Heritage Showroom</h3>
             <p className="text-xs text-[#E6C37A] mt-0.5">Vedha Radha Thanga Maaligai</p>
           </div>
           <button
@@ -50,7 +50,7 @@ export default function ShowroomModal({ isOpen, onClose }) {
             <Phone className="w-4 h-4 text-[#581923] shrink-0 mt-0.5" />
             <div>
               <p className="font-semibold text-[#241716]">Direct Concierge & Appointments:</p>
-              <p className="text-[#66584F] mt-0.5">+91 44 2834 1999 / +91 98401 23456</p>
+              <p className="text-[#66584F] mt-0.5">+91 44 2834 1999 / +91 70108 94104</p>
             </div>
           </div>
 

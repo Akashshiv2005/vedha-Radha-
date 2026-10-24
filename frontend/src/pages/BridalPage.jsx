@@ -93,7 +93,7 @@ export default function BridalPage({
                   BRIDAL COLLECTION
                 </span>
               </div>
-              <h1 className="font-serif text-2xl sm:text-4xl lg:text-[44px] xl:text-[48px] font-normal text-[#F8F4EC] leading-[1.16] tracking-tight">
+              <h1 className="text-2xl sm:text-4xl lg:text-[44px] xl:text-[48px] font-normal text-[#F8F4EC] leading-[1.16] tracking-tight">
                 Where Every Bride<br />
                 Becomes a Tradition
               </h1>
@@ -125,7 +125,7 @@ export default function BridalPage({
               <Award className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-serif text-sm font-bold text-[#241716]">100% Hallmarked 916 Gold</h3>
+              <h3 className="text-sm font-bold text-[#241716]">100% Hallmarked 916 Gold</h3>
               <p className="text-xs text-[#73655C] mt-0.5">Every gram verified by Govt-certified laser assaying for absolute purity.</p>
             </div>
           </div>
@@ -135,7 +135,7 @@ export default function BridalPage({
               <CheckCircle2 className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-serif text-sm font-bold text-[#241716]">0% Making Charge Benefit</h3>
+              <h3 className="text-sm font-bold text-[#241716]">0% Making Charge Benefit</h3>
               <p className="text-xs text-[#73655C] mt-0.5">Special wedding trousseau savings on complete Muhurtham gold packages.</p>
             </div>
           </div>
@@ -145,7 +145,7 @@ export default function BridalPage({
               <Calendar className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-serif text-sm font-bold text-[#241716]">Bespoke Artisan Customization</h3>
+              <h3 className="text-sm font-bold text-[#241716]">Bespoke Artisan Customization</h3>
               <p className="text-xs text-[#73655C] mt-0.5">Tailor necklaces, waist belts, and bangles to your saree fabric and neckline.</p>
             </div>
           </div>
@@ -155,7 +155,7 @@ export default function BridalPage({
         <div className="mb-12">
           <div className="text-center max-w-xl mx-auto mb-8">
             <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#8C6D2D]">Curated Packages</span>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#241716] mt-1">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#241716] mt-1">
               Signature Wedding Sets
             </h2>
             <p className="text-xs text-[#73655C] mt-1">
@@ -174,7 +174,7 @@ export default function BridalPage({
                     <span className="text-[10px] font-bold text-[#8C6D2D] uppercase tracking-wider bg-[#F8F2E6] px-2 py-0.5 rounded">
                       {set.highlight}
                     </span>
-                    <h3 className="font-serif text-lg font-bold text-[#241716] mt-2">{set.title}</h3>
+                    <h3 className="text-lg font-bold text-[#241716] mt-2">{set.title}</h3>
                     <p className="text-xs text-[#4A403A] mt-1 font-medium">{set.pieces}</p>
                     <p className="text-[11px] text-[#7A6E65] mt-1 font-mono">Approx. Weight: {set.goldWeight}</p>
                   </div>
@@ -196,7 +196,7 @@ export default function BridalPage({
         <div id="bridal-products" className="pt-6">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="font-serif text-2xl font-bold text-[#241716]">Bridal Jewellery Catalog</h2>
+              <h2 className="text-2xl font-bold text-[#241716]">Bridal Jewellery Catalog</h2>
               <p className="text-xs text-[#7A6E65] mt-0.5">Individual bridal pieces ready for showcase and reserving.</p>
             </div>
             <button
@@ -209,12 +209,12 @@ export default function BridalPage({
 
           {apiError ? (
             <div className="bg-white rounded-xl p-12 text-center border border-[#DECDBB] my-8">
-              <h3 className="font-serif text-xl font-bold text-[#8C1D28]">{apiError}</h3>
+              <h3 className="text-xl font-bold text-[#8C1D28]">{apiError}</h3>
               <p className="text-xs text-[#7A6E65] mt-1">Please verify your server connection or try again later.</p>
             </div>
           ) : bridalProducts.length === 0 ? (
             <div className="bg-white rounded-xl p-12 text-center border border-[#DECDBB] my-8">
-              <h3 className="font-serif text-xl font-bold text-[#241716]">No products available yet.</h3>
+              <h3 className="text-xl font-bold text-[#241716]">No products available yet.</h3>
               <p className="text-xs text-[#7A6E65] mt-1">New bridal designs will be showcased here as soon as they are added to the vault inventory.</p>
             </div>
           ) : (
@@ -248,12 +248,12 @@ export default function BridalPage({
                   <div className="p-5 flex-1 flex flex-col justify-between">
                     <div>
                       <span className="text-[10.5px] font-bold text-[#8C6D2D] uppercase tracking-wider">{item.details}</span>
-                      <h3 className="font-serif text-base font-bold text-[#241716] mt-1">{item.name}</h3>
+                      <h3 className="text-base font-bold text-[#241716] mt-1">{item.name}</h3>
                       <p className="text-xs text-[#63574F] line-clamp-2 mt-1">{item.description}</p>
                     </div>
 
                     <div className="mt-4 pt-3 border-t border-[#EAE2D5] flex items-center justify-between">
-                      <span className="font-serif text-lg font-bold text-[#48161E]">{item.price}</span>
+                      <span className="text-lg font-bold text-[#48161E]">{item.price}</span>
                       <div className="flex gap-2">
                         <button
                           onClick={() => onViewProduct(item)}

@@ -49,7 +49,7 @@ export default function OffersModal({ isOpen, onClose, onExploreOffers }) {
               <Gift className="w-4 h-4" />
             </div>
             <div>
-              <h3 id="offers-modal-title" className="font-serif text-lg font-bold">Showroom & Festive Offers</h3>
+              <h3 id="offers-modal-title" className="text-lg font-bold">Showroom & Festive Offers</h3>
               <p className="text-[11px] text-[#E6C37A]">Vedha Radha Thanga Maaligai</p>
             </div>
           </div>
@@ -78,7 +78,7 @@ export default function OffersModal({ isOpen, onClose, onExploreOffers }) {
                 </span>
               </div>
 
-              <h4 className="font-serif font-bold text-sm text-[#241716] mt-2">
+              <h4 className="font-bold text-sm text-[#241716] mt-2">
                 {offer.title}
               </h4>
               <p className="text-xs text-[#63574F] mt-1 leading-relaxed">

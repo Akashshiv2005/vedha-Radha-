@@ -11,7 +11,7 @@ from sqlalchemy import (
     CheckConstraint,
     func,
 )
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 from ..db.base import Base
 
@@ -92,6 +92,11 @@ class Product(Base):
         String(500),
         nullable=True,
         default=None,
+    )
+    images: Mapped[list[str] | None] = mapped_column(
+        JSONB,
+        nullable=True,
+        default=list,
     )
     stock_quantity: Mapped[int] = mapped_column(
         Integer,

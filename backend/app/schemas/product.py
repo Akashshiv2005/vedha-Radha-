@@ -156,6 +156,7 @@ class ProductCreate(BaseModel):
     numeric_price: Optional[int] = Field(None, alias="numericPrice")
     status: str = "available"
     image_url: Optional[str] = Field(None, alias="image")
+    images: Optional[List[str]] = Field(None, max_length=3, description="Up to 3 gallery image references")
     stock_quantity: Optional[int] = Field(1, alias="stockQty")
     purity: Optional[str] = None
     gross_weight: Optional[str] = Field(None, alias="grossWeight")
@@ -246,6 +247,7 @@ class ProductUpdate(BaseModel):
     numeric_price: Optional[int] = Field(None, alias="numericPrice")
     status: Optional[str] = None
     image_url: Optional[str] = Field(None, alias="image")
+    images: Optional[List[str]] = Field(None, max_length=3, description="Up to 3 gallery image references")
     stock_quantity: Optional[int] = Field(None, alias="stockQty")
     purity: Optional[str] = None
     gross_weight: Optional[str] = Field(None, alias="grossWeight")
@@ -318,16 +320,37 @@ def normalize_image_reference(image_ref: Optional[str]) -> Optional[str]:
     """
     if not image_ref:
         return None
-    cleaned = image_ref.strip()
+    cleaned = str(image_ref).strip()
     if not cleaned:
         return None
     # If it contains query parameters (e.g. presigned URL), strip them
     if "?" in cleaned:
         cleaned = cleaned.split("?")[0]
-    # If it contains /products/ in URL path, extract products/...
-    if "/products/" in cleaned:
-        idx = cleaned.find("products/")
-        return cleaned[idx:]
+    # Check for MinIO product object key pattern without capturing bucket prefix
+    m = re.search(r'(?:^|/)products/([0-9a-fA-F\-]+(?:\.[a-zA-Z0-9]+)?)', cleaned)
+    if m:
+        return f"products/{m.group(1)}"
+    if cleaned.startswith("products/"):
+        return cleaned
+    return cleaned
+
+
+def resolve_browser_image_url(image_ref: Optional[str]) -> str:
+    """
+    Resolves stored MinIO object key into a browser-ready presigned URL,
+    or preserves static asset / remote URLs.
+    """
+    if not image_ref:
+        return "/images/neutral_product_placeholder.svg"
+    cleaned = str(image_ref).strip()
+    if not cleaned:
+        return "/images/neutral_product_placeholder.svg"
+    if cleaned.startswith("products/"):
+        try:
+            from ..services.minio_service import minio_service
+            return minio_service.get_presigned_url(cleaned)
+        except Exception:
+            return cleaned
     return cleaned
 
 
@@ -352,6 +375,7 @@ class ProductPublic(BaseModel):
     price: Decimal
     status: str
     image_url: Optional[str] = None
+    raw_images: Optional[List[str]] = Field(default_factory=list, validation_alias="images", exclude=True)
     stock_quantity: int
     purity: Optional[str] = None
     gross_weight: Optional[str] = None
@@ -405,16 +429,22 @@ class ProductPublic(BaseModel):
         return f"{int(self.price):,}"
 
     @computed_field
+    def images(self) -> List[str]:
+        raw = self.raw_images or []
+        valid_refs = [str(r).strip() for r in raw if r and str(r).strip()]
+        if not valid_refs and self.image_url:
+            valid_refs = [str(self.image_url).strip()]
+        valid_refs = valid_refs[:3]
+        if not valid_refs:
+            return ["/images/neutral_product_placeholder.svg"]
+        return [resolve_browser_image_url(ref) for ref in valid_refs]
+
+    @computed_field
     def image(self) -> str:
-        if not self.image_url:
-            return "/images/neutral_product_placeholder.svg"
-        if self.image_url.startswith("products/"):
-            try:
-                from ..services.minio_service import minio_service
-                return minio_service.get_presigned_url(self.image_url)
-            except Exception:
-                return self.image_url
-        return self.image_url
+        all_imgs = self.images
+        if all_imgs and len(all_imgs) > 0:
+            return all_imgs[0]
+        return resolve_browser_image_url(self.image_url)
 
     @computed_field
     def availability(self) -> str:
@@ -483,10 +513,7 @@ class ProductPublic(BaseModel):
     def subType(self) -> str:
         return (self.sub_category or "").lower().replace(" ", "-")
 
-    @computed_field
-    def images(self) -> List[str]:
-        img = self.image
-        return [img] if img else []
+
 
 
 class ProductListResponse(BaseModel):

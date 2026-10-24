@@ -111,7 +111,7 @@ export default function CoinsBarsPage({
             <span className="inline-block text-[11px] uppercase tracking-[0.25em] text-[#F3EAD3] font-semibold mb-2">
               24K 999.9 Fine Gold &bull; 999 Pure Silver Bullion
             </span>
-            <h1 className="font-serif text-2xl sm:text-4xl font-bold text-white tracking-tight">
+            <h1 className="text-2xl sm:text-4xl font-bold text-white tracking-tight">
               {categoryInfo.title}
             </h1>
             <p className="text-xs sm:text-sm text-[#F0E6D8] mt-2 leading-relaxed">
@@ -125,21 +125,21 @@ export default function CoinsBarsPage({
           <div className="p-4 bg-white rounded-xl border border-[#E8DFC0] shadow-2xs flex items-center gap-3">
             <Award className="w-8 h-8 text-[#B38E46] shrink-0" />
             <div>
-              <h4 className="font-serif text-xs font-bold text-[#241716]">999 / 999.9 Certified Purity</h4>
+              <h4 className="text-xs font-bold text-[#241716]">999 / 999.9 Certified Purity</h4>
               <p className="text-[11px] text-[#7A6E65]">Assayed with international tamper-proof certicards.</p>
             </div>
           </div>
           <div className="p-4 bg-white rounded-xl border border-[#E8DFC0] shadow-2xs flex items-center gap-3">
             <RefreshCcw className="w-8 h-8 text-[#B38E46] shrink-0" />
             <div>
-              <h4 className="font-serif text-xs font-bold text-[#241716]">0% Deduction Buyback</h4>
+              <h4 className="text-xs font-bold text-[#241716]">0% Deduction Buyback</h4>
               <p className="text-[11px] text-[#7A6E65]">100% market spot value buyback guarantee.</p>
             </div>
           </div>
           <div className="p-4 bg-white rounded-xl border border-[#E8DFC0] shadow-2xs flex items-center gap-3">
             <ShieldCheck className="w-8 h-8 text-[#B38E46] shrink-0" />
             <div>
-              <h4 className="font-serif text-xs font-bold text-[#241716]">Zero Making Charge Advantage</h4>
+              <h4 className="text-xs font-bold text-[#241716]">Zero Making Charge Advantage</h4>
               <p className="text-[11px] text-[#7A6E65]">Ideal for savings, weddings, and auspicious gifting.</p>
             </div>
           </div>
@@ -256,7 +256,7 @@ export default function CoinsBarsPage({
                     <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C6D2D]">
                       {item.purity || item.details}
                     </span>
-                    <h3 className="font-serif text-sm font-bold text-[#241716] group-hover:text-[#581923] transition-colors line-clamp-2 mt-1">
+                    <h3 className="text-sm font-bold text-[#241716] group-hover:text-[#581923] transition-colors line-clamp-2 mt-1">
                       {item.name}
                     </h3>
                     <p className="text-[11px] text-[#63574F] line-clamp-2 mt-1">
@@ -267,7 +267,7 @@ export default function CoinsBarsPage({
                   <div className="mt-4 pt-3 border-t border-[#EAE2D5] flex items-center justify-between">
                     <div>
                       <span className="text-[10px] text-[#7A6E65] block">Spot Price</span>
-                      <span className="font-serif text-base font-bold text-[#48161E]">
+                      <span className="text-base font-bold text-[#48161E]">
                         {item.price}
                       </span>
                     </div>

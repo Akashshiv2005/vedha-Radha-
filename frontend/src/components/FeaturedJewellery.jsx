@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 
 export default function FeaturedJewellery({ onSelectCollection }) {
   return (
@@ -7,7 +7,7 @@ export default function FeaturedJewellery({ onSelectCollection }) {
         
         {/* Centered Top Heading Block */}
         <div className="text-center mb-8 lg:mb-10">
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-[42px] font-normal text-[#651F2B] tracking-normal leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-normal text-[#651F2B] tracking-normal leading-tight">
             Featured Jewellery Collections
           </h2>
 
@@ -29,7 +29,7 @@ export default function FeaturedJewellery({ onSelectCollection }) {
             <span className="h-[1px] w-12 sm:w-16 bg-[#C49A45]/70"></span>
           </div>
 
-          <p className="font-serif text-[#218F95] text-sm sm:text-base tracking-wide font-normal">
+          <p className="text-[#218F95] text-sm sm:text-base tracking-wide font-normal">
             Discover signature designs for every moment.
           </p>
         </div>
@@ -55,10 +55,10 @@ export default function FeaturedJewellery({ onSelectCollection }) {
 
             {/* Exact Text Overlay (Upper Right) */}
             <div className="absolute top-4 xs:top-6 sm:top-8 right-4 xs:right-6 sm:right-8 text-right z-10 pointer-events-none">
-              <h3 className="font-serif text-xl xs:text-2xl sm:text-3xl lg:text-[34px] font-normal text-white tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] leading-tight">
+              <h3 className="text-xl xs:text-2xl sm:text-3xl lg:text-[34px] font-normal text-white tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] leading-tight">
                 Layered Luxe
               </h3>
-              <p className="text-white/95 font-serif text-xs sm:text-[13.5px] tracking-wide mt-0.5 sm:mt-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+              <p className="text-white/95 text-xs sm:text-[13.5px] tracking-wide mt-0.5 sm:mt-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                 Stack it. Style it. Own it.
               </p>
             </div>
@@ -84,10 +84,10 @@ export default function FeaturedJewellery({ onSelectCollection }) {
 
               {/* Exact Text Overlay (Lower Right) */}
               <div className="absolute bottom-4 xs:bottom-5 sm:bottom-6 right-4 xs:right-6 sm:right-8 text-right z-10 pointer-events-none">
-                <h3 className="font-serif text-xl xs:text-2xl sm:text-[28px] font-normal text-white tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] leading-tight">
+                <h3 className="text-xl xs:text-2xl sm:text-[28px] font-normal text-white tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] leading-tight">
                   Ethnic Glow
                 </h3>
-                <p className="text-white/95 font-serif text-xs sm:text-[13.5px] tracking-wide mt-0.5 sm:mt-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+                <p className="text-white/95 text-xs sm:text-[13.5px] tracking-wide mt-0.5 sm:mt-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                   Tradition with a twist.
                 </p>
               </div>
@@ -110,10 +110,10 @@ export default function FeaturedJewellery({ onSelectCollection }) {
 
               {/* Exact Text Overlay (Lower Right) */}
               <div className="absolute bottom-4 xs:bottom-5 sm:bottom-6 right-4 xs:right-6 sm:right-8 text-right z-10 pointer-events-none">
-                <h3 className="font-serif text-xl xs:text-2xl sm:text-[28px] font-normal text-white tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] leading-tight">
+                <h3 className="text-xl xs:text-2xl sm:text-[28px] font-normal text-white tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] leading-tight">
                   Everyday Icons
                 </h3>
-                <p className="text-white/95 font-serif text-xs sm:text-[13.5px] tracking-wide mt-0.5 sm:mt-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+                <p className="text-white/95 text-xs sm:text-[13.5px] tracking-wide mt-0.5 sm:mt-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                   Little details. Lasting meaning.
                 </p>
               </div>

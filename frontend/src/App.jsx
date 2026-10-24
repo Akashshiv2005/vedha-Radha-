@@ -15,6 +15,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminLoginPage from './pages/admin/AdminLoginPage';
 import { AuthProvider, RequireAuth } from './context/AuthContext';
 
+import ProductDetailPage from './pages/ProductDetailPage';
 import ProductDetailModal from './components/ProductDetailModal';
 import ShowroomModal from './components/ShowroomModal';
 import CartDrawer from './components/CartDrawer';
@@ -340,6 +341,18 @@ export default function App() {
             element={<ContactPage />} 
           />
 
+          {/* Dedicated Full Product Page Route */}
+          <Route 
+            path="/product/:productId" 
+            element={
+              <ProductDetailPage 
+                onAddToCart={handleAddToCart}
+                onAddToWishlist={handleAddToWishlist}
+                wishlistItems={wishlistItems}
+              />
+            } 
+          />
+
           {/* Fallback */}
           <Route 
             path="*" 
@@ -355,9 +368,13 @@ export default function App() {
 
       {/* Shared Modals & Drawers */}
       <ProductDetailModal
+        key={selectedProduct?.id || 'no-product'}
         product={selectedProduct}
         onClose={() => setSelectedProduct(null)}
         onAddToCart={handleAddToCart}
+        onAddToWishlist={handleAddToWishlist}
+        isWishlisted={wishlistItems.some(item => item.id === selectedProduct?.id)}
+        onSelectRelatedProduct={(p) => setSelectedProduct(p)}
       />
 
       <ShowroomModal

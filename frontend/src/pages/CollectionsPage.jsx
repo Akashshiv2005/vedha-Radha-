@@ -384,7 +384,7 @@ export default function CollectionsPage({
                       {/* Product Title */}
                       <h3 
                         onClick={() => onViewProduct(item)}
-                        className="font-serif text-[15px] sm:text-base font-bold text-[#241716] group-hover:text-[#581923] transition-colors line-clamp-2 leading-snug cursor-pointer pt-0.5"
+                        className="text-[15px] sm:text-base font-bold text-[#241716] group-hover:text-[#581923] transition-colors line-clamp-2 leading-snug cursor-pointer pt-0.5"
                         title={item.name}
                       >
                         {item.name}
@@ -422,7 +422,7 @@ export default function CollectionsPage({
                     <div className="mt-3 pt-3 border-t border-[#EAE2D5] flex items-center justify-between gap-2">
                       <div>
                         <span className="text-[10px] text-[#7A6E65] block font-medium">Showroom Price</span>
-                        <span className="font-serif text-lg font-bold text-[#48161E]">{item.price}</span>
+                        <span className="text-lg font-bold text-[#48161E]">{item.price}</span>
                       </div>
                       <div className="flex items-center gap-2 shrink-0">
                         <button

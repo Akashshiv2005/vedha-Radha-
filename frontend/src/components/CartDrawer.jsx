@@ -19,7 +19,7 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onRemoveItem, o
         {/* Header */}
         <div className="p-4 sm:p-5 border-b border-[#EAE2D5] flex items-center justify-between bg-[#FAF8F5]">
           <div className="flex items-center gap-2">
-            <h3 className="font-serif text-lg font-bold text-[#48161E]">Reserved Jewellery</h3>
+            <h3 className="text-lg font-bold text-[#48161E]">Reserved Jewellery</h3>
             <span className="text-xs bg-[#581923] text-white px-2 py-0.5 rounded-full font-medium">
               {cartItems.length}
             </span>
@@ -36,7 +36,7 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onRemoveItem, o
         <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4">
           {cartItems.length === 0 ? (
             <div className="text-center py-12">
-              <p className="font-serif text-base text-[#6E6056]">Your reservation bag is currently empty.</p>
+              <p className="text-base text-[#6E6056]">Your reservation bag is currently empty.</p>
               <p className="text-xs text-[#9C8F85] mt-1">Explore our collections and reserve your unique piece.</p>
             </div>
           ) : (
@@ -61,11 +61,11 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onRemoveItem, o
                     }}
                   />
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-serif text-xs sm:text-[13px] font-bold text-[#241716] truncate">
+                    <h4 className="text-xs sm:text-[13px] font-bold text-[#241716] truncate">
                       {item.name}
                     </h4>
                     <p className="text-[11px] text-[#7A6E65]">{item.details}</p>
-                    <p className="text-xs font-serif font-bold text-[#581923] mt-1">{item.price}</p>
+                    <p className="text-xs font-bold text-[#581923] mt-1">{item.price}</p>
                   </div>
                   <button
                     onClick={() => onRemoveItem(idx)}
@@ -85,7 +85,7 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onRemoveItem, o
           <div className="p-4 sm:p-5 border-t border-[#EAE2D5] bg-[#FAF8F5] space-y-3">
             <div className="flex justify-between items-center text-sm font-semibold text-[#241716]">
               <span>Estimated Total:</span>
-              <span className="font-serif text-base text-[#581923]">
+              <span className="text-base text-[#581923]">
                 ₹ {totalAmount.toLocaleString('en-IN')}
               </span>
             </div>

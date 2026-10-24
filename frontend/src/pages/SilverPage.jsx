@@ -627,7 +627,7 @@ export default function SilverPage({
             </span>
 
             {/* Main Heading */}
-            <h1 className="font-serif text-2xl sm:text-4xl lg:text-[44px] font-bold text-white tracking-tight leading-[1.15] drop-shadow-md">
+            <h1 className="text-2xl sm:text-4xl lg:text-[44px] font-bold text-white tracking-tight leading-[1.15] drop-shadow-md">
               Timeless radiance in pure silver.
             </h1>
 
@@ -653,7 +653,7 @@ export default function SilverPage({
         
         {/* CENTERED SECTION HEADING & LOTUS FLOURISH */}
         <div className="text-center mb-6">
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-[40px] font-bold text-[#0F172A] tracking-tight mb-2.5">
+          <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-bold text-[#0F172A] tracking-tight mb-2.5">
             Silver Collections
           </h2>
 
@@ -789,7 +789,7 @@ export default function SilverPage({
             <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3 mb-3">
               <div className="flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-[#1E293B]" />
-                <h3 className="font-serif text-sm font-bold text-[#0F172A]">
+                <h3 className="text-sm font-bold text-[#0F172A]">
                   Filter Silver Articles
                 </h3>
               </div>
@@ -892,7 +892,7 @@ export default function SilverPage({
         {/* Product Cards Grid */}
         {apiError ? (
           <div className="bg-white rounded-2xl p-8 sm:p-12 text-center border border-[#CBD5E1] my-8 shadow-xs max-w-2xl mx-auto space-y-3">
-            <p className="font-serif text-base font-semibold text-[#8C1D28]">{apiError}</p>
+            <p className="text-base font-semibold text-[#8C1D28]">{apiError}</p>
             <p className="text-xs text-[#475569]">Please verify your backend connection or try again later.</p>
           </div>
         ) : sortedProducts.length > 0 ? (
@@ -904,17 +904,36 @@ export default function SilverPage({
                   key={item.id}
                   className="bg-white rounded-xl border border-[#CBD5E1] overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between group"
                 >
-                  <div className="relative aspect-4/3 overflow-hidden bg-[#FAF6EE]">
+                  <div 
+                    className="relative aspect-4/3 overflow-hidden bg-[#FAF6EE] cursor-pointer"
+                    onClick={() => onViewProduct(item)}
+                  >
                     <img
                       src={item.image}
                       alt={item.name}
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                      className={`w-full h-full object-cover object-center transition-all duration-500 ${
+                        item.images && item.images.length > 1
+                          ? 'group-hover:opacity-0 group-hover:scale-105'
+                          : 'group-hover:scale-105'
+                      }`}
                       loading="lazy"
                       onError={(e) => {
                         e.target.onerror = null;
-                        e.target.src = '/images/product_anklet.jpg';
+                        e.target.src = '/images/neutral_product_placeholder.svg';
                       }}
                     />
+                    {item.images && item.images.length > 1 && (
+                      <img
+                        src={item.images[1]}
+                        alt={`${item.name} - angle view`}
+                        className="absolute inset-0 w-full h-full object-cover object-center opacity-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 pointer-events-none"
+                        loading="lazy"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = item.image;
+                        }}
+                      />
+                    )}
                     <div className="absolute top-3 left-3">
                       <span className="inline-block px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-[#F1F5F9] text-[#1E293B] border border-[#CBD5E1]">
                         {item.badge || '92.5 Silver'}
@@ -945,7 +964,7 @@ export default function SilverPage({
                       </div>
                       <h3 
                         onClick={() => onViewProduct(item)}
-                        className="font-serif text-base font-bold text-[#0F172A] group-hover:text-[#1E293B] transition-colors line-clamp-1 mt-1 cursor-pointer"
+                        className="text-base font-bold text-[#0F172A] group-hover:text-[#1E293B] transition-colors line-clamp-1 mt-1 cursor-pointer"
                       >
                         {item.name}
                       </h3>
@@ -957,7 +976,7 @@ export default function SilverPage({
                     <div className="mt-4 pt-3 border-t border-[#E2E8F0] flex items-center justify-between">
                       <div>
                         <span className="text-[10px] text-[#64748B] block">Showroom Price</span>
-                        <span className="font-serif text-lg font-bold text-[#0F172A]">
+                        <span className="text-lg font-bold text-[#0F172A]">
                           {item.price}
                         </span>
                       </div>
@@ -989,7 +1008,7 @@ export default function SilverPage({
             <div className="w-14 h-14 rounded-full bg-[#F1F5F9] text-[#475569] flex items-center justify-center mx-auto border border-[#CBD5E1]">
               <Sparkles className="w-7 h-7 text-[#475569]" />
             </div>
-            <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#0F172A]">
+            <h2 className="text-xl sm:text-2xl font-bold text-[#0F172A]">
               No products available yet.
             </h2>
             <p className="text-xs sm:text-sm text-[#475569] leading-relaxed max-w-md mx-auto">

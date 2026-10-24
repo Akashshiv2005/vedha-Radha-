@@ -21,12 +21,18 @@ SEED_PRODUCTS = [
         "sku": "SA-001",
         "name": "Handcrafted Silver Anklet",
         "subtitle": "One of a kind • Handcrafted",
+        "product_type": "silver",
         "category": "Silver Jewellery",
         "sub_category": "Anklets & Kolusu",
         "item_type": "unique",
         "price": Decimal("12800.00"),
         "status": "reserved",
-        "image_url": "/images/product_anklet.jpg",
+        "image_url": "/images/products/silver/anklets/silver-new-arrival-salem-ghungroo-payal-01.jpg",
+        "images": [
+            "/images/products/silver/anklets/silver-new-arrival-salem-ghungroo-payal-01.jpg",
+            "/images/products/silver/anklets/silver-new-arrival-salem-ghungroo-payal-02.jpg",
+            "/images/products/silver/anklets/silver-new-arrival-salem-ghungroo-payal-03.jpg",
+        ],
         "description": "Traditional heavy Chettinad silver payal with intricately sculpted peacock clasps and melodic chime ghungroos. Handcrafted by master silversmiths.",
         "purity": "925 Sterling Silver",
         "gross_weight": "45.00 g",
@@ -39,12 +45,18 @@ SEED_PRODUCTS = [
         "sku": "GC-1045",
         "name": "22K Gold Chain",
         "subtitle": "22K 916 Hallmark • Classic Curb",
+        "product_type": "gold",
         "category": "Gold Jewellery",
         "sub_category": "Chains & Neckwear",
         "item_type": "regular",
         "price": Decimal("48500.00"),
         "status": "available",
-        "image_url": "/images/product_gold_chain.jpg",
+        "image_url": "/images/products/gold/chains/gold-new-arrival-nawabi-rope-chain-01.jpg",
+        "images": [
+            "/images/products/gold/chains/gold-new-arrival-nawabi-rope-chain-01.jpg",
+            "/images/products/gold/chains/gold-new-arrival-nawabi-rope-chain-02.jpg",
+            "/images/products/gold/chains/gold-new-arrival-nawabi-rope-chain-03.jpg",
+        ],
         "description": "22K yellow gold classic curb chain featuring precision soldered links with BIS hallmarked lock mechanism.",
         "purity": "22K (916 Fineness)",
         "gross_weight": "24.20 g",
@@ -57,12 +69,14 @@ SEED_PRODUCTS = [
         "sku": "SB-778",
         "name": "Silver Bowl",
         "subtitle": "Pure Silver Pooja Kinnam",
+        "product_type": "silver",
         "category": "Silver Articles",
         "sub_category": "Pooja Utensils",
         "item_type": "regular",
         "price": Decimal("16200.00"),
         "status": "available",
         "image_url": "/images/product_silver_bowl.jpg",
+        "images": ["/images/product_silver_bowl.jpg"],
         "description": "Solid sterling silver ceremonial bowl crafted for sacred rituals, archana offering, and deity abhishekams.",
         "purity": "92.5% Silver Grade",
         "gross_weight": "118.00 g",
@@ -75,12 +89,18 @@ SEED_PRODUCTS = [
         "sku": "TP-201",
         "name": "Temple Lakshmi Haram",
         "subtitle": "Antique Nakshi • Goddess Motif",
+        "product_type": "gold",
         "category": "Temple Jewellery",
         "sub_category": "Long Harams",
         "item_type": "unique",
         "price": Decimal("245000.00"),
         "status": "available",
-        "image_url": "/images/product_gold_chain.jpg",
+        "image_url": "/images/products/gold/necklaces/gold-new-arrival-ashtalakshmi-haram-01.jpg",
+        "images": [
+            "/images/products/gold/necklaces/gold-new-arrival-ashtalakshmi-haram-01.jpg",
+            "/images/products/gold/necklaces/gold-new-arrival-ashtalakshmi-haram-02.jpg",
+            "/images/products/gold/necklaces/gold-new-arrival-ashtalakshmi-haram-03.jpg",
+        ],
         "description": "Heritage antique gold long haram depicting Goddess Lakshmi seated on a lotus, flanked by imperial temple peacocks.",
         "purity": "22K Antique Finish",
         "gross_weight": "86.50 g",
@@ -93,12 +113,18 @@ SEED_PRODUCTS = [
         "sku": "BR-902",
         "name": "Bridal Emerald Choker",
         "subtitle": "Royal Heritage • Zambian Emeralds",
+        "product_type": "gold",
         "category": "Bridal Jewellery",
         "sub_category": "Chokers",
         "item_type": "unique",
         "price": Decimal("380000.00"),
         "status": "sold",
-        "image_url": "/images/product_anklet.jpg",
+        "image_url": "/images/products/gold/necklaces/collections-new-arrival-bridal-peacock-vaddanam-01.jpg",
+        "images": [
+            "/images/products/gold/necklaces/collections-new-arrival-bridal-peacock-vaddanam-01.jpg",
+            "/images/products/gold/necklaces/collections-new-arrival-bridal-peacock-vaddanam-02.jpg",
+            "/images/products/gold/necklaces/collections-new-arrival-bridal-peacock-vaddanam-03.jpg",
+        ],
         "description": "Magnificent bridal choker encrusted with unheated natural emeralds and heirloom polki diamond motifs.",
         "purity": "22K Yellow Gold",
         "gross_weight": "98.20 g",
@@ -111,12 +137,18 @@ SEED_PRODUCTS = [
         "sku": "CB-001",
         "name": "24K Lakshmi Gold Coin 8g",
         "subtitle": "999 Pure Gold • Certified Tamper-Proof",
+        "product_type": "coins_bars",
         "category": "Coins & Bars",
         "sub_category": "Gold Coins",
         "item_type": "regular",
         "price": Decimal("58400.00"),
         "status": "available",
-        "image_url": "/images/product_gold_chain.jpg",
+        "image_url": "/images/coins-bars/gold-coin-lakshmi-01.jpg",
+        "images": [
+            "/images/coins-bars/gold-coin-lakshmi-01.jpg",
+            "/images/coins-bars/gold-coin-lakshmi-02.jpg",
+            "/images/coins-bars/gold-coin-lakshmi-03.jpg",
+        ],
         "description": "Certified 24 Karat 999 fineness pure gold coin embossed with divine Goddess Lakshmi posture.",
         "purity": "24K (999 Purity)",
         "gross_weight": "8.00 g",
@@ -369,6 +401,16 @@ def create_product(db: Session, payload: ProductCreate) -> Product:
     item_type = payload.resolve_item_type()
 
     clean_image = normalize_image_reference(payload.image_url)
+    clean_images: List[str] = []
+    if payload.images:
+        for img in payload.images:
+            norm = normalize_image_reference(img)
+            if norm and norm not in clean_images:
+                clean_images.append(norm)
+        clean_images = clean_images[:3]
+    if not clean_images and clean_image:
+        clean_images = [clean_image]
+    primary_image = clean_images[0] if clean_images else clean_image
     clean_pt = normalize_product_type(payload.product_type) or infer_product_type(payload.category)
 
     product = Product(
@@ -382,7 +424,8 @@ def create_product(db: Session, payload: ProductCreate) -> Product:
         item_type=item_type,
         price=price_dec,
         status=payload.status.strip().lower(),
-        image_url=clean_image,
+        image_url=primary_image,
+        images=clean_images,
         stock_quantity=stock_qty,
         purity=payload.purity.strip() if payload.purity else None,
         gross_weight=payload.gross_weight.strip() if payload.gross_weight else None,
@@ -443,12 +486,34 @@ def update_product(db: Session, product: Product, payload: ProductUpdate) -> Pro
         clean_status = payload.status.strip().lower()
         product.status = clean_status
 
-    old_image_to_cleanup: Optional[str] = None
-    if payload.image_url is not None:
+    old_images_to_cleanup: List[str] = []
+    if payload.images is not None:
+        clean_images: List[str] = []
+        for img in payload.images:
+            norm = normalize_image_reference(img)
+            if norm and norm not in clean_images:
+                clean_images.append(norm)
+        clean_images = clean_images[:3]
+
+        current_images = product.images or []
+        for prev_img in current_images:
+            if prev_img and prev_img.startswith("products/") and prev_img not in clean_images:
+                old_images_to_cleanup.append(prev_img)
+
+        product.images = clean_images
+        product.image_url = clean_images[0] if clean_images else None
+    elif payload.image_url is not None:
         new_image = normalize_image_reference(payload.image_url)
         if product.image_url and product.image_url != new_image and product.image_url.startswith("products/"):
-            old_image_to_cleanup = product.image_url
+            old_images_to_cleanup.append(product.image_url)
         product.image_url = new_image
+        if new_image:
+            if not product.images:
+                product.images = [new_image]
+            else:
+                product.images = [new_image] + [img for img in product.images[1:] if img != new_image][:2]
+        else:
+            product.images = []
 
     if payload.stock_quantity is not None:
         product.stock_quantity = max(0, payload.stock_quantity)
@@ -468,9 +533,9 @@ def update_product(db: Session, product: Product, payload: ProductUpdate) -> Pro
     db.commit()
     db.refresh(product)
 
-    # Safely clean up previous replaced image only after successful DB commit
-    if old_image_to_cleanup:
-        minio_service.delete_object_if_unreferenced(old_image_to_cleanup, db, exclude_product_id=product.id)
+    # Safely clean up previous replaced images only after successful DB commit
+    for old_img in old_images_to_cleanup:
+        minio_service.delete_object_if_unreferenced(old_img, db, exclude_product_id=product.id)
 
     return product
 
@@ -483,10 +548,15 @@ def soft_delete_product(db: Session, product: Product) -> None:
 
 
 def delete_product_permanent(db: Session, product: Product) -> None:
-    """Permanently delete product from database and cleanup unreferenced MinIO image."""
-    image_to_cleanup = product.image_url if product.image_url and product.image_url.startswith("products/") else None
+    """Permanently delete product from database and cleanup unreferenced MinIO images."""
+    images_to_cleanup: List[str] = []
+    if product.images:
+        images_to_cleanup.extend([img for img in product.images if img and img.startswith("products/")])
+    elif product.image_url and product.image_url.startswith("products/"):
+        images_to_cleanup.append(product.image_url)
+
     prod_id = product.id
     db.delete(product)
     db.commit()
-    if image_to_cleanup:
-        minio_service.delete_object_if_unreferenced(image_to_cleanup, db, exclude_product_id=prod_id)
+    for img in set(images_to_cleanup):
+        minio_service.delete_object_if_unreferenced(img, db, exclude_product_id=prod_id)

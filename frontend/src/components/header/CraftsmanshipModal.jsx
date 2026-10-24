@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { X, Sparkles, Award, ShieldCheck, Hammer } from 'lucide-react';
 
 export default function CraftsmanshipModal({ isOpen, onClose }) {
@@ -21,7 +21,7 @@ export default function CraftsmanshipModal({ isOpen, onClose }) {
               <Sparkles className="w-4 h-4" />
             </div>
             <div>
-              <h3 id="craftsmanship-title" className="font-serif text-lg font-bold">The Art of Our Craftsmanship</h3>
+              <h3 id="craftsmanship-title" className="text-lg font-bold">The Art of Our Craftsmanship</h3>
               <p className="text-[11px] text-[#E6C37A]">Vedha Radha Thanga Maaligai</p>
             </div>
           </div>
@@ -40,9 +40,9 @@ export default function CraftsmanshipModal({ isOpen, onClose }) {
               <Award className="w-4 h-4" />
             </div>
             <div>
-              <h4 className="font-serif text-sm font-bold text-[#241716]">Heritage Nakshi & Temple Artistry</h4>
+              <h4 className="text-sm font-bold text-[#241716]">Heritage Nakshi & Temple Artistry</h4>
               <p className="text-[#6E5F55] mt-0.5 leading-relaxed">
-                Hand-engraved by master karigars from Mylapore and Chettinad, using ancient repoussé techniques passed down across four generations.
+                Hand-engraved by master karigars from Mylapore and Chettinad, using ancient repouss├⌐ techniques passed down across four generations.
               </p>
             </div>
           </div>
@@ -52,7 +52,7 @@ export default function CraftsmanshipModal({ isOpen, onClose }) {
               <ShieldCheck className="w-4 h-4" />
             </div>
             <div>
-              <h4 className="font-serif text-sm font-bold text-[#241716]">100% 916 BIS Hallmark & 92.5 Silver Purity</h4>
+              <h4 className="text-sm font-bold text-[#241716]">100% 916 BIS Hallmark & 92.5 Silver Purity</h4>
               <p className="text-[#6E5F55] mt-0.5 leading-relaxed">
                 Every gram of gold is assayed with laser-engraved HUID certifications, ensuring lifelong purity, buyback assurance, and absolute peace of mind.
               </p>
@@ -64,7 +64,7 @@ export default function CraftsmanshipModal({ isOpen, onClose }) {
               <Hammer className="w-4 h-4" />
             </div>
             <div>
-              <h4 className="font-serif text-sm font-bold text-[#241716]">Bespoke Bridal & Custom Commissions</h4>
+              <h4 className="text-sm font-bold text-[#241716]">Bespoke Bridal & Custom Commissions</h4>
               <p className="text-[#6E5F55] mt-0.5 leading-relaxed">
                 Work directly with our master designers to conceptualize bespoke trousseau heirlooms tailored to your family's weddings and auspicious occasions.
               </p>

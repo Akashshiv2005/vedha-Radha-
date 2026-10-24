@@ -56,7 +56,7 @@ export const goldCategories = [
     name: 'Nosepin',
     slug: 'nosepin',
     path: '/gold/nosepin',
-    image: '/images/products/gold/gold_nosepin_61.svg',
+    image: '/images/products/gold/nosepin/gold_nosepin_61-01.jpg',
     description: 'Traditional South Indian mookuthi, stone nosepins, and press-on studs.',
     subcategories: []
   },
@@ -78,7 +78,7 @@ export const goldCategories = [
     name: 'Chains',
     slug: 'chains',
     path: '/gold/chains',
-    image: '/images/products/gold/gold_chains_81.svg',
+    image: '/images/products/gold/chains/gold_chains_81-01.jpg',
     description: 'Hand-woven mugappu chains, hollow rope links, and daily 22K chains.',
     subcategories: []
   },
@@ -87,7 +87,7 @@ export const goldCategories = [
     name: 'Pendant',
     slug: 'pendants',
     path: '/gold/pendants',
-    image: '/images/products/gold/gold_pendants_86.svg',
+    image: '/images/products/gold/pendants/gold_pendants_86-01.jpg',
     description: 'Ganesha medallions, Lakshmi motifs, and ruby floral lockets.',
     subcategories: []
   },
@@ -105,7 +105,7 @@ export const goldCategories = [
     name: 'Toe Rings',
     slug: 'toe-rings',
     path: '/gold/toe-rings',
-    image: '/images/products/gold/gold_toe_rings_01.jpg',
+    image: '/images/products/gold/rings/gold_toe_rings_01.jpg',
     description: 'Auspicious South Indian bridal 22K gold metti pairs and ornate floral filigree toe rings.',
     subcategories: []
   },
@@ -218,7 +218,7 @@ export const silverCategories = [
     name: 'Anklets',
     slug: 'anklets',
     path: '/silver/anklets',
-    image: '/images/products/silver/silver-anklets-payal-01.jpg',
+    image: '/images/products/silver/anklets/silver-anklets-payal-01.jpg',
     description: 'Melodic ghungroo payals, antique Kasu payals, and Salem bridal ankle kadas.',
     subcategories: []
   },
@@ -227,7 +227,7 @@ export const silverCategories = [
     name: 'Toe Rings',
     slug: 'toe-rings',
     path: '/silver/toe-rings',
-    image: '/images/products/silver/silver-rings-metti-01.jpg',
+    image: '/images/products/silver/rings/silver-rings-metti-01.jpg',
     description: 'Traditional South Indian bridal metti and contemporary sterling silver toe rings.',
     subcategories: []
   },
@@ -236,7 +236,7 @@ export const silverCategories = [
     name: 'Coins',
     slug: 'coins',
     path: '/silver/coins',
-    image: '/images/products/silver/silver-coin-lakshmi-card.jpg',
+    image: '/images/products/silver/coins/silver-coin-lakshmi-card.jpg',
     description: 'Certified 999 pure fine silver coins embossed with sacred Lakshmi, royal peacock, and blooming lotus motifs for puja and gifting.',
     subcategories: []
   }

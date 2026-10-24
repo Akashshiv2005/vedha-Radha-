@@ -674,7 +674,7 @@ export default function GoldPage({
             </span>
 
             {/* Main Heading */}
-            <h1 className="font-serif text-2xl sm:text-4xl lg:text-[44px] font-bold text-white tracking-tight leading-[1.15]">
+            <h1 className="text-2xl sm:text-4xl lg:text-[44px] font-bold text-white tracking-tight leading-[1.15]">
               The Radiance of Pure Gold
             </h1>
 
@@ -699,8 +699,8 @@ export default function GoldPage({
 
         {/* CENTERED SECTION HEADING & LOTUS FLOURISH */}
         <div className="text-center mb-6">
-          {/* "Gold Collections" in Deep Navy Serif Typography */}
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-[40px] font-bold text-[#0C1E44] tracking-tight mb-2.5">
+          {/* "Gold Collections" in Deep Navy Typography */}
+          <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-bold text-[#0C1E44] tracking-tight mb-2.5">
             Gold Collections
           </h2>
 
@@ -839,7 +839,7 @@ export default function GoldPage({
             <div className="flex items-center justify-between border-b border-[#EAE2D5] pb-3 mb-3">
               <div className="flex items-center gap-2">
                 <SlidersHorizontal className="w-4 h-4 text-[#581923]" />
-                <h3 className="font-serif text-sm font-bold text-[#241716]">
+                <h3 className="text-sm font-bold text-[#241716]">
                   Filter Gold Jewellery
                 </h3>
               </div>
@@ -941,7 +941,7 @@ export default function GoldPage({
         {/* Product Cards Grid with First JPG Product Image */}
         {apiError ? (
           <div className="bg-white rounded-2xl p-8 sm:p-12 text-center border border-[#E8DFC0] my-8 shadow-xs max-w-2xl mx-auto space-y-3">
-            <p className="font-serif text-base font-semibold text-[#8C1D28]">{apiError}</p>
+            <p className="text-base font-semibold text-[#8C1D28]">{apiError}</p>
             <p className="text-xs text-[#63574F]">Please verify your backend connection or try again later.</p>
           </div>
         ) : sortedProducts.length > 0 ? (
@@ -963,13 +963,29 @@ export default function GoldPage({
                     <img
                       src={cardImage}
                       alt={item.altText || item.name}
-                      className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-500"
+                      className={`w-full h-full object-contain p-2 transition-all duration-500 ${
+                        item.images && item.images.length > 1
+                          ? 'group-hover:opacity-0 group-hover:scale-105'
+                          : 'group-hover:scale-105'
+                      }`}
                       loading="lazy"
                       onError={(e) => {
                         e.target.onerror = null;
-                        e.target.src = '/images/product_gold_chain.jpg';
+                        e.target.src = '/images/neutral_product_placeholder.svg';
                       }}
                     />
+                    {item.images && item.images.length > 1 && (
+                      <img
+                        src={item.images[1]}
+                        alt={`${item.altText || item.name} - alternate view`}
+                        className="absolute inset-0 w-full h-full object-contain p-2 opacity-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 pointer-events-none"
+                        loading="lazy"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = cardImage;
+                        }}
+                      />
+                    )}
 
                     {/* Status Badge */}
                     <div className="absolute top-3 left-3 flex flex-col gap-1.5">
@@ -1022,7 +1038,7 @@ export default function GoldPage({
                       {/* Product Name */}
                       <h3
                         onClick={() => onViewProduct(item)}
-                        className="font-serif text-base font-bold text-[#241716] group-hover:text-[#581923] transition-colors line-clamp-1 mt-1 cursor-pointer"
+                        className="text-base font-bold text-[#241716] group-hover:text-[#581923] transition-colors line-clamp-1 mt-1 cursor-pointer"
                         title={item.name}
                       >
                         {item.name}
@@ -1038,7 +1054,7 @@ export default function GoldPage({
                     <div className="mt-4 pt-3 border-t border-[#EAE2D5] flex items-center justify-between gap-2">
                       <div>
                         <span className="text-[10px] text-[#7A6E65] block font-medium">Showroom Price</span>
-                        <span className="font-serif text-lg font-bold text-[#48161E]">
+                        <span className="text-lg font-bold text-[#48161E]">
                           {item.price}
                         </span>
                       </div>
@@ -1070,7 +1086,7 @@ export default function GoldPage({
             <div className="w-14 h-14 rounded-full bg-[#FAF3E3] text-[#8C6D2D] flex items-center justify-center mx-auto border border-[#E8DFC0]">
               <Sparkles className="w-7 h-7 text-[#8C6D2D]" />
             </div>
-            <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#241716]">
+            <h2 className="text-xl sm:text-2xl font-bold text-[#241716]">
               No products available yet.
             </h2>
             <p className="text-xs sm:text-sm text-[#63574F] leading-relaxed max-w-md mx-auto">

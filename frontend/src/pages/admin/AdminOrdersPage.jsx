@@ -25,7 +25,9 @@ import {
   Share2,
   FileText,
   Sparkles,
-  Hourglass
+  Hourglass,
+  ShoppingBag,
+  Loader2
 } from 'lucide-react';
 import { useAdmin } from '../../context/AdminContext';
 
@@ -42,6 +44,8 @@ export default function AdminOrdersPage({
     updateOrderStatus, 
     updateTracking, 
     createReservation,
+    createOrder,
+    refreshOrders,
     addToast
   } = useAdmin();
 
@@ -99,6 +103,44 @@ export default function AdminOrdersPage({
     notes: 'In-store customer visit requested.'
   });
 
+  // Form State for Create Order
+  const [orderForm, setOrderForm] = useState({
+    customerName: '',
+    phone: '',
+    email: '',
+    productSku: '',
+    quantity: 1,
+    discount: 0,
+    channel: 'Showroom',
+    paymentMethod: 'UPI',
+    paymentStatus: 'paid',
+    orderStatus: 'processing',
+    city: 'Madurai',
+    notes: ''
+  });
+  const [isSubmittingOrder, setIsSubmittingOrder] = useState(false);
+  const [orderFormError, setOrderFormError] = useState(null);
+
+  // Selected product in create order modal
+  const selectedOrderProduct = useMemo(() => {
+    if (!products || products.length === 0) return null;
+    return products.find(p => p.sku === orderForm.productSku) || products[0];
+  }, [products, orderForm.productSku]);
+
+  // Pricing calculations for the Create Order form
+  const orderPricing = useMemo(() => {
+    const rawPrice = selectedOrderProduct?.numericPrice ?? selectedOrderProduct?.price ?? 0;
+    const unitPrice = typeof rawPrice === 'number' 
+      ? rawPrice 
+      : (parseInt(String(rawPrice).replace(/[^0-9]/g, ''), 10) || 0);
+    const quantity = Math.max(1, parseInt(orderForm.quantity, 10) || 1);
+    const subtotal = unitPrice * quantity;
+    const discount = Math.max(0, parseFloat(orderForm.discount) || 0);
+    const tax = Math.round(subtotal * 0.03); // standard 3% jewellery GST
+    const totalAmount = Math.max(0, subtotal - discount + tax);
+    return { unitPrice, quantity, subtotal, discount, tax, totalAmount };
+  }, [selectedOrderProduct, orderForm.quantity, orderForm.discount]);
+
   // KPI Calculations
   const kpiCounts = useMemo(() => {
     let awaiting = 0;
@@ -107,7 +149,7 @@ export default function AdminOrdersPage({
     let dispatch = 0;
 
     orders.forEach(o => {
-      const s = (o.status || '').toLowerCase();
+      const s = (o.status || o.orderStatus || '').toLowerCase();
       if (s === 'awaiting_confirmation') awaiting++;
       else if (s === 'reserved') holds++;
       else if (s === 'processing' || s === 'confirmed') processing++;
@@ -115,10 +157,10 @@ export default function AdminOrdersPage({
     });
 
     return {
-      awaiting: awaiting || 2,
-      holds: holds || 2,
-      processing: processing || 2,
-      dispatch: dispatch || 1
+      awaiting: awaiting,
+      holds: holds,
+      processing: processing,
+      dispatch: dispatch
     };
   }, [orders]);
 
@@ -218,7 +260,7 @@ export default function AdminOrdersPage({
       productName: selProd?.name || 'Diamond Ring',
       productPrice: selProd?.price || '₹ 2,48,000',
       numericPrice: selProd?.numericPrice || 248000,
-      productImage: selProd?.image || '/images/products/gold/gold_studs_1_photo.jpg',
+      productImage: selProd?.image || '/images/products/gold/earrings/gold_studs_1_photo.jpg',
       isUniqueItem: selProd?.isUnique ?? true,
       orderType: 'reservation',
       fulfilmentType: reservationForm.channel === 'Showroom' ? 'showroom_pickup' : 'home_delivery',
@@ -237,6 +279,84 @@ export default function AdminOrdersPage({
     createReservation(newRes);
     setIsNewReservationOpen(false);
     addToast('Reservation Created', `Hold ${newRes.orderNumber} placed for ${newRes.customerName}.`);
+  };
+
+  const handleOpenCreateOrder = () => {
+    setOrderFormError(null);
+    setOrderForm(prev => ({
+      ...prev,
+      productSku: prev.productSku || products[0]?.sku || ''
+    }));
+    setIsCreateOrderOpen(true);
+  };
+
+  const handleCreateOrderSubmit = async (e) => {
+    e.preventDefault();
+    setOrderFormError(null);
+
+    if (!orderForm.customerName.trim()) {
+      setOrderFormError('Customer Name is required.');
+      return;
+    }
+    if (!orderForm.phone.trim()) {
+      setOrderFormError('Mobile Number is required.');
+      return;
+    }
+    const currentSku = orderForm.productSku || products[0]?.sku;
+    if (!currentSku) {
+      setOrderFormError('Please select a product from inventory.');
+      return;
+    }
+
+    const qty = parseInt(orderForm.quantity, 10) || 1;
+    if (qty < 1) {
+      setOrderFormError('Quantity must be a positive integer.');
+      return;
+    }
+
+    setIsSubmittingOrder(true);
+    try {
+      const payload = {
+        customerName: orderForm.customerName.trim(),
+        phone: orderForm.phone.trim(),
+        email: orderForm.email?.trim() || null,
+        productSku: currentSku,
+        quantity: qty,
+        discount: Math.max(0, parseFloat(orderForm.discount) || 0),
+        tax: orderPricing.tax,
+        channel: orderForm.channel,
+        paymentMethod: orderForm.paymentMethod,
+        paymentStatus: orderForm.paymentStatus,
+        orderStatus: orderForm.orderStatus,
+        city: orderForm.city?.trim() || 'Madurai',
+        notes: orderForm.notes?.trim() || null
+      };
+
+      const res = await createOrder(payload);
+      if (res.success) {
+        setIsCreateOrderOpen(false);
+        setOrderForm({
+          customerName: '',
+          phone: '',
+          email: '',
+          productSku: products[0]?.sku || '',
+          quantity: 1,
+          discount: 0,
+          channel: 'Showroom',
+          paymentMethod: 'UPI',
+          paymentStatus: 'paid',
+          orderStatus: 'processing',
+          city: 'Madurai',
+          notes: ''
+        });
+      } else {
+        setOrderFormError(res.error || 'Failed to create order on server.');
+      }
+    } catch (err) {
+      setOrderFormError(err.message || 'An unexpected network error occurred.');
+    } finally {
+      setIsSubmittingOrder(false);
+    }
   };
 
   const handleClearFilters = () => {
@@ -293,7 +413,7 @@ export default function AdminOrdersPage({
 
           {/* + Create Order Button */}
           <button
-            onClick={() => setIsCreateOrderOpen(true)}
+            onClick={handleOpenCreateOrder}
             className="px-4 py-2 rounded-lg bg-white hover:bg-gray-50 border border-[#D1D5DB] text-[#292521] text-[14px] font-semibold font-admin-body shadow-sm flex items-center gap-1.5 transition duration-150 cursor-pointer"
           >
             <Plus className="w-4 h-4 stroke-[2.2] text-[#6B7280]" />
@@ -1125,7 +1245,7 @@ export default function AdminOrdersPage({
                 >
                   {products.map(p => (
                     <option key={p.sku} value={p.sku}>
-                      {p.name} ({p.sku}) — {p.price}
+                      {p.name} ({p.sku}) • {p.price}
                     </option>
                   ))}
                 </select>
@@ -1172,6 +1292,294 @@ export default function AdminOrdersPage({
                   className="px-4 py-2 rounded-lg bg-[#5C1D27] hover:bg-[#48161E] text-white font-semibold text-[13px] shadow-sm"
                 >
                   Register Hold
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ================= CREATE ORDER MODAL ================= */}
+      {isCreateOrderOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in">
+          <div className="bg-white border border-[#E5E7EB] rounded-2xl max-w-xl w-full shadow-2xl overflow-hidden font-admin-body max-h-[92vh] flex flex-col">
+            {/* Modal Header */}
+            <div className="bg-[#5C1D27] text-white px-6 py-4 flex items-center justify-between flex-shrink-0">
+              <div className="flex items-center gap-2">
+                <ShoppingBag className="w-5 h-5 text-[#C49A45]" />
+                <h3 className="font-admin-heading font-semibold text-[20px] text-white">
+                  Create Customer Order
+                </h3>
+              </div>
+              <button 
+                onClick={() => setIsCreateOrderOpen(false)}
+                className="text-white/70 hover:text-white p-1 rounded-lg hover:bg-white/10 transition cursor-pointer"
+                aria-label="Close modal"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Scrollable Body */}
+            <form onSubmit={handleCreateOrderSubmit} className="p-6 space-y-4 text-[13px] text-[#292521] overflow-y-auto flex-1">
+              {/* Error Notice */}
+              {orderFormError && (
+                <div className="bg-red-50 border border-red-200 text-[#C24141] px-4 py-2.5 rounded-xl text-[12.5px] flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4 flex-shrink-0" />
+                  <span>{orderFormError}</span>
+                </div>
+              )}
+
+              {/* Customer Name */}
+              <div>
+                <label className="block text-[12px] font-semibold text-[#4B5563] mb-1">
+                  Customer Name *
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Smt. Rajeshwari Sundaram"
+                  value={orderForm.customerName}
+                  onChange={(e) => setOrderForm({ ...orderForm, customerName: e.target.value })}
+                  className="w-full border border-[#D1D5DB] rounded-lg px-3 py-2 text-[13px] focus:ring-2 focus:ring-[#C49A45]/30 focus:border-[#C49A45] focus:outline-none"
+                />
+              </div>
+
+              {/* Mobile Number & Email */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[12px] font-semibold text-[#4B5563] mb-1">
+                    Mobile Number *
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    placeholder="+91 98401 23894"
+                    value={orderForm.phone}
+                    onChange={(e) => setOrderForm({ ...orderForm, phone: e.target.value })}
+                    className="w-full border border-[#D1D5DB] rounded-lg px-3 py-2 text-[13px] font-admin-mono focus:ring-2 focus:ring-[#C49A45]/30 focus:border-[#C49A45] focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[12px] font-semibold text-[#4B5563] mb-1">
+                    Email Address (Optional)
+                  </label>
+                  <input
+                    type="email"
+                    placeholder="customer@example.com"
+                    value={orderForm.email}
+                    onChange={(e) => setOrderForm({ ...orderForm, email: e.target.value })}
+                    className="w-full border border-[#D1D5DB] rounded-lg px-3 py-2 text-[13px] focus:ring-2 focus:ring-[#C49A45]/30 focus:border-[#C49A45] focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              {/* Product Selector */}
+              <div>
+                <label className="block text-[12px] font-semibold text-[#4B5563] mb-1">
+                  Select Jewellery Product *
+                </label>
+                <select
+                  value={orderForm.productSku || (selectedOrderProduct?.sku || '')}
+                  onChange={(e) => setOrderForm({ ...orderForm, productSku: e.target.value })}
+                  className="w-full border border-[#D1D5DB] rounded-lg px-3 py-2 text-[13px] focus:ring-2 focus:ring-[#C49A45]/30 focus:border-[#C49A45] focus:outline-none cursor-pointer"
+                >
+                  {products.map(p => (
+                    <option key={p.sku} value={p.sku}>
+                      {p.name} ({p.sku}) • ₹ {Number(p.numericPrice || (typeof p.price === 'number' ? p.price : String(p.price).replace(/[^0-9]/g, '')) || 0).toLocaleString('en-IN')}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Auto-populated Product Specs Card */}
+              {selectedOrderProduct && (
+                <div className="bg-[#FCFBF9] border border-[#E8DCBE] rounded-xl p-3 flex items-center justify-between text-[12.5px]">
+                  <div>
+                    <span className="text-[#736B63]">SKU:</span>{' '}
+                    <span className="font-semibold text-[#292521] font-admin-mono">{selectedOrderProduct.sku}</span>
+                    <span className="text-[#D5CFC5] mx-2">•</span>
+                    <span className="text-[#736B63]">Category:</span>{' '}
+                    <span className="font-semibold text-[#292521]">{selectedOrderProduct.category || 'Jewellery'}</span>
+                  </div>
+                  <div>
+                    <span className="text-[#736B63]">Unit Price:</span>{' '}
+                    <span className="font-bold text-[#8D6725]">₹ {orderPricing.unitPrice.toLocaleString('en-IN')}</span>
+                  </div>
+                </div>
+              )}
+
+              {/* Quantity, Discount, Tax */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                  <label className="block text-[12px] font-semibold text-[#4B5563] mb-1">
+                    Quantity *
+                  </label>
+                  <input
+                    type="number"
+                    min="1"
+                    required
+                    value={orderForm.quantity}
+                    onChange={(e) => setOrderForm({ ...orderForm, quantity: Math.max(1, parseInt(e.target.value, 10) || 1) })}
+                    className="w-full border border-[#D1D5DB] rounded-lg px-3 py-2 text-[13px] font-admin-mono focus:ring-2 focus:ring-[#C49A45]/30 focus:border-[#C49A45] focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[12px] font-semibold text-[#4B5563] mb-1">
+                    Discount (₹)
+                  </label>
+                  <input
+                    type="number"
+                    min="0"
+                    value={orderForm.discount}
+                    onChange={(e) => setOrderForm({ ...orderForm, discount: Math.max(0, parseFloat(e.target.value) || 0) })}
+                    className="w-full border border-[#D1D5DB] rounded-lg px-3 py-2 text-[13px] font-admin-mono focus:ring-2 focus:ring-[#C49A45]/30 focus:border-[#C49A45] focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[12px] font-semibold text-[#4B5563] mb-1">
+                    GST (3%)
+                  </label>
+                  <div className="w-full bg-gray-50 border border-[#D1D5DB] rounded-lg px-3 py-2 text-[13px] font-admin-mono text-[#6B7280]">
+                    ₹ {orderPricing.tax.toLocaleString('en-IN')}
+                  </div>
+                </div>
+              </div>
+
+              {/* Total Calculation Summary Card */}
+              <div className="bg-[#F7F0E1]/80 border border-[#E8DCBE] rounded-xl px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 shadow-2xs">
+                <div>
+                  <div className="text-[11px] font-medium uppercase tracking-wider text-[#7A7167]">
+                    Total Authoritative Amount
+                  </div>
+                  <div className="text-[12px] text-[#695D4E]">
+                    Subtotal: ₹ {orderPricing.subtotal.toLocaleString('en-IN')} • GST (3%): +₹ {orderPricing.tax.toLocaleString('en-IN')}{orderPricing.discount > 0 ? ` • Discount: -₹ ${orderPricing.discount.toLocaleString('en-IN')}` : ''}
+                  </div>
+                </div>
+                <div className="text-[20px] font-bold text-[#8D6725] font-admin-heading self-end sm:self-center">
+                  ₹ {orderPricing.totalAmount.toLocaleString('en-IN')}
+                </div>
+              </div>
+
+              {/* Order Channel, Payment Method, Payment Status */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                  <label className="block text-[12px] font-semibold text-[#4B5563] mb-1">
+                    Order Channel
+                  </label>
+                  <select
+                    value={orderForm.channel}
+                    onChange={(e) => setOrderForm({ ...orderForm, channel: e.target.value })}
+                    className="w-full border border-[#D1D5DB] rounded-lg px-3 py-2 text-[13px] focus:ring-2 focus:ring-[#C49A45]/30 focus:border-[#C49A45] focus:outline-none cursor-pointer"
+                  >
+                    <option value="Showroom">Showroom Walk-in</option>
+                    <option value="Online">Online Concierge</option>
+                    <option value="WhatsApp">WhatsApp Direct</option>
+                    <option value="Phone">Phone Booking</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-[12px] font-semibold text-[#4B5563] mb-1">
+                    Payment Method
+                  </label>
+                  <select
+                    value={orderForm.paymentMethod}
+                    onChange={(e) => setOrderForm({ ...orderForm, paymentMethod: e.target.value })}
+                    className="w-full border border-[#D1D5DB] rounded-lg px-3 py-2 text-[13px] focus:ring-2 focus:ring-[#C49A45]/30 focus:border-[#C49A45] focus:outline-none cursor-pointer"
+                  >
+                    <option value="UPI">UPI / QR</option>
+                    <option value="Card">Credit / Debit Card</option>
+                    <option value="Cash">Cash at Counter</option>
+                    <option value="NetBanking">Bank Transfer / NEFT</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-[12px] font-semibold text-[#4B5563] mb-1">
+                    Payment Status
+                  </label>
+                  <select
+                    value={orderForm.paymentStatus}
+                    onChange={(e) => setOrderForm({ ...orderForm, paymentStatus: e.target.value })}
+                    className="w-full border border-[#D1D5DB] rounded-lg px-3 py-2 text-[13px] focus:ring-2 focus:ring-[#C49A45]/30 focus:border-[#C49A45] focus:outline-none cursor-pointer"
+                  >
+                    <option value="paid">Paid (Immediate)</option>
+                    <option value="pending">Pending Verification</option>
+                    <option value="partially_paid">Partially Paid</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Order Status & City */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[12px] font-semibold text-[#4B5563] mb-1">
+                    Initial Order Status
+                  </label>
+                  <select
+                    value={orderForm.orderStatus}
+                    onChange={(e) => setOrderForm({ ...orderForm, orderStatus: e.target.value })}
+                    className="w-full border border-[#D1D5DB] rounded-lg px-3 py-2 text-[13px] focus:ring-2 focus:ring-[#C49A45]/30 focus:border-[#C49A45] focus:outline-none cursor-pointer"
+                  >
+                    <option value="processing">Processing (Workshop Queue)</option>
+                    <option value="confirmed">Confirmed (Vault Allocation)</option>
+                    <option value="dispatch_ready">Dispatch Ready (Armoured Carrier)</option>
+                    <option value="awaiting_confirmation">Awaiting Confirmation</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-[12px] font-semibold text-[#4B5563] mb-1">
+                    City / Showroom Region
+                  </label>
+                  <input
+                    type="text"
+                    value={orderForm.city}
+                    onChange={(e) => setOrderForm({ ...orderForm, city: e.target.value })}
+                    className="w-full border border-[#D1D5DB] rounded-lg px-3 py-2 text-[13px] focus:ring-2 focus:ring-[#C49A45]/30 focus:border-[#C49A45] focus:outline-none"
+                    placeholder="e.g. Madurai"
+                  />
+                </div>
+              </div>
+
+              {/* Notes */}
+              <div>
+                <label className="block text-[12px] font-semibold text-[#4B5563] mb-1">
+                  Order Notes / Special Requests
+                </label>
+                <textarea
+                  rows={2}
+                  value={orderForm.notes}
+                  onChange={(e) => setOrderForm({ ...orderForm, notes: e.target.value })}
+                  className="w-full border border-[#D1D5DB] rounded-lg p-2.5 text-[13px] focus:ring-2 focus:ring-[#C49A45]/30 focus:border-[#C49A45] focus:outline-none"
+                  placeholder="e.g. Hallmarking certification, custom gift box, or wedding date engraving."
+                />
+              </div>
+
+              {/* Action Buttons */}
+              <div className="pt-3 border-t border-[#E5E7EB] flex items-center justify-end gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => setIsCreateOrderOpen(false)}
+                  disabled={isSubmittingOrder}
+                  className="px-4 py-2 rounded-lg border border-[#D1D5DB] text-[#4B5563] hover:bg-gray-50 text-[13px] font-medium transition cursor-pointer disabled:opacity-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmittingOrder}
+                  className="px-5 py-2 rounded-lg bg-[#5C1D27] hover:bg-[#48161E] active:bg-[#381016] text-white font-semibold text-[13.5px] shadow-sm flex items-center gap-2 transition duration-150 cursor-pointer disabled:opacity-50"
+                >
+                  {isSubmittingOrder ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>Saving Order...</span>
+                    </>
+                  ) : (
+                    <>
+                      <ShoppingBag className="w-4 h-4 text-[#C49A45]" />
+                      <span>Create Order</span>
+                    </>
+                  )}
                 </button>
               </div>
             </form>

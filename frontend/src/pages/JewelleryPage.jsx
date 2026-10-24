@@ -119,7 +119,7 @@ export default function JewelleryPage({
             <span className="inline-block text-[11px] uppercase tracking-[0.25em] text-[#E6C37A] font-semibold mb-2">
               Authentic BIS Hallmarked Jewellery
             </span>
-            <h1 className="font-serif text-2xl sm:text-4xl font-bold text-white tracking-tight">
+            <h1 className="text-2xl sm:text-4xl font-bold text-white tracking-tight">
               Fine Gold & 92.5 Silver Jewellery
             </h1>
             <p className="text-xs sm:text-sm text-[#E6D4D6] mt-2 leading-relaxed">
@@ -181,12 +181,12 @@ export default function JewelleryPage({
         {/* Products Grid */}
         {apiError ? (
           <div className="bg-[#FAF8F5] rounded-xl p-12 text-center border border-[#DECDBB] my-8">
-            <h3 className="font-serif text-xl font-bold text-[#8C1D28]">{apiError}</h3>
+            <h3 className="text-xl font-bold text-[#8C1D28]">{apiError}</h3>
             <p className="text-xs text-[#7A6E65] mt-1">Please verify your server connection or try again later.</p>
           </div>
         ) : sortedProducts.length === 0 ? (
           <div className="bg-[#FAF8F5] rounded-xl p-12 text-center border border-[#DECDBB] my-8">
-            <h3 className="font-serif text-xl font-bold text-[#241716]">No products available yet.</h3>
+            <h3 className="text-xl font-bold text-[#241716]">No products available yet.</h3>
             <p className="text-xs text-[#7A6E65] mt-1">Try selecting another category or clearing your search filters.</p>
             <button
               onClick={() => handleTabClick('All')}
@@ -240,7 +240,7 @@ export default function JewelleryPage({
                       <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C6D2D]">
                         {item.purity || item.details}
                       </span>
-                      <h3 className="font-serif text-base font-bold text-[#241716] group-hover:text-[#581923] transition-colors line-clamp-1 mt-1">
+                      <h3 className="text-base font-bold text-[#241716] group-hover:text-[#581923] transition-colors line-clamp-1 mt-1">
                         {item.name}
                       </h3>
                       <p className="text-xs text-[#63574F] line-clamp-2 mt-1 leading-relaxed">
@@ -251,7 +251,7 @@ export default function JewelleryPage({
                     <div className="mt-4 pt-3 border-t border-[#EAE2D5] flex items-center justify-between">
                       <div>
                         <span className="text-[10px] text-[#7A6E65] block">Showroom Price</span>
-                        <span className="font-serif text-lg font-bold text-[#48161E]">
+                        <span className="text-lg font-bold text-[#48161E]">
                           {item.price}
                         </span>
                       </div>

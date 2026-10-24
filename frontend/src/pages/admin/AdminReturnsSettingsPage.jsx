@@ -193,7 +193,7 @@ export default function AdminReturnsSettingsPage() {
         {/* Brand Tagline matching reference image */}
         <div className="flex items-center gap-2 self-start sm:self-center">
           <span className="w-6 h-px bg-[#A87B3B] inline-block" />
-          <span className="text-[11px] font-serif tracking-[0.16em] uppercase text-[#A87B3B] font-semibold">
+          <span className="text-[11px] tracking-[0.16em] uppercase text-[#A87B3B] font-semibold">
             TRUSTED JEWELLERY FOR GENERATIONS
           </span>
         </div>
@@ -1175,7 +1175,7 @@ export default function AdminReturnsSettingsPage() {
               )}
               {activePolicyModal === 'support' && (
                 <>
-                  <p><strong>Showroom Concierge Desk:</strong> Direct phone: +91 98401 23456</p>
+                  <p><strong>Showroom Concierge Desk:</strong> Direct phone: +91 70108 94104</p>
                   <p><strong>WhatsApp Support:</strong> Available 10:00 AM – 08:30 PM for instant live video inspection and hold consultations.</p>
                   <p><strong>Email:</strong> support@vedaradha.com</p>
                 </>

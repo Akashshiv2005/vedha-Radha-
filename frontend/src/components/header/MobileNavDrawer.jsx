@@ -49,7 +49,7 @@ export default function MobileNavDrawer({
         {/* Top Header */}
         <div className="p-4 bg-[#581923] text-white flex items-center justify-between">
           <div>
-            <span className="font-serif text-base font-bold block">Vedha Radha</span>
+            <span className="text-base font-bold block">Vedha Radha</span>
             <span className="text-[9.5px] text-[#E6C37A] tracking-wider uppercase">Thanga Maaligai</span>
           </div>
           <button

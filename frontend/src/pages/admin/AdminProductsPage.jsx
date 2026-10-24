@@ -43,6 +43,7 @@ export default function AdminProductsPage({
     addProduct, 
     updateProduct, 
     deleteProduct,
+    deleteProducts,
     markProductSoldInShowroom, 
     releaseReservation,
     addToast
@@ -68,6 +69,7 @@ export default function AdminProductsPage({
 
   // Table selection & pagination state
   const [selectedSkus, setSelectedSkus] = useState([]);
+  const [isDeletingSelected, setIsDeletingSelected] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
@@ -79,8 +81,12 @@ export default function AdminProductsPage({
   const [isDetailDrawerOpen, setIsDetailDrawerOpen] = useState(false);
   const [selectedDetailProduct, setSelectedDetailProduct] = useState(null);
   const [editingProduct, setEditingProduct] = useState(null);
-  const [isUploadingImage, setIsUploadingImage] = useState(false);
-  const fileInputRef = useRef(null);
+  const [uploadingSlotIndex, setUploadingSlotIndex] = useState(null);
+  const [activeImageSlot, setActiveImageSlot] = useState(0);
+  const fileInputSlot0Ref = useRef(null);
+  const fileInputSlot1Ref = useRef(null);
+  const fileInputSlot2Ref = useRef(null);
+  const fileInputRefs = [fileInputSlot0Ref, fileInputSlot1Ref, fileInputSlot2Ref];
 
   // Form state for Add/Edit
   const [formData, setFormData] = useState({
@@ -99,6 +105,7 @@ export default function AdminProductsPage({
     status: 'available',
     availability: 'in_stock',
     image: '/images/product_anklet.jpg',
+    images: ['/images/product_anklet.jpg'],
     description: '',
     hallmarkDetails: '925 Fineness Stamped',
     stockQty: 1,
@@ -284,12 +291,14 @@ export default function AdminProductsPage({
       status: 'available',
       availability: 'in_stock',
       image: '/images/product_anklet.jpg',
+      images: ['/images/product_anklet.jpg'],
       description: 'Traditional handcrafted piece sculpted by master artisans for the authentic showroom gallery.',
       hallmarkDetails: '925 Fineness Stamped',
       stockQty: 1,
       location: 'Showroom Counter 3 - Silver Section'
     });
     setEditingProduct(null);
+    setActiveImageSlot(0);
     setIsAddModalOpen(true);
   };
 
@@ -299,6 +308,10 @@ export default function AdminProductsPage({
       normalizeProductType(product.product_type) || 
       inferProductTypeFromCategory(product.category);
 
+    const initialImages = (Array.isArray(product.images) && product.images.length > 0)
+      ? product.images.filter(img => typeof img === 'string' && img.trim().length > 0).slice(0, 3)
+      : (product.image ? [product.image] : ['/images/neutral_product_placeholder.svg']);
+
     setEditingProduct(product);
     setFormData({
       ...product,
@@ -307,9 +320,12 @@ export default function AdminProductsPage({
       subCategory: product.subCategory || product.sub_category || '',
       purity: product.purity || '',
       price: product.price ? String(product.price).replace(/[^0-9,]/g, '') : '',
-      numericPrice: product.numericPrice || 0
+      numericPrice: product.numericPrice || 0,
+      images: initialImages,
+      image: initialImages[0] || '/images/neutral_product_placeholder.svg'
     });
     setOpenActionSku(null);
+    setActiveImageSlot(0);
     setIsAddModalOpen(true);
   };
 
@@ -320,10 +336,19 @@ export default function AdminProductsPage({
     setIsDetailDrawerOpen(true);
   };
 
-  // MinIO Image Upload Handler
-  const handleImageUpload = async (e) => {
+  // MinIO Multi-Image Upload Handler (Slot-targeted, max 3 images total)
+  const handleImageUpload = async (e, slotIndex = 0) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    // Validate image format
+    const validExts = ['.jpg', '.jpeg', '.png', '.webp'];
+    const lowerName = (file.name || '').toLowerCase();
+    const hasValidExt = validExts.some(ext => lowerName.endsWith(ext));
+    if (!hasValidExt) {
+      addToast('Invalid Image', 'Please upload a JPEG, PNG, or WebP image.', 'warning');
+      return;
+    }
 
     // Check size limit: 5 MB
     if (file.size > 5 * 1024 * 1024) {
@@ -331,29 +356,72 @@ export default function AdminProductsPage({
       return;
     }
 
-    setIsUploadingImage(true);
+    setUploadingSlotIndex(slotIndex);
     try {
       const res = await productsClient.uploadImage(file);
       if (res.success) {
-        setFormData(prev => ({
-          ...prev,
-          image: res.imageUrl,
-          image_url: res.objectKey,
-          objectKey: res.objectKey
-        }));
-        addToast('Photo Uploaded', 'Jewellery image safely stored in MinIO storage.', 'success');
+        setFormData(prev => {
+          const current = [...(prev.images || [])];
+          if (slotIndex >= current.length) {
+            current.push(res.imageUrl);
+          } else {
+            current[slotIndex] = res.imageUrl;
+          }
+          const capped = current.slice(0, 3);
+          return {
+            ...prev,
+            images: capped,
+            image: capped[0] || res.imageUrl,
+            image_url: capped[0] || res.objectKey
+          };
+        });
+        addToast('Photo Uploaded', `Slot ${slotIndex + 1} image safely stored in MinIO storage.`, 'success');
       } else {
         addToast('Upload Failed', res.error || 'Failed to upload photo to MinIO.', 'danger');
       }
     } catch (err) {
       addToast('Upload Error', 'Network error during image upload.', 'danger');
     } finally {
-      setIsUploadingImage(false);
-      if (fileInputRef.current) fileInputRef.current.value = '';
+      setUploadingSlotIndex(null);
+      if (fileInputRefs[slotIndex]?.current) {
+        fileInputRefs[slotIndex].current.value = '';
+      }
     }
   };
 
-  // Form Submit (Add or Edit)
+  // Remove specific image slot
+  const handleRemoveImageSlot = (slotIndex) => {
+    setFormData(prev => {
+      const updated = (prev.images || []).filter((_, idx) => idx !== slotIndex);
+      return {
+        ...prev,
+        images: updated,
+        image: updated[0] || '/images/neutral_product_placeholder.svg',
+        image_url: updated[0] || '/images/neutral_product_placeholder.svg'
+      };
+    });
+  };
+
+  // Set catalog preset for a slot
+  const handleSelectPresetForSlot = (presetPath, slotIndex) => {
+    setFormData(prev => {
+      const current = [...(prev.images || [])];
+      if (slotIndex >= current.length) {
+        current.push(presetPath);
+      } else {
+        current[slotIndex] = presetPath;
+      }
+      const capped = current.slice(0, 3);
+      return {
+        ...prev,
+        images: capped,
+        image: capped[0] || presetPath,
+        image_url: capped[0] || presetPath
+      };
+    });
+  };
+
+  // Form Submit (Add or Edit) with strict 3-image validation and DB synchronization
   const handleSubmitForm = async (e) => {
     e.preventDefault();
     const cleanNumeric = parseInt(String(formData.price).replace(/[^0-9]/g, ''), 10) || 0;
@@ -367,6 +435,15 @@ export default function AdminProductsPage({
 
     const resolvedProductType = formData.productType || inferProductTypeFromCategory(formData.category);
 
+    // Filter and strictly cap images at 3
+    const cleanImages = (formData.images || [])
+      .filter(img => typeof img === 'string' && img.trim().length > 0)
+      .slice(0, 3);
+
+    if (cleanImages.length === 0) {
+      cleanImages.push(formData.image || '/images/neutral_product_placeholder.svg');
+    }
+
     const productPayload = {
       ...formData,
       productType: resolvedProductType,
@@ -374,8 +451,9 @@ export default function AdminProductsPage({
       category: formData.category ? formData.category.trim() : '',
       subCategory: validSubCategory,
       sub_category: validSubCategory,
-      image: formData.image,
-      image_url: formData.objectKey || formData.image_url || formData.image,
+      images: cleanImages,
+      image: cleanImages[0],
+      image_url: cleanImages[0],
       price: cleanNumeric,
       numericPrice: cleanNumeric,
       updatedDate: 'Today',
@@ -401,6 +479,27 @@ export default function AdminProductsPage({
     if (window.confirm(`Are you sure you want to remove product ${sku} from the inventory?`)) {
       setOpenActionSku(null);
       await deleteProduct(sku);
+    }
+  };
+
+  // Batch action: Delete selected products
+  const handleDeleteSelected = async () => {
+    if (selectedSkus.length === 0) return;
+    const count = selectedSkus.length;
+    if (window.confirm(`Are you sure you want to remove ${count} selected product${count > 1 ? 's' : ''} from the inventory?`)) {
+      setIsDeletingSelected(true);
+      try {
+        if (typeof deleteProducts === 'function') {
+          await deleteProducts(selectedSkus);
+        } else {
+          for (const sku of selectedSkus) {
+            await deleteProduct(sku);
+          }
+        }
+        setSelectedSkus([]);
+      } finally {
+        setIsDeletingSelected(false);
+      }
     }
   };
 
@@ -599,9 +698,23 @@ export default function AdminProductsPage({
           <div className="flex items-center gap-2">
             <button
               onClick={() => setSelectedSkus([])}
-              className="text-[12.5px] text-[#736B63] hover:text-[#292521] px-2.5 py-1 rounded transition"
+              disabled={isDeletingSelected}
+              className="text-[12.5px] text-[#736B63] hover:text-[#292521] px-2.5 py-1 rounded transition disabled:opacity-50 cursor-pointer"
             >
               Deselect All
+            </button>
+            <button
+              onClick={handleDeleteSelected}
+              disabled={isDeletingSelected}
+              className="px-3 py-1.5 rounded-lg bg-[#C24141] hover:bg-[#A83232] active:bg-[#8F2828] text-white text-[12.5px] font-medium font-admin-body shadow-2xs flex items-center justify-center gap-1.5 transition duration-150 disabled:opacity-50 cursor-pointer"
+              title="Delete selected products"
+            >
+              {isDeletingSelected ? (
+                <Loader2 className="w-3.5 h-3.5 animate-spin" />
+              ) : (
+                <Trash2 className="w-3.5 h-3.5" />
+              )}
+              <span>Delete</span>
             </button>
           </div>
         </div>
@@ -1197,69 +1310,146 @@ export default function AdminProductsPage({
                 </label>
               </div>
 
-              {/* Image Selector */}
+              {/* Product Visual Images: Maximum 3 Ordered Slots */}
               <div>
-                <div className="flex items-center justify-between mb-1.5">
-                  <label className="block text-[12px] font-semibold text-[#4A423A]">
-                    Jewellery Visual Image
-                  </label>
-                  <label className="inline-flex items-center gap-1.5 text-[11.5px] font-medium text-[#8D6725] hover:text-[#78551B] cursor-pointer bg-[#FAF7F2] border border-[#E8DCBE] px-2.5 py-1 rounded-md transition hover:bg-[#F4EBD9]">
-                    {isUploadingImage ? (
-                      <Loader2 className="w-3.5 h-3.5 animate-spin text-[#8D6725]" />
-                    ) : (
-                      <Upload className="w-3.5 h-3.5" />
-                    )}
-                    <span>{isUploadingImage ? 'Uploading to MinIO...' : 'Upload Image (MinIO)'}</span>
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept=".jpg,.jpeg,.png,.webp"
-                      onChange={handleImageUpload}
-                      disabled={isUploadingImage}
-                      className="hidden"
-                    />
-                  </label>
-                </div>
-                <div className="grid grid-cols-5 gap-2">
-                  {[
-                    { path: '/images/product_anklet.jpg', label: 'Silver Anklet' },
-                    { path: '/images/product_gold_chain.jpg', label: 'Gold Chain' },
-                    { path: '/images/product_silver_bowl.jpg', label: 'Silver Bowl' },
-                    { path: '/images/product_gold_earrings.jpg', label: 'Gold Earrings' },
-                    { path: '/images/product_necklace.jpg', label: 'Temple Necklace' }
-                  ].map((img, idx) => (
-                    <button
-                      key={idx}
-                      type="button"
-                      onClick={() => setFormData({ ...formData, image: img.path, objectKey: null, image_url: img.path })}
-                      className={`border-2 rounded-xl p-1 text-left transition overflow-hidden bg-[#221F1C] ${
-                        formData.image === img.path ? 'border-[#8D6725] ring-2 ring-[#C49A45]/40' : 'border-[#E2DCD2]'
-                      }`}
-                    >
-                      <img src={img.path} alt={img.label} className="w-full h-14 object-cover rounded-lg" />
-                      <span className="text-[10.5px] font-medium block truncate mt-1 text-center text-white">{img.label}</span>
-                    </button>
-                  ))}
+                <div className="flex items-center justify-between mb-2">
+                  <div>
+                    <label className="block text-[12px] font-semibold text-[#4A423A]">
+                      Product Visual Images (Up to 3 Slots) *
+                    </label>
+                    <span className="text-[11px] text-[#736B63] block">
+                      Slot 1 is the primary cover image across homepage and search. Slot 2 &amp; 3 are detail perspectives.
+                    </span>
+                  </div>
+                  <span className="text-[11px] font-medium text-[#8D6725] bg-[#F4EBD9] px-2 py-0.5 rounded-full border border-[#DECDBB]">
+                    {(formData.images || []).length} / 3 Uploaded
+                  </span>
                 </div>
 
-                {/* Display custom MinIO uploaded image banner if selected */}
-                {formData.image && !['/images/product_anklet.jpg', '/images/product_gold_chain.jpg', '/images/product_silver_bowl.jpg', '/images/product_gold_earrings.jpg', '/images/product_necklace.jpg'].includes(formData.image) && (
-                  <div className="mt-2.5 p-2 bg-[#FAF7F2] rounded-xl border border-[#8D6725]/40 flex items-center gap-3">
-                    <img 
-                      src={formData.image} 
-                      alt="Uploaded piece preview" 
-                      className="w-12 h-12 object-cover rounded-lg border border-[#E8DCBE] bg-[#221F1C]"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = '/images/product_anklet.jpg';
-                      }}
-                    />
-                    <div className="min-w-0 flex-1">
-                      <span className="text-[12px] font-semibold text-[#8D6725] block truncate">Custom MinIO Photo Active</span>
-                      <span className="text-[11px] text-[#736B63] block truncate font-admin-mono">{formData.objectKey || formData.image}</span>
-                    </div>
+                {/* 3 Dedicated Slots */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
+                  {[0, 1, 2].map((slotIdx) => {
+                    const slotImg = formData.images?.[slotIdx];
+                    const isUploadingThisSlot = uploadingSlotIndex === slotIdx;
+                    const slotLabels = [
+                      'Slot 1 • Cover / Primary',
+                      'Slot 2 • Side / Angle',
+                      'Slot 3 • Detail / Hallmark'
+                    ];
+
+                    return (
+                      <div 
+                        key={slotIdx}
+                        className={`border rounded-xl p-2.5 flex flex-col justify-between transition-all ${
+                          activeImageSlot === slotIdx 
+                            ? 'bg-[#FAF7F2] border-[#8D6725] ring-1 ring-[#8D6725]/30' 
+                            : 'bg-[#FFFFFF] border-[#E2DCD2]'
+                        }`}
+                        onClick={() => setActiveImageSlot(slotIdx)}
+                      >
+                        <div className="flex items-center justify-between mb-1.5">
+                          <span className={`text-[11px] font-bold ${slotIdx === 0 ? 'text-[#8D6725]' : 'text-[#736B63]'}`}>
+                            {slotLabels[slotIdx]}
+                          </span>
+                          {slotImg && (
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleRemoveImageSlot(slotIdx);
+                              }}
+                              className="text-[#991B1B] hover:text-[#DC2626] p-1 rounded hover:bg-[#FEE2E2] transition cursor-pointer"
+                              title={`Remove Slot ${slotIdx + 1} image`}
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          )}
+                        </div>
+
+                        {/* Image Preview or Upload Placeholder */}
+                        {slotImg ? (
+                          <div className="relative aspect-square w-full rounded-lg overflow-hidden bg-[#221F1C] border border-[#E8DCBE] mb-2 flex items-center justify-center group">
+                            <img 
+                              src={slotImg} 
+                              alt={`Slot ${slotIdx + 1} piece`} 
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = '/images/neutral_product_placeholder.svg';
+                              }}
+                            />
+                            {slotIdx === 0 && (
+                              <span className="absolute bottom-1.5 left-1.5 bg-[#8D6725]/90 text-white text-[10px] font-semibold px-2 py-0.5 rounded shadow-sm">
+                                Primary Cover
+                              </span>
+                            )}
+                          </div>
+                        ) : (
+                          <div className="aspect-square w-full rounded-lg border-2 border-dashed border-[#D8CBB8] bg-[#FAF7F2] flex flex-col items-center justify-center p-3 text-center mb-2">
+                            <Upload className="w-5 h-5 text-[#8D6725]/70 mb-1" />
+                            <span className="text-[11px] font-semibold text-[#4A423A]">Empty Slot</span>
+                            <span className="text-[9.5px] text-[#736B63] mt-0.5">JPEG, PNG, WebP &le; 5MB</span>
+                          </div>
+                        )}
+
+                        {/* Slot Action Button */}
+                        <div className="flex items-center gap-1.5">
+                          <label className={`w-full py-1.5 px-2 rounded-lg text-center text-[11.5px] font-medium cursor-pointer transition flex items-center justify-center gap-1.5 ${
+                            slotImg 
+                              ? 'bg-[#F4EBD9] text-[#8D6725] hover:bg-[#EBDDC5] border border-[#DECDBB]' 
+                              : 'bg-[#8D6725] text-white hover:bg-[#78551B] shadow-2xs'
+                          }`}>
+                            {isUploadingThisSlot ? (
+                              <Loader2 className="w-3.5 h-3.5 animate-spin text-current" />
+                            ) : (
+                              <Upload className="w-3 h-3 text-current" />
+                            )}
+                            <span>{isUploadingThisSlot ? 'Uploading...' : slotImg ? 'Replace Image' : 'Upload Image'}</span>
+                            <input
+                              ref={fileInputRefs[slotIdx]}
+                              type="file"
+                              accept=".jpg,.jpeg,.png,.webp"
+                              onChange={(e) => handleImageUpload(e, slotIdx)}
+                              disabled={isUploadingThisSlot}
+                              className="hidden"
+                            />
+                          </label>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Showroom Catalog Presets */}
+                <div className="pt-2 border-t border-[#EDE8E1]">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-[11px] font-medium text-[#736B63]">
+                      Or choose showroom catalog preset for <strong className="text-[#8D6725]">Slot {activeImageSlot + 1}</strong>:
+                    </span>
                   </div>
-                )}
+                  <div className="grid grid-cols-5 gap-2">
+                    {[
+                      { path: '/images/product_anklet.jpg', label: 'Silver Anklet' },
+                      { path: '/images/product_gold_chain.jpg', label: 'Gold Chain' },
+                      { path: '/images/product_silver_bowl.jpg', label: 'Silver Bowl' },
+                      { path: '/images/product_gold_earrings.jpg', label: 'Gold Earrings' },
+                      { path: '/images/product_necklace.jpg', label: 'Temple Necklace' }
+                    ].map((img, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => handleSelectPresetForSlot(img.path, activeImageSlot)}
+                        className={`border rounded-lg p-1 text-left transition overflow-hidden bg-[#221F1C] cursor-pointer hover:border-[#8D6725] ${
+                          formData.images?.[activeImageSlot] === img.path ? 'border-[#8D6725] ring-2 ring-[#8D6725]/40' : 'border-[#E2DCD2]'
+                        }`}
+                        title={`Assign ${img.label} to Slot ${activeImageSlot + 1}`}
+                      >
+                        <img src={img.path} alt={img.label} className="w-full h-12 object-cover rounded" />
+                        <span className="text-[10px] font-medium block truncate mt-0.5 text-center text-white">{img.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </div>
 
               {/* Modal Footer */}
@@ -1305,7 +1495,7 @@ export default function AdminProductsPage({
             <div className="p-5 overflow-y-auto space-y-4 flex-1 text-[13.5px]">
               <div className="rounded-xl overflow-hidden border border-[#EDE8E1] bg-[#1E1B18] shadow-sm">
                 <img 
-                  src={selectedDetailProduct.image} 
+                  src={selectedDetailProduct.images?.[activeImageSlot] || selectedDetailProduct.image} 
                   alt={selectedDetailProduct.name}
                   className="w-full h-56 object-cover"
                   onError={(e) => {
@@ -1314,6 +1504,33 @@ export default function AdminProductsPage({
                   }}
                 />
               </div>
+              {Array.isArray(selectedDetailProduct.images) && selectedDetailProduct.images.length > 1 && (
+                <div className="flex items-center gap-2">
+                  {selectedDetailProduct.images.slice(0, 3).map((img, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setActiveImageSlot(idx)}
+                      className={`w-14 h-14 rounded-lg overflow-hidden border-2 p-0.5 bg-[#221F1C] cursor-pointer transition ${
+                        (selectedDetailProduct.images?.[activeImageSlot] || selectedDetailProduct.image) === img
+                          ? 'border-[#8D6725] ring-2 ring-[#8D6725]/30'
+                          : 'border-[#E2DCD2] opacity-75 hover:opacity-100'
+                      }`}
+                      title={`View Angle ${idx + 1}`}
+                    >
+                      <img 
+                        src={img} 
+                        alt={`View ${idx + 1}`} 
+                        className="w-full h-full object-cover rounded" 
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = '/images/neutral_product_placeholder.svg';
+                        }}
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
 
               <div>
                 <div className="flex items-center gap-2">

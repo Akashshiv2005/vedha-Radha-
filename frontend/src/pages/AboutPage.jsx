@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ShieldCheck, Award, Heart, Sparkles, MapPin, Phone, ChevronRight, Clock, Users, ArrowRight } from 'lucide-react';
 
@@ -14,7 +14,7 @@ export default function AboutPage() {
     {
       icon: Award,
       title: 'Four Generations of Mastery',
-      description: 'Preserving ancient South Indian repoussé, nakshi, and filigree techniques perfected by hereditary master goldsmiths.'
+      description: 'Preserving ancient South Indian repouss├⌐, nakshi, and filigree techniques perfected by hereditary master goldsmiths.'
     },
     {
       icon: Heart,
@@ -52,7 +52,7 @@ export default function AboutPage() {
                 <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#E6C37A] block">
                   Heritage Since 1952 &bull; Mylapore, Chennai
                 </span>
-                <h1 className="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-white leading-tight">
+                <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-white leading-tight">
                   The Legacy of Vedha Radha
                 </h1>
                 <p className="text-xs sm:text-sm text-[#EAD8D8] leading-relaxed">
@@ -69,7 +69,7 @@ export default function AboutPage() {
             <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#8C6D2D] block">
               Our Journey
             </span>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#241716] leading-snug">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#241716] leading-snug">
               Crafting Heirloom Memories for Every Generation
             </h2>
             <p>
@@ -108,7 +108,7 @@ export default function AboutPage() {
         <div className="mb-16">
           <div className="text-center max-w-xl mx-auto mb-10">
             <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#8C6D2D]">Our Foundation</span>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#241716] mt-1">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#241716] mt-1">
               The Four Pillars of Vedha Radha
             </h2>
           </div>
@@ -121,7 +121,7 @@ export default function AboutPage() {
                   <div className="w-12 h-12 rounded-full bg-[#F3EAD3] text-[#581923] flex items-center justify-center mb-3">
                     <Icon className="w-6 h-6" />
                   </div>
-                  <h3 className="font-serif text-base font-bold text-[#241716] mb-1.5">{p.title}</h3>
+                  <h3 className="text-base font-bold text-[#241716] mb-1.5">{p.title}</h3>
                   <p className="text-xs text-[#73655C] leading-relaxed">{p.description}</p>
                 </div>
               );
@@ -135,7 +135,7 @@ export default function AboutPage() {
             <span className="text-[10.5px] font-bold uppercase tracking-wider text-[#8C6D2D] bg-[#F7ECD8] px-3 py-1 rounded-full">
               Flagship Destination
             </span>
-            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#241716]">
+            <h3 className="text-2xl sm:text-3xl font-bold text-[#241716]">
               Visit Our Heritage Mylapore Showroom
             </h3>
             <p className="text-xs sm:text-sm text-[#63574F] leading-relaxed">

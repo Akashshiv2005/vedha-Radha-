@@ -29,7 +29,7 @@ export default function WishlistModal({
               <Heart className="w-4 h-4 fill-[#E6C37A]" />
             </div>
             <div>
-              <h3 id="wishlist-modal-title" className="font-serif text-lg font-bold">
+              <h3 id="wishlist-modal-title" className="text-lg font-bold">
                 My Saved Wishlist ({wishlistItems.length})
               </h3>
               <p className="text-[11px] text-[#E6C37A]">Vedha Radha Thanga Maaligai</p>
@@ -51,7 +51,7 @@ export default function WishlistModal({
               <div className="w-14 h-14 mx-auto rounded-full bg-[#F3EAD3] text-[#8C6D2D] flex items-center justify-center mb-3">
                 <Heart className="w-7 h-7" />
               </div>
-              <h4 className="font-serif text-base font-bold text-[#241716]">Your wishlist is currently empty</h4>
+              <h4 className="text-base font-bold text-[#241716]">Your wishlist is currently empty</h4>
               <p className="text-xs text-[#7A6E65] mt-1 max-w-xs mx-auto">
                 Explore our fine gold & 92.5 silver collections and save your favorite heirloom pieces.
               </p>
@@ -76,11 +76,11 @@ export default function WishlistModal({
                   </div>
 
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-serif text-xs font-bold text-[#241716] truncate">
+                    <h4 className="text-xs font-bold text-[#241716] truncate">
                       {item.name}
                     </h4>
                     <p className="text-[10.5px] text-[#7A6E65]">{item.details}</p>
-                    <p className="font-serif font-bold text-xs text-[#581923] mt-0.5">
+                    <p className="font-bold text-xs text-[#581923] mt-0.5">
                       {item.price}
                     </p>
                   </div>

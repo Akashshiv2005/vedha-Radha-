@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+﻿import React, { useEffect, useRef } from 'react';
 import { ChevronRight, Sparkles } from 'lucide-react';
 
 export default function NavDropdown({
@@ -48,7 +48,7 @@ export default function NavDropdown({
       {/* Dropdown Header */}
       <div className="flex items-center justify-between pb-2.5 mb-3 border-b border-[#EAE2D5]">
         <div>
-          <span className="font-serif text-sm font-bold text-[#241716] block">{title} Collection</span>
+          <span className="text-sm font-bold text-[#241716] block">{title} Collection</span>
           <span className="text-[10.5px] text-[#7A6E65]">{subtitle}</span>
         </div>
         <div className="flex items-center gap-1 text-[10.5px] text-[#8C6D2D] font-medium bg-[#F3EAD3]/60 px-2 py-0.5 rounded">

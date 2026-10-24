@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { User, ShoppingBag, Menu, X, Sparkles } from 'lucide-react';
 
 export default function BrandRow({
@@ -46,7 +46,7 @@ export default function BrandRow({
           </div>
 
           {/* Shop Name */}
-          <span className="font-serif text-[21px] sm:text-[25px] md:text-[27px] font-bold tracking-tight text-[#48161E] group-hover:text-[#581923] transition-colors leading-tight">
+          <span className="text-[21px] sm:text-[25px] md:text-[27px] font-bold tracking-tight text-[#48161E] group-hover:text-[#581923] transition-colors leading-tight">
             Vedha Radha Thanga Maaligai
           </span>
 

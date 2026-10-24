@@ -7,6 +7,7 @@ import {
   INITIAL_AUDIT_LOGS 
 } from '../data/adminMockData';
 import { productsClient } from '../api/productsClient';
+import { ordersClient } from '../api/ordersClient';
 
 const AdminContext = createContext(null);
 
@@ -127,7 +128,28 @@ export function AdminProvider({ children }) {
     return state.products;
   };
 
-  // Load products from backend on mount
+  // Refresh orders from backend PostgreSQL database
+  const refreshOrders = async () => {
+    try {
+      const res = await ordersClient.getOrders();
+      if (res.success && Array.isArray(res.data)) {
+        setState(prev => {
+          const dbOrders = res.data;
+          const combined = [
+            ...dbOrders,
+            ...prev.orders.filter(o => !dbOrders.some(dbo => dbo.orderNumber === o.orderNumber || dbo.id === o.id))
+          ];
+          return { ...prev, orders: combined };
+        });
+        return res.data;
+      }
+    } catch (err) {
+      console.warn('Backend orders fetch notice:', err);
+    }
+    return state.orders;
+  };
+
+  // Load products and orders from backend on mount
   useEffect(() => {
     let isMounted = true;
     productsClient.getProducts({ page_size: 100 })
@@ -149,6 +171,25 @@ export function AdminProvider({ children }) {
       .catch((err) => {
         if (!isMounted) return;
         console.warn('Backend products fetch notice:', err);
+      });
+
+    ordersClient.getOrders()
+      .then(res => {
+        if (!isMounted) return;
+        if (res.success && Array.isArray(res.data)) {
+          setState(prev => {
+            const dbOrders = res.data;
+            const combined = [
+              ...dbOrders,
+              ...prev.orders.filter(o => !dbOrders.some(dbo => dbo.orderNumber === o.orderNumber || dbo.id === o.id))
+            ];
+            return { ...prev, orders: combined };
+          });
+        }
+      })
+      .catch(err => {
+        if (!isMounted) return;
+        console.warn('Backend orders mount fetch notice:', err);
       });
 
     return () => { isMounted = false; };
@@ -238,6 +279,37 @@ export function AdminProvider({ children }) {
       await refreshProducts();
       return { success: false, error: errorMsg };
     }
+  };
+
+  const deleteProducts = async (skus, hard = false) => {
+    if (!Array.isArray(skus) || skus.length === 0) return { success: true, count: 0 };
+    let successCount = 0;
+    let errors = [];
+    for (const sku of skus) {
+      try {
+        const res = await productsClient.deleteProduct(sku, hard);
+        if (res.success) {
+          successCount++;
+        } else {
+          errors.push(sku);
+        }
+      } catch {
+        errors.push(sku);
+      }
+    }
+    setState(prev => ({
+      ...prev,
+      products: prev.products.filter(p => !skus.includes(p.sku))
+    }));
+    await refreshProducts();
+    if (successCount > 0) {
+      logAction('PRODUCTS_BULK_DELETED', `${successCount} product(s) removed from catalog.`, 'Admin', 'warning');
+      addToast('Products Removed', `${successCount} product${successCount > 1 ? 's' : ''} deleted from inventory.`, 'info');
+    }
+    if (errors.length > 0) {
+      addToast('Delete Warning', `Failed to delete ${errors.length} product(s).`, 'warning');
+    }
+    return { success: errors.length === 0, count: successCount };
   };
 
   // CRITICAL BUSINESS SAFEGUARD: Mark Sold in Showroom
@@ -441,6 +513,34 @@ export function AdminProvider({ children }) {
     logAction('RESERVATION_CREATED', `Reservation ${newOrder.orderNumber} created for ${customerName} (${product.sku}).`, 'Concierge', 'warning');
     addToast('Reservation Created & Locked!', `Safeguard active: ${product.name} is now locked from duplicate sales.`);
     return { success: true, order: newOrder };
+  };
+
+  // CREATE ORDER DIRECTLY IN DATABASE
+  const createOrder = async (orderPayload) => {
+    try {
+      const res = await ordersClient.createOrder(orderPayload);
+      if (res.success && res.data) {
+        const savedOrder = res.data;
+        setState(prev => ({
+          ...prev,
+          orders: [savedOrder, ...prev.orders.filter(o => o.orderNumber !== savedOrder.orderNumber && o.id !== savedOrder.id)]
+        }));
+        logAction('ORDER_CREATED', `Order ${savedOrder.orderNumber} created for ${savedOrder.customerName}.`, 'Showroom Admin', 'success');
+        addToast('Order Created', `Order ${savedOrder.orderNumber} saved to database for ₹${Number(savedOrder.totalAmount).toLocaleString('en-IN')}.`);
+        await refreshOrders();
+        await refreshProducts();
+        return { success: true, order: savedOrder };
+      } else {
+        const errorMsg = res.error || 'Failed to create order on server.';
+        logAction('ORDER_CREATE_FAILED', `Failed to create order: ${errorMsg}`, 'Showroom Admin', 'danger');
+        addToast('Order Creation Failed', errorMsg, 'error');
+        return { success: false, error: errorMsg };
+      }
+    } catch (e) {
+      const errorMsg = e.message || 'Network connection error';
+      addToast('Order Creation Error', errorMsg, 'error');
+      return { success: false, error: errorMsg };
+    }
   };
 
   const confirmReservation = (orderId) => {
@@ -827,13 +927,16 @@ export function AdminProvider({ children }) {
         removeToast,
         logAction,
         refreshProducts,
+        refreshOrders,
         addProduct,
         updateProduct,
         deleteProduct,
+        deleteProducts,
         markProductSoldInShowroom,
         releaseReservation,
         markProductUnavailable,
         createReservation,
+        createOrder,
         confirmReservation,
         extendHold,
         rejectReservation,

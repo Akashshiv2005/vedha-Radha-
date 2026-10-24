@@ -151,17 +151,17 @@ export default function HeroBanner({ onExploreClick }) {
             </div>
 
             {/* Main Headline: A little gold. A lifetime of meaning. */}
-            <h1 className="font-serif text-center md:text-left mb-1.5 xs:mb-2 sm:mb-3.5">
+            <h1 className="text-center md:text-left mb-1.5 xs:mb-2 sm:mb-3.5">
               <span className="block text-[27px] xs:text-[31px] sm:text-[38px] md:text-[44px] lg:text-[50px] xl:text-[58px] font-bold text-[#2A1D1A] leading-[1.12] tracking-tight">
                 A little gold.
               </span>
-              <span className="block font-normal italic font-serif text-[#3D2520] text-[27px] xs:text-[31px] sm:text-[38px] md:text-[44px] lg:text-[50px] xl:text-[58px] leading-[1.14] mt-0.5 xs:mt-1 sm:mt-2">
+              <span className="block font-normal italic text-[#3D2520] text-[27px] xs:text-[31px] sm:text-[38px] md:text-[44px] lg:text-[50px] xl:text-[58px] leading-[1.14] mt-0.5 xs:mt-1 sm:mt-2">
                 A lifetime of meaning.
               </span>
             </h1>
 
             {/* Subtitle */}
-            <p className="font-serif text-[12px] xs:text-[13px] sm:text-[14.5px] md:text-[15.5px] text-[#5A453F] leading-[1.4] sm:leading-[1.5] max-w-[270px] xs:max-w-[320px] sm:max-w-md mb-2.5 xs:mb-3.5 sm:mb-6 mx-auto md:mx-0">
+            <p className="text-[12px] xs:text-[13px] sm:text-[14.5px] md:text-[15.5px] text-[#5A453F] leading-[1.4] sm:leading-[1.5] max-w-[270px] xs:max-w-[320px] sm:max-w-md mb-2.5 xs:mb-3.5 sm:mb-6 mx-auto md:mx-0">
               Temple-inspired treasures, made for your most memorable moments.
             </p>
 

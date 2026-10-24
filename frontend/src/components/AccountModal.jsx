@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { X, UserCheck, Shield, Award } from 'lucide-react';
 
 export default function AccountModal({ isOpen, onClose }) {
@@ -22,7 +22,7 @@ export default function AccountModal({ isOpen, onClose }) {
             <UserCheck className="w-6 h-6" />
           </div>
 
-          <h3 className="font-serif text-lg font-bold text-[#241716]">Vedha Radha Privilege Club</h3>
+          <h3 className="text-lg font-bold text-[#241716]">Vedha Radha Privilege Club</h3>
           <p className="text-xs text-[#73655C] mt-1">
             Exclusive loyalty benefits, bespoke preview invitations, and gold rate alerts.
           </p>
@@ -37,7 +37,7 @@ export default function AccountModal({ isOpen, onClose }) {
             <input
               type="tel"
               placeholder="Mobile Number"
-              defaultValue="+91 98401 23456"
+              defaultValue="+91 70108 94104"
               className="w-full bg-[#F5EFE6]/80 border border-[#DECDBB] rounded px-3 py-2 text-[#2C2420] focus:outline-none focus:border-[#581923]"
             />
           </div>

@@ -249,9 +249,15 @@ class MinioService:
 
         try:
             from ..models.product import Product
+            from sqlalchemy import or_
 
-            # Query database for other products referencing this object_key
-            query = db.query(Product).filter(Product.image_url == object_key)
+            # Query database for other products referencing this object_key in image_url or images JSONB array
+            query = db.query(Product).filter(
+                or_(
+                    Product.image_url == object_key,
+                    Product.images.contains([object_key]),
+                )
+            )
             if exclude_product_id is not None:
                 query = query.filter(Product.id != exclude_product_id)
 

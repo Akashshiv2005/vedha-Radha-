@@ -17,10 +17,12 @@ export function adaptStorefrontProduct(raw) {
     ? raw.price.trim()
     : `₹ ${numPrice.toLocaleString('en-IN')}`;
 
-  const image = raw.image || raw.image_url || '/images/product_gold_chain.jpg';
-  const images = (Array.isArray(raw.images) && raw.images.length > 0)
-    ? raw.images
-    : [image];
+  const rawImages = (Array.isArray(raw.images) && raw.images.length > 0)
+    ? raw.images.filter(img => typeof img === 'string' && img.trim().length > 0).slice(0, 3)
+    : [];
+  const primaryFallback = raw.image || raw.image_url || '/images/neutral_product_placeholder.svg';
+  const images = rawImages.length > 0 ? rawImages : [primaryFallback];
+  const image = images[0];
 
   const subCat = raw.subCategory || raw.sub_category || '';
   const subCatSlug = raw.subCategorySlug || subCat.toLowerCase().replace(/\s+/g, '-');
@@ -95,6 +97,8 @@ export const storefrontClient = {
     if (params.page) query.set('page', params.page);
     if (params.pageSize || params.page_size) query.set('page_size', params.pageSize || params.page_size || 100);
     if (params.search) query.set('search', params.search);
+    const prodType = params.product_type || params.productType;
+    if (prodType && prodType !== 'all') query.set('product_type', prodType);
     if (params.category && params.category !== 'all') query.set('category', params.category);
     if (params.sub_category && params.sub_category !== 'all') query.set('sub_category', params.sub_category);
     if (params.status && params.status !== 'all') query.set('status', params.status);

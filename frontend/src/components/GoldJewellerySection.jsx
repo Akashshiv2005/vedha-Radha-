@@ -40,7 +40,7 @@ export default function GoldJewellerySection({ onViewProduct }) {
               <Sparkles className="w-3.5 h-3.5" />
               <span>Authentic 22K BIS 916 Hallmark</span>
             </div>
-            <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-[#241716] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#241716] tracking-tight">
               Gold Jewellery Collection
             </h2>
             <p className="text-xs sm:text-sm text-[#695D56] mt-1.5 max-w-2xl leading-relaxed">
@@ -102,7 +102,7 @@ export default function GoldJewellerySection({ onViewProduct }) {
                     <div className="flex items-center justify-between">
                       <h3 
                         onClick={() => navigate(cat.path)}
-                        className="font-serif text-lg font-bold text-[#241716] group-hover:text-[#581923] transition-colors cursor-pointer"
+                        className="text-lg font-bold text-[#241716] group-hover:text-[#581923] transition-colors cursor-pointer"
                       >
                         {cat.name}
                       </h3>
@@ -169,7 +169,7 @@ export default function GoldJewellerySection({ onViewProduct }) {
               <Sparkles className="w-6 h-6" />
             </div>
             <div>
-              <h4 className="font-serif text-base font-bold text-[#2C1D18]">
+              <h4 className="text-base font-bold text-[#2C1D18]">
                 Looking for Bespoke Traditional Masterpieces?
               </h4>
               <p className="text-xs text-[#695D56] mt-0.5">

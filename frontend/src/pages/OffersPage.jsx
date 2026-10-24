@@ -77,7 +77,7 @@ export default function OffersPage() {
               <Gift className="w-3.5 h-3.5 text-[#E5C278]" />
               Limited-Time Showroom Benefits
             </span>
-            <h1 className="font-serif text-2xl sm:text-4xl font-bold text-white tracking-tight">
+            <h1 className="text-2xl sm:text-4xl font-bold text-white tracking-tight">
               Exclusive Showroom & Festive Offers
             </h1>
             <p className="text-xs sm:text-sm text-[#E6D4D6] mt-2 leading-relaxed">
@@ -104,7 +104,7 @@ export default function OffersPage() {
                   </span>
                 </div>
 
-                <h2 className="font-serif text-xl font-bold text-[#241716]">
+                <h2 className="text-xl font-bold text-[#241716]">
                   {offer.title}
                 </h2>
                 <p className="text-xs sm:text-[13px] text-[#554942] mt-2 leading-relaxed">
@@ -155,7 +155,7 @@ export default function OffersPage() {
               <ShieldCheck className="w-6 h-6 text-[#E6C37A]" />
             </div>
             <div>
-              <h3 className="font-serif text-lg font-bold text-[#241716]">How to Redeem in Showroom</h3>
+              <h3 className="text-lg font-bold text-[#241716]">How to Redeem in Showroom</h3>
               <p className="text-xs text-[#63574F] mt-1 max-w-xl">
                 Simply quote the offer code at the billing counter in our Mylapore showroom or present it during your bespoke bridal consultation for instant application.
               </p>
