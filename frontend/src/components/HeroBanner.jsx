@@ -1,0 +1,213 @@
+import React, { useRef, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
+
+/**
+ * ============================================================================
+ * VEDHA RADHA HERO SECTION CONFIGURATION
+ * 
+ * Layer Architecture:
+ * - 2nd Layer (z-0 / background): Full-bleed video fitting edge-to-edge without side gaps
+ * - 1st Layer (z-10 / foreground): Real HTML typography and interactive buttons
+ * ============================================================================
+ */
+export const HERO_MEDIA_CONFIG = {
+  videoSrc: '/videos/vedha-radha-hero-teal-motion.mp4',
+  mobileVideoSrc: '/videos/hero_video_mobile.mp4',
+  //posterSrc: '/images/vedha_radha_hero_teal_clean_poster.jpg'
+};
+
+export default function HeroBanner({ onExploreClick }) {
+  const navigate = useNavigate();
+  const desktopVideoRef = useRef(null);
+  const mobileVideoRef = useRef(null);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  // Check user OS accessibility preferences for reduced motion
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handler = (e) => setPrefersReducedMotion(e.matches);
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
+
+  // Ensure both desktop and mobile videos play automatically
+  useEffect(() => {
+    if (!prefersReducedMotion) {
+      if (desktopVideoRef.current) {
+        desktopVideoRef.current.play().catch(() => {});
+      }
+      if (mobileVideoRef.current) {
+        mobileVideoRef.current.play().catch(() => {});
+      }
+    }
+  }, [prefersReducedMotion]);
+
+  const handleShopGold = () => {
+    if (onExploreClick) {
+      onExploreClick();
+    } else {
+      navigate('/gold');
+    }
+  };
+
+  const handleExploreNewArrivals = () => {
+    navigate('/new-arrivals');
+  };
+
+  return (
+    <section className="relative w-full overflow-hidden bg-[#FAF7F2] select-none">
+
+      {/* 
+        Full-bleed Viewport Container:
+        - 100% full width with NO left/right margins or max-width constraints
+        - Mobile: Fits upper silk zone without pushing content into the teal jewelry
+        - Desktop/Tablet: Responsive height preserving full jewelry composition without cropping
+      */}
+      <div
+        className="relative w-full overflow-hidden flex items-start md:items-center justify-start h-[calc(100dvh-85px)] sm:h-[calc(100dvh-75px)] md:h-[min(calc(100vh-100px),620px)] lg:h-[min(calc(100vh-100px),660px)] xl:h-[min(calc(100vh-100px),700px)] 2xl:h-[min(calc(100vh-100px),720px)] min-h-[480px] xs:min-h-[500px] sm:min-h-[540px] md:min-h-[540px] lg:min-h-[580px] xl:min-h-[600px] 2xl:min-h-[620px]"
+      >
+
+        {/* ========================================================================= */}
+        {/* 2ND LAYER: FULL-WIDTH BACKGROUND VIDEO (JEWELLERY MOTION & SPARKLE)       */}
+        {/* ========================================================================= */}
+        <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none select-none z-0">
+
+          {/* Static Still Poster Fallback: Visible during loading & reduced motion */}
+          <img
+            src={HERO_MEDIA_CONFIG.posterSrc}
+            alt="Vedha Radha Signature Collection - Temple Gold Jewellery on Teal Velvet"
+            className={`absolute inset-0 w-full h-full object-cover object-[65%_60%] lg:object-[58%_61%] xl:object-[52%_61%] 2xl:object-[center_61%] transition-opacity duration-700 select-none pointer-events-none ${videoLoaded && !prefersReducedMotion ? 'opacity-0' : 'opacity-100'
+              }`}
+            loading="eager"
+          />
+
+          {/* Full-bleed Video with Jewel Motion & Blinking Sparkles */}
+          {!prefersReducedMotion && (
+            <>
+              {/* Desktop / Tablet Video (md: 768px and up) */}
+              <video
+                ref={desktopVideoRef}
+                src={HERO_MEDIA_CONFIG.videoSrc}
+                poster={HERO_MEDIA_CONFIG.posterSrc}
+                autoPlay
+                loop
+                muted
+                playsInline
+                onLoadedData={() => setVideoLoaded(true)}
+                className="hidden md:block absolute inset-0 w-full h-full object-cover object-[65%_60%] lg:object-[58%_61%] xl:object-[52%_61%] 2xl:object-[center_61%] select-none pointer-events-none transition-opacity duration-700"
+              />
+
+              {/* Mobile View Video (all mobile devices < 768px: dedicated 1080x1920 mobile video in full view) */}
+              <video
+                ref={mobileVideoRef}
+                src={HERO_MEDIA_CONFIG.mobileVideoSrc}
+                poster={HERO_MEDIA_CONFIG.posterSrc}
+                autoPlay
+                loop
+                muted
+                playsInline
+                onLoadedData={() => setVideoLoaded(true)}
+                className="block md:hidden absolute inset-0 w-full h-full object-cover object-center select-none pointer-events-none transition-opacity duration-700"
+              />
+            </>
+          )}
+
+        </div>
+
+        {/* ========================================================================= */}
+        {/* 1ST LAYER: REAL HTML TYPOGRAPHY, BUTTONS & BRAND FLOURISHES               */}
+        {/* ========================================================================= */}
+        <div className="relative z-10 w-full h-full flex items-start md:items-center justify-center md:justify-start px-3.5 xs:px-6 sm:px-10 md:px-12 lg:px-16 xl:px-20 pointer-events-auto pt-3 xs:pt-4 sm:pt-6 md:pt-0">
+
+          {/* Content Wrapper: Center-aligned on Mobile, Left-aligned on Desktop */}
+          <div className="w-full max-w-[340px] xs:max-w-[380px] sm:max-w-[460px] md:max-w-[440px] lg:max-w-[480px] xl:max-w-[540px] flex flex-col items-center md:items-start text-center md:text-left mx-auto md:mx-0">
+
+            {/* Top Eyebrow: VEDHA RADHA SIGNATURE COLLECTION with Gold Lotus */}
+            <div className="flex flex-col items-center md:items-start gap-1 sm:gap-2 mb-1.5 xs:mb-2 sm:mb-3.5">
+              <span className="font-sans text-[10px] xs:text-[11px] sm:text-[12.5px] font-semibold tracking-[0.22em] sm:tracking-[0.24em] text-[#917144] uppercase">
+                VEDHA RADHA SIGNATURE COLLECTION
+              </span>
+
+              {/* Delicate Gold Lotus Emblem with Tagline on Mobile */}
+              <div className="flex items-center justify-center md:justify-start gap-2 sm:gap-3">
+                <span className="w-5 xs:w-7 sm:w-11 h-[1px] bg-[#C5A059]/60" aria-hidden="true" />
+                <div className="flex items-center gap-1.5 text-[#917144]">
+                  <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#917144] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M12 4C10.5 7 10.5 11 12 15C13.5 11 13.5 7 12 4Z" />
+                    <path d="M12 15C9.5 11.5 6 9.5 5 11.5C4 13.5 7.5 15.5 12 15Z" />
+                    <path d="M12 15C14.5 11.5 18 9.5 19 11.5C20 13.5 16.5 15.5 12 15Z" />
+                  </svg>
+                  {/* On Mobile: Elegantly integrated flourish */}
+                  <span className="md:hidden font-sans text-[8px] xs:text-[9px] font-bold tracking-[0.22em] uppercase text-[#917144] whitespace-nowrap">
+                    TRADITION LIVES FOREVER
+                  </span>
+                </div>
+                <span className="w-5 xs:w-7 sm:w-11 h-[1px] bg-[#C5A059]/60" aria-hidden="true" />
+              </div>
+            </div>
+
+            {/* Main Headline: A little gold. A lifetime of meaning. */}
+            <h1 className="font-serif text-center md:text-left mb-1.5 xs:mb-2 sm:mb-3.5">
+              <span className="block text-[27px] xs:text-[31px] sm:text-[38px] md:text-[44px] lg:text-[50px] xl:text-[58px] font-bold text-[#2A1D1A] leading-[1.12] tracking-tight">
+                A little gold.
+              </span>
+              <span className="block font-normal italic font-serif text-[#3D2520] text-[27px] xs:text-[31px] sm:text-[38px] md:text-[44px] lg:text-[50px] xl:text-[58px] leading-[1.14] mt-0.5 xs:mt-1 sm:mt-2">
+                A lifetime of meaning.
+              </span>
+            </h1>
+
+            {/* Subtitle */}
+            <p className="font-serif text-[12px] xs:text-[13px] sm:text-[14.5px] md:text-[15.5px] text-[#5A453F] leading-[1.4] sm:leading-[1.5] max-w-[270px] xs:max-w-[320px] sm:max-w-md mb-2.5 xs:mb-3.5 sm:mb-6 mx-auto md:mx-0">
+              Temple-inspired treasures, made for your most memorable moments.
+            </p>
+
+            {/* Interactive Action Buttons */}
+            <div className="flex flex-row items-center justify-center md:justify-start gap-2 xs:gap-3 sm:gap-4 w-full sm:w-auto mt-1 xs:mt-2 sm:mt-5 mb-1.5 xs:mb-2.5 sm:mb-5">
+
+              {/* Primary Button: Shop Gold Jewellery */}
+              <button
+                onClick={handleShopGold}
+                className="w-[130px] xs:w-[144px] sm:w-auto inline-flex items-center justify-center gap-1.5 xs:gap-2 bg-[#651F2B] hover:bg-[#521721] active:scale-95 text-[#F8F4EC] text-[12px] xs:text-[13.5px] sm:text-[14.5px] font-medium tracking-wide py-2.5 xs:py-3 sm:py-3.5 px-3.5 xs:px-4 sm:px-6 rounded-md shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer whitespace-nowrap"
+                aria-label="Shop Gold Jewellery"
+              >
+                <span>Shop Gold</span>
+                <ArrowRight className="w-3.5 h-3.5 xs:w-4 xs:h-4 stroke-[2]" />
+              </button>
+
+              {/* Secondary Button: Explore New Arrivals */}
+              <button
+                onClick={handleExploreNewArrivals}
+                className="w-[130px] xs:w-[144px] sm:w-auto inline-flex items-center justify-center gap-1.5 xs:gap-2 bg-white hover:bg-[#FAF8F5] active:scale-95 text-[#2C1D18] border border-[#C5A059]/70 hover:border-[#8E6928] text-[12px] xs:text-[13.5px] sm:text-[14.5px] font-medium tracking-wide py-2.5 xs:py-3 sm:py-3.5 px-3.5 xs:px-4 sm:px-6 rounded-md shadow-2xs hover:shadow-sm transition-all duration-200 cursor-pointer whitespace-nowrap"
+                aria-label="Explore New Arrivals"
+              >
+                <span>New Arrivals</span>
+                <ArrowRight className="w-3.5 h-3.5 xs:w-4 xs:h-4 stroke-[2] text-[#8E6928]" />
+              </button>
+
+            </div>
+
+            {/* Bottom Brand Flourish: TRADITION LIVES FOREVER (Desktop & Tablet) */}
+            <div className="hidden md:flex items-center justify-start gap-2 w-full max-w-[260px] pt-3 sm:pt-4">
+              <svg className="w-4 h-4 text-[#B88E3E]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M12 4C10.5 7 10.5 11 12 15C13.5 11 13.5 7 12 4Z" />
+                <path d="M12 15C9.5 11.5 6 9.5 5 11.5C4 13.5 7.5 15.5 12 15Z" />
+                <path d="M12 15C14.5 11.5 18 9.5 19 11.5C20 13.5 16.5 15.5 12 15Z" />
+              </svg>
+              <span className="font-sans text-[10px] sm:text-[10.5px] font-bold tracking-[0.26em] text-[#917144] uppercase whitespace-nowrap">
+                TRADITION LIVES FOREVER
+              </span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+  );
+}
