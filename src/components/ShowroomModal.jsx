@@ -50,7 +50,7 @@ export default function ShowroomModal({ isOpen, onClose }) {
             <Phone className="w-4 h-4 text-[#581923] shrink-0 mt-0.5" />
             <div>
               <p className="font-semibold text-[#241716]">Direct Concierge & Appointments:</p>
-              <p className="text-[#66584F] mt-0.5">+91 44 2834 1999 / +91 98401 23456</p>
+              <p className="text-[#66584F] mt-0.5">+91 44 2834 1999 / +91 70108 94104</p>
             </div>
           </div>
 

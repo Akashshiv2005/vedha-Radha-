@@ -89,7 +89,7 @@ export default function ContactPage() {
                     Phone: <a href="tel:+914428341999" className="text-[#581923] font-semibold hover:underline">+91 44 2834 1999</a>
                   </p>
                   <p className="text-xs text-[#63574F]">
-                    Mobile / WhatsApp: <a href="tel:+919840123456" className="text-[#581923] font-semibold hover:underline">+91 98401 23456</a>
+                    Mobile / WhatsApp: <a href="tel:+917010894104" className="text-[#581923] font-semibold hover:underline">+91 70108 94104</a>
                   </p>
                 </div>
               </div>
@@ -182,7 +182,7 @@ export default function ContactPage() {
                       <input
                         type="tel"
                         required
-                        placeholder="+91 98401 23456"
+                        placeholder="+91 70108 94104"
                         value={formData.phone}
                         onChange={(e) => setFormData({...formData, phone: e.target.value})}
                         className="w-full bg-[#FAF7F2] border border-[#DECDBB] focus:border-[#581923] rounded-lg px-3.5 py-2 text-xs text-[#2C1D18] focus:outline-none"

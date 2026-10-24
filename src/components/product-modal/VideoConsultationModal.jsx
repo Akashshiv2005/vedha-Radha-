@@ -39,7 +39,7 @@ export default function VideoConsultationModal({ isOpen, onClose, product }) {
     const text = encodeURIComponent(
       `Hello Veda Radha Jewellery, I have booked a Live Video Consultation for "${product?.name}".\n\nDate: ${selectedDate}\nTime: ${selectedSlot}\nShowroom: ${showroom}\nCustomer Name: ${formData.name}\nContact: ${formData.phone}`
     );
-    window.open(`https://wa.me/919840123456?text=${text}`, '_blank');
+    window.open(`https://wa.me/917010894104?text=${text}`, '_blank');
     onClose();
   };
 
@@ -194,7 +194,7 @@ export default function VideoConsultationModal({ isOpen, onClose, product }) {
                     <input
                       type="tel"
                       required
-                      placeholder="+91 98401 23456"
+                      placeholder="+91 70108 94104"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       className="w-full pl-8 pr-3 py-2 text-xs bg-white border border-[#E8DFC0] rounded-xl text-[#241716] focus:outline-none focus:ring-2 focus:ring-[#581923]/30"

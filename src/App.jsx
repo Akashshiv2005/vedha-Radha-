@@ -374,6 +374,7 @@ export default function App() {
 
       {/* Shared Modals & Drawers */}
       <ProductDetailModal
+        key={selectedProduct?.id || 'no-product'}
         product={selectedProduct}
         onClose={() => setSelectedProduct(null)}
         onAddToCart={handleAddToCart}

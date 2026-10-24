@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { 
   X, 
   ArrowLeft,
@@ -45,7 +46,8 @@ export default function ProductDetailModal({
   onAddToCart, 
   onAddToWishlist, 
   isWishlisted: externalIsWishlisted,
-  onSelectRelatedProduct
+  onSelectRelatedProduct,
+  onBackToProducts
 }) {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [isZoomModalOpen, setIsZoomModalOpen] = useState(false);
@@ -87,11 +89,10 @@ export default function ProductDetailModal({
   const recordingTimerRef = useRef(null);
   const audioPlayerRef = useRef(null);
 
-  // Reset active image index and zoom lens whenever a new product is selected
+  // Reset product-specific image state without moving the page behind the modal
   useEffect(() => {
     setActiveImageIndex(0);
     setIsZoomLensActive(false);
-    window.scrollTo(0, 0);
   }, [product?.id]);
 
   useEffect(() => {
@@ -330,7 +331,7 @@ export default function ProductDetailModal({
     const text = encodeURIComponent(
       `Vanakkam Veda Radha Jewellery, I am interested in exploring "${product.name}" (${product.price}). Could you please share more details or live showroom availability?`
     );
-    window.open(`https://wa.me/919840123456?text=${text}`, '_blank');
+    window.open(`https://wa.me/917010894104?text=${text}`, '_blank');
   };
 
   // 5-Second Voice Recording Handlers
@@ -475,7 +476,7 @@ export default function ProductDetailModal({
       <header className="sticky top-0 z-40 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#E8DFC0] px-4 sm:px-6 lg:px-10 py-3 flex items-center justify-between shadow-2xs">
         <div className="flex items-center gap-3 sm:gap-4">
           <button 
-            onClick={onClose}
+            onClick={onBackToProducts || onClose}
             className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#581923] hover:text-[#431219] bg-white border border-[#E8DFC0] hover:border-[#8C6D2D] px-3.5 py-1.5 rounded-full shadow-2xs transition-all cursor-pointer group"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
@@ -484,11 +485,21 @@ export default function ProductDetailModal({
 
           {/* Breadcrumb Path */}
           <nav className="hidden md:flex items-center gap-2 text-xs text-[#7A6E65]">
-            <span className="hover:text-[#581923] cursor-pointer" onClick={onClose}>Home</span>
+            <Link to="/" className="hover:text-[#581923] cursor-pointer">Home</Link>
             <span>/</span>
-            <span className="capitalize">{product.category} Jewellery</span>
+            <Link
+              to={`/${product.category?.toLowerCase().includes('silver') ? 'silver' : 'gold'}`}
+              className="capitalize hover:text-[#581923] cursor-pointer"
+            >
+              {product.category} Jewellery
+            </Link>
             <span>/</span>
-            <span className="capitalize">{product.subCategory || product.subType || 'Catalog'}</span>
+            <Link
+              to={`/${product.category?.toLowerCase().includes('silver') ? 'silver' : 'gold'}/${product.subCategorySlug || product.subCategory || ''}`}
+              className="capitalize hover:text-[#581923] cursor-pointer"
+            >
+              {(product.subCategory || product.subType || 'Catalog').replace(/[-_]/g, ' ')}
+            </Link>
             <span>/</span>
             <span className="font-semibold text-[#241716] truncate max-w-xs">{product.name}</span>
           </nav>

@@ -39,8 +39,10 @@ export default function ProductDetailPage({ onAddToCart, onAddToWishlist, wishli
 
   return (
     <ProductDetailModal
+      key={product.id}
       product={product}
       onClose={() => navigate(-1)}
+      onBackToProducts={() => navigate('/gold')}
       onAddToCart={onAddToCart}
       onAddToWishlist={onAddToWishlist}
       isWishlisted={wishlistItems.some((item) => item.id === product.id)}

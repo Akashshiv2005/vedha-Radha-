@@ -1175,7 +1175,7 @@ export default function AdminReturnsSettingsPage() {
               )}
               {activePolicyModal === 'support' && (
                 <>
-                  <p><strong>Showroom Concierge Desk:</strong> Direct phone: +91 98401 23456</p>
+                  <p><strong>Showroom Concierge Desk:</strong> Direct phone: +91 70108 94104</p>
                   <p><strong>WhatsApp Support:</strong> Available 10:00 AM – 08:30 PM for instant live video inspection and hold consultations.</p>
                   <p><strong>Email:</strong> support@vedaradha.com</p>
                 </>

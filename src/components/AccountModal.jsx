@@ -37,7 +37,7 @@ export default function AccountModal({ isOpen, onClose }) {
             <input
               type="tel"
               placeholder="Mobile Number"
-              defaultValue="+91 98401 23456"
+              defaultValue="+91 70108 94104"
               className="w-full bg-[#F5EFE6]/80 border border-[#DECDBB] rounded px-3 py-2 text-[#2C2420] focus:outline-none focus:border-[#581923]"
             />
           </div>

@@ -98,7 +98,7 @@ export default function HeroBanner({ onExploreClick }) {
                 muted
                 playsInline
                 onLoadedData={() => setVideoLoaded(true)}
-                className="hidden md:block absolute inset-0 w-full h-full object-cover object-[62%_center] lg:object-center select-none pointer-events-none transition-opacity duration-700"
+                className="hidden md:block absolute inset-0 w-full h-full object-cover object-[62%_70%] select-none pointer-events-none transition-opacity duration-700"
               />
 
               {/* Mobile View Video (all mobile devices < 768px: dedicated 1080x1920 mobile video in full view) */}

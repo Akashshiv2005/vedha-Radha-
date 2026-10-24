@@ -432,7 +432,7 @@ export const products = [
     "details": "22K BIS 916 Gold with Brilliant Solitaire",
     "price": "₹ 32,000",
     "numericPrice": 32000,
-    "image": "/images/products/gold/rings/gold_engagement_rings_26-01.jpg",
+    "image": "/images/products/gold/rings/gold_engagement_rings_26-03.jpg",
     "altText": "Elegant gold engagement ring with a raised clear centre stone and a simple band",
     "description": "An elegant gold engagement ring with a raised clear centre stone and a simple band, crafted in 22K yellow gold with six-prong setting.",
     "weight": "5.3 grams",
@@ -444,8 +444,8 @@ export const products = [
     "isNewArrival": true,
     "collection": "wedding",
     "images": [
-      "/images/products/gold/rings/gold_engagement_rings_26-01.jpg",
-      "/images/products/gold/rings/gold_engagement_rings_26-02.jpg",
+      "/images/products/gold/rings/gold_engagement_rings_26-03.jpg",
+      "/images/products/gold/rings/gold_engagement_rings_26-03.jpg",
       "/images/products/gold/rings/gold_engagement_rings_26-03.jpg"
     ]
   },
@@ -462,7 +462,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold",
     "price": "₹ 35,500",
     "numericPrice": 35500,
-    "image": "/images/products/gold/rings/gold_engagement_rings_27-01.jpg",
+    "image": "/images/products/gold/rings/gold_engagement_rings_27-03.jpg",
     "altText": "Gold ring with a square clear centre stone and delicate side details",
     "description": "A gold ring with a square clear centre stone and delicate side details, featuring corner chevron gold clasps and polished tapered shoulders.",
     "weight": "5.8 grams",
@@ -474,8 +474,8 @@ export const products = [
     "isNewArrival": false,
     "collection": "wedding",
     "images": [
-      "/images/products/gold/rings/gold_engagement_rings_27-01.jpg",
-      "/images/products/gold/rings/gold_engagement_rings_27-02.jpg",
+      "/images/products/gold/rings/gold_engagement_rings_27-03.jpg",
+      "/images/products/gold/rings/gold_engagement_rings_27-03.jpg",
       "/images/products/gold/rings/gold_engagement_rings_27-03.jpg"
     ]
   },
@@ -505,8 +505,8 @@ export const products = [
     "collection": "wedding",
     "images": [
       "/images/products/gold/rings/gold_engagement_rings_28-01.jpg",
-      "/images/products/gold/rings/gold_engagement_rings_28-02.jpg",
-      "/images/products/gold/rings/gold_engagement_rings_28-03.jpg"
+      "/images/products/gold/rings/gold_engagement_rings_28-01.jpg",
+      "/images/products/gold/rings/gold_engagement_rings_28-01.jpg"
     ]
   },
   {
@@ -1092,7 +1092,7 @@ export const products = [
     "details": "22K BIS 916 Hallmarked Gold",
     "price": "₹ 96,000",
     "numericPrice": 96000,
-    "image": "/images/products/gold/necklaces/gold_short_necklace_51-01.jpg",
+    "image": "/images/products/gold/necklaces/gold_short_necklace_51-02.jpg",
     "altText": "Short gold necklace with a delicate floral centrepiece and fine matching links",
     "description": "A short gold necklace with a delicate floral centrepiece and fine matching links, accented with untreated ruby droplets and gold dori.",
     "weight": "21.0 grams",
@@ -1104,9 +1104,9 @@ export const products = [
     "isNewArrival": true,
     "collection": "wedding",
     "images": [
-      "/images/products/gold/necklaces/gold_short_necklace_51-01.jpg",
       "/images/products/gold/necklaces/gold_short_necklace_51-02.jpg",
-      "/images/products/gold/necklaces/gold_short_necklace_51-03.jpg"
+      "/images/products/gold/necklaces/gold_short_necklace_51-02.jpg",
+      "/images/products/gold/necklaces/gold_short_necklace_51-02.jpg"
     ]
   },
   {

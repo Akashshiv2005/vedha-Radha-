@@ -797,7 +797,7 @@ export const INITIAL_RETURNS_CASES = [
     id: 'RET-1008',
     orderId: '#ORD-2456',
     customerName: 'Meera Krishnan',
-    phone: '+91 98401 23456',
+    phone: '+91 70108 94104',
     productName: '22K Gold Chain',
     productSku: 'GC-1045',
     productImage: '/images/product_gold_chain.jpg',
