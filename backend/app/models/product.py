@@ -74,6 +74,16 @@ class Product(Base):
         nullable=True,
         default=None,
     )
+    sub_type: Mapped[str | None] = mapped_column(
+        String(100),
+        nullable=True,
+        default=None,
+    )
+    occasion: Mapped[str | None] = mapped_column(
+        String(100),
+        nullable=True,
+        default=None,
+    )
     item_type: Mapped[str] = mapped_column(
         String(20),
         default="unique",

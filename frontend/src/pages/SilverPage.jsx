@@ -753,7 +753,7 @@ export default function SilverPage({
               }`}
             >
               {getSilverCategoryIcon('all', activeKey === 'all')}
-              <span>All Silver ({dbProducts.filter(p => p.category?.toLowerCase().includes('silver')).length})</span>
+              <span>All Silver ({dbProducts.filter(p => !((p.productType || p.product_type || '').toLowerCase() === 'gold' || (p.category || '').toLowerCase().includes('gold'))).length})</span>
             </Link>
 
             {/* Category Shortcut Pills */}

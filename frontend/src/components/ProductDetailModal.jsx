@@ -593,11 +593,13 @@ export default function ProductDetailModal({
                     </div>
 
                     {/* Image Counter (Top-Right) */}
-                    <div className="absolute top-3 right-3 z-20 pointer-events-none">
-                      <span className="bg-[#241716]/85 text-[#F3EAD3] text-[11px] font-medium px-2 py-0.5 rounded-md backdrop-blur-xs font-mono shadow-xs">
-                        {activeImageIndex + 1} / {thumbnailViews.length}
-                      </span>
-                    </div>
+                    {thumbnailViews.length > 1 && (
+                      <div className="absolute top-3 right-3 z-20 pointer-events-none">
+                        <span className="bg-[#241716]/85 text-[#F3EAD3] text-[11px] font-medium px-2 py-0.5 rounded-md backdrop-blur-xs font-mono shadow-xs">
+                          {activeImageIndex + 1} / {thumbnailViews.length}
+                        </span>
+                      </div>
+                    )}
 
                     {/* Top-Right Quick Action Icons (Zoom & Fullscreen) */}
                     <div className="absolute top-10 right-3 z-30 flex flex-col gap-1.5 opacity-90 group-hover:opacity-100 transition-opacity">
@@ -726,35 +728,36 @@ export default function ProductDetailModal({
                   )}
                 </div>
 
-                {/* 3. Thumbnails Row (Up to 3 Perspectives) */}
-                <div className={`grid gap-2.5 sm:gap-3 mt-3.5 ${
-                  thumbnailViews.length === 1 ? 'grid-cols-1 max-w-[100px]' :
-                  thumbnailViews.length === 2 ? 'grid-cols-2 max-w-[210px]' :
-                  'grid-cols-3 max-w-[320px]'
-                }`}>
-                  {thumbnailViews.map((item, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setActiveImageIndex(idx)}
-                      className={`aspect-square rounded-xl overflow-hidden bg-white p-1.5 transition-all cursor-pointer ${
-                        activeImageIndex === idx
-                          ? 'border-2 border-[#8C6D2D] ring-2 ring-[#8C6D2D]/20 shadow-xs scale-[1.02]'
-                          : 'border border-[#E8DFC0] hover:border-[#8C6D2D] opacity-80 hover:opacity-100'
-                      }`}
-                      title={`${product.name} - ${item.label}`}
-                    >
-                      <img
-                        src={item.src}
-                        alt={`${product.name} ${item.label}`}
-                        className="w-full h-full object-contain"
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src = '/images/neutral_product_placeholder.svg';
-                        }}
-                      />
-                    </button>
-                  ))}
-                </div>
+                {/* 3. Thumbnails Row (Up to 3 Perspectives - only when multiple views) */}
+                {thumbnailViews.length > 1 && (
+                  <div className={`grid gap-2.5 sm:gap-3 mt-3.5 ${
+                    thumbnailViews.length === 2 ? 'grid-cols-2 max-w-[210px]' :
+                    'grid-cols-3 max-w-[320px]'
+                  }`}>
+                    {thumbnailViews.map((item, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setActiveImageIndex(idx)}
+                        className={`aspect-square rounded-xl overflow-hidden bg-white p-1.5 transition-all cursor-pointer ${
+                          activeImageIndex === idx
+                            ? 'border-2 border-[#8C6D2D] ring-2 ring-[#8C6D2D]/20 shadow-xs scale-[1.02]'
+                            : 'border border-[#E8DFC0] hover:border-[#8C6D2D] opacity-80 hover:opacity-100'
+                        }`}
+                        title={`${product.name} - ${item.label}`}
+                      >
+                        <img
+                          src={item.src}
+                          alt={`${product.name} ${item.label}`}
+                          className="w-full h-full object-contain"
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = '/images/neutral_product_placeholder.svg';
+                          }}
+                        />
+                      </button>
+                    ))}
+                  </div>
+                )}
 
                 {/* 4. Pagination Dots Indicator (Only when > 1 image) */}
                 {thumbnailViews.length > 1 && (

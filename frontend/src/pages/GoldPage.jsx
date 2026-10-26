@@ -442,11 +442,12 @@ export default function GoldPage({
       return false;
     }
 
-    // 2. Handle Coins & Bars: only show under /gold/coins, never in general gold jewellery
+    // 2. Handle Coins & Bars:
     const isCoinsItem = prodTypeLower === 'coins_bars' || catLower.includes('coin') || catLower.includes('bar');
     if (activeMainCat === 'coins') {
       if (!isCoinsItem) return false;
-    } else {
+    } else if (activeMainCat !== 'all') {
+      // Exclude coins & bars only from specific jewellery category tabs (e.g. earrings, rings, bangles)
       if (isCoinsItem) return false;
     }
 
@@ -455,7 +456,7 @@ export default function GoldPage({
       'nosepin', 'occasion', 'chains', 'pendant', 'pendants', 'anklets', 'toe rings', 'toe-rings',
       'bridal jewellery', 'bridal'
     ];
-    const isGoldCategory = catLower.includes('gold') || prodTypeLower === 'gold' || goldCategoryNames.includes(catLower);
+    const isGoldCategory = catLower.includes('gold') || prodTypeLower === 'gold' || isCoinsItem || goldCategoryNames.includes(catLower);
     if (!isGoldCategory && activeMainCat !== 'coins') return false;
 
     // Search query filter
@@ -811,7 +812,7 @@ export default function GoldPage({
               }`}
             >
               {getCategoryIcon('all', activeKey === 'all')}
-              <span>All Gold ({dbProducts.filter(p => p.category?.toLowerCase().includes('gold')).length})</span>
+              <span>All Gold ({dbProducts.filter(p => !((p.productType || p.product_type || '').toLowerCase() === 'silver' || (p.category || '').toLowerCase().includes('silver'))).length})</span>
             </Link>
 
             {/* Category Shortcut Pills */}

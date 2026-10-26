@@ -78,6 +78,8 @@ class ProductBase(BaseModel):
     product_type: Optional[str] = Field(None, max_length=50, description="'gold', 'silver', 'coins_bars'")
     category: str = Field(..., min_length=2, max_length=100)
     sub_category: Optional[str] = Field(None, max_length=100)
+    sub_type: Optional[str] = Field(None, max_length=100)
+    occasion: Optional[str] = Field(None, max_length=100)
     item_type: str = Field("unique", description="'unique' or 'regular'")
     price: Decimal = Field(..., ge=0, description="Selling price (INR)")
     status: str = Field("available", description="'available', 'reserved', 'sold', 'sold_showroom'")
@@ -150,6 +152,8 @@ class ProductCreate(BaseModel):
     product_type: Optional[str] = Field(None, alias="productType")
     category: str = Field(..., min_length=2, max_length=100)
     sub_category: Optional[str] = Field(None, alias="subCategory")
+    sub_type: Optional[str] = Field(None, alias="subType")
+    occasion: Optional[str] = None
     item_type: Optional[str] = Field(None, alias="itemType")
     is_unique: Optional[bool] = Field(None, alias="isUnique")
     price: Optional[Decimal] = None
@@ -241,6 +245,8 @@ class ProductUpdate(BaseModel):
     product_type: Optional[str] = Field(None, alias="productType")
     category: Optional[str] = None
     sub_category: Optional[str] = Field(None, alias="subCategory")
+    sub_type: Optional[str] = Field(None, alias="subType")
+    occasion: Optional[str] = None
     item_type: Optional[str] = Field(None, alias="itemType")
     is_unique: Optional[bool] = Field(None, alias="isUnique")
     price: Optional[Decimal] = None
@@ -371,6 +377,8 @@ class ProductPublic(BaseModel):
     product_type: Optional[str] = None
     category: str
     sub_category: Optional[str] = None
+    sub_type: Optional[str] = None
+    occasion: Optional[str] = None
     item_type: str
     price: Decimal
     status: str
@@ -511,6 +519,8 @@ class ProductPublic(BaseModel):
 
     @computed_field
     def subType(self) -> str:
+        if self.sub_type:
+            return self.sub_type.lower().replace(" ", "-")
         return (self.sub_category or "").lower().replace(" ", "-")
 
 

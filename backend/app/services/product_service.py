@@ -393,6 +393,7 @@ def get_products(
                 func.lower(Product.sku).like(term),
                 func.lower(Product.category).like(term),
                 func.lower(func.coalesce(Product.sub_category, "")).like(term),
+                func.lower(func.coalesce(Product.sub_type, "")).like(term),
                 func.lower(func.coalesce(Product.subtitle, "")).like(term),
                 func.lower(func.coalesce(Product.description, "")).like(term),
             )
@@ -427,14 +428,26 @@ def get_products(
             query = query.filter(
                 and_(
                     or_(
+                        Product.product_type == "gold",
                         func.lower(Product.category).like("%gold%"),
                         func.lower(Product.category).in_(gold_storefront_categories),
+                        and_(
+                            or_(
+                                Product.product_type == "coins_bars",
+                                func.lower(Product.category).like("%coin%"),
+                                func.lower(Product.category).like("%bar%"),
+                            ),
+                            or_(
+                                func.lower(Product.name).like("%gold%"),
+                                func.lower(Product.category).like("%gold%"),
+                                func.lower(Product.sku).like("cb-0%"),
+                                func.lower(Product.sku).like("cb-g%"),
+                            ),
+                        ),
                     ),
                     Product.product_type != "silver",
-                    Product.product_type != "coins_bars",
                     ~func.lower(Product.category).like("%silver%"),
-                    ~func.lower(Product.category).like("%coin%"),
-                    ~func.lower(Product.category).like("%bar%"),
+                    ~func.lower(Product.name).like("%silver%"),
                 )
             )
         elif cat_lower in ("silver", "silver_jewellery"):
@@ -443,13 +456,22 @@ def get_products(
                     or_(
                         Product.product_type == "silver",
                         func.lower(Product.category).like("%silver%"),
+                        and_(
+                            or_(
+                                Product.product_type == "coins_bars",
+                                func.lower(Product.category).like("%coin%"),
+                                func.lower(Product.category).like("%bar%"),
+                            ),
+                            or_(
+                                func.lower(Product.name).like("%silver%"),
+                                func.lower(Product.category).like("%silver%"),
+                                func.lower(Product.sku).like("%-s%"),
+                            ),
+                        ),
                     ),
                     Product.product_type != "gold",
-                    Product.product_type != "coins_bars",
                     ~func.lower(Product.category).like("%gold%"),
-                    ~func.lower(Product.category).like("%article%"),
-                    ~func.lower(Product.category).like("%coin%"),
-                    ~func.lower(Product.category).like("%bar%"),
+                    ~func.lower(Product.name).like("%gold%"),
                 )
             )
         elif cat_lower == "silver_articles":
@@ -489,6 +511,7 @@ def get_products(
         query = query.filter(
             or_(
                 func.lower(func.coalesce(Product.sub_category, "")).like(f"%{sub_lower}%"),
+                func.lower(func.coalesce(Product.sub_type, "")).like(f"%{sub_lower}%"),
                 func.lower(Product.name).like(f"%{sub_lower}%"),
             )
         )

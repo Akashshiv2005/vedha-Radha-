@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { X, ZoomIn, ZoomOut, RotateCcw, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -61,9 +61,11 @@ export default function ProductZoomModal({ isOpen, onClose, images, activeIndex,
             <span className="font-bold text-base text-[#F3EAD3] hidden sm:inline">
               {productName}
             </span>
-            <span className="text-xs bg-white/10 px-2.5 py-1 rounded-full text-white/80 font-mono">
-              View {activeIndex + 1} of {images.length}
-            </span>
+            {images.length > 1 && (
+              <span className="text-xs bg-white/10 px-2.5 py-1 rounded-full text-white/80 font-mono">
+                View {activeIndex + 1} of {images.length}
+              </span>
+            )}
           </div>
 
           <div className="flex items-center gap-2">
