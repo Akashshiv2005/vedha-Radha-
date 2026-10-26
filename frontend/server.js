@@ -26,8 +26,6 @@ import {
   invalidateSession
 } from './server/authService.js';
 
-import { getPreciousRates } from './server/ratesService.js';
-
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
@@ -163,22 +161,20 @@ app.all('/api/admin/{*subpath}', async (req, res) => {
 });
 
 /**
- * GET /api/rates
- * Returns precious metal rate data (cached, with 60-second TTL)
+ * Forward precious metal rate endpoints to FastAPI backend
  */
-app.get('/api/rates', async (req, res) => {
+app.all(['/api/rates', '/api/prices*', '/api/gold-rates*'], async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   try {
-    const force = req.query.force === 'true' || req.query.refresh === '1';
-    const rateData = await getPreciousRates(process.env, force);
-
-    res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=300');
-    return res.status(200).json(rateData);
+    const url = `${BACKEND_API_URL}${req.originalUrl}`;
+    const response = await fetch(url);
+    const data = await response.json().catch(() => null);
+    return res.status(response.status).json(data || {});
   } catch (err) {
-    console.error('[api/rates] Error:', err);
-    return res.status(500).json({
+    console.error('[rates proxy] Error reaching backend:', err);
+    return res.status(503).json({
       success: false,
-      error: 'Internal error processing precious metal rates',
+      error: 'Gold and silver rate service is temporarily unavailable',
       timestamp: Date.now()
     });
   }

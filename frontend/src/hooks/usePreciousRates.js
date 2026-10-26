@@ -1,17 +1,18 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 
-const LOCAL_STORAGE_KEY = 'vedha_radha_rates_cache_v1';
-const REFRESH_INTERVAL_MS = 120 * 1000; // 120 seconds (2 minutes)
+const LOCAL_STORAGE_KEY = 'vedha_radha_rates_cache_v2';
+const REFRESH_INTERVAL_MS = 300 * 1000; // 300 seconds (5 minutes)
 
 const FALLBACK_INITIAL_RATES = {
-  gold22k: '6,742',
-  gold24k: '7,355',
-  gold18k: '5,516',
-  silver1g: '94.50',
-  silver999: '102.16',
-  change: '+ ₹32',
+  gold22k: '13,085',
+  gold24k: '14,275',
+  gold18k: '10,705',
+  gold14k: '8,550',
+  silver1g: '220.00',
+  silver999: '237.60',
+  change: '+ ₹15',
   isUp: true,
-  lastUpdated: 'Today, Indicative Benchmark'
+  lastUpdated: 'The Jewellers Association Benchmark'
 };
 
 export function usePreciousRates() {
@@ -60,8 +61,11 @@ export function usePreciousRates() {
     setError(null);
 
     try {
-      const endpoint = `/api/prices/gold-silver${force ? '?force=true' : ''}`;
-      const response = await fetch(endpoint);
+      // Call primary live endpoint with fallback to prices/gold-silver
+      let response = await fetch(`/api/gold-rates/live${force ? '?force=true' : ''}`);
+      if (!response.ok) {
+        response = await fetch(`/api/prices/gold-silver${force ? '?force=true' : ''}`);
+      }
 
       if (!response.ok) {
         throw new Error(`Rates API returned status ${response.status}`);

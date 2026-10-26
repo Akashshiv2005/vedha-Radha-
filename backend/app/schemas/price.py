@@ -51,28 +51,36 @@ class OroPocketResponse(BaseModel):
 
 
 class FormattedRates(BaseModel):
-    gold22k: str = Field(..., description="Standard 22K (916) jewellery rate per gram formatted e.g. 13,751")
-    gold24k: str = Field(..., description="Pure 24K (999) bullion rate per gram formatted e.g. 15,001")
-    gold18k: str = Field(..., description="18K jewellery rate per gram formatted e.g. 11,250")
-    silver1g: str = Field(..., description="925 sterling silver rate per gram formatted e.g. 200.00")
-    silver999: str = Field(..., description="Pure 999 fine silver rate per gram formatted e.g. 216.17")
-    change: Optional[str] = Field(None, description="24h price movement formatted e.g. '+ ₹32' or '- ₹26'")
+    gold22k: str = Field(..., description="Standard 22K (916) jewellery rate per gram formatted e.g. 13,085")
+    gold24k: Optional[str] = Field(None, description="Pure 24K bullion rate per gram formatted e.g. 14,275")
+    gold18k: str = Field(..., description="18K jewellery rate per gram formatted e.g. 10,705")
+    gold14k: Optional[str] = Field(None, description="14K jewellery rate per gram formatted e.g. 8,550")
+    silver1g: str = Field(..., description="Silver rate per gram formatted e.g. 220.00")
+    silver999: Optional[str] = Field(None, description="Pure 999 fine silver rate per gram formatted e.g. 237.60")
+    change: Optional[str] = Field(None, description="Daily price movement formatted e.g. '+ ₹15' or '- ₹20'")
     isUp: bool = Field(True, description="True if price moved up or remained neutral")
-    lastUpdated: str = Field(..., description="Display timestamp formatted in IST")
+    lastUpdated: str = Field(..., description="Actual rate update date and time from source")
 
 
 class RawRates(BaseModel):
-    gold24k_buy: float
-    gold24k_sell: float
-    gold22k_buy: float
-    gold18k_buy: float
-    silver999_buy: float
-    silver999_sell: float
-    silver925_buy: float
+    gold22k: float
+    gold18k: float
+    gold14k: Optional[float] = None
+    silver1g: float
+    gold24k: Optional[float] = None
+    gold22k_buy: Optional[float] = None
+    gold24k_buy: Optional[float] = None
+    gold24k_sell: Optional[float] = None
+    gold18k_buy: Optional[float] = None
+    silver999_buy: Optional[float] = None
+    silver999_sell: Optional[float] = None
+    silver925_buy: Optional[float] = None
     change_pct: Optional[float] = None
     change_amount_22k: Optional[float] = None
     is_up: bool = True
     timestamp: str
+
+    model_config = ConfigDict(extra="ignore")
 
 
 class RatesContainer(BaseModel):
@@ -88,7 +96,7 @@ class PriceResponse(BaseModel):
     is_stale: bool = Field(False, description="True if served as fallback after provider failure")
     is_cached: bool = Field(False, description="True if served from memory cache")
     cache_age_seconds: int = Field(0, description="Age of the cached rate in seconds")
-    disclaimer: str = Field("Live spot benchmark rates from OroPocket (24K Gold & 999 Silver). Jewellery retail prices calculated per gram.")
+    disclaimer: str = Field("Official market rates from The Jewellers Association (MJDTA).")
     rates: RatesContainer
     gold: Dict[str, Any]
     silver: Dict[str, Any]

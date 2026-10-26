@@ -168,6 +168,23 @@ export default function GoldRateModal({
                 </div>
               )}
 
+              {/* 14K Gold Card */}
+              {rates.gold14k && (
+                <div className="p-3.5 rounded-xl bg-white border border-[#E8DFC0] flex items-center justify-between">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="w-2.5 h-2.5 rounded-full bg-[#E5D7C5]" />
+                      <span className="text-sm font-bold text-[#241716]">14K Jewellery Gold</span>
+                    </div>
+                    <span className="text-[11px] text-[#7A6E65] block">58.5% Fine Purity</span>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-base font-bold text-[#351218]">₹ {rates.gold14k}</span>
+                    <span className="text-[10px] text-[#7A6E65] block font-mono">/ 1 gram</span>
+                  </div>
+                </div>
+              )}
+
               {/* 92.5 Pure Silver Rate Card */}
               <div className="p-4 rounded-xl bg-white border border-[#E8DFC0] shadow-xs flex items-center justify-between">
                 <div>

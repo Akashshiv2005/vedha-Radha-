@@ -7,10 +7,24 @@ router = APIRouter(tags=["Precious Metal Rates"])
 
 
 @router.get(
+    "/gold-rates/live",
+    response_model=PriceResponse,
+    summary="Get live gold and silver rates from The Jewellers Association (MJDTA)",
+    description="Returns live benchmark rates for 22K, 18K, 14K gold and silver per gram from The Jewellers Association.",
+)
+async def get_live_gold_rates(
+    force: bool = Query(False, description="Bypass cache and force-fetch fresh rates from source"),
+    refresh: Optional[bool] = Query(None, description="Alias for force refresh"),
+):
+    should_force = force or bool(refresh)
+    return await price_service.get_live_prices(force_refresh=should_force)
+
+
+@router.get(
     "/prices/gold-silver",
     response_model=PriceResponse,
-    summary="Get live gold and silver rates (cached for 120s from OroPocket)",
-    description="Returns live spot rates for 24K, 22K, 18K gold and 999, 925 silver in INR per gram, refreshed every 2 minutes.",
+    summary="Get live gold and silver rates (backward-compatible alias)",
+    description="Returns rates for 22K, 18K, 14K gold and silver per gram.",
 )
 async def get_gold_silver_prices(
     force: bool = Query(False, description="Bypass cache and force-fetch fresh rates from provider"),

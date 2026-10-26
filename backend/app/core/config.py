@@ -40,9 +40,10 @@ class Settings(BaseSettings):
     RATE_LIMIT_LOGIN_MAX_ATTEMPTS: int = 5
     RATE_LIMIT_LOGIN_WINDOW_SECONDS: int = 60
 
-    # OroPocket Public Price API & Cache TTL (120 seconds = 2 minutes)
+    # The Jewellers Association Source URL & Cache TTL (300 seconds = 5 minutes)
+    JEWELLERS_ASSOCIATION_URL: str = "https://thejewellersassociation.org/"
+    PRICE_CACHE_TTL_SECONDS: int = 300
     OROPOCKET_PRICE_URL: str = "https://api.oropocket.com/public/prices"
-    PRICE_CACHE_TTL_SECONDS: int = 120
 
     # MinIO Object Storage Configuration
     MINIO_ENDPOINT: str = "127.0.0.1:9000"
