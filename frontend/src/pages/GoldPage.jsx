@@ -1,0 +1,1161 @@
+import React, { useState } from 'react';
+import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
+import { goldCategories } from '../data/categoryData';
+import { storefrontClient } from '../api/storefrontProductsClient';
+import {
+  Sparkles,
+  ChevronRight,
+  ChevronLeft,
+  Heart,
+  ShoppingBag,
+  ShieldCheck,
+  ArrowLeft,
+  PhoneCall,
+  SlidersHorizontal,
+  Gem,
+  CircleDot,
+  Crown,
+  Filter,
+  Layers,
+  Check,
+  X
+} from 'lucide-react';
+
+const CATEGORY_MAP = {
+  // Main Categories
+  'earrings': {
+    title: 'Gold Earrings Collection',
+    desc: 'From royal Chettinad antique jhumkas to daily wear studs in 22K BIS 916 hallmarked gold.',
+    parent: null
+  },
+  'studs': {
+    title: '22K Gold Studs',
+    desc: 'Delicate everyday floral, pearl cluster, and solitaire-style gemstone studs.',
+    parent: { name: 'Earrings', slug: 'earrings', path: '/gold/earrings' }
+  },
+  'hangings': {
+    title: 'Gold Hanging Earrings',
+    desc: 'Graceful dangling earrings and chandelier hangings with fine gold bead droplets.',
+    parent: { name: 'Earrings', slug: 'earrings', path: '/gold/earrings' }
+  },
+  'drops': {
+    title: 'Gold Drop Earrings',
+    desc: 'Heirloom tear-drop and oval antique drops adorned with rubies and emeralds.',
+    parent: { name: 'Earrings', slug: 'earrings', path: '/gold/earrings' }
+  },
+  'jhumkas': {
+    title: 'Chettinad Royal Gold Jhumkas',
+    desc: 'Grand multi-tier bell jhumkas inspired by South Indian temple architecture.',
+    parent: { name: 'Earrings', slug: 'earrings', path: '/gold/earrings' }
+  },
+  'hoops-bali': {
+    title: 'Gold Hoops & Bali Earrings',
+    desc: 'Classic circular South Indian balis, twisted hoop earrings, and lightweight daily loops.',
+    parent: { name: 'Earrings', slug: 'earrings', path: '/gold/earrings' }
+  },
+
+  // Rings
+  'rings': {
+    title: 'Gold Rings Collection',
+    desc: 'Artisanal 22K cocktail rings, engagement bands, and auspicious gemstone signet rings.',
+    parent: null
+  },
+  'engagement-rings': {
+    title: 'Gold Engagement Rings',
+    desc: 'Auspicious proposal bands, filigree solitaires, and eternity wedding rings.',
+    parent: { name: 'Rings', slug: 'rings', path: '/gold/rings' }
+  },
+  'casual-rings': {
+    title: 'Casual & Daily Wear Gold Rings',
+    desc: 'Comfort-fit lightweight gold rings, floral bands, and stackable modern accents.',
+    parent: { name: 'Rings', slug: 'rings', path: '/gold/rings' }
+  },
+
+  // Bangles & Bracelets
+  'bangles': {
+    title: 'Gold Bangles & Bracelets',
+    desc: 'Antique finish screw-kadas, traditional valayal sets, and lightweight daily bracelets.',
+    parent: null
+  },
+  'cuff-bracelets': {
+    title: 'Gold Cuff Bracelets',
+    desc: 'Heavy structured kadas, open cuff bangles, and peacock-embossed wrist cuffs.',
+    parent: { name: 'Bangle & Bracelets', slug: 'bangles', path: '/gold/bangles' }
+  },
+  'chain-bracelets': {
+    title: 'Gold Chain Bracelets',
+    desc: 'Flexible woven link bracelets, watch-charm bangles, and delicate gold wrist chains.',
+    parent: { name: 'Bangle & Bracelets', slug: 'bangles', path: '/gold/bangles' }
+  },
+  'bangle-bracelets': {
+    title: 'Gold Bangle Bracelets',
+    desc: 'Contemporary hinge-lock bangle bracelets crafted for festive styling.',
+    parent: { name: 'Bangle & Bracelets', slug: 'bangles', path: '/gold/bangles' }
+  },
+
+  // Necklaces
+  'necklaces': {
+    title: 'Gold Necklaces & Harams',
+    desc: 'Heritage temple choker necklaces, long harams, and bridal kasu malas in 22K gold.',
+    parent: null
+  },
+  'short-necklace': {
+    title: 'Short Gold Necklaces & Chokers',
+    desc: 'Close-fitting temple collar chokers, mango malas, and festive short necklaces.',
+    parent: { name: 'Necklaces', slug: 'necklaces', path: '/gold/necklaces' }
+  },
+  'long-necklace': {
+    title: 'Long Gold Harams & Kasu Malas',
+    desc: 'Grand 22-to-28 inch long bridal harams, coin malas, and multi-tier heirloom necklaces.',
+    parent: { name: 'Necklaces', slug: 'necklaces', path: '/gold/necklaces' }
+  },
+
+  // Nosepin
+  'nosepin': {
+    title: '22K Gold Nosepins & Mookuthi',
+    desc: 'Traditional South Indian stone mookuthi, floral diamond studs, and clip-on nose rings.',
+    parent: null
+  },
+
+  // Occasion
+  'occasion': {
+    title: 'Occasion Wear Gold Jewellery',
+    desc: 'Curated 22K jewellery ensembles tailored for casual days, celebrations, and wedding muhurthams.',
+    parent: null
+  },
+  'casual-wear': {
+    title: 'Casual & Daily Wear Gold',
+    desc: 'Understated, lightweight 22K gold essentials designed for daily elegance and durability.',
+    parent: { name: 'Occasion', slug: 'occasion', path: '/gold/occasion' }
+  },
+  'party-wear': {
+    title: 'Party & Festive Wear Gold',
+    desc: 'Radiant statement pieces, cocktail rings, and gemstone-accented jewellery for celebrations.',
+    parent: { name: 'Occasion', slug: 'occasion', path: '/gold/occasion' }
+  },
+  'traditional-wear': {
+    title: 'Traditional & Muhurtham Wedding Gold',
+    desc: 'Auspicious temple harams, antique kadas, Kasu malas, and bridal heirloom sets.',
+    parent: { name: 'Occasion', slug: 'occasion', path: '/gold/occasion' }
+  },
+
+  // Chains & Pendants
+  'chains': {
+    title: '22K Gold Chains',
+    desc: 'Hand-woven mugappu chains, hollow rope links, and durable everyday 22K chains.',
+    parent: null
+  },
+  'pendants': {
+    title: '22K Gold Pendants',
+    desc: 'Sacred temple deities, peacock medallions, and floral repoussé lockets in 22K gold.',
+    parent: null
+  },
+  'anklets': {
+    title: '22K Gold Anklets & Payals',
+    desc: 'Melodic gold ghungroo payals, heritage Mani beaded kolusus, and bridal bell-charm anklets in 22K hallmarked gold.',
+    parent: null
+  },
+  'toe-rings': {
+    title: '22K Gold Toe Rings (Metti)',
+    desc: 'Auspicious South Indian bridal 22K gold metti pairs and ornate floral filigree toe rings in 22K hallmarked gold.',
+    parent: null
+  },
+  'bridal-jewellery': {
+    title: 'Bridal Gold Jewellery',
+    desc: 'Complete auspicious Muhurtham wedding trousseau sets and temple bridal jewelry.',
+    parent: null
+  },
+  'coins': {
+    title: '24K 999 Pure Gold Coins',
+    desc: 'Certified 24K pure gold coins and sacred temple medallions for auspicious gifting and puja.',
+    parent: null
+  }
+};
+
+// Helper for custom category gold line-art icons matching exact design reference
+function getCategoryIcon(slug, isActive = false) {
+  const iconColor = isActive ? 'text-[#CFA85A]' : 'text-[#B89248]';
+
+  switch (slug) {
+    case 'all':
+      return (
+        <svg className={`w-4 h-4 shrink-0 ${iconColor}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="3" y="3" width="7" height="7" rx="1.5" />
+          <rect x="14" y="3" width="7" height="7" rx="1.5" />
+          <rect x="14" y="14" width="7" height="7" rx="1.5" />
+          <rect x="3" y="14" width="7" height="7" rx="1.5" />
+        </svg>
+      );
+    case 'earrings':
+      return (
+        <svg className={`w-4 h-4 shrink-0 ${iconColor}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="3.5" r="1.5" />
+          <path d="M12 5V7.5" />
+          <path d="M6.5 14C6.5 10 9 7.5 12 7.5C15 7.5 17.5 10 17.5 14H6.5Z" />
+          <path d="M7 14L6 17M12 14V18M17 14L18 17" />
+          <circle cx="6" cy="17.5" r="0.8" fill="currentColor" />
+          <circle cx="12" cy="18.5" r="0.8" fill="currentColor" />
+          <circle cx="18" cy="17.5" r="0.8" fill="currentColor" />
+        </svg>
+      );
+    case 'rings':
+      return (
+        <svg className={`w-4 h-4 shrink-0 ${iconColor}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="14" r="6" />
+          <path d="M9.5 5.5L12 2.5L14.5 5.5L13.5 8H10.5L9.5 5.5Z" />
+          <path d="M10.5 8L12 5L13.5 8" />
+        </svg>
+      );
+    case 'bangles':
+      return (
+        <svg className={`w-4 h-4 shrink-0 ${iconColor}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <ellipse cx="12" cy="12" rx="8" ry="6" transform="rotate(-30 12 12)" />
+          <ellipse cx="12" cy="12" rx="6" ry="4.2" transform="rotate(-30 12 12)" />
+          <line x1="7" y1="8" x2="8.5" y2="10" strokeWidth="1.2" />
+          <line x1="15.5" y1="14" x2="17" y2="16" strokeWidth="1.2" />
+        </svg>
+      );
+    case 'necklaces':
+      return (
+        <svg className={`w-4 h-4 shrink-0 ${iconColor}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M5 6C5 12.5 8.2 17 12 17C15.8 17 19 12.5 19 6" />
+          <circle cx="6.5" cy="10" r="0.9" fill="currentColor" />
+          <circle cx="9" cy="13.5" r="0.9" fill="currentColor" />
+          <circle cx="15" cy="13.5" r="0.9" fill="currentColor" />
+          <circle cx="17.5" cy="10" r="0.9" fill="currentColor" />
+          <path d="M12 17V19.5" />
+          <circle cx="12" cy="20.5" r="1.2" fill="currentColor" />
+        </svg>
+      );
+    case 'nosepin':
+      return (
+        <svg className={`w-4 h-4 shrink-0 ${iconColor}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+          <path d="M12 5C12 7.5 10.5 8.8 12 10.5C13.5 8.8 12 7.5 12 5Z" />
+          <path d="M12 19C12 16.5 10.5 15.2 12 13.5C13.5 15.2 12 16.5 12 19Z" />
+          <path d="M5 12C7.5 12 8.8 10.5 10.5 12C8.8 13.5 7.5 12 5 12Z" />
+          <path d="M19 12C16.5 12 15.2 10.5 13.5 12C15.2 13.5 16.5 12 19 12Z" />
+          <path d="M7 7C8.5 8.5 9.5 9.5 11 11C9.5 9.5 8.5 8.5 7 7Z" />
+          <path d="M17 17C15.5 15.5 14.5 14.5 13 13C14.5 14.5 15.5 15.5 17 17Z" />
+          <path d="M17 7C15.5 8.5 14.5 9.5 13 11C14.5 9.5 15.5 8.5 17 7Z" />
+          <path d="M7 17C8.5 15.5 9.5 14.5 11 13C9.5 14.5 8.5 15.5 7 17Z" />
+        </svg>
+      );
+    case 'occasion':
+      return (
+        <svg className={`w-4 h-4 shrink-0 ${iconColor}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 5C12 8.5 10.5 11.5 12 16C13.5 11.5 12 8.5 12 5Z" />
+          <path d="M12 16C9.5 11.5 5 13 5 15.5C5 18 9 18.5 12 18.5C15 18.5 19 18 19 15.5C19 13 14.5 11.5 12 16Z" />
+          <path d="M8 17C6.5 17.5 4.5 19 4.5 20H19.5C19.5 19 17.5 17.5 16 17" />
+        </svg>
+      );
+    case 'chains':
+      return (
+        <svg className={`w-4 h-4 shrink-0 ${iconColor}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="7" y="10" width="10" height="4" rx="2" transform="rotate(-45 12 12)" />
+          <path d="M7.5 8.5L5 11C3.89543 12.1046 3.89543 13.8954 5 15C6.10457 16.1046 7.89543 16.1046 9 15L11.5 12.5" />
+          <path d="M16.5 15.5L19 13C20.1046 11.8954 20.1046 10.1046 19 9C17.8954 7.89543 16.1046 7.89543 15 9L12.5 11.5" />
+        </svg>
+      );
+    case 'pendants':
+      return (
+        <svg className={`w-4 h-4 shrink-0 ${iconColor}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="4" r="1.5" />
+          <path d="M12 5.5V7.5" />
+          <path d="M12 7.5C8.5 11.5 7 14.5 7 17C7 19.8 9.2 22 12 22C14.8 22 17 19.8 17 17C17 14.5 15.5 11.5 12 7.5Z" />
+          <circle cx="12" cy="16" r="1.5" fill="currentColor" />
+        </svg>
+      );
+    case 'anklets':
+      return (
+        <svg className={`w-4 h-4 shrink-0 ${iconColor}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M3 10C7 16.5 17 16.5 21 10" />
+          <path d="M8 14.5V17" />
+          <circle cx="8" cy="18" r="1" fill="currentColor" />
+          <path d="M12 15.2V18" />
+          <circle cx="12" cy="19" r="1" fill="currentColor" />
+          <path d="M16 14.5V17" />
+          <circle cx="16" cy="18" r="1" fill="currentColor" />
+          <circle cx="3.5" cy="10" r="1" fill="currentColor" />
+          <circle cx="20.5" cy="10" r="1" fill="currentColor" />
+        </svg>
+      );
+    case 'toe-rings':
+      return (
+        <svg className={`w-4 h-4 shrink-0 ${iconColor}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <ellipse cx="12" cy="14" rx="7" ry="5" />
+          <ellipse cx="12" cy="14" rx="4.5" ry="3" />
+          <circle cx="12" cy="6" r="2.5" />
+          <circle cx="12" cy="6" r="1" fill="currentColor" />
+          <path d="M12 8.5V9.5" />
+        </svg>
+      );
+    case 'coins':
+      return (
+        <svg className={`w-4 h-4 shrink-0 ${iconColor}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="9" />
+          <circle cx="12" cy="12" r="6.5" strokeWidth="1" />
+          <circle cx="12" cy="12" r="3" fill="currentColor" fillOpacity="0.2" />
+          <path d="M12 7.5V8.5M12 15.5V16.5M7.5 12H8.5M15.5 12H16.5" strokeWidth="1.2" />
+        </svg>
+      );
+    default:
+      return <Gem className={`w-4 h-4 shrink-0 ${iconColor}`} />;
+  }
+}
+
+export default function GoldPage({
+  searchQuery = '',
+  onViewProduct = () => { },
+  onAddToCart = () => { },
+  onAddToWishlist = () => { },
+  wishlistItems = []
+}) {
+  const { subCategory, category, subType } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [sortBy, setSortBy] = useState('featured');
+  const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
+  const [priceFilter, setPriceFilter] = useState('all'); // 'all' | 'under50k' | '50k-100k' | 'above100k'
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(false);
+  const [dbProducts, setDbProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [apiError, setApiError] = useState(null);
+  const pillTrackRef = React.useRef(null);
+
+  // Identify active category key from either single-level or nested route
+  const isBanglesSubStyle = Boolean(subType) && (subType.toLowerCase() === 'bangles' || subType.toLowerCase() === 'bangle-bracelets');
+  const activeKey = (subType || subCategory || category || 'all').toLowerCase();
+
+  let categoryInfo = CATEGORY_MAP[activeKey];
+  if (isBanglesSubStyle) {
+    categoryInfo = {
+      title: 'Gold Bangles',
+      desc: 'Heritage antique gold kadas, daily wear valayals, and handcrafted 22K bangles.',
+      parent: { name: 'Bangle & Bracelets', slug: 'bangles', path: '/gold/bangles' }
+    };
+  } else if (!categoryInfo) {
+    categoryInfo = {
+      title: '22K Hallmarked Gold Jewellery',
+      desc: 'Explore our complete range of BIS 916 certified South Indian bridal necklaces, antique bangles, earrings, and temple jewels.',
+      parent: null
+    };
+  }
+  const activeMainCat = (category || (categoryInfo.parent ? categoryInfo.parent.slug : subCategory) || 'all').toLowerCase();
+
+  const checkPillScroll = () => {
+    if (!pillTrackRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = pillTrackRef.current;
+    setShowLeftArrow(scrollLeft > 10);
+    setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 10);
+  };
+
+  React.useEffect(() => {
+    const el = pillTrackRef.current;
+    if (el) {
+      checkPillScroll();
+      el.addEventListener('scroll', checkPillScroll, { passive: true });
+      window.addEventListener('resize', checkPillScroll);
+      return () => {
+        el.removeEventListener('scroll', checkPillScroll);
+        window.removeEventListener('resize', checkPillScroll);
+      };
+    }
+  }, []);
+
+  const handlePillScroll = (direction) => {
+    if (pillTrackRef.current) {
+      const scrollAmount = direction === 'left' ? -260 : 260;
+      pillTrackRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
+  React.useEffect(() => {
+    if (!pillTrackRef.current) return;
+    if (activeKey === 'all') {
+      pillTrackRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      setTimeout(() => {
+        const activePill = pillTrackRef.current?.querySelector('[data-active="true"]');
+        if (activePill) {
+          activePill.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      }, 50);
+    }
+    checkPillScroll();
+  }, [activeKey, activeMainCat]);
+
+  // Smooth scroll helper to navigate directly to catalog products instead of jumping to hero
+  const isInitialMount = React.useRef(true);
+  const scrollToCatalog = () => {
+    setTimeout(() => {
+      const el = document.getElementById('gold-catalog-section');
+      if (el) {
+        const yOffset = -90; // offset for sticky showroom header
+        const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }, 50);
+  };
+
+  React.useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+    scrollToCatalog();
+  }, [activeKey, activeMainCat, location.pathname]);
+
+  React.useEffect(() => {
+    let isMounted = true;
+    setIsLoading(true);
+    setApiError(null);
+
+    storefrontClient.getStorefrontProducts({
+      category: activeMainCat === 'coins' ? 'coins' : 'gold',
+      page_size: 200
+    }).then(res => {
+      if (!isMounted) return;
+      if (res.success) {
+        setDbProducts(res.items);
+      } else {
+        setApiError(res.error || 'Failed to load products');
+      }
+      setIsLoading(false);
+    }).catch(() => {
+      if (!isMounted) return;
+      setApiError('Unable to connect to product server');
+      setIsLoading(false);
+    });
+
+    return () => { isMounted = false; };
+  }, [activeMainCat]);
+
+  // Filter products matching category or subcategory
+  const filteredProducts = dbProducts.filter(item => {
+    const catLower = (item.category || '').toLowerCase();
+    const prodTypeLower = (item.productType || item.product_type || '').toLowerCase();
+
+    // 1. Strictly exclude silver jewellery and silver products from Gold Page
+    if (prodTypeLower === 'silver' || catLower.includes('silver') || (item.purity && item.purity.toLowerCase().includes('silver'))) {
+      return false;
+    }
+
+    // 2. Handle Coins & Bars: only show under /gold/coins, never in general gold jewellery
+    const isCoinsItem = prodTypeLower === 'coins_bars' || catLower.includes('coin') || catLower.includes('bar');
+    if (activeMainCat === 'coins') {
+      if (!isCoinsItem) return false;
+    } else {
+      if (isCoinsItem) return false;
+    }
+
+    const goldCategoryNames = [
+      'earrings', 'rings', 'bangle & bracelets', 'bangles', 'necklace', 'necklaces',
+      'nosepin', 'occasion', 'chains', 'pendant', 'pendants', 'anklets', 'toe rings', 'toe-rings',
+      'bridal jewellery', 'bridal'
+    ];
+    const isGoldCategory = catLower.includes('gold') || prodTypeLower === 'gold' || goldCategoryNames.includes(catLower);
+    if (!isGoldCategory && activeMainCat !== 'coins') return false;
+
+    // Search query filter
+    if (searchQuery && searchQuery.trim() !== '') {
+      const q = searchQuery.toLowerCase().trim();
+      const matchesSearch =
+        item.name.toLowerCase().includes(q) ||
+        (item.description && item.description.toLowerCase().includes(q)) ||
+        (item.details && item.details.toLowerCase().includes(q)) ||
+        (item.subCategory && item.subCategory.toLowerCase().includes(q)) ||
+        (item.subType && item.subType.toLowerCase().includes(q)) ||
+        (item.sku && item.sku.toLowerCase().includes(q));
+      if (!matchesSearch) return false;
+    }
+
+    // Category match
+    let matchesCategory = false;
+    if (activeKey === 'all') {
+      matchesCategory = true;
+    } else if (subType) {
+      // Direct subcategory view (e.g., /gold/earrings/studs, /gold/rings/engagement-rings, /gold/bangles/bangles, /gold/occasion/casual-wear)
+      if (isBanglesSubStyle) {
+        matchesCategory = (item.subType === 'bangles' || item.subType === 'bangle-bracelets' || item.subCategory?.toLowerCase().includes('bangle'));
+      } else {
+        const subCat = (item.subCategory || '').toLowerCase();
+        const subCatSlug = (item.subCategorySlug || '').toLowerCase();
+        const activeSubSlug = activeKey.toLowerCase();
+        matchesCategory = (
+          item.subType === activeKey ||
+          subCatSlug === activeSubSlug ||
+          subCat === activeSubSlug ||
+          subCat.replace(/\s+/g, '-').replace(/&/g, '') === activeSubSlug ||
+          (activeSubSlug === 'studs' && subCat.includes('stud')) ||
+          (activeSubSlug === 'hangings' && subCat.includes('hanging')) ||
+          (activeSubSlug === 'drops' && subCat.includes('drop')) ||
+          (activeSubSlug === 'jhumkas' && subCat.includes('jhumka')) ||
+          (activeSubSlug === 'hoops-bali' && (subCat.includes('hoop') || subCat.includes('bali'))) ||
+          (activeSubSlug === 'engagement-rings' && subCat.includes('engagement')) ||
+          (activeSubSlug === 'casual-rings' && subCat.includes('casual')) ||
+          (activeSubSlug === 'short-necklace' && subCat.includes('short')) ||
+          (activeSubSlug === 'long-necklace' && subCat.includes('long')) ||
+          (activeSubSlug === 'cuff-bracelets' && subCat.includes('cuff')) ||
+          (activeSubSlug === 'chain-bracelets' && subCat.includes('chain')) ||
+          (activeSubSlug === 'casual-wear' && subCat.includes('casual')) ||
+          (activeSubSlug === 'party-wear' && subCat.includes('party')) ||
+          (activeSubSlug === 'traditional-wear' && subCat.includes('traditional')) ||
+          item.occasion === activeKey
+        );
+      }
+    } else if (activeMainCat === 'all') {
+      matchesCategory = true;
+    } else if (activeMainCat === 'earrings') {
+      matchesCategory = (
+        catLower === 'earrings' ||
+        item.subCategory?.toLowerCase().includes('earring') || 
+        item.subCategorySlug?.toLowerCase().includes('earring') || 
+        item.subType?.toLowerCase().includes('stud') || 
+        item.subType?.toLowerCase().includes('jhumka') || 
+        item.subType?.toLowerCase().includes('hanging')
+      );
+    } else if (activeMainCat === 'necklaces') {
+      matchesCategory = (
+        catLower === 'necklace' ||
+        catLower === 'necklaces' ||
+        item.subCategory?.toLowerCase().includes('necklace') || 
+        item.subCategory?.toLowerCase().includes('haram') || 
+        item.subCategorySlug?.toLowerCase().includes('necklace')
+      );
+    } else if (activeMainCat === 'bangles') {
+      matchesCategory = (
+        catLower.includes('bangle') ||
+        catLower.includes('bracelet') ||
+        item.subCategory?.toLowerCase().includes('bangle') || 
+        item.subCategorySlug?.toLowerCase().includes('bangle') || 
+        item.subCategory?.toLowerCase().includes('bracelet')
+      );
+    } else if (activeMainCat === 'rings') {
+      matchesCategory = (
+        catLower === 'rings' ||
+        item.subCategory?.toLowerCase().includes('ring') || 
+        item.subCategorySlug?.toLowerCase().includes('ring')
+      );
+    } else if (activeMainCat === 'occasion') {
+      matchesCategory = (
+        catLower === 'occasion' ||
+        item.subCategory?.toLowerCase().includes('occasion') || 
+        !!item.occasion || 
+        !!item.isBridal
+      );
+    } else if (activeMainCat === 'nosepin') {
+      matchesCategory = (
+        catLower === 'nosepin' ||
+        item.subCategory?.toLowerCase().includes('nosepin') || 
+        item.subCategorySlug?.toLowerCase().includes('nosepin') || 
+        item.subType?.toLowerCase().includes('nosepin')
+      );
+    } else if (activeMainCat === 'chains') {
+      matchesCategory = (
+        catLower === 'chains' ||
+        item.subCategory?.toLowerCase().includes('chain') || 
+        item.subCategorySlug?.toLowerCase().includes('chain') || 
+        item.subType?.toLowerCase().includes('chain')
+      );
+    } else if (activeMainCat === 'pendants') {
+      matchesCategory = (
+        catLower === 'pendant' ||
+        catLower === 'pendants' ||
+        item.subCategory?.toLowerCase().includes('pendant') || 
+        item.subCategorySlug?.toLowerCase().includes('pendant') || 
+        item.subType?.toLowerCase().includes('pendant')
+      );
+    } else if (activeMainCat === 'anklets') {
+      matchesCategory = (
+        catLower === 'anklets' ||
+        item.subCategory?.toLowerCase().includes('anklet') || 
+        item.subCategorySlug?.toLowerCase().includes('anklet') || 
+        item.subType?.toLowerCase().includes('anklet') || 
+        item.id?.includes('anklet') || 
+        item.name?.toLowerCase().includes('anklet') || 
+        item.name?.toLowerCase().includes('payal')
+      );
+    } else if (activeMainCat === 'toe-rings') {
+      matchesCategory = (
+        catLower === 'toe rings' ||
+        catLower === 'toe-rings' ||
+        item.subCategory?.toLowerCase().includes('toe-ring') || 
+        item.subCategorySlug?.toLowerCase().includes('toe-ring') || 
+        item.subType?.toLowerCase().includes('toe-ring') || 
+        item.id?.includes('toe-ring') || 
+        item.name?.toLowerCase().includes('toe ring') || 
+        item.name?.toLowerCase().includes('metti')
+      );
+    } else if (activeMainCat === 'coins') {
+      matchesCategory = (
+        catLower.includes('coin') ||
+        catLower.includes('bar') ||
+        item.subCategory?.toLowerCase().includes('coin') || 
+        item.subCategory?.toLowerCase().includes('gold-coins') || 
+        item.subType?.toLowerCase().includes('coin') || 
+        item.name?.toLowerCase().includes('gold coin')
+      );
+    } else {
+      matchesCategory = (
+        catLower === activeKey ||
+        item.subType?.toLowerCase() === activeKey ||
+        item.subCategorySlug?.toLowerCase() === activeKey ||
+        item.subCategory?.toLowerCase().includes(activeKey) ||
+        item.occasion?.toLowerCase() === activeKey
+      );
+    }
+
+    if (!matchesCategory) return false;
+
+    // Price Filter
+    if (priceFilter === 'under50k' && item.numericPrice > 50000) return false;
+    if (priceFilter === '50k-100k' && (item.numericPrice <= 50000 || item.numericPrice > 100000)) return false;
+    if (priceFilter === 'above100k' && item.numericPrice <= 100000) return false;
+
+    return true;
+  });
+
+  // Deduplicate products to prevent repeated cards from duplicate DB records or API returns
+  const seenIds = new Set();
+  const seenDesigns = new Set();
+  const uniqueProducts = [];
+
+  for (const item of filteredProducts) {
+    if (seenIds.has(item.id)) continue;
+    seenIds.add(item.id);
+
+    // Deduplicate identical test clones (same name, category, price, purity)
+    const designKey = `${(item.name || '').toLowerCase().trim()}|${(item.category || '').toLowerCase()}|${item.numericPrice}|${(item.purity || '').toLowerCase()}`;
+    if (seenDesigns.has(designKey)) {
+      continue;
+    }
+    seenDesigns.add(designKey);
+    uniqueProducts.push(item);
+  }
+
+  const sortedProducts = [...uniqueProducts].sort((a, b) => {
+    const priceA = typeof a.numericPrice === 'number' ? a.numericPrice : 0;
+    const priceB = typeof b.numericPrice === 'number' ? b.numericPrice : 0;
+    if (sortBy === 'price-low') return priceA - priceB;
+    if (sortBy === 'price-high') return priceB - priceA;
+    return 0;
+  });
+
+  // Find subcategories for the current main category
+  const currentCategoryData = goldCategories.find(
+    c => c.slug === activeMainCat || c.slug === activeKey || (categoryInfo.parent && c.slug === categoryInfo.parent.slug)
+  );
+  const activeSubcategories = currentCategoryData?.subcategories || [];
+
+  return (
+    <div className="bg-[#FAF7F2] min-h-screen border-b border-[#EAE2D5] font-sans selection:bg-[#581923] selection:text-white">
+
+      {/* Breadcrumb Navigation Container */}
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 pt-4 sm:pt-6 pb-3">
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-[#7A6E65] flex-wrap">
+          <Link to="/" className="hover:text-[#581923] transition-colors">Home</Link>
+          <ChevronRight className="w-3.5 h-3.5 text-[#B38E46] shrink-0" />
+          <Link to="/gold" className={`hover:text-[#581923] transition-colors ${activeKey === 'all' ? 'font-bold text-[#581923]' : ''}`}>
+            Gold Jewellery
+          </Link>
+
+          {categoryInfo.parent && (
+            <>
+              <ChevronRight className="w-3.5 h-3.5 text-[#B38E46] shrink-0" />
+              <Link to={categoryInfo.parent.path} className="hover:text-[#581923] transition-colors">
+                {categoryInfo.parent.name}
+              </Link>
+            </>
+          )}
+
+          {activeKey !== 'all' && (
+            <>
+              <ChevronRight className="w-3.5 h-3.5 text-[#B38E46] shrink-0" />
+              <span className="font-semibold text-[#581923] capitalize">
+                {activeKey.replace(/-/g, ' ')}
+              </span>
+            </>
+          )}
+        </nav>
+      </div>
+
+      {/* ========================================================================= */}
+      {/* FULL-WIDTH PREMIUM SPLIT HERO BANNER                                      */}
+      {/* ========================================================================= */}
+      <div className="w-full bg-[#2D0F15] overflow-hidden shadow-lg border-y border-[#521B24] mb-8 sm:mb-10">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-2 min-h-[300px] lg:min-h-[440px]">
+
+          {/* Left Column: Lifestyle Image with Traditional Saree & Gold Jewellery */}
+          <div className="relative w-full h-[280px] sm:h-[360px] lg:h-full min-h-[280px] lg:min-h-[440px] overflow-hidden bg-[#1E080D]">
+            <img
+              src="/images/col_gold.jpg"
+              alt="South Indian Traditional Gold Jewellery with Saree"
+              className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700 ease-out"
+              loading="eager"
+            />
+            {/* Subtle inner shadow gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-black/50 via-transparent to-transparent pointer-events-none" />
+          </div>
+
+          {/* Right Column: Deep Maroon / Chocolate Panel with Warm Gold & Ivory Copy */}
+          <div className="p-8 sm:p-12 lg:p-16 xl:p-20 flex flex-col justify-center bg-gradient-to-br from-[#3B1117] via-[#2E0E15] to-[#240B10] text-[#FAF6EE] relative">
+            {/* Eyebrow */}
+            <span className="text-[11px] sm:text-xs font-bold tracking-[0.25em] text-[#E5C278] uppercase mb-2 sm:mb-3 block font-sans">
+              VEDA RADHA THANGAMAALIGAI
+            </span>
+
+            {/* Main Heading */}
+            <h1 className="text-2xl sm:text-4xl lg:text-[44px] font-bold text-white tracking-tight leading-[1.15]">
+              The Radiance of Pure Gold
+            </h1>
+
+            {/* Supporting Description */}
+            <p className="text-xs sm:text-sm text-[#E6D4D6] mt-3 sm:mt-4 leading-relaxed max-w-xl font-sans">
+              Discover timeless South Indian jewellery for life’s most treasured moments—from everyday elegance to wedding celebrations.
+            </p>
+
+            {/* Subtle BIS 916 Hallmark Assurance Pill */}
+            <div className="mt-6 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-[#E5C278]/30 text-[#E5C278] text-[11px] font-medium self-start">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#E5C278]" />
+              <span>22K (916) BIS Hallmarked Heritage Craft</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ========================================================================= */}
+      {/* MAIN CATALOG CONTENT CONTAINER                                            */}
+      {/* ========================================================================= */}
+      <div id="gold-catalog-section" className="max-w-[1440px] mx-auto px-4 sm:px-8 pb-12 scroll-mt-24">
+
+        {/* CENTERED SECTION HEADING & LOTUS FLOURISH */}
+        <div className="text-center mb-6">
+          {/* "Gold Collections" in Deep Navy Typography */}
+          <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-bold text-[#0C1E44] tracking-tight mb-2.5">
+            Gold Collections
+          </h2>
+
+          {/* Centered 5-Petal Lotus Divider */}
+          <div className="flex items-center justify-center gap-3.5 mb-6">
+            <div className="h-[1.5px] bg-gradient-to-r from-transparent via-[#C8A058] to-[#C8A058] w-16 sm:w-28 opacity-90" />
+
+            <div className="text-[#C8A058] flex items-center justify-center">
+              <svg
+                className="w-7 h-7 text-[#C8A058]"
+                viewBox="0 0 40 32"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.25"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                {/* Center Petal */}
+                <path d="M20 4C16.8 8.2 16.8 13.2 20 19" />
+                <path d="M20 4C23.2 8.2 23.2 13.2 20 19" />
+
+                {/* Left Inner Petal */}
+                <path d="M20 19C16.5 14 11.8 11.5 10.5 13.8C9.3 16.2 13.5 19 20 19Z" />
+
+                {/* Right Inner Petal */}
+                <path d="M20 19C23.5 14 28.2 11.5 29.5 13.8C30.7 16.2 26.5 19 20 19Z" />
+
+                {/* Left Outer Petal */}
+                <path d="M19 19.5C14.5 17.2 8.2 17.5 6.5 20C5.3 22 11.8 22.8 19.5 20.5" />
+
+                {/* Right Outer Petal */}
+                <path d="M21 19.5C25.5 17.2 31.8 17.5 33.5 20C34.7 22 28.2 22.8 20.5 20.5" />
+
+                {/* Bottom Lotus Curve */}
+                <path d="M10 21C13.5 23.5 16.8 24.5 20 24.5C23.2 24.5 26.5 23.5 30 21" />
+              </svg>
+            </div>
+
+            <div className="h-[1.5px] bg-gradient-to-l from-transparent via-[#C8A058] to-[#C8A058] w-16 sm:w-28 opacity-90" />
+          </div>
+        </div>
+
+        {/* ========================================================================= */}
+        {/* CATEGORY FILTERS: Exact Reference Pill Design & Custom Gold Vector Icons  */}
+        {/* ========================================================================= */}
+        {/* ========================================================================= */}
+        {/* CATEGORY FILTERS: Compact Rounded White Pills + Dark Navy Filter Button    */}
+        {/* ========================================================================= */}
+        <div className="relative mb-6">
+          {/* Desktop Left Scroll Control */}
+          {showLeftArrow && (
+            <button
+              onClick={() => handlePillScroll('left')}
+              className="hidden md:flex absolute -left-3 sm:-left-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 items-center justify-center rounded-full bg-white/95 border border-[#DECDBB] text-[#1E293B] shadow-md hover:bg-[#F1F5F9] hover:scale-105 transition-all cursor-pointer focus:outline-none"
+              aria-label="Scroll categories left"
+            >
+              <ChevronLeft className="w-4 h-4 stroke-[2.2]" />
+            </button>
+          )}
+
+          <div
+            ref={pillTrackRef}
+            className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto scrollbar-none pb-2 sm:pb-0 px-1 justify-start scroll-smooth"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            {/* "All Gold (N)" Pill */}
+            <Link
+              to="/gold"
+              onClick={scrollToCatalog}
+              data-active={activeKey === 'all'}
+              className={`px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-xs shrink-0 ${
+                activeKey === 'all'
+                  ? 'bg-[#1E293B] text-white border border-[#1E293B] shadow-md'
+                  : 'bg-white text-[#1C273C] hover:text-[#1E293B] hover:border-[#C8A058] border border-[#E2E8F0]'
+              }`}
+            >
+              {getCategoryIcon('all', activeKey === 'all')}
+              <span>All Gold ({dbProducts.filter(p => p.category?.toLowerCase().includes('gold')).length})</span>
+            </Link>
+
+            {/* Category Shortcut Pills */}
+            {goldCategories.map(cat => {
+              const isActive = activeMainCat === cat.slug;
+              return (
+                <Link
+                  key={cat.id}
+                  to={cat.path}
+                  onClick={scrollToCatalog}
+                  data-active={isActive}
+                  className={`px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-xs shrink-0 ${
+                    isActive
+                      ? 'bg-[#1E293B] text-white border border-[#1E293B] shadow-md'
+                      : 'bg-white text-[#1C273C] hover:text-[#1E293B] hover:border-[#C8A058] border border-[#E2E8F0]'
+                  }`}
+                >
+                  {getCategoryIcon(cat.slug, isActive)}
+                  <span>{cat.name}</span>
+                </Link>
+              );
+            })}
+
+            {/* Dark Navy "Filter" Button with Filter Icon */}
+            <button
+              onClick={() => setIsFilterDrawerOpen(!isFilterDrawerOpen)}
+              className={`px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-xs shrink-0 ${
+                isFilterDrawerOpen || priceFilter !== 'all'
+                  ? 'bg-[#0F172A] text-[#E5C278] border border-[#E5C278] shadow-md'
+                  : 'bg-[#1E293B] hover:bg-[#0F172A] text-white border border-[#1E293B]'
+              }`}
+              title="Toggle Price & Purity Filter"
+              aria-label="Filter products"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-[#E5C278] shrink-0" />
+              <span>Filter</span>
+              {priceFilter !== 'all' && (
+                <span className="w-2 h-2 rounded-full bg-[#E5C278]" />
+              )}
+            </button>
+          </div>
+
+          {/* Desktop Right Scroll Control */}
+          {showRightArrow && (
+            <button
+              onClick={() => handlePillScroll('right')}
+              className="hidden md:flex absolute -right-3 sm:-right-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 items-center justify-center rounded-full bg-white/95 border border-[#DECDBB] text-[#1E293B] shadow-md hover:bg-[#F1F5F9] hover:scale-105 transition-all cursor-pointer focus:outline-none"
+              aria-label="Scroll categories right"
+            >
+              <ChevronRight className="w-4 h-4 stroke-[2.2]" />
+            </button>
+          )}
+        </div>
+
+        {/* Collapsible Filter Panel (When Filter is toggled) */}
+        {isFilterDrawerOpen && (
+          <div className="bg-white border border-[#E2D7C8] rounded-2xl p-4 sm:p-5 mb-6 shadow-sm animate-fadeIn">
+            <div className="flex items-center justify-between border-b border-[#EAE2D5] pb-3 mb-3">
+              <div className="flex items-center gap-2">
+                <SlidersHorizontal className="w-4 h-4 text-[#581923]" />
+                <h3 className="text-sm font-bold text-[#241716]">
+                  Filter Gold Jewellery
+                </h3>
+              </div>
+              <button
+                onClick={() => setIsFilterDrawerOpen(false)}
+                className="text-gray-400 hover:text-gray-700 p-1"
+                aria-label="Close filters"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2 text-xs">
+              <span className="text-gray-500 font-medium">Price Range:</span>
+              {[
+                { id: 'all', label: 'All Prices' },
+                { id: 'under50k', label: 'Under ₹50,000' },
+                { id: '50k-100k', label: '₹50,000 - ₹1,00,000' },
+                { id: 'above100k', label: 'Above ₹1,00,000' }
+              ].map(opt => (
+                <button
+                  key={opt.id}
+                  onClick={() => setPriceFilter(opt.id)}
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold transition ${priceFilter === opt.id
+                    ? 'bg-[#581923] text-white shadow-xs'
+                    : 'bg-[#FAF7F2] text-gray-700 hover:bg-[#F3EAD3] border border-[#DECDBB]'
+                    }`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Secondary Subcategory Sub-pills (When inside a category with subcategories) */}
+        {activeSubcategories.length > 0 && !['nosepin', 'chains', 'pendants', 'anklets', 'toe-rings', 'coins'].includes(currentCategoryData?.slug) && (
+          <div className="bg-[#F1F5F9] p-3 rounded-2xl border border-[#CBD5E1] mb-6 flex items-center gap-2 overflow-x-auto scrollbar-none">
+            <span className="text-[11px] font-bold text-[#475569] uppercase tracking-wider pl-1 shrink-0">
+              {currentCategoryData.name} Styles:
+            </span>
+            <Link
+              to={currentCategoryData.path}
+              id="gold-style-filter-view-all"
+              onClick={scrollToCatalog}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
+                !subType
+                  ? 'bg-[#1E293B] text-white shadow-xs'
+                  : 'bg-white text-[#334155] hover:bg-white border border-[#CBD5E1]'
+              }`}
+            >
+              View All
+            </Link>
+            {activeSubcategories.map(sub => {
+              const isSubActive = Boolean(subType) && (subType.toLowerCase() === sub.slug.toLowerCase());
+              return (
+                <Link
+                  key={sub.slug}
+                  id={`gold-style-filter-${sub.slug}`}
+                  to={sub.path}
+                  onClick={scrollToCatalog}
+                  className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
+                    isSubActive
+                      ? 'bg-[#1E293B] text-white shadow-xs'
+                      : 'bg-white text-[#334155] hover:bg-white border border-[#CBD5E1]'
+                  }`}
+                >
+                  {sub.name}
+                </Link>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Toolbar: Result Count & Sort Dropdown aligned neatly to the right */}
+        <div className="flex items-center justify-between gap-4 pb-4 border-b border-[#DECDBB] text-xs">
+          <span className="text-[#7A6E65]">
+            Showing <strong className="text-[#2C1D18]">{sortedProducts.length}</strong> designs in {categoryInfo.title}
+          </span>
+
+          <div className="flex items-center gap-2">
+            <label htmlFor="sort-dropdown" className="text-gray-500 font-medium whitespace-nowrap hidden sm:inline">
+              Sort by:
+            </label>
+            <select
+              id="sort-dropdown"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="bg-white border border-[#DECDBB] rounded-lg px-3 py-1.5 text-xs text-[#2C1D18] focus:outline-none focus:border-[#581923] cursor-pointer shadow-xs"
+              aria-label="Sort products"
+            >
+              <option value="featured">Featured</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Product Cards Grid with First JPG Product Image */}
+        {apiError ? (
+          <div className="bg-white rounded-2xl p-8 sm:p-12 text-center border border-[#E8DFC0] my-8 shadow-xs max-w-2xl mx-auto space-y-3">
+            <p className="text-base font-semibold text-[#8C1D28]">{apiError}</p>
+            <p className="text-xs text-[#63574F]">Please verify your backend connection or try again later.</p>
+          </div>
+        ) : sortedProducts.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 my-8">
+            {sortedProducts.map((item) => {
+              const isWishlisted = wishlistItems.some(w => w.id === item.id);
+              const cardImage = (item.images && item.images.length > 0) ? item.images[0] : item.image;
+
+              return (
+                <div
+                  key={item.id}
+                  className="bg-white rounded-2xl border border-[#E8DFC0] overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:border-[#C8A058] relative"
+                >
+                  {/* Product Image Container */}
+                  <div
+                    className="relative aspect-square overflow-hidden bg-[#FAF6EE] cursor-pointer"
+                    onClick={() => onViewProduct(item)}
+                  >
+                    <img
+                      src={cardImage}
+                      alt={item.altText || item.name}
+                      className={`w-full h-full object-contain p-2 transition-all duration-500 ${
+                        item.images && item.images.length > 1
+                          ? 'group-hover:opacity-0 group-hover:scale-105'
+                          : 'group-hover:scale-105'
+                      }`}
+                      loading="lazy"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = '/images/neutral_product_placeholder.svg';
+                      }}
+                    />
+                    {item.images && item.images.length > 1 && (
+                      <img
+                        src={item.images[1]}
+                        alt={`${item.altText || item.name} - alternate view`}
+                        className="absolute inset-0 w-full h-full object-contain p-2 opacity-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 pointer-events-none"
+                        loading="lazy"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = cardImage;
+                        }}
+                      />
+                    )}
+
+                    {/* Status Badge */}
+                    <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+                      <span className="inline-block px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-[#DCF0DF] text-[#1E5C2D] border border-[#C1E3C6] shadow-xs">
+                        {item.badge || '22K BIS 916'}
+                      </span>
+                    </div>
+
+                    {/* 3-View Indicator Pill */}
+                    {item.images && item.images.length > 1 && (
+                      <div className="absolute bottom-3 left-3">
+                        <span className="bg-[#241716]/80 text-[#E5C278] text-[10px] font-semibold px-2 py-0.5 rounded-md backdrop-blur-xs flex items-center gap-1 shadow-xs">
+                          <span>{item.images.length} Views</span>
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Wishlist Button */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onAddToWishlist(item);
+                      }}
+                      className={`absolute top-3 right-3 p-2 rounded-full border shadow-md transition-all active:scale-95 cursor-pointer z-10 ${isWishlisted
+                        ? 'bg-[#FDF2F2] border-[#F8B4B4] text-[#D32F2F]'
+                        : 'bg-white/90 hover:bg-white text-[#581923] border-[#EAE2D5]'
+                        }`}
+                      title={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
+                      aria-label={`${isWishlisted ? 'Remove' : 'Add'} ${item.name} ${isWishlisted ? 'from' : 'to'} Wishlist`}
+                    >
+                      <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-[#D32F2F] text-[#D32F2F]' : ''}`} />
+                    </button>
+                  </div>
+
+                  {/* Card Content */}
+                  <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+                    <div>
+                      {/* Category & Purity Tags */}
+                      <div className="flex items-center justify-between gap-2 mb-1.5 flex-wrap">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C6D2D] bg-[#FAF3E3] px-2 py-0.5 rounded border border-[#E8DFC0]/70">
+                          {item.purity || item.details || '22K BIS 916'}
+                        </span>
+                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-[#F4EFE6] text-[#63574F] capitalize">
+                          {activeMainCat === 'occasion' && item.occasion
+                            ? item.occasion.replace(/-/g, ' ')
+                            : (item.subType ? item.subType.replace(/-/g, ' ') : item.subCategory)}
+                        </span>
+                      </div>
+
+                      {/* Product Name */}
+                      <h3
+                        onClick={() => onViewProduct(item)}
+                        className="text-base font-bold text-[#241716] group-hover:text-[#581923] transition-colors line-clamp-1 mt-1 cursor-pointer"
+                        title={item.name}
+                      >
+                        {item.name}
+                      </h3>
+
+                      {/* Product Description */}
+                      <p className="text-xs text-[#63574F] line-clamp-2 mt-1 leading-relaxed">
+                        {item.description}
+                      </p>
+                    </div>
+
+                    {/* Card Bottom: Price & Action Buttons */}
+                    <div className="mt-4 pt-3 border-t border-[#EAE2D5] flex items-center justify-between gap-2">
+                      <div>
+                        <span className="text-[10px] text-[#7A6E65] block font-medium">Showroom Price</span>
+                        <span className="text-lg font-bold text-[#48161E]">
+                          {item.price}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-2 shrink-0">
+                        <button
+                          onClick={() => onViewProduct(item)}
+                          className="px-3 py-1.5 rounded-lg border border-[#581923] text-[#581923] hover:bg-[#FAF0E1] text-xs font-semibold transition-colors cursor-pointer"
+                        >
+                          Details
+                        </button>
+                        <button
+                          onClick={() => onAddToCart(item)}
+                          className="px-3 py-1.5 rounded-lg bg-[#581923] hover:bg-[#431219] text-white text-xs font-semibold flex items-center gap-1 transition-colors cursor-pointer shadow-2xs"
+                        >
+                          <ShoppingBag className="w-3.5 h-3.5" />
+                          <span>Add</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          /* Small consistent empty state message inside existing product-list area */
+          <div className="bg-white rounded-2xl p-8 sm:p-12 text-center border border-[#E8DFC0] my-8 shadow-xs max-w-2xl mx-auto space-y-4">
+            <div className="w-14 h-14 rounded-full bg-[#FAF3E3] text-[#8C6D2D] flex items-center justify-center mx-auto border border-[#E8DFC0]">
+              <Sparkles className="w-7 h-7 text-[#8C6D2D]" />
+            </div>
+            <h2 className="text-xl sm:text-2xl font-bold text-[#241716]">
+              No products available yet.
+            </h2>
+            <p className="text-xs sm:text-sm text-[#63574F] leading-relaxed max-w-md mx-auto">
+              There are currently no products available in this category. New designs will be shown here as soon as they are added to the showroom inventory.
+            </p>
+            <div className="pt-2 flex justify-center gap-3 flex-wrap">
+              <Link
+                to="/gold"
+                className="inline-flex items-center gap-1.5 bg-[#581923] hover:bg-[#431219] text-white px-5 py-2.5 rounded-lg text-xs font-semibold shadow transition-colors"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Explore All Gold Jewellery</span>
+              </Link>
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-1.5 border border-[#581923] text-[#581923] hover:bg-[#FAF0E1] px-5 py-2.5 rounded-lg text-xs font-semibold transition-colors"
+              >
+                <PhoneCall className="w-3.5 h-3.5" />
+                <span>Showroom Custom Commission</span>
+              </Link>
+            </div>
+          </div>
+        )}
+
+        {/* Showroom Purity Assurance Footer */}
+        <div className=" p-5  flex items-center justify-between flex-wrap gap-4 text-xs text-[#52453E]">
+          <div className="flex items-center gap-2 font-medium">
+            <ShieldCheck className="w-4 h-4 text-[#581923]" />
+            <span>100% BIS 916 Hallmark &bull; 0% Deduction on Old Gold Exchange &bull; Lifetime Free Maintenance</span>
+          </div>
+          <Link to="/contact" className="text-[#581923] font-bold hover:underline">
+            Visit Mylapore Showroom &rarr;
+          </Link>
+        </div>
+
+      </div>
+    </div>
+  );
+}
