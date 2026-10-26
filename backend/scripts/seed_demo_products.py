@@ -5,8 +5,10 @@ Vedha Radha Thangamaaligai — Jewellery E-commerce Platform.
 Features:
     - Dynamically discovers real product images from frontend/public/images/products and coins-bars.
     - Matches authentic, multi-view gallery photos to products based on category, subcategory, and title.
-    - Fixes placeholder and missing images across the PostgreSQL database.
-    - Idempotent and safe: never deletes real inventory or customer-referenced products.
+    - Strict category partitioning (earrings to earrings, rings to rings, coins to coins, bars to bars).
+    - Least-frequently-used distribution to eliminate duplicate image assignments across products.
+    - Fixes placeholder, broken, mismatched, and duplicate images across PostgreSQL.
+    - Idempotent and safe: preserves real inventory and customer-referenced products.
     - Supports --dry-run for complete simulation without database writes.
 """
 
@@ -54,15 +56,16 @@ def find_frontend_public_dir() -> Path:
 class ImageAssetCatalog:
     """
     Dynamically discovers and indexes real jewellery image assets from the filesystem.
-    No hardcoded file lists or assumptions — discovers all assets at runtime.
+    Groups multi-view variants (-01, -02, -03) and tracks usage counts to minimize repetition.
     """
 
     def __init__(self, public_dir: Path):
         self.public_dir = public_dir
         self.img_root = public_dir / "images"
         self.groups: Dict[str, Dict[str, Any]] = defaultdict(
-            lambda: {"urls": [], "metal": "", "subcat": "", "tokens": set(), "base": "", "is_subfolder": False}
+            lambda: {"urls": [], "metal": "", "cat": "", "base": "", "tokens": set()}
         )
+        self.usage_counts: Dict[str, int] = defaultdict(int)
         self.category_counts: Dict[str, int] = defaultdict(int)
         self.total_image_files = 0
         self._discover()
@@ -82,23 +85,67 @@ class ImageAssetCatalog:
             if top not in ("products", "coins-bars"):
                 continue
 
-            parent_dirs = rel.parent.parts
-            is_subfolder = False
+            parent_parts = rel.parent.parts  # ('products', 'gold') or ('products', 'gold', 'rings') or ('coins-bars',)
 
-            if top == "products":
-                metal = parent_dirs[1].lower() if len(parent_dirs) > 1 else "gold"
-                if len(parent_dirs) > 2:
-                    subcat = parent_dirs[2].lower()
-                    is_subfolder = True
-                else:
-                    subcat = "general"
+            if top == "coins-bars":
+                name_lower = p.name.lower()
+                metal = "silver" if "silver" in name_lower else "gold"
+                cat = "bars" if "bar" in name_lower else "coins"
             else:
-                metal = "coins_bars"
-                subcat = "coins_bars"
-                is_subfolder = True
+                metal = parent_parts[1].lower() if len(parent_parts) > 1 else "gold"
+                cat = parent_parts[2].lower() if len(parent_parts) > 2 else "general"
+                if cat == "general":
+                    fn = p.name.lower()
+                    if any(k in fn for k in ["earring", "stud", "drop", "hanging", "jhumka", "hoop"]):
+                        cat = "earrings"
+                    elif any(k in fn for k in ["ring"]):
+                        cat = "rings"
+                    elif any(k in fn for k in ["bangle", "bracelet", "kada", "cuff"]):
+                        cat = "bangles"
+                    elif any(k in fn for k in ["necklace", "haram", "choker", "vaddanam"]):
+                        cat = "necklaces"
+                    elif any(k in fn for k in ["chain", "rope"]):
+                        cat = "chains"
+                    elif any(k in fn for k in ["nosepin", "mookuthi"]):
+                        cat = "nosepin"
+                    elif any(k in fn for k in ["pendant", "locket"]):
+                        cat = "pendants"
+                    elif any(k in fn for k in ["anklet", "payal", "kolusu"]):
+                        cat = "anklets"
+                    elif any(k in fn for k in ["pooja", "bell", "lamp", "thali", "kalash", "bowl", "kinnam"]):
+                        cat = "pooja-items"
+                    elif any(k in fn for k in ["idol", "murti", "balaji", "lakshmi", "ganesha"]):
+                        cat = "silver-idols"
 
-            # Group category count
-            cat_label = "Gold Jewellery" if metal == "gold" else ("Silver Jewellery" if metal == "silver" else "Coins & Bars")
+            # Standardize category names
+            if cat in ("earrings", "studs", "drops", "hangings", "jhumkas", "hoops"):
+                cat = "earrings"
+            elif cat in ("rings", "ring"):
+                cat = "rings"
+            elif cat in ("bangles", "bracelets", "bangle & bracelets", "cuff", "cuffs", "kada"):
+                cat = "bangles"
+            elif cat in ("necklaces", "necklace", "harams", "chokers"):
+                cat = "necklaces"
+            elif cat in ("chains", "chain"):
+                cat = "chains"
+            elif cat in ("pendants", "pendant"):
+                cat = "pendants"
+            elif cat in ("nosepin", "nosepins", "mookuthi"):
+                cat = "nosepin"
+            elif cat in ("anklets", "anklet", "payal", "kolusu"):
+                cat = "anklets"
+            elif cat in ("pooja", "pooja-items", "utensil", "utensils"):
+                cat = "pooja-items"
+            elif cat in ("silver-idols", "idols", "idol", "murti"):
+                cat = "silver-idols"
+
+            # Category labels for audit stats
+            if top == "coins-bars":
+                cat_label = "Coins & Bars"
+            elif metal == "silver":
+                cat_label = "Silver Jewellery"
+            else:
+                cat_label = "Gold Jewellery"
             self.category_counts[cat_label] += 1
             self.total_image_files += 1
 
@@ -107,22 +154,25 @@ class ImageAssetCatalog:
             base_name = m.group(1) if m else p.stem
             idx = int(m.group(2)) if (m and m.group(2)) else 1
 
-            # Web URL relative to public directory (forward slashes, browser-safe)
             web_url = "/" + str(p.relative_to(self.public_dir)).replace(os.sep, "/")
-            key = f"{metal}/{subcat}/{base_name}"
+            key = f"{metal}/{cat}/{base_name}"
 
             self.groups[key]["urls"].append((idx, web_url))
             self.groups[key]["metal"] = metal
-            self.groups[key]["subcat"] = subcat
+            self.groups[key]["cat"] = cat
             self.groups[key]["base"] = base_name
-            self.groups[key]["is_subfolder"] = is_subfolder
+            self.groups[key]["tokens"].update(set(re.findall(r"[a-z0-9]+", f"{metal} {cat} {base_name}".lower())))
 
-            tokens = set(re.findall(r"[a-z0-9]+", f"{metal} {subcat} {base_name}".lower()))
-            self.groups[key]["tokens"].update(tokens)
-
-        # Sort urls by variant index and cap at 3 images
+        # Sort urls by variant index, prefer subfolder, keep max 1 per index (1, 2, 3), cap at 3 images
         for k, data in self.groups.items():
-            sorted_urls = [u for idx, u in sorted(data["urls"], key=lambda x: x[0])]
+            by_idx = defaultdict(list)
+            for idx, u in data["urls"]:
+                by_idx[idx].append(u)
+            sorted_urls = []
+            for idx in sorted(by_idx.keys()):
+                urls_for_idx = by_idx[idx]
+                urls_for_idx.sort(key=lambda u: len(u.split("/")), reverse=True)
+                sorted_urls.append(urls_for_idx[0])
             data["urls"] = sorted_urls[:3]
 
     def match_product(
@@ -131,87 +181,157 @@ class ImageAssetCatalog:
         category: str,
         sub_category: Optional[str] = None,
         used_keys: Optional[Set[str]] = None,
+        prod_type: Optional[str] = None,
     ) -> Optional[List[str]]:
         """Intelligently match product to an authentic, distinct image group."""
         text = f"{name or ''} {category or ''} {sub_category or ''}".lower()
+        cat_lower = (category or "").lower()
+        sub_lower = (sub_category or "").lower()
 
-        # 1. Determine metal
-        if any(k in text for k in ["coin", "bar", "bullion"]):
-            metal = "coins_bars"
-        elif any(k in text for k in ["silver", "925", "pooja", "payal", "kolusu", "metti", "murti", "idol", "kinnam", "bowl"]):
-            metal = "silver"
+        # 1. Determine target metal strictly
+        if "silver" in cat_lower or "silver" in (prod_type or "").lower() or (not "gold" in cat_lower and any(k in text for k in ["silver", "925", "pooja", "payal", "kolusu", "metti", "murti", "idol"])):
+            target_metal = "silver"
         else:
-            metal = "gold"
+            target_metal = "gold"
 
-        # 2. Identify target subcategory keyword
-        sub_kw = None
+        # 2. Determine target category from Category and Subcategory first
+        target_cat = None
+        if any(k in cat_lower for k in ["coin", "coins"]) or any(k in sub_lower for k in ["coin", "coins"]):
+            target_cat = "coins"
+        elif any(k in cat_lower for k in ["bar", "bars"]) or any(k in sub_lower for k in ["bar", "bars"]):
+            target_cat = "bars"
+        elif "earring" in cat_lower or "earring" in sub_lower or any(k in sub_lower for k in ["stud", "jhumka", "drop", "hanging", "hoop"]):
+            target_cat = "earrings"
+        elif ("ring" in cat_lower or "ring" in sub_lower) and "earring" not in cat_lower and "earring" not in sub_lower:
+            target_cat = "rings"
+        elif any(k in cat_lower for k in ["bangle", "bracelet"]) or any(k in sub_lower for k in ["bangle", "bracelet", "kada", "cuff"]):
+            target_cat = "bangles"
+        elif any(k in cat_lower for k in ["necklace", "haram", "choker"]) or any(k in sub_lower for k in ["necklace", "haram", "choker"]):
+            target_cat = "necklaces"
+        elif "chain" in cat_lower or "chain" in sub_lower:
+            target_cat = "chains"
+        elif "pendant" in cat_lower or "pendant" in sub_lower:
+            target_cat = "pendants"
+        elif "nosepin" in cat_lower or "nosepin" in sub_lower or "mookuthi" in sub_lower:
+            target_cat = "nosepin"
+        elif "anklet" in cat_lower or "anklet" in sub_lower or any(k in sub_lower for k in ["payal", "kolusu"]):
+            target_cat = "anklets"
+        elif any(k in cat_lower for k in ["pooja", "utensil"]) or any(k in sub_lower for k in ["pooja", "utensil"]):
+            target_cat = "pooja-items"
+        elif any(k in cat_lower for k in ["idol", "murti"]) or any(k in sub_lower for k in ["idol", "murti"]):
+            target_cat = "silver-idols"
+
+        # Fallback to name keywords only if category was generic
+        if not target_cat:
+            for kw, c in [
+                ("coin", "coins"), ("bar", "bars"),
+                ("jhumka", "earrings"), ("stud", "earrings"), ("earring", "earrings"), ("drop", "earrings"), ("hanging", "earrings"),
+                ("ring", "rings"), ("band", "rings"), ("metti", "rings"),
+                ("bangle", "bangles"), ("bracelet", "bangles"), ("kada", "bangles"), ("cuff", "bangles"),
+                ("necklace", "necklaces"), ("haram", "necklaces"), ("choker", "necklaces"),
+                ("chain", "chains"), ("pendant", "pendants"), ("locket", "pendants"),
+                ("nosepin", "nosepin"), ("mookuthi", "nosepin"),
+                ("anklet", "anklets"), ("payal", "anklets"), ("kolusu", "anklets"),
+                ("pooja", "pooja-items"), ("lamp", "pooja-items"), ("bell", "pooja-items"),
+                ("idol", "silver-idols"), ("murti", "silver-idols")
+            ]:
+                if kw in text:
+                    target_cat = c
+                    break
+
+        if not target_cat:
+            target_cat = "general"
+
+        # Gather candidates strictly matching metal and category
+        candidates = []
+        for key, data in self.groups.items():
+            if data["metal"] != target_metal:
+                continue
+            if target_cat != "general" and data["cat"] != target_cat:
+                continue
+            candidates.append((key, data))
+
+        # Safe fallback only within compatible sacred categories (pooja-items <-> silver-idols)
+        if not candidates and target_cat in ("pooja-items", "silver-idols"):
+            for key, data in self.groups.items():
+                if data["metal"] == target_metal and data["cat"] in ("pooja-items", "silver-idols"):
+                    candidates.append((key, data))
+
+        if not candidates:
+            return None
+
+        # Identify subcategory keywords in product
+        sub_keywords = []
         for kw in [
-            "studs", "jhumka", "jhumkas", "drops", "hangings", "bali", "hoop", "earring", "earrings",
-            "engagement", "solitaire", "casual", "band", "ring", "rings",
-            "bangle", "bangles", "kada", "bracelet", "bracelets",
-            "chain", "chains", "rope",
-            "haram", "choker", "necklace", "necklaces",
-            "nosepin", "mookuthi",
-            "pendant", "pendants", "locket",
-            "anklet", "anklets", "payal", "kolusu",
-            "coin", "coins", "bar", "bars",
-            "pooja", "idol", "idols", "bowl",
+            ('jhumka', ['jhumka', 'jhumkas']),
+            ('stud', ['stud', 'studs']),
+            ('drop', ['drop', 'drops']),
+            ('hanging', ['hanging', 'hangings']),
+            ('hoop', ['hoop', 'hoops', 'bali']),
+            ('engagement', ['engagement', 'solitaire']),
+            ('casual', ['casual', 'band']),
+            ('toe', ['toe', 'metti']),
+            ('kada', ['kada', 'cuff', 'cuffs']),
+            ('chain_bracelet', ['chain_bracelet', 'bracelet']),
+            ('rope', ['rope']),
+            ('choker', ['choker', 'chokers']),
+            ('haram', ['haram', 'harams', 'long_necklace']),
+            ('short_necklace', ['short_necklace']),
+            ('locket', ['locket', 'pendant']),
+            ('bell', ['bell']),
+            ('lamp', ['lamp', 'diya']),
+            ('balaji', ['balaji', 'venkateswara']),
+            ('lakshmi', ['lakshmi', 'ashtalakshmi']),
+            ('ganesha', ['ganesha', 'vinayaka']),
+            ('om', ['om']),
         ]:
-            if kw in text:
-                sub_kw = kw
-                break
+            if any(syn in text for syn in kw[1]):
+                sub_keywords.extend(kw[1])
+
+        # Subcategory candidate pool filtering
+        matching_sub = []
+        if sub_keywords:
+            for key, data in candidates:
+                tokens = data['tokens']
+                base = data['base'].lower()
+                if any(syn in tokens or syn in base for syn in sub_keywords):
+                    matching_sub.append((key, data))
+
+        active_pool = matching_sub if matching_sub else candidates
 
         prod_tokens = set(re.findall(r"[a-z0-9]+", text))
-        best_key = None
-        best_score = -999
+        scored = []
+        for key, data in active_pool:
+            u_count = self.usage_counts[key]
+            # Extra penalty if already in caller's used_keys
+            if used_keys and key in used_keys:
+                u_count += 5
+            tokens = data['tokens']
+            sim = len(prod_tokens.intersection(tokens))
+            scored.append((u_count, -sim, key, data['urls']))
 
-        for key, data in self.groups.items():
-            if data["metal"] != metal:
-                continue
+        # Sort: lowest usage count first (distribute evenly), then highest token similarity
+        scored.sort(key=lambda x: (x[0], x[1]))
+        best_u, best_sim, best_key, urls = scored[0]
 
-            score = 0
-            if data["is_subfolder"]:
-                score += 10  # Prefer organized subfolder over root folder
+        self.usage_counts[best_key] += 1
+        if used_keys is not None:
+            used_keys.add(best_key)
 
-            if sub_kw and (sub_kw in data["subcat"] or sub_kw in data["tokens"]):
-                score += 50
-            elif sub_kw and data["subcat"] not in ("coins_bars", "general"):
-                # Penalize mismatched jewellery types (never put earrings on a ring, etc.)
-                if any(x in sub_kw for x in ["ring", "band"]) and "ring" not in data["subcat"]:
-                    score -= 100
-                elif any(x in sub_kw for x in ["earring", "stud", "jhumka", "drop", "hanging"]) and "earring" not in data["subcat"]:
-                    score -= 100
-                elif any(x in sub_kw for x in ["necklace", "haram", "choker"]) and "necklace" not in data["subcat"]:
-                    score -= 100
-                elif any(x in sub_kw for x in ["chain"]) and "chain" not in data["subcat"]:
-                    score -= 100
-                elif any(x in sub_kw for x in ["bangle", "bracelet"]) and "bangle" not in data["subcat"]:
-                    score -= 100
-                elif any(x in sub_kw for x in ["anklet", "payal"]) and "anklet" not in data["subcat"]:
-                    score -= 100
-
-            # Token overlap
-            common = prod_tokens.intersection(data["tokens"])
-            score += len(common) * 12
-
-            # Distinctness bonus to prevent image repetition across unrelated products
-            if used_keys and key not in used_keys:
-                score += 20
-
-            if score > best_score:
-                best_score = score
-                best_key = key
-
-        if best_key and best_score > 0:
-            if used_keys is not None:
-                used_keys.add(best_key)
-            return self.groups[best_key]["urls"]
-
-        return None
+        return urls
 
 
-def is_generic_or_missing_image(image_url: Optional[str], name: str, category: str, public_dir: Path) -> bool:
-    """Determine whether a product image reference is missing, broken, or a placeholder."""
+def is_generic_or_missing_image(
+    image_url: Optional[str],
+    name: str,
+    category: str,
+    sub_category: Optional[str],
+    public_dir: Path,
+) -> bool:
+    """
+    Determine whether a product image reference is missing, broken, a placeholder,
+    or has a severe category/metal mismatch.
+    """
     if not image_url or not str(image_url).strip():
         return True
 
@@ -224,13 +344,33 @@ def is_generic_or_missing_image(image_url: Optional[str], name: str, category: s
     if not local_file.exists():
         return True
 
-    text = f"{name} {category}".lower()
-    # Check for mismatched legacy placeholders:
-    # 1. Gold chain image on non-chains (e.g. rings, harams, coins)
+    text = f"{name or ''} {category or ''} {sub_category or ''}".lower()
+    cat_lower = (category or "").lower()
+
+    # Legacy placeholders
     if "product_gold_chain.jpg" in clean and not any(k in text for k in ["chain", "chains", "rope"]):
         return True
-    # 2. Anklet image on non-anklets (e.g. chokers, necklaces)
     if "product_anklet.jpg" in clean and not any(k in text for k in ["anklet", "kolusu", "payal"]):
+        return True
+
+    fn = Path(clean).name.lower()
+    # 1. Rings assigned earring images
+    if cat_lower == "rings" and any(k in fn for k in ["earring", "stud", "jhumka", "drop", "hanging", "hoop"]):
+        return True
+    # 2. Earrings assigned ring images
+    if cat_lower == "earrings" and "ring" in fn and not any(k in fn for k in ["earring", "stud", "jhumka", "drop", "hanging", "hoop"]):
+        return True
+    # 3. Coins assigned bar images
+    if "coin" in cat_lower and "bar" in fn and "coin" not in fn:
+        return True
+    # 4. Bars assigned coin images
+    if "bar" in cat_lower and "coin" in fn and "bar" not in fn:
+        return True
+    # 5. Silver product assigned gold image
+    if "silver" in cat_lower and "/gold/" in clean:
+        return True
+    # 6. Gold product assigned silver image
+    if "gold" in cat_lower and "/silver/" in clean:
         return True
 
     return False
@@ -353,7 +493,6 @@ def run_seed(
         return False
 
     db = SessionLocal()
-    total_considered = len(SEED_PRODUCTS)
     eligible_inserts = 0
     eligible_updates = 0
     skipped_existing = 0
@@ -406,8 +545,8 @@ def run_seed(
                 continue
 
             # Ensure image is dynamically matched from catalog if missing or generic
-            if is_generic_or_missing_image(item.get("image_url"), item["name"], item["category"], public_dir):
-                matched_imgs = catalog.match_product(item["name"], item["category"], item.get("sub_category"), used_design_keys)
+            if is_generic_or_missing_image(item.get("image_url"), item["name"], item["category"], item.get("sub_category"), public_dir):
+                matched_imgs = catalog.match_product(item["name"], item["category"], item.get("sub_category"), used_design_keys, item.get("product_type"))
                 if matched_imgs:
                     item["image_url"] = matched_imgs[0]
                     item["images"] = matched_imgs[:3]
@@ -432,28 +571,45 @@ def run_seed(
                     print(f"[DRY-RUN] Eligible for update (--force): SKU='{item['sku']}' Image='{item.get('image_url')}'")
             else:
                 skipped_existing += 1
-                print(f"[INFO] SKU '{item['sku']}' already exists in database. Skipped insertion (use --force to overwrite).")
 
         # Phase 3: Synchronize and enrich images across all existing database products
         if sync_images:
-            db_products = db.query(Product).all()
+            db_products = db.query(Product).order_by(Product.category, Product.sub_category, Product.name, Product.id).all()
             products_inspected = len(db_products)
+
+            # Pre-count existing image URL assignments to detect duplicates
+            url_usage_counts = defaultdict(int)
+            for prod in db_products:
+                if prod.image_url:
+                    url_usage_counts[prod.image_url] += 1
 
             for prod in db_products:
                 needs_update = False
                 if force:
                     needs_update = True
                 else:
-                    needs_update = is_generic_or_missing_image(prod.image_url, prod.name, prod.category, public_dir)
+                    is_bad = is_generic_or_missing_image(prod.image_url, prod.name, prod.category, prod.sub_category, public_dir)
+                    # Check if this image URL is heavily duplicated (> 1 assignment)
+                    is_duplicate = url_usage_counts.get(prod.image_url, 0) > 1
+                    # Check if gallery has duplicate entries or is missing primary view
+                    gallery_has_dups = False
+                    if prod.images and isinstance(prod.images, list):
+                        if len(prod.images) != len(set(prod.images)):
+                            gallery_has_dups = True
+                    needs_update = is_bad or is_duplicate or gallery_has_dups
 
                 if needs_update:
-                    matched_urls = catalog.match_product(prod.name, prod.category, prod.sub_category, used_design_keys)
+                    matched_urls = catalog.match_product(prod.name, prod.category, prod.sub_category, used_design_keys, prod.product_type)
                     if matched_urls:
                         images_updated += 1
                         if not dry_run:
-                            prod.image_url = matched_urls[0]
-                            prod.images = matched_urls[:3]
-                            # Ensure product_type is also normalized
+                            # Deduplicate gallery array, cap at 3, ensure primary is first
+                            clean_gallery = []
+                            for u in matched_urls:
+                                if u not in clean_gallery:
+                                    clean_gallery.append(u)
+                            prod.image_url = clean_gallery[0]
+                            prod.images = clean_gallery[:3]
                             if not prod.product_type:
                                 prod.product_type = normalize_product_type(prod.category) or infer_product_type(prod.category)
                         else:
@@ -517,4 +673,3 @@ if __name__ == "__main__":
     success = run_seed(dry_run=args.dry_run, force=args.force, clear=args.clear, sync_images=args.sync_images)
     if not success:
         sys.exit(1)
-

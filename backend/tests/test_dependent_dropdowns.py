@@ -2,6 +2,20 @@ import uuid
 import pytest
 from app.db.session import SessionLocal
 from app.models.product import Product
+from app.models.order import Order
+
+
+@pytest.fixture(scope="module", autouse=True)
+def cleanup_dependent_dropdown_test_products():
+    """Teardown fixture: cleans up unreferenced test-generated DEP products created during tests."""
+    yield
+    with SessionLocal() as db:
+        ordered_skus = {row[0] for row in db.query(Order.product_sku).all()}
+        db.query(Product).filter(
+            Product.sku.like("DEP-%"),
+            ~Product.sku.in_(ordered_skus)
+        ).delete(synchronize_session=False)
+        db.commit()
 
 
 def test_01_create_gold_earrings_studs(client, auth_headers):

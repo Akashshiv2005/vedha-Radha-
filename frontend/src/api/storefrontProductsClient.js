@@ -32,16 +32,35 @@ export function adaptStorefrontProduct(raw) {
   const isSold = stat.includes('sold') || (raw.stock_quantity !== undefined && raw.stock_quantity <= 0);
   const availability = isSold ? 'out_of_stock' : 'in_stock';
 
+  const rawProductType = String(raw.productType || raw.product_type || '').toLowerCase();
+  const rawCategory = String(raw.category || '').toLowerCase();
+  const isGoldItem = rawProductType === 'gold' || rawCategory.includes('gold');
+  const isSilverItem = rawProductType === 'silver' || rawCategory.includes('silver');
+  const isCoinOrBar = rawProductType === 'coins_bars' || rawCategory.includes('coin') || rawCategory.includes('bar');
+
+  let defaultPurityOrDetails = '22K BIS 916';
+  if (isSilverItem) {
+    defaultPurityOrDetails = '92.5 Silver';
+  } else if (isCoinOrBar) {
+    defaultPurityOrDetails = '24K 999 Pure Gold';
+  } else {
+    defaultPurityOrDetails = '22K BIS 916';
+  }
+
   let badge = raw.badge;
   if (!badge) {
     if (isSold) {
       badge = 'Sold';
     } else if (raw.hallmark_details) {
       badge = raw.hallmark_details;
-    } else if (String(raw.category).toLowerCase().includes('gold')) {
+    } else if (raw.purity) {
+      badge = raw.purity;
+    } else if (isGoldItem) {
       badge = '22K BIS 916';
-    } else if (String(raw.category).toLowerCase().includes('silver')) {
+    } else if (isSilverItem) {
       badge = '92.5 Silver';
+    } else if (isCoinOrBar) {
+      badge = '24K Pure Gold';
     } else {
       badge = 'In stock';
     }
@@ -49,7 +68,7 @@ export function adaptStorefrontProduct(raw) {
 
   const badgeType = raw.badgeType || (isSold ? 'out-of-stock' : (raw.item_type === 'unique' ? 'one-piece' : 'in-stock'));
 
-  const details = raw.details || raw.hallmark_details || raw.purity || (String(raw.category).toLowerCase().includes('gold') ? '22K BIS 916' : '92.5 Silver');
+  const details = raw.details || raw.hallmark_details || raw.purity || defaultPurityOrDetails;
 
   return {
     id: String(raw.id || raw.sku || Math.random()),

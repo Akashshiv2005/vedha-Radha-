@@ -445,8 +445,16 @@ export default function SilverPage({
 
   // Filter silver products
   const filteredProducts = dbProducts.filter(item => {
-    const isSilver = item.category?.toLowerCase().includes('silver');
-    const isCoinsMatch = (activeMainCat === 'coins' || activeMainCat === 'coins-bars') && (item.category?.toLowerCase().includes('coin') || item.category?.toLowerCase().includes('bar'));
+    const catLower = (item.category || '').toLowerCase();
+    const prodTypeLower = (item.productType || item.product_type || '').toLowerCase();
+
+    // 1. Strictly exclude gold products from Silver Page
+    if (prodTypeLower === 'gold' || catLower.includes('gold')) {
+      return false;
+    }
+
+    const isSilver = catLower.includes('silver') || prodTypeLower === 'silver';
+    const isCoinsMatch = (activeMainCat === 'coins' || activeMainCat === 'coins-bars') && (catLower.includes('coin') || catLower.includes('bar'));
     if (!isSilver && !isCoinsMatch) return false;
 
     // Search query filter
@@ -556,7 +564,24 @@ export default function SilverPage({
     return true;
   });
 
-  const sortedProducts = [...filteredProducts].sort((a, b) => {
+  // Deduplicate products to prevent repeated cards from duplicate DB records or API returns
+  const seenIds = new Set();
+  const seenDesigns = new Set();
+  const uniqueProducts = [];
+
+  for (const item of filteredProducts) {
+    if (seenIds.has(item.id)) continue;
+    seenIds.add(item.id);
+
+    const designKey = `${(item.name || '').toLowerCase().trim()}|${(item.category || '').toLowerCase()}|${item.numericPrice}|${(item.purity || '').toLowerCase()}`;
+    if (seenDesigns.has(designKey)) {
+      continue;
+    }
+    seenDesigns.add(designKey);
+    uniqueProducts.push(item);
+  }
+
+  const sortedProducts = [...uniqueProducts].sort((a, b) => {
     const priceA = typeof a.numericPrice === 'number' ? a.numericPrice : 0;
     const priceB = typeof b.numericPrice === 'number' ? b.numericPrice : 0;
     if (sortBy === 'price-low') return priceA - priceB;

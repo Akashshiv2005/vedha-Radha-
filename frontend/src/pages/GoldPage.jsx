@@ -435,13 +435,28 @@ export default function GoldPage({
   // Filter products matching category or subcategory
   const filteredProducts = dbProducts.filter(item => {
     const catLower = (item.category || '').toLowerCase();
+    const prodTypeLower = (item.productType || item.product_type || '').toLowerCase();
+
+    // 1. Strictly exclude silver jewellery and silver products from Gold Page
+    if (prodTypeLower === 'silver' || catLower.includes('silver') || (item.purity && item.purity.toLowerCase().includes('silver'))) {
+      return false;
+    }
+
+    // 2. Handle Coins & Bars: only show under /gold/coins, never in general gold jewellery
+    const isCoinsItem = prodTypeLower === 'coins_bars' || catLower.includes('coin') || catLower.includes('bar');
+    if (activeMainCat === 'coins') {
+      if (!isCoinsItem) return false;
+    } else {
+      if (isCoinsItem) return false;
+    }
+
     const goldCategoryNames = [
-      'earrings', 'rings', 'bangle & bracelets', 'necklace', 'necklaces',
-      'nosepin', 'occasion', 'chains', 'pendant', 'pendants', 'anklets', 'toe rings'
+      'earrings', 'rings', 'bangle & bracelets', 'bangles', 'necklace', 'necklaces',
+      'nosepin', 'occasion', 'chains', 'pendant', 'pendants', 'anklets', 'toe rings', 'toe-rings',
+      'bridal jewellery', 'bridal'
     ];
-    const isGoldCategory = catLower.includes('gold') || goldCategoryNames.includes(catLower);
-    const isCoinsMatch = activeMainCat === 'coins' && (catLower.includes('coin') || catLower.includes('bar'));
-    if (!isGoldCategory && !isCoinsMatch) return false;
+    const isGoldCategory = catLower.includes('gold') || prodTypeLower === 'gold' || goldCategoryNames.includes(catLower);
+    if (!isGoldCategory && activeMainCat !== 'coins') return false;
 
     // Search query filter
     if (searchQuery && searchQuery.trim() !== '') {
@@ -602,7 +617,25 @@ export default function GoldPage({
     return true;
   });
 
-  const sortedProducts = [...filteredProducts].sort((a, b) => {
+  // Deduplicate products to prevent repeated cards from duplicate DB records or API returns
+  const seenIds = new Set();
+  const seenDesigns = new Set();
+  const uniqueProducts = [];
+
+  for (const item of filteredProducts) {
+    if (seenIds.has(item.id)) continue;
+    seenIds.add(item.id);
+
+    // Deduplicate identical test clones (same name, category, price, purity)
+    const designKey = `${(item.name || '').toLowerCase().trim()}|${(item.category || '').toLowerCase()}|${item.numericPrice}|${(item.purity || '').toLowerCase()}`;
+    if (seenDesigns.has(designKey)) {
+      continue;
+    }
+    seenDesigns.add(designKey);
+    uniqueProducts.push(item);
+  }
+
+  const sortedProducts = [...uniqueProducts].sort((a, b) => {
     const priceA = typeof a.numericPrice === 'number' ? a.numericPrice : 0;
     const priceB = typeof b.numericPrice === 'number' ? b.numericPrice : 0;
     if (sortBy === 'price-low') return priceA - priceB;
