@@ -12,6 +12,7 @@ import {
   Heart,
   ShoppingBag,
   TrendingUp,
+  TrendingDown,
   Sparkles,
   Coins,
   Menu
@@ -199,7 +200,12 @@ export default function Header({
               {rates.change && (
                 <span className={`text-[9.5px] font-semibold items-center gap-0.5 px-1.5 py-0.2 rounded-full hidden sm:inline-flex ${rates.isUp ? 'bg-emerald-100/90 text-[#167034] border border-emerald-200' : 'bg-red-100/90 text-red-700 border border-red-200'
                   }`}>
-                  <span>{rates.isUp ? 'Γåæ' : 'Γåô'}</span> {rates.change}
+                  {rates.isUp ? (
+                    <TrendingUp className="w-2.5 h-2.5 text-[#167034] shrink-0" aria-hidden="true" />
+                  ) : (
+                    <TrendingDown className="w-2.5 h-2.5 text-red-700 shrink-0" aria-hidden="true" />
+                  )}
+                  <span>{rates.change}</span>
                 </span>
               )}
 
@@ -287,7 +293,7 @@ export default function Header({
 
           </div>
 
-          {/* Center: Main Navigation: Home | Gold | Silver | Coins & Bars Γû╝ | New Arrivals | Collections Γû╝ */}
+          {/* Center: Main Navigation: Home | Gold | Silver | Coins & Bars ▼ | New Arrivals | Collections ▼ */}
           <nav
             ref={dropdownRef}
             className="hidden lg:flex items-center gap-3.5 xl:gap-6 2xl:gap-8 text-[12.5px] xl:text-[13.5px] font-medium text-[#3A2E28]"
@@ -329,7 +335,7 @@ export default function Header({
               )}
             </Link>
 
-            {/* 3. COINS & BARS Γû╝ */}
+            {/* 3. COINS & BARS ▼ */}
             <div
               className="relative"
               onMouseEnter={() => handleMouseEnter('coins-bars')}
@@ -424,7 +430,7 @@ export default function Header({
               )}
             </Link>
 
-            {/* 5. COLLECTIONS Γû╝ */}
+            {/* 5. COLLECTIONS ▼ */}
             <div
               className="relative"
               onMouseEnter={() => handleMouseEnter('collections')}
