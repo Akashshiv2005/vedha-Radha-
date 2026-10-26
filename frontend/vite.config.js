@@ -35,22 +35,11 @@ function preciousRatesApiPlugin(env) {
   };
 }
 
-import tailwindcss from 'tailwindcss';
-import autoprefixer from 'autoprefixer';
-
 export default defineConfig(({ mode }) => {
   // Load server-side environment variables from .env without exposing secret keys to client
   const env = loadEnv(mode, process.cwd(), '');
 
   return {
-    css: {
-      postcss: {
-        plugins: [
-          tailwindcss(),
-          autoprefixer(),
-        ],
-      },
-    },
     server: {
       proxy: {
         '/api/auth': {
