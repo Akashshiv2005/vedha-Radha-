@@ -35,9 +35,12 @@ backend_dir = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(backend_dir))
 
 from app.core.config import settings
+from app.core.security import hash_password
 from app.db.session import SessionLocal, check_db_connection
 from app.models.product import Product
 from app.models.order import Order
+from app.models.admin_user import AdminUser
+from sqlalchemy import or_, func
 from app.schemas.product import (
     infer_product_type,
     normalize_product_type,
@@ -481,6 +484,52 @@ def run_seed_from_json(
             else:
                 skipped_count += 1
 
+        # Phase 2b: Ensure Default Admin Accounts Exist
+        admin_summary = []
+        if not dry_run:
+            admin_accounts = [
+                {
+                    "username": "admin",
+                    "email": "admin@gmail.com",
+                    "password": "admin123",
+                    "full_name": "Showroom Administrator",
+                },
+                {
+                    "username": "superadmin",
+                    "email": "admin@vedaradha.com",
+                    "password": "admin@123",
+                    "full_name": "Executive Director",
+                },
+            ]
+            for acc in admin_accounts:
+                admin_user = (
+                    db.query(AdminUser)
+                    .filter(
+                        or_(
+                            func.lower(AdminUser.username) == acc["username"].lower(),
+                            func.lower(AdminUser.email) == acc["email"].lower(),
+                        )
+                    )
+                    .first()
+                )
+                if not admin_user:
+                    admin_user = AdminUser(
+                        username=acc["username"],
+                        email=acc["email"],
+                        password_hash=hash_password(acc["password"]),
+                        full_name=acc["full_name"],
+                        is_active=True,
+                        is_superuser=True,
+                    )
+                    db.add(admin_user)
+                    admin_summary.append(f"Created: {acc['email']} (user: {acc['username']})")
+                else:
+                    admin_user.password_hash = hash_password(acc["password"])
+                    admin_user.email = acc["email"]
+                    admin_user.is_active = True
+                    admin_user.is_superuser = True
+                    admin_summary.append(f"Verified/Updated: {acc['email']} (user: {acc['username']})")
+
         # Phase 3: Commit or Rollback
         if not dry_run:
             db.commit()
@@ -506,6 +555,12 @@ def run_seed_from_json(
         print("Breakdown by Product Type:")
         for pt, count in sorted(type_summary.items()):
             print(f"  • {pt:<24}: {count} products")
+        if admin_summary:
+            print("-" * 76)
+            print("Staff / Admin Portal Credentials:")
+            print("  • Primary Login:   admin@gmail.com   (password: admin123)")
+            print("  • Username Login:  admin             (password: admin123)")
+            print("  • Executive Login: admin@vedaradha.com (password: admin@123)")
         print(f"Execution Time:            {elapsed:.2f} seconds")
         print("=" * 76)
 
