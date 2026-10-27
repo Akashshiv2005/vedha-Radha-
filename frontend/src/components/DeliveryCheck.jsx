@@ -84,6 +84,19 @@ export default function DeliveryCheck() {
           </div>
         )}
 
+        {/* Bottom Center: Designed & Developed by Credit */}
+        <div className="mt-4 pt-3.5 border-t border-[#DECDBB]/60 text-center text-xs text-[#73655C]">
+          <span>Designed &amp; Developed by </span>
+          <a
+            href="https://www.izonetech.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#581923] font-semibold hover:underline hover:text-[#7A2332] transition-colors"
+          >
+            Izone Technologies
+          </a>
+        </div>
+
       </div>
     </footer>
   );

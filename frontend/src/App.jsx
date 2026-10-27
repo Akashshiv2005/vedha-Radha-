@@ -366,6 +366,23 @@ export default function App() {
         </Routes>
       </main>
 
+      {/* Bottom Center Credit for all other storefront pages */}
+      {location.pathname !== '/' && (
+        <footer className="bg-[#FAF7F2] border-t border-[#DECDBB]/60 py-4 text-center text-xs text-[#73655C]">
+          <div className="max-w-[1400px] mx-auto px-4 sm:px-8">
+            <span>Designed &amp; Developed by </span>
+            <a
+              href="https://www.izonetech.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#581923] font-semibold hover:underline hover:text-[#7A2332] transition-colors"
+            >
+              Izone Technologies
+            </a>
+          </div>
+        </footer>
+      )}
+
       {/* Shared Modals & Drawers */}
       <ProductDetailModal
         key={selectedProduct?.id || 'no-product'}
