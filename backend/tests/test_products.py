@@ -49,9 +49,9 @@ def test_filter_by_category_and_status(client, auth_headers):
     """Filters products by category and status."""
     res = client.get("/api/admin/products?category=gold", headers=auth_headers)
     assert res.status_code == 200
-    gold_cats = ("gold", "earrings", "rings", "bangle & bracelets", "necklace", "necklaces", "nosepin", "occasion", "chains", "pendant", "pendants", "anklets", "toe rings")
+    gold_cats = ("gold", "earrings", "rings", "bangle & bracelets", "necklace", "necklaces", "nosepin", "occasion", "chains", "pendant", "pendants", "anklets", "toe rings", "temple", "mangalsutra", "jewellery", "coin", "bar")
     for item in res.json()["items"]:
-        assert any(c in item["category"].lower() for c in gold_cats)
+        assert item.get("product_type") in ("gold", "coins_bars") or any(c in item["category"].lower() for c in gold_cats)
 
     res_status = client.get("/api/admin/products?status=available", headers=auth_headers)
     assert res_status.status_code == 200

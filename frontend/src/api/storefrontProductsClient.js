@@ -1,3 +1,5 @@
+import { buildApiUrl } from './config';
+
 /**
  * Public Storefront Products API Client.
  * Communicates with FastAPI /api/products endpoints.
@@ -129,7 +131,7 @@ export const storefrontClient = {
     if (params.sort_order) query.set('sort_order', params.sort_order);
 
     const queryString = query.toString();
-    const url = `/api/products${queryString ? `?${queryString}` : ''}`;
+    const url = buildApiUrl(`/api/products${queryString ? `?${queryString}` : ''}`);
 
     try {
       const response = await fetch(url, {
@@ -177,7 +179,7 @@ export const storefrontClient = {
   async getStorefrontProduct(idOrSku) {
     if (!idOrSku) return null;
     try {
-      const response = await fetch(`/api/products/${encodeURIComponent(idOrSku)}`, {
+      const response = await fetch(buildApiUrl(`/api/products/${encodeURIComponent(idOrSku)}`), {
         method: 'GET',
         headers: {
           'Accept': 'application/json'

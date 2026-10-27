@@ -1,6 +1,5 @@
-/**
- * Typed API client for Veda Radha Admin Authentication
- */
+import { buildApiUrl } from './config';
+
 
 const AUTH_STORAGE_KEY = 'VR_ADMIN_AUTH_TOKEN';
 const USER_STORAGE_KEY = 'VR_ADMIN_AUTH_USER';
@@ -57,7 +56,7 @@ export const authClient = {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 12000);
 
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch(buildApiUrl('/api/auth/login'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -123,7 +122,7 @@ export const authClient = {
     }
 
     try {
-      const response = await fetch('/api/auth/me', {
+      const response = await fetch(buildApiUrl('/api/auth/me'), {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -160,7 +159,7 @@ export const authClient = {
 
     if (token) {
       try {
-        await fetch('/api/auth/logout', {
+        await fetch(buildApiUrl('/api/auth/logout'), {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`

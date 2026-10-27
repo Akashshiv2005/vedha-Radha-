@@ -4,7 +4,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .core.config import settings
-from .db.session import check_db_connection, SessionLocal
+from .db.session import check_db_connection, SessionLocal, engine
+from .db.base import Base
 from .services.auth_service import bootstrap_initial_admin
 from .services.minio_service import minio_service
 from .api import api_router
@@ -26,6 +27,14 @@ async def lifespan(app: FastAPI):
     is_connected, msg = check_db_connection()
     if is_connected:
         logger.info("PostgreSQL database connection verified successfully.")
+        # Ensure all tables exist in database (products, admin_users, orders, product_import_jobs)
+        try:
+            from . import models  # noqa: F401 - register all models on Base.metadata
+            Base.metadata.create_all(bind=engine)
+            logger.info("Database schema verified/synchronized successfully.")
+        except Exception as e:
+            logger.warning("Database schema synchronization notice: %s", e)
+
         # Bootstrap default admin safely if not existing
         db = SessionLocal()
         try:
@@ -68,12 +77,20 @@ def create_application() -> FastAPI:
     )
 
     # Configure Cross-Origin Resource Sharing (CORS)
+    # Allows requests from Vite storefront/admin development server and production origins.
+    # allow_origin_regex seamlessly supports any local development port without preflight errors.
+    allowed_origins = list(settings.CORS_ORIGINS)
+    if settings.FRONTEND_URL and settings.FRONTEND_URL not in allowed_origins:
+        allowed_origins.append(settings.FRONTEND_URL)
+
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=settings.CORS_ORIGINS,
+        allow_origins=allowed_origins,
+        allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$",
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
+        expose_headers=["*"],
     )
 
     # Mount API routes (/api/auth/login, /api/auth/me, /api/auth/logout, /api/health)

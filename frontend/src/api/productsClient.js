@@ -1,4 +1,5 @@
 import { authClient } from './authClient';
+import { buildApiUrl } from './config';
 
 /**
  * Typed API client for Veda Radha Admin Product Inventory
@@ -29,7 +30,7 @@ export const productsClient = {
     if (params.sort_order) query.set('sort_order', params.sort_order);
 
     const queryString = query.toString();
-    const url = `/api/admin/products${queryString ? `?${queryString}` : ''}`;
+    const url = buildApiUrl(`/api/admin/products${queryString ? `?${queryString}` : ''}`);
 
     try {
       const response = await fetch(url, {
@@ -51,7 +52,7 @@ export const productsClient = {
 
       // If unauthorized (401/403) e.g. token expired, synchronize from public catalogue
       if (response.status === 401 || response.status === 403) {
-        const publicUrl = `/api/products${queryString ? `?${queryString}` : ''}`;
+        const publicUrl = buildApiUrl(`/api/products${queryString ? `?${queryString}` : ''}`);
         const pubResp = await fetch(publicUrl, {
           method: 'GET',
           headers: { 'Accept': 'application/json' }
@@ -80,7 +81,7 @@ export const productsClient = {
       console.warn('Failed to fetch products from backend:', err);
       // Fallback query to public catalogue if admin endpoint is unreachable
       try {
-        const publicUrl = `/api/products${queryString ? `?${queryString}` : ''}`;
+        const publicUrl = buildApiUrl(`/api/products${queryString ? `?${queryString}` : ''}`);
         const pubResp = await fetch(publicUrl, {
           method: 'GET',
           headers: { 'Accept': 'application/json' }
@@ -113,7 +114,7 @@ export const productsClient = {
    */
   async getProduct(idOrSku) {
     try {
-      const response = await fetch(`/api/admin/products/${encodeURIComponent(idOrSku)}`, {
+      const response = await fetch(buildApiUrl(`/api/admin/products/${encodeURIComponent(idOrSku)}`), {
         method: 'GET',
         headers: this.getAuthHeaders()
       });
@@ -174,7 +175,7 @@ export const productsClient = {
   async createProduct(productData) {
     try {
       const cleanData = this._cleanProductPayload(productData);
-      const response = await fetch('/api/admin/products', {
+      const response = await fetch(buildApiUrl('/api/admin/products'), {
         method: 'POST',
         headers: this.getAuthHeaders(),
         body: JSON.stringify(cleanData)
@@ -200,7 +201,7 @@ export const productsClient = {
   async updateProduct(idOrSku, updatedFields) {
     try {
       const cleanData = this._cleanProductPayload(updatedFields);
-      const response = await fetch(`/api/admin/products/${encodeURIComponent(idOrSku)}`, {
+      const response = await fetch(buildApiUrl(`/api/admin/products/${encodeURIComponent(idOrSku)}`), {
         method: 'PUT',
         headers: this.getAuthHeaders(),
         body: JSON.stringify(cleanData)
@@ -225,7 +226,7 @@ export const productsClient = {
    */
   async deleteProduct(idOrSku, hard = false) {
     try {
-      const url = `/api/admin/products/${encodeURIComponent(idOrSku)}${hard ? '?hard=true' : ''}`;
+      const url = buildApiUrl(`/api/admin/products/${encodeURIComponent(idOrSku)}${hard ? '?hard=true' : ''}`);
       const response = await fetch(url, {
         method: 'DELETE',
         headers: this.getAuthHeaders()
@@ -259,7 +260,7 @@ export const productsClient = {
     formData.append('dry_run', String(dryRun));
 
     try {
-      const response = await fetch('/api/admin/products/import', {
+      const response = await fetch(buildApiUrl('/api/admin/products/import'), {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -292,7 +293,7 @@ export const productsClient = {
     formData.append('file', file);
 
     try {
-      const response = await fetch('/api/admin/products/upload-image', {
+      const response = await fetch(buildApiUrl('/api/admin/products/upload-image'), {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

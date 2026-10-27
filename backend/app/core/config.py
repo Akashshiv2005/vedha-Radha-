@@ -22,6 +22,9 @@ class Settings(BaseSettings):
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24  # 24 hours
 
+    # Frontend URL (Storefront & Admin Portal)
+    FRONTEND_URL: str = "http://localhost:5173"
+
     # CORS
     CORS_ORIGINS: Union[List[str], str] = [
         "http://localhost:5173",
@@ -59,17 +62,29 @@ class Settings(BaseSettings):
     @field_validator("CORS_ORIGINS", mode="before")
     @classmethod
     def assemble_cors_origins(cls, v: Union[str, List[str]]) -> List[str]:
+        origins = []
         if isinstance(v, str):
             v_str = v.strip()
             if v_str.startswith("[") and v_str.endswith("]"):
                 try:
-                    return json.loads(v_str)
+                    origins = json.loads(v_str)
                 except Exception:
-                    pass
-            return [i.strip() for i in v_str.split(",") if i.strip()]
+                    origins = [i.strip() for i in v_str.split(",") if i.strip()]
+            else:
+                origins = [i.strip() for i in v_str.split(",") if i.strip()]
         elif isinstance(v, list):
-            return v
-        return ["http://localhost:5173"]
+            origins = list(v)
+
+        defaults = [
+            "http://localhost:5173",
+            "http://127.0.0.1:5173",
+            "http://localhost:3000",
+            "http://127.0.0.1:3000",
+        ]
+        for d in defaults:
+            if d not in origins:
+                origins.append(d)
+        return origins
 
     model_config = SettingsConfigDict(
         env_file=str(BASE_DIR / ".env"),

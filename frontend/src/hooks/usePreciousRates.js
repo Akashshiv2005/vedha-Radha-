@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { buildApiUrl } from '../api/config';
 
 const LOCAL_STORAGE_KEY = 'vedha_radha_rates_cache_v2';
 const REFRESH_INTERVAL_MS = 300 * 1000; // 300 seconds (5 minutes)
@@ -62,9 +63,9 @@ export function usePreciousRates() {
 
     try {
       // Call primary live endpoint with fallback to prices/gold-silver
-      let response = await fetch(`/api/gold-rates/live${force ? '?force=true' : ''}`);
+      let response = await fetch(buildApiUrl(`/api/gold-rates/live${force ? '?force=true' : ''}`));
       if (!response.ok) {
-        response = await fetch(`/api/prices/gold-silver${force ? '?force=true' : ''}`);
+        response = await fetch(buildApiUrl(`/api/prices/gold-silver${force ? '?force=true' : ''}`));
       }
 
       if (!response.ok) {

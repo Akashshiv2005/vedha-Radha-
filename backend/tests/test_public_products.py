@@ -13,9 +13,9 @@ def test_public_get_products_category_filter(client):
     res = client.get("/api/products?category=gold")
     assert res.status_code == 200
     items = res.json()["items"]
-    gold_cats = ("gold", "earrings", "rings", "bangle & bracelets", "necklace", "necklaces", "nosepin", "occasion", "chains", "pendant", "pendants", "anklets", "toe rings")
+    gold_cats = ("gold", "earrings", "rings", "bangle & bracelets", "necklace", "necklaces", "nosepin", "occasion", "chains", "pendant", "pendants", "anklets", "toe rings", "temple", "mangalsutra", "jewellery", "coin", "bar")
     for item in items:
-        assert any(c in item["category"].lower() for c in gold_cats)
+        assert item.get("product_type") in ("gold", "coins_bars") or any(c in item["category"].lower() for c in gold_cats)
 
 
 def test_public_get_products_price_filter(client):

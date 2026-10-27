@@ -1,4 +1,5 @@
 import { authClient } from './authClient';
+import { buildApiUrl } from './config';
 
 /**
  * API client for Veda Radha Admin Orders and Reservations
@@ -30,7 +31,7 @@ export const ordersClient = {
    */
   async getOrders() {
     try {
-      const response = await fetch('/api/admin/orders', {
+      const response = await fetch(buildApiUrl('/api/admin/orders'), {
         method: 'GET',
         headers: this.getAuthHeaders()
       });
@@ -49,7 +50,7 @@ export const ordersClient = {
    */
   async createOrder(payload) {
     try {
-      const response = await fetch('/api/admin/orders', {
+      const response = await fetch(buildApiUrl('/api/admin/orders'), {
         method: 'POST',
         headers: this.getAuthHeaders(),
         body: JSON.stringify(payload)
