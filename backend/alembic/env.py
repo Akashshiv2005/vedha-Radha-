@@ -14,6 +14,7 @@ from app.db.base import Base
 from app.models.admin_user import AdminUser
 from app.models.product import Product
 from app.models.product_import_job import ProductImportJob
+from app.models.order import Order
 
 # Alembic Config object
 config = context.config

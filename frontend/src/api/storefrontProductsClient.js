@@ -1,4 +1,4 @@
-import { buildApiUrl } from './config';
+import { buildApiUrl } from './config.js';
 
 /**
  * Public Storefront Products API Client.

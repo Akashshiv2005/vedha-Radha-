@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { buildApiUrl } from '../api/config';
+import { buildApiUrl } from '../api/config.js';
 
 const LOCAL_STORAGE_KEY = 'vedha_radha_rates_cache_v2';
 const REFRESH_INTERVAL_MS = 300 * 1000; // 300 seconds (5 minutes)

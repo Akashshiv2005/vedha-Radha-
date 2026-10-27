@@ -1,4 +1,4 @@
-import { buildApiUrl } from './config';
+import { buildApiUrl } from './config.js';
 
 
 const AUTH_STORAGE_KEY = 'VR_ADMIN_AUTH_TOKEN';

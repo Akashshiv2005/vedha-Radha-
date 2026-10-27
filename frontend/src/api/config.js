@@ -3,11 +3,12 @@
  * All frontend requests use this module to resolve backend endpoints from .env
  */
 
-// Reads VITE_API_BASE_URL, VITE_BACKEND_URL, or VITE_API_URL from frontend/.env
+// Safely read VITE_API_BASE_URL across both Vite (browser) and Node environments
+const metaEnv = (typeof import.meta !== 'undefined' && import.meta.env) ? import.meta.env : {};
 const rawBaseUrl = (
-  import.meta.env.VITE_API_BASE_URL ||
-  import.meta.env.VITE_BACKEND_URL ||
-  import.meta.env.VITE_API_URL ||
+  metaEnv.VITE_API_BASE_URL ||
+  metaEnv.VITE_BACKEND_URL ||
+  metaEnv.VITE_API_URL ||
   ''
 ).trim();
 

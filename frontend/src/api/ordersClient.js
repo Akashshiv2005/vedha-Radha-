@@ -1,5 +1,5 @@
 import { authClient } from './authClient';
-import { buildApiUrl } from './config';
+import { buildApiUrl } from './config.js';
 
 /**
  * API client for Veda Radha Admin Orders and Reservations
