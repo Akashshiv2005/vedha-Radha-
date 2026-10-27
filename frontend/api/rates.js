@@ -2,7 +2,7 @@
  * Serverless Handler for /api/rates (forwards to FastAPI backend)
  */
 export default async function handler(req, res) {
-  const backendUrl = process.env.BACKEND_API_URL || 'http://127.0.0.1:8000';
+  const backendUrl = process.env.BACKEND_API_URL || process.env.VITE_API_BASE_URL || process.env.BACKEND_URL || '';
   const force = req.query && (req.query.force === 'true' || req.query.refresh === '1');
   const targetEndpoint = `${backendUrl}/api/gold-rates/live${force ? '?force=true' : ''}`;
 

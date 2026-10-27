@@ -43,7 +43,7 @@ app.use((req, res, next) => {
   next();
 });
 
-const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://127.0.0.1:8000';
+const BACKEND_API_URL = process.env.BACKEND_API_URL || process.env.VITE_API_BASE_URL || process.env.BACKEND_URL || '';
 
 // ─── API Routes ────────────────────────────────────────────────────────────────
 

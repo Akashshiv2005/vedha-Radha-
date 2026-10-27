@@ -4,18 +4,22 @@ import react from '@vitejs/plugin-react';
 export default defineConfig(({ mode }) => {
   // Load environment variables from .env based on current mode
   const env = loadEnv(mode, process.cwd(), '');
-  const backendTarget = env.VITE_API_BASE_URL || env.BACKEND_URL || 'http://127.0.0.1:8000';
+  const backendTarget = env.BACKEND_URL || env.VITE_API_BASE_URL;
 
   return {
     server: {
-      proxy: {
-        // Universal proxy for all backend /api endpoints
-        '/api': {
-          target: backendTarget,
-          changeOrigin: true,
-          secure: false,
-        },
-      },
+      ...(backendTarget
+        ? {
+            proxy: {
+              // Universal proxy for all backend /api endpoints routed strictly to backend from .env
+              '/api': {
+                target: backendTarget,
+                changeOrigin: true,
+                secure: false,
+              },
+            },
+          }
+        : {}),
     },
     plugins: [
       react(),

@@ -22,16 +22,14 @@ class Settings(BaseSettings):
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24  # 24 hours
 
-    # Frontend URL (Storefront & Admin Portal)
-    FRONTEND_URL: str = "http://localhost:5173"
+    # Frontend URL (Storefront & Admin Portal) - configured from FRONTEND_URL in .env
+    FRONTEND_URL: Optional[str] = None
 
-    # CORS
-    CORS_ORIGINS: Union[List[str], str] = [
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-    ]
+    # CORS Allowed Origins - configured from CORS_ORIGINS in .env
+    CORS_ORIGINS: Union[List[str], str] = []
+
+    # Optional CORS Origin Regex - configured from CORS_ORIGIN_REGEX in .env
+    CORS_ORIGIN_REGEX: Optional[str] = None
 
     # Admin Bootstrap Defaults
     ADMIN_BOOTSTRAP_USERNAME: str = "admin"
@@ -61,30 +59,20 @@ class Settings(BaseSettings):
 
     @field_validator("CORS_ORIGINS", mode="before")
     @classmethod
-    def assemble_cors_origins(cls, v: Union[str, List[str]]) -> List[str]:
-        origins = []
+    def assemble_cors_origins(cls, v: Union[str, List[str], None]) -> List[str]:
+        if not v:
+            return []
         if isinstance(v, str):
             v_str = v.strip()
             if v_str.startswith("[") and v_str.endswith("]"):
                 try:
-                    origins = json.loads(v_str)
+                    return json.loads(v_str)
                 except Exception:
-                    origins = [i.strip() for i in v_str.split(",") if i.strip()]
-            else:
-                origins = [i.strip() for i in v_str.split(",") if i.strip()]
+                    pass
+            return [i.strip() for i in v_str.split(",") if i.strip()]
         elif isinstance(v, list):
-            origins = list(v)
-
-        defaults = [
-            "http://localhost:5173",
-            "http://127.0.0.1:5173",
-            "http://localhost:3000",
-            "http://127.0.0.1:3000",
-        ]
-        for d in defaults:
-            if d not in origins:
-                origins.append(d)
-        return origins
+            return list(v)
+        return []
 
     model_config = SettingsConfigDict(
         env_file=str(BASE_DIR / ".env"),
