@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 import { silverCategories } from '../data/categoryData';
 import { storefrontClient } from '../api/storefrontProductsClient';
+import { ProductGridSkeleton } from '../components/common/ProductCardSkeleton';
 import { 
   Sparkles, 
   ChevronRight, 
@@ -915,7 +916,14 @@ export default function SilverPage({
         </div>
 
         {/* Product Cards Grid */}
-        {apiError ? (
+        {isLoading ? (
+          <ProductGridSkeleton
+            count={6}
+            columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+            aspect="aspect-square"
+            label="Curating Pure 925 Hallmarked Silver Articles..."
+          />
+        ) : apiError ? (
           <div className="bg-white rounded-2xl p-8 sm:p-12 text-center border border-[#CBD5E1] my-8 shadow-xs max-w-2xl mx-auto space-y-3">
             <p className="text-base font-semibold text-[#8C1D28]">{apiError}</p>
             <p className="text-xs text-[#475569]">Please verify your backend connection or try again later.</p>

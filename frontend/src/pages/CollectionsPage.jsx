@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { storefrontClient } from '../api/storefrontProductsClient';
+import { ProductGridSkeleton } from '../components/common/ProductCardSkeleton';
 import { Sparkles, ChevronRight, Gem, Shield, Heart, ShoppingBag, Layers, Eye } from 'lucide-react';
 
 export default function CollectionsPage({
@@ -274,7 +275,14 @@ export default function CollectionsPage({
             </div>
           </div>
 
-          {apiError ? (
+          {isLoading ? (
+            <ProductGridSkeleton
+              count={6}
+              columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+              aspect="aspect-square"
+              label="Curating Signature Designs..."
+            />
+          ) : apiError ? (
             <div className="bg-white rounded-2xl p-8 sm:p-12 text-center border border-[#E8DFC0] my-8 shadow-xs max-w-2xl mx-auto space-y-3">
               <h3 className="font-serif text-xl font-bold text-[#8C1D28]">{apiError}</h3>
               <p className="text-xs text-[#7A6E65]">Please verify your backend connection or try again later.</p>

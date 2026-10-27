@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 import { storefrontClient } from '../api/storefrontProductsClient';
+import { ProductGridSkeleton } from '../components/common/ProductCardSkeleton';
 import { coinsBarsNavItems } from '../data/navigationData';
 import { Sparkles, ChevronRight, Heart, ShoppingBag, ShieldCheck, Award, ArrowLeft, RefreshCcw } from 'lucide-react';
 
@@ -192,7 +193,14 @@ export default function CoinsBarsPage({
         </div>
 
         {/* Products Grid */}
-        {apiError ? (
+        {isLoading ? (
+          <ProductGridSkeleton
+            count={8}
+            columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+            aspect="aspect-square"
+            label="Curating 24K Bullion Coins & Bars..."
+          />
+        ) : apiError ? (
           <div className="bg-[#FAF8F5] rounded-xl p-12 text-center border border-[#DECDBB] my-8 max-w-2xl mx-auto space-y-3">
             <h3 className="font-serif text-xl font-bold text-[#8C1D28]">{apiError}</h3>
             <p className="text-xs text-[#7A6E65]">Please verify your backend connection or try again later.</p>

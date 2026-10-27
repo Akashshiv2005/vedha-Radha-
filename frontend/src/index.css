@@ -425,4 +425,39 @@ body,
   animation: audioWaveBar 0.75s ease-in-out infinite alternate;
 }
 
+/* Luxury Shimmer Loading Animation for Jewellery Cards */
+@keyframes luxuryShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    #F6F1E7 0%,
+    #ECE3D0 25%,
+    #FAF7F0 50%,
+    #ECE3D0 75%,
+    #F6F1E7 100%
+  );
+  background-size: 200% 100%;
+  animation: luxuryShimmer 1.8s ease-in-out infinite;
+}
+
+.animate-shimmer-subtle {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0.4) 100%
+  );
+  background-size: 200% 100%;
+  animation: luxuryShimmer 2s ease-in-out infinite;
+}
+
+
 

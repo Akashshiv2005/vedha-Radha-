@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { storefrontClient } from '../api/storefrontProductsClient';
+import { ProductGridSkeleton } from '../components/common/ProductCardSkeleton';
 import { Sparkles, Filter, ChevronRight, ShieldCheck, Heart, ShoppingBag, ArrowLeft } from 'lucide-react';
 
 export default function JewelleryPage({
@@ -179,7 +180,14 @@ export default function JewelleryPage({
         </div>
 
         {/* Products Grid */}
-        {apiError ? (
+        {isLoading ? (
+          <ProductGridSkeleton
+            count={6}
+            columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+            aspect="aspect-4/3"
+            label="Curating Jewellery Showroom Designs..."
+          />
+        ) : apiError ? (
           <div className="bg-[#FAF8F5] rounded-xl p-12 text-center border border-[#DECDBB] my-8">
             <h3 className="text-xl font-bold text-[#8C1D28]">{apiError}</h3>
             <p className="text-xs text-[#7A6E65] mt-1">Please verify your server connection or try again later.</p>
