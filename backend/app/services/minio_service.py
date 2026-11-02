@@ -232,7 +232,8 @@ class MinioService:
         except Exception as e:
             logger.warning("Failed to generate presigned URL for key '%s': %s", object_key, e)
             # Safe fallback: return object key or default placeholder
-            return f"http://{self._endpoint}/{self._bucket}/{object_key}"
+            proto = "https" if self._secure else "http"
+            return f"{proto}://{self._endpoint}/{self._bucket}/{object_key}"
 
     def delete_object_if_unreferenced(
         self,

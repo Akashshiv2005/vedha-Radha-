@@ -209,3 +209,73 @@ def test_reject_incompatible_subcategory(client, auth_headers):
     )
     assert res.status_code in (400, 422)
 
+
+
+def test_qr_code_lifecycle_and_lookup(client, auth_headers):
+    """QR Code registration, retrieval by QR, duplicate rejection, and update."""
+    unique_id = uuid.uuid4().hex[:6].upper()
+    sku = f"QR-TEST-{unique_id}"
+    qr_code = f"TAG-QR-{unique_id}"
+
+    # 1. Create product with QR code and jewellery specs
+    create_payload = {
+        "sku": sku,
+        "qrCode": qr_code,
+        "name": "QR Scanned Silver Anklet",
+        "productType": "Silver",
+        "category": "Silver Jewellery",
+        "subCategory": "Anklets & Kolusu",
+        "purity": "925 Sterling Silver",
+        "grossWeight": "15.350 g",
+        "netWeight": "15.350 g",
+        "hallmarkDetails": "VRTM 925 BIS Hallmarked",
+        "price": 6140,
+        "status": "available",
+        "location": "Counter 3",
+    }
+    res = client.post("/api/admin/products", json=create_payload, headers=auth_headers)
+    assert res.status_code == 201, res.text
+    data = res.json()
+    assert data["sku"] == sku
+    assert data["qrCode"] == qr_code
+    assert data["grossWeight"] == "15.350 g"
+    assert data["hallmarkDetails"] == "VRTM 925 BIS Hallmarked"
+
+    try:
+        # 2. Look up product by QR code directly via endpoint
+        get_res = client.get(f"/api/admin/products/{qr_code}", headers=auth_headers)
+        assert get_res.status_code == 200, get_res.text
+        lookup_data = get_res.json()
+        assert lookup_data["sku"] == sku
+        assert lookup_data["qrCode"] == qr_code
+
+        # 3. Duplicate QR code rejection (Case B safeguard)
+        dup_sku = f"DUP-QR-{uuid.uuid4().hex[:6].upper()}"
+        dup_payload = {
+            "sku": dup_sku,
+            "qrCode": qr_code,
+            "name": "Duplicate QR Product",
+            "category": "Silver Jewellery",
+            "price": 5000,
+        }
+        dup_res = client.post("/api/admin/products", json=dup_payload, headers=auth_headers)
+        assert dup_res.status_code == 409, dup_res.text
+
+        # 4. Search by QR code
+        search_res = client.get(f"/api/admin/products?search={qr_code}", headers=auth_headers)
+        assert search_res.status_code == 200
+        assert any(p["sku"] == sku for p in search_res.json()["items"])
+
+        # 5. Update product specifications
+        update_payload = {
+            "grossWeight": "16.000 g",
+            "hallmarkDetails": "VRTM 925 BIS Certified",
+        }
+        update_res = client.put(f"/api/admin/products/{sku}", json=update_payload, headers=auth_headers)
+        assert update_res.status_code == 200
+        updated = update_res.json()
+        assert updated["grossWeight"] == "16.000 g"
+        assert updated["hallmarkDetails"] == "VRTM 925 BIS Certified"
+    finally:
+        # Cleanup
+        client.delete(f"/api/admin/products/{sku}", headers=auth_headers)

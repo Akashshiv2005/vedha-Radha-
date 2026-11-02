@@ -90,6 +90,7 @@ class ProductBase(BaseModel):
     net_weight: Optional[str] = Field(None, max_length=50)
     hallmark_details: Optional[str] = Field(None, max_length=255)
     location: Optional[str] = Field(None, max_length=255)
+    qr_code: Optional[str] = Field(None, max_length=100, alias="qrCode")
 
     @field_validator("price", mode="before")
     @classmethod
@@ -167,6 +168,7 @@ class ProductCreate(BaseModel):
     net_weight: Optional[str] = Field(None, alias="netWeight")
     hallmark_details: Optional[str] = Field(None, alias="hallmarkDetails")
     location: Optional[str] = None
+    qr_code: Optional[str] = Field(None, alias="qrCode")
 
     model_config = ConfigDict(populate_by_name=True, extra="ignore")
 
@@ -262,6 +264,7 @@ class ProductUpdate(BaseModel):
     location: Optional[str] = None
     is_active: Optional[bool] = Field(None, alias="isActive")
 
+    qr_code: Optional[str] = Field(None, alias="qrCode")
     model_config = ConfigDict(populate_by_name=True, extra="ignore")
 
     @field_validator("price", mode="before")
@@ -390,11 +393,16 @@ class ProductPublic(BaseModel):
     net_weight: Optional[str] = None
     hallmark_details: Optional[str] = None
     location: Optional[str] = None
+    qr_code: Optional[str] = None
     is_active: bool
     created_at: datetime
     updated_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
+    @computed_field
+    def qrCode(self) -> Optional[str]:
+        return self.qr_code
+
 
     @computed_field
     def id_str(self) -> str:

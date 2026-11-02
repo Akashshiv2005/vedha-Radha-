@@ -391,6 +391,7 @@ def get_products(
             or_(
                 func.lower(Product.name).like(term),
                 func.lower(Product.sku).like(term),
+                func.lower(func.coalesce(Product.qr_code, "")).like(term),
                 func.lower(Product.category).like(term),
                 func.lower(func.coalesce(Product.sub_category, "")).like(term),
                 func.lower(func.coalesce(Product.sub_type, "")).like(term),
@@ -595,6 +596,13 @@ def get_product_by_id_or_sku(db: Session, identifier: str, include_inactive: boo
     q = db.query(Product).filter(func.lower(Product.sku) == clean_id.lower())
     if not include_inactive:
         q = q.filter(Product.is_active == True)
+    product = q.first()
+    if product:
+        return product
+
+    q = db.query(Product).filter(func.lower(Product.qr_code) == clean_id.lower())
+    if not include_inactive:
+        q = q.filter(Product.is_active == True)
     return q.first()
 
 
@@ -639,6 +647,15 @@ def create_product(db: Session, payload: ProductCreate) -> Product:
     primary_image = clean_images[0] if clean_images else clean_image
     clean_pt = normalize_product_type(payload.product_type) or infer_product_type(payload.category)
 
+    clean_qr = payload.qr_code.strip() if payload.qr_code else None
+    if clean_qr:
+        existing_qr = db.query(Product).filter(func.lower(Product.qr_code) == clean_qr.lower()).first()
+        if existing_qr:
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail={"success": False, "error": f"Product with QR Code '{clean_qr}' already exists (SKU: {existing_qr.sku})."},
+            )
+
     product = Product(
         sku=clean_sku,
         name=payload.name.strip(),
@@ -647,6 +664,9 @@ def create_product(db: Session, payload: ProductCreate) -> Product:
         product_type=clean_pt,
         category=payload.category.strip(),
         sub_category=payload.sub_category.strip() if payload.sub_category else None,
+        sub_type=payload.sub_type.strip() if payload.sub_type else None,
+        occasion=payload.occasion.strip() if payload.occasion else None,
+        qr_code=clean_qr,
         item_type=item_type,
         price=price_dec,
         status=payload.status.strip().lower(),
@@ -694,6 +714,23 @@ def update_product(db: Session, product: Product, payload: ProductUpdate) -> Pro
             product.product_type = infer_product_type(payload.category)
     if payload.sub_category is not None:
         product.sub_category = payload.sub_category.strip() if payload.sub_category else None
+    if payload.sub_type is not None:
+        product.sub_type = payload.sub_type.strip() if payload.sub_type else None
+    if payload.occasion is not None:
+        product.occasion = payload.occasion.strip() if payload.occasion else None
+    if payload.qr_code is not None:
+        clean_qr = payload.qr_code.strip() if payload.qr_code else None
+        if clean_qr and (not product.qr_code or clean_qr.lower() != product.qr_code.lower()):
+            conflict = db.query(Product).filter(
+                func.lower(Product.qr_code) == clean_qr.lower(),
+                Product.id != product.id
+            ).first()
+            if conflict:
+                raise HTTPException(
+                    status_code=status.HTTP_409_CONFLICT,
+                    detail={"success": False, "error": f"Product with QR Code '{clean_qr}' already exists (SKU: {conflict.sku})."},
+                )
+        product.qr_code = clean_qr
 
     # Handle item_type / is_unique
     if payload.item_type is not None:

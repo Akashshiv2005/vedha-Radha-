@@ -65,7 +65,7 @@ def test_create_order_authoritative_calculation_and_persistence(client, auth_hea
         "channel": "Showroom",
         "paymentMethod": "UPI",
         "paymentStatus": "paid",
-        "orderStatus": "confirmed",
+        "orderStatus": "processing",
         "notes": "Wedding anniversary purchase."
     }
 
@@ -83,11 +83,62 @@ def test_create_order_authoritative_calculation_and_persistence(client, auth_hea
     assert order["totalAmount"] == 101000.0
     assert order["orderNumber"].startswith("VR-")
 
-    # 3. Retrieve orders list to verify persistence
+    # 3. Test status update via PATCH /api/admin/orders/{order_number}/status
+    status_res = client.patch(
+        f"/api/admin/orders/{order['orderNumber']}/status",
+        json={"status": "dispatched", "notes": "Handed to courier team"},
+        headers=auth_headers,
+    )
+    assert status_res.status_code == 200, status_res.text
+    updated_order = status_res.json()
+    assert updated_order["orderStatus"] == "dispatched"
+    assert updated_order["status"] == "dispatched"
+
+    # 4. Retrieve orders list to verify persistence
     list_res = client.get("/api/admin/orders", headers=auth_headers)
     assert list_res.status_code == 200
     orders_list = list_res.json()
-    assert any(o["orderNumber"] == order["orderNumber"] for o in orders_list)
+    assert any(o["orderNumber"] == order["orderNumber"] and o["orderStatus"] == "dispatched" for o in orders_list)
+
+    # Cleanup product
+    client.delete(f"/api/admin/products/{test_sku}?hard=true", headers=auth_headers)
+
+
+def test_create_order_short_phone_accepted(client, auth_headers):
+    # Tests that short phone inputs (e.g. 4 chars like 'test' or test extension) are accepted without 422
+    test_sku = "TEST-ORD-SHORT-PHONE"
+    client.post(
+        "/api/admin/products",
+        json={
+            "sku": test_sku,
+            "name": "Short Phone Test Item",
+            "category": "Gold",
+            "price": 14500,
+            "status": "available",
+            "item_type": "regular"
+        },
+        headers=auth_headers,
+    )
+
+    order_payload = {
+        "customerName": "test",
+        "phone": "test",
+        "email": "testwwwwww@gmail.com",
+        "productSku": test_sku,
+        "quantity": 1,
+        "discount": 0,
+        "channel": "Showroom",
+        "paymentMethod": "UPI",
+        "paymentStatus": "paid",
+        "orderStatus": "processing",
+        "notes": "testtesttesttest"
+    }
+
+    create_res = client.post("/api/admin/orders", json=order_payload, headers=auth_headers)
+    assert create_res.status_code == 201, create_res.text
+    order = create_res.json()
+    assert order["customerName"] == "test"
+    assert order["phone"] == "test"
 
     # Cleanup product
     client.delete(f"/api/admin/products/{test_sku}?hard=true", headers=auth_headers)

@@ -1,7 +1,7 @@
 from typing import Optional
 from fastapi import APIRouter, Query
-from app.schemas.price import PriceResponse
-from app.services.price_service import price_service
+from ...schemas.price import PriceResponse
+from ...services.price_service import price_service
 
 router = APIRouter(tags=["Precious Metal Rates"])
 

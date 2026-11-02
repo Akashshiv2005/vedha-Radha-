@@ -7,7 +7,11 @@ from .auth import (
     LogoutResponse,
     HealthResponse,
 )
-
+from .order import (
+    OrderCreate,
+    OrderStatusUpdate,
+    OrderPublic,
+)
 from .product import (
     ProductBase,
     ProductCreate,
@@ -30,6 +34,9 @@ __all__ = [
     "AuthProfileResponse",
     "LogoutResponse",
     "HealthResponse",
+    "OrderCreate",
+    "OrderStatusUpdate",
+    "OrderPublic",
     "ProductBase",
     "ProductCreate",
     "ProductUpdate",

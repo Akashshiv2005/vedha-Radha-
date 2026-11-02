@@ -43,6 +43,13 @@ class Product(Base):
         index=True,
         nullable=False,
     )
+    qr_code: Mapped[str | None] = mapped_column(
+        String(100),
+        unique=True,
+        index=True,
+        nullable=True,
+        default=None,
+    )
     name: Mapped[str] = mapped_column(
         String(255),
         index=True,

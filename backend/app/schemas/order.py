@@ -8,7 +8,7 @@ class OrderCreate(BaseModel):
     model_config = ConfigDict(populate_by_name=True, extra="ignore")
 
     customer_name: str = Field(..., min_length=1, max_length=255, alias="customerName")
-    phone: str = Field(..., min_length=7, max_length=50)
+    phone: str = Field(..., min_length=1, max_length=50)
     email: Optional[str] = Field(None, max_length=255)
     product_sku: str = Field(..., min_length=1, max_length=50, alias="productSku")
     quantity: int = Field(default=1, ge=1)
@@ -20,6 +20,13 @@ class OrderCreate(BaseModel):
     order_status: str = Field(default="processing", max_length=50, alias="orderStatus")
     city: Optional[str] = Field(default="Madurai", max_length=100)
     delivery_address: Optional[str] = Field(default=None, alias="deliveryAddress")
+    notes: Optional[str] = None
+
+
+class OrderStatusUpdate(BaseModel):
+    model_config = ConfigDict(populate_by_name=True, extra="ignore")
+
+    status: str = Field(..., min_length=1, max_length=50)
     notes: Optional[str] = None
 
 

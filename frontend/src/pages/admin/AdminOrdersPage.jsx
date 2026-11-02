@@ -18,6 +18,7 @@ import {
   MapPin, 
   Eye, 
   CheckCircle2, 
+  Check,
   X, 
   AlertTriangle,
   ArrowUpDown,
@@ -30,6 +31,15 @@ import {
   Loader2
 } from 'lucide-react';
 import { useAdmin } from '../../context/AdminContext';
+
+const ORDER_STATUS_OPTIONS = [
+  { value: 'awaiting_confirmation', label: 'Awaiting Confirmation', dotColor: 'bg-[#F59E0B]' },
+  { value: 'reserved', label: 'Reserved', dotColor: 'bg-[#10B981]' },
+  { value: 'processing', label: 'Processing', dotColor: 'bg-[#EC4899]' },
+  { value: 'dispatched', label: 'Dispatched', dotColor: 'bg-[#14B8A6]' },
+  { value: 'delivered', label: 'Delivered', dotColor: 'bg-[#3B82F6]' },
+  { value: 'cancelled', label: 'Cancelled', dotColor: 'bg-[#EF4444]' },
+];
 
 export default function AdminOrdersPage({
   onOpenSimulateReservation = () => {}
@@ -74,7 +84,9 @@ export default function AdminOrdersPage({
 
   // Row dropdown popover
   const [openRowActionId, setOpenRowActionId] = useState(null);
+  const [openStatusMenuId, setOpenStatusMenuId] = useState(null);
   const rowActionRef = useRef(null);
+  const statusMenuRef = useRef(null);
   const moreActionsRef = useRef(null);
 
   // Close popovers on outside click
@@ -82,6 +94,9 @@ export default function AdminOrdersPage({
     const handleClickOutside = (e) => {
       if (rowActionRef.current && !rowActionRef.current.contains(e.target)) {
         setOpenRowActionId(null);
+      }
+      if (statusMenuRef.current && !statusMenuRef.current.contains(e.target)) {
+        setOpenStatusMenuId(null);
       }
       if (moreActionsRef.current && !moreActionsRef.current.contains(e.target)) {
         setIsMoreActionsOpen(false);
@@ -300,6 +315,10 @@ export default function AdminOrdersPage({
     }
     if (!orderForm.phone.trim()) {
       setOrderFormError('Mobile Number is required.');
+      return;
+    }
+    if (orderForm.phone.trim().length < 3) {
+      setOrderFormError('Mobile Number must have at least 3 characters.');
       return;
     }
     const currentSku = orderForm.productSku || products[0]?.sku;
@@ -972,8 +991,59 @@ export default function AdminOrdersPage({
                     </td>
 
                     {/* Status Column */}
-                    <td className="py-3.5 px-3 whitespace-nowrap">
-                      {statusBadge}
+                    <td className="py-3.5 px-3 whitespace-nowrap relative">
+                      <div className="relative inline-block text-left">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const currentId = order.id || order.orderNumber;
+                            setOpenStatusMenuId(openStatusMenuId === currentId ? null : currentId);
+                          }}
+                          className="group inline-flex items-center gap-1.5 focus:outline-none rounded-full transition-all hover:ring-2 hover:ring-[#5C1D27]/20 cursor-pointer"
+                          title="Click to update order status"
+                        >
+                          {statusBadge}
+                          <ChevronDown className="w-3.5 h-3.5 text-[#9CA3AF] group-hover:text-[#5C1D27] transition-colors" />
+                        </button>
+
+                        {openStatusMenuId === (order.id || order.orderNumber) && (
+                          <div 
+                            ref={statusMenuRef}
+                            onClick={(e) => e.stopPropagation()}
+                            className="absolute left-0 mt-1.5 w-52 bg-white border border-[#E5E7EB] rounded-xl shadow-2xl z-40 py-1 text-left text-[12.5px] animate-in fade-in zoom-in-95 font-admin-body"
+                          >
+                            <div className="px-3 py-1.5 text-[11px] font-semibold text-[#9CA3AF] uppercase tracking-wider border-b border-[#F3F4F6] mb-1 flex items-center justify-between">
+                              <span>Update Status</span>
+                              <span className="text-[10px] text-[#C49A45] font-normal">Instant Save</span>
+                            </div>
+                            {ORDER_STATUS_OPTIONS.map((item) => {
+                              const isActive = stat === item.value || (item.value === 'processing' && stat === 'confirmed');
+                              return (
+                                <button
+                                  key={item.value}
+                                  type="button"
+                                  onClick={async () => {
+                                    setOpenStatusMenuId(null);
+                                    await updateOrderStatus(order.id || order.orderNumber, item.value);
+                                  }}
+                                  className={`w-full px-3 py-2 flex items-center justify-between text-left transition ${
+                                    isActive
+                                      ? 'bg-[#FAF7F2] font-semibold text-[#5C1D27]'
+                                      : 'text-[#374151] hover:bg-[#F9FAFB] hover:text-[#111827]'
+                                  }`}
+                                >
+                                  <div className="flex items-center gap-2">
+                                    <span className={`w-2 h-2 rounded-full ${item.dotColor} flex-shrink-0`} />
+                                    <span>{item.label}</span>
+                                  </div>
+                                  {isActive && <Check className="w-3.5 h-3.5 text-[#5C1D27] flex-shrink-0" />}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
                     </td>
 
                     {/* Actions Column */}
@@ -1059,16 +1129,37 @@ export default function AdminOrdersPage({
                                 </button>
                               )}
 
-                              <button
-                                onClick={() => {
-                                  rejectReservation(order.id, 'Customer cancellation request');
-                                  setOpenRowActionId(null);
-                                }}
-                                className="w-full px-3 py-1.5 text-[#C24141] hover:bg-[#FDECEC] flex items-center gap-2 text-left font-medium"
-                              >
-                                <X className="w-3.5 h-3.5" />
-                                <span>Cancel / Release</span>
-                              </button>
+                              <div className="border-t border-[#F3F4F6] my-1 pt-1">
+                                <div className="px-3 py-1 text-[10.5px] font-semibold text-[#9CA3AF] uppercase tracking-wider">
+                                  Set Status
+                                </div>
+                                {ORDER_STATUS_OPTIONS.map(opt => (
+                                  <button
+                                    key={opt.value}
+                                    onClick={async () => {
+                                      setOpenRowActionId(null);
+                                      await updateOrderStatus(order.id || order.orderNumber, opt.value);
+                                    }}
+                                    className={`w-full px-3 py-1.5 flex items-center gap-2 text-left transition ${stat === opt.value ? 'font-semibold text-[#5C1D27] bg-[#FAF7F2]' : 'text-[#4B5563] hover:bg-[#F9FAFB]'}`}
+                                  >
+                                    <span className={`w-1.5 h-1.5 rounded-full ${opt.dotColor}`} />
+                                    <span>{opt.label}</span>
+                                  </button>
+                                ))}
+                              </div>
+
+                              <div className="border-t border-[#F3F4F6] my-1 pt-1">
+                                <button
+                                  onClick={() => {
+                                    rejectReservation(order.id, 'Customer cancellation request');
+                                    setOpenRowActionId(null);
+                                  }}
+                                  className="w-full px-3 py-1.5 text-[#C24141] hover:bg-[#FDECEC] flex items-center gap-2 text-left font-medium"
+                                >
+                                  <X className="w-3.5 h-3.5" />
+                                  <span>Cancel / Release</span>
+                                </button>
+                              </div>
                             </div>
                           )}
                         </div>
@@ -1717,6 +1808,22 @@ export default function AdminOrdersPage({
                     "{selectedOrder.notes}"
                   </p>
                 )}
+                <div className="mt-3 pt-2.5 border-t border-[#FDE68A]/60 flex items-center justify-between gap-2">
+                  <span className="text-[12px] font-semibold text-[#78350F]">Update Status:</span>
+                  <select
+                    value={selectedOrder.status || selectedOrder.orderStatus || 'processing'}
+                    onChange={async (e) => {
+                      const newStat = e.target.value;
+                      await updateOrderStatus(selectedOrder.id || selectedOrder.orderNumber, newStat);
+                      setSelectedOrder(prev => ({ ...prev, status: newStat, orderStatus: newStat }));
+                    }}
+                    className="border border-[#D1D5DB] bg-white rounded-lg px-2.5 py-1 text-[12px] font-medium text-[#292521] focus:ring-2 focus:ring-[#C49A45]/30 focus:border-[#C49A45] cursor-pointer"
+                  >
+                    {ORDER_STATUS_OPTIONS.map(opt => (
+                      <option key={opt.value} value={opt.value}>{opt.label}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
 
               {/* Tracking Details */}

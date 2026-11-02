@@ -640,11 +640,11 @@ export function AdminProvider({ children }) {
     addToast('Converted to Confirmed Order', `Order ${newOrderNumber} created and moved to Packing queue.`);
   };
 
-  const updateOrderStatus = (orderId, newStatus, extraData = {}) => {
+  const updateOrderStatus = async (orderId, newStatus, extraData = {}) => {
     setState(prev => ({
       ...prev,
       orders: prev.orders.map(o => {
-        if (o.id !== orderId) return o;
+        if (o.id !== orderId && o.orderNumber !== orderId) return o;
         const timeline = [
           { 
             timestamp: `Today ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`, 
@@ -663,6 +663,21 @@ export function AdminProvider({ children }) {
       })
     }));
 
+    try {
+      const res = await ordersClient.updateOrderStatus(orderId, newStatus, extraData.notes || extraData.logMessage);
+      if (res.success && res.data) {
+        const updated = res.data;
+        setState(prev => ({
+          ...prev,
+          orders: prev.orders.map(o => (o.id === orderId || o.orderNumber === orderId) ? { ...o, ...updated, status: updated.orderStatus || newStatus } : o)
+        }));
+        logAction('ORDER_STATUS_UPDATE', `Order ${updated.orderNumber || orderId} status set to ${newStatus}.`, 'Staff', 'info');
+        addToast('Status Updated', `Order ${updated.orderNumber || orderId} updated to ${newStatus.replace('_', ' ')}.`);
+        return { success: true, order: updated };
+      }
+    } catch {
+      // fallback to local notification
+    }
     logAction('ORDER_STATUS_UPDATE', `Order ${orderId} status set to ${newStatus}.`, 'Staff', 'info');
     addToast('Status Updated', `Order ${orderId} updated to ${newStatus.replace('_', ' ')}.`);
   };
@@ -671,7 +686,7 @@ export function AdminProvider({ children }) {
     setState(prev => ({
       ...prev,
       orders: prev.orders.map(o => {
-        if (o.id !== orderId) return o;
+        if (o.id !== orderId && o.orderNumber !== orderId) return o;
         return {
           ...o,
           status: 'dispatched',

@@ -18,8 +18,11 @@ import {
   Gem,
   Info,
   Upload,
-  Loader2
+  Loader2,
+  ScanQrCode,
+  Scale
 } from 'lucide-react';
+import QRScannerModal from '../../components/admin/QRScannerModal';
 import { useAdmin } from '../../context/AdminContext';
 import { productsClient } from '../../api/productsClient';
 import { 
@@ -88,11 +91,16 @@ export default function AdminProductsPage({
   const fileInputSlot2Ref = useRef(null);
   const fileInputRefs = [fileInputSlot0Ref, fileInputSlot1Ref, fileInputSlot2Ref];
 
+  // QR Scanner Modal State & Comparison Diff
+  const [isQRScannerOpen, setIsQRScannerOpen] = useState(false);
+  const [qrComparisonDiff, setQrComparisonDiff] = useState(null);
+
   // Form state for Add/Edit
   const [formData, setFormData] = useState({
     name: '',
     subtitle: '',
     sku: '',
+    qrCode: '',
     productType: 'Silver',
     category: 'Silver Jewellery',
     subCategory: 'Anklets & Kolusu',
@@ -275,10 +283,12 @@ export default function AdminProductsPage({
 
   // Open Add Product Modal
   const handleOpenAdd = () => {
+    setQrComparisonDiff(null);
     setFormData({
       name: '',
       subtitle: 'One of a kind • Handcrafted',
       sku: `SA-${Math.floor(100 + Math.random() * 899)}`,
+      qrCode: '',
       productType: 'Silver',
       category: 'Silver Jewellery',
       subCategory: 'Anklets & Kolusu',
@@ -303,7 +313,10 @@ export default function AdminProductsPage({
   };
 
   // Open Edit Product Modal
-  const handleOpenEdit = (product) => {
+  const handleOpenEdit = (product, retainDiff = false) => {
+    if (!retainDiff) {
+      setQrComparisonDiff(null);
+    }
     const inferredType = product.productType || 
       normalizeProductType(product.product_type) || 
       inferProductTypeFromCategory(product.category);
@@ -315,6 +328,11 @@ export default function AdminProductsPage({
     setEditingProduct(product);
     setFormData({
       ...product,
+      qrCode: product.qrCode || product.qr_code || product.sku || '',
+      grossWeight: product.grossWeight || product.gross_weight || '',
+      netWeight: product.netWeight || product.net_weight || '',
+      hallmarkDetails: product.hallmarkDetails || product.hallmark_details || '',
+      location: product.location || '',
       productType: inferredType,
       category: product.category || '',
       subCategory: product.subCategory || product.sub_category || '',
@@ -327,6 +345,124 @@ export default function AdminProductsPage({
     setOpenActionSku(null);
     setActiveImageSlot(0);
     setIsAddModalOpen(true);
+  };
+
+  // QR Scan Handler: Identifies Product in PostgreSQL or Pre-populates Registration
+  const handleQRScanSuccess = async (parsedData, rawPayload, preFetchedProduct = undefined) => {
+    if (!parsedData || (!parsedData.sku && !parsedData.productCode)) {
+      addToast('Invalid QR Code', 'No valid product identifier found in scanned payload.', 'danger');
+      return;
+    }
+
+    const targetCode = (parsedData.sku || parsedData.productCode).trim();
+
+    try {
+      // 1. Search PostgreSQL by SKU or QR identifier (use pre-fetched product if available)
+      const existing = preFetchedProduct !== undefined ? preFetchedProduct : await productsClient.getProduct(targetCode);
+
+      if (existing) {
+        // CASE A: EXISTING PRODUCT FOUND
+        const diffs = [];
+        const existingWeight = existing.grossWeight || existing.gross_weight;
+        const scannedGrossWeight = parsedData.gross_weight || parsedData.grossWeight;
+        if (scannedGrossWeight && existingWeight && scannedGrossWeight.trim() !== existingWeight.trim()) {
+          diffs.push({
+            field: 'grossWeight',
+            label: 'Gross Weight',
+            current: existingWeight,
+            scanned: scannedGrossWeight
+          });
+        }
+        if (parsedData.purity && existing.purity && parsedData.purity.toLowerCase() !== existing.purity.toLowerCase()) {
+          diffs.push({
+            field: 'purity',
+            label: 'Purity / Fineness',
+            current: existing.purity,
+            scanned: parsedData.purity
+          });
+        }
+        if (parsedData.rate && existing.price && Number(parsedData.rate) !== Number(existing.price)) {
+          diffs.push({
+            field: 'rate',
+            label: 'Scanned Tag Rate vs System Price',
+            current: `₹${Number(existing.price).toLocaleString('en-IN')}`,
+            scanned: `₹${Number(parsedData.rate).toLocaleString('en-IN')}`
+          });
+        }
+
+        setQrComparisonDiff({
+          existing,
+          scanned: parsedData,
+          diffs,
+          rawPayload
+        });
+
+        // Open edit form for existing piece
+        handleOpenEdit(existing, true);
+
+        // Populate qrCode if empty
+        setFormData(prev => ({
+          ...prev,
+          qrCode: existing.qrCode || existing.qr_code || targetCode
+        }));
+
+        addToast(
+          'Product Identified',
+          `Found "${existing.name}" (${existing.sku}) in PostgreSQL. Form populated for verification.`,
+          'info'
+        );
+      } else {
+        // CASE B: NEW PRODUCT REGISTRATION
+        setQrComparisonDiff(null);
+        setEditingProduct(null);
+
+        const inferredType = parsedData.productType || parsedData.product_type || (parsedData.category && parsedData.category.toLowerCase().includes('gold') ? 'Gold' : 'Silver');
+        const inferredCategory = parsedData.category || (inferredType === 'Gold' ? 'Earrings' : 'Silver Jewellery');
+        const defaultSubs = getSubcategoriesForTypeAndCategory(inferredType, inferredCategory);
+        const sub = defaultSubs[0] || '';
+
+        const scannedGrossWeight = parsedData.gross_weight || parsedData.grossWeight || '';
+        const scannedNetWeight = parsedData.net_weight || parsedData.netWeight || scannedGrossWeight;
+
+        setFormData({
+          name: parsedData.description || '',
+          subtitle: parsedData.description ? `${parsedData.description} • Handcrafted` : 'One of a kind • Handcrafted',
+          sku: targetCode,
+          qrCode: targetCode,
+          productType: inferredType,
+          category: inferredCategory,
+          subCategory: sub,
+          purity: parsedData.purity || '',
+          grossWeight: scannedGrossWeight,
+          netWeight: scannedNetWeight,
+          price: parsedData.rate ? String(parsedData.rate) : '0',
+          numericPrice: parsedData.rate || 0,
+          isUnique: true,
+          status: 'available',
+          availability: 'in_stock',
+          image: '/images/neutral_product_placeholder.svg',
+          images: ['/images/neutral_product_placeholder.svg'],
+          description: parsedData.description
+            ? `${parsedData.description} - Tag code ${targetCode}.`
+            : `Authentic handcrafted jewellery piece tagged under code ${targetCode}.`,
+          hallmarkDetails: parsedData.hallmarkDetails || parsedData.hallmark_details || (parsedData.brand ? `${parsedData.brand} BIS Hallmarked` : ''),
+          stockQty: parsedData.quantity || 1,
+          location: ''
+        });
+
+        setActiveImageSlot(0);
+        setIsAddModalOpen(true);
+
+        addToast(
+          'New Jewellery Piece',
+          `Tag code ${targetCode} is ready for registration. Complete required fields and confirm.`,
+          'info'
+        );
+      }
+    } catch (err) {
+      console.error('Error during QR product lookup:', err);
+      addToast('Lookup Failed', 'Error connecting to database to verify scanned code.', 'danger');
+    }
   };
 
   // Open View Details Drawer
@@ -451,6 +587,15 @@ export default function AdminProductsPage({
       category: formData.category ? formData.category.trim() : '',
       subCategory: validSubCategory,
       sub_category: validSubCategory,
+      qr_code: formData.qrCode ? formData.qrCode.trim() : (formData.sku ? formData.sku.trim() : null),
+      qrCode: formData.qrCode ? formData.qrCode.trim() : (formData.sku ? formData.sku.trim() : null),
+      gross_weight: formData.grossWeight ? formData.grossWeight.trim() : null,
+      grossWeight: formData.grossWeight ? formData.grossWeight.trim() : null,
+      net_weight: formData.netWeight ? formData.netWeight.trim() : null,
+      netWeight: formData.netWeight ? formData.netWeight.trim() : null,
+      hallmark_details: formData.hallmarkDetails ? formData.hallmarkDetails.trim() : null,
+      hallmarkDetails: formData.hallmarkDetails ? formData.hallmarkDetails.trim() : null,
+      location: formData.location ? formData.location.trim() : null,
       images: cleanImages,
       image: cleanImages[0],
       image_url: cleanImages[0],
@@ -464,11 +609,13 @@ export default function AdminProductsPage({
     if (editingProduct) {
       const res = await updateProduct(editingProduct.sku, productPayload);
       if (res?.success) {
+        setQrComparisonDiff(null);
         setIsAddModalOpen(false);
       }
     } else {
       const res = await addProduct(productPayload);
       if (res?.success) {
+        setQrComparisonDiff(null);
         setIsAddModalOpen(false);
       }
     }
@@ -674,11 +821,20 @@ export default function AdminProductsPage({
           </div>
         </div>
 
-        {/* Add Product Button aligned directly on the right */}
-        <div className="flex-shrink-0 self-end">
+        {/* Actions aligned directly on the right */}
+        <div className="flex-shrink-0 self-end flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setIsQRScannerOpen(true)}
+            className="px-3.5 py-2 rounded-lg border border-[#8D6725] text-[#8D6725] hover:bg-[#8D6725]/10 active:bg-[#8D6725]/20 text-[14px] font-semibold font-admin-body shadow-2xs flex items-center justify-center gap-1.5 transition duration-150 h-[38px] whitespace-nowrap cursor-pointer"
+            title="Scan jewellery tag QR code with camera"
+          >
+            <ScanQrCode className="w-4 h-4 stroke-[2.2]" />
+            <span>Scan QR Code</span>
+          </button>
           <button
             onClick={handleOpenAdd}
-            className="px-5 py-2 rounded-lg bg-[#8D6725] hover:bg-[#78551B] active:bg-[#684914] text-white text-[14px] font-semibold font-admin-body shadow-2xs flex items-center justify-center gap-1.5 transition duration-150 h-[38px] whitespace-nowrap"
+            className="px-5 py-2 rounded-lg bg-[#8D6725] hover:bg-[#78551B] active:bg-[#684914] text-white text-[14px] font-semibold font-admin-body shadow-2xs flex items-center justify-center gap-1.5 transition duration-150 h-[38px] whitespace-nowrap cursor-pointer"
           >
             <Plus className="w-4 h-4 stroke-[2.5]" />
             <span>Add product</span>
@@ -1117,6 +1273,65 @@ export default function AdminProductsPage({
                 </div>
               </div>
 
+              {/* QR Tag Verification & Comparison Banner (Case A) */}
+              {qrComparisonDiff && editingProduct && (
+                <div className="bg-[#FAF7F2] border border-[#C49A45] rounded-xl p-3.5 space-y-2.5 animate-in fade-in">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <ScanQrCode className="w-4 h-4 text-[#8D6725]" />
+                      <span className="text-[13px] font-bold text-[#78551B]">
+                        QR Scanned Tag Verification
+                      </span>
+                    </div>
+                    <span className="text-[11px] font-admin-mono px-2 py-0.5 rounded bg-[#8D6725]/15 text-[#78551B] font-semibold border border-[#8D6725]/30">
+                      Tag: {qrComparisonDiff.scanned?.sku || qrComparisonDiff.scanned?.productCode}
+                    </span>
+                  </div>
+                  <p className="text-[12px] text-[#4A423A] leading-relaxed">
+                    Identified matching product in PostgreSQL. Review current database specifications against the scanned jewellery tag below.
+                  </p>
+                  {qrComparisonDiff.diffs?.length > 0 ? (
+                    <div className="space-y-1.5 pt-1">
+                      <span className="text-[11px] font-bold text-[#8D6725] uppercase tracking-wider block">
+                        Detected Discrepancies:
+                      </span>
+                      {qrComparisonDiff.diffs.map((d, idx) => (
+                        <div key={idx} className="bg-white p-2.5 rounded-lg border border-[#EDE8E1] text-[12px] flex items-center justify-between shadow-2xs">
+                          <div>
+                            <span className="font-semibold text-[#292521]">{d.label}: </span>
+                            <span className="text-[#C24141] line-through mr-2 font-admin-mono">{d.current}</span>
+                            <span className="text-[#2E7D32] font-semibold font-admin-mono">Tag: {d.scanned}</span>
+                          </div>
+                          {d.field === 'grossWeight' && (
+                            <button
+                              type="button"
+                              onClick={() => setFormData(prev => ({ ...prev, grossWeight: d.scanned, netWeight: d.scanned }))}
+                              className="px-2 py-0.5 rounded text-[11px] font-semibold bg-[#8D6725]/10 text-[#8D6725] hover:bg-[#8D6725]/20 cursor-pointer"
+                            >
+                              Apply Tag Weight
+                            </button>
+                          )}
+                          {d.field === 'purity' && (
+                            <button
+                              type="button"
+                              onClick={() => setFormData(prev => ({ ...prev, purity: d.scanned }))}
+                              className="px-2 py-0.5 rounded text-[11px] font-semibold bg-[#8D6725]/10 text-[#8D6725] hover:bg-[#8D6725]/20 cursor-pointer"
+                            >
+                              Apply Tag Purity
+                            </button>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-[11.5px] text-[#2E7D32] flex items-center gap-1.5 pt-1 font-medium">
+                      <Check className="w-3.5 h-3.5" />
+                      <span>Physical jewellery tag matches current PostgreSQL database specifications.</span>
+                    </div>
+                  )}
+                </div>
+              )}
+
               {/* Row 1: Name & Subtitle */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
@@ -1149,14 +1364,25 @@ export default function AdminProductsPage({
               {/* Row 2: SKU, Product Type (Dropdown 1) & Purity */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-[12px] font-semibold text-[#4A423A] mb-1">
-                    SKU Code *
-                  </label>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="text-[12px] font-semibold text-[#4A423A]">
+                      SKU Code *
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => setIsQRScannerOpen(true)}
+                      className="text-[11px] text-[#8D6725] hover:text-[#78551B] font-semibold flex items-center gap-1 cursor-pointer"
+                      title="Scan QR Code to auto-fill"
+                    >
+                      <ScanQrCode className="w-3 h-3" />
+                      <span>Scan QR</span>
+                    </button>
+                  </div>
                   <input
                     type="text"
                     required
                     value={formData.sku}
-                    onChange={(e) => setFormData({ ...formData, sku: e.target.value })}
+                    onChange={(e) => setFormData({ ...formData, sku: e.target.value, qrCode: formData.qrCode || e.target.value })}
                     className="w-full bg-[#FFFFFF] border border-[#E2DCD2] rounded-lg px-3.5 py-2 text-[13.5px] font-admin-mono focus:ring-2 focus:ring-[#8D6725]/30 focus:border-[#8D6725] focus:outline-none"
                     placeholder="e.g. SA-001"
                   />
@@ -1308,6 +1534,74 @@ export default function AdminProductsPage({
                   />
                   <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#8D6725]"></div>
                 </label>
+              </div>
+
+              {/* Row 4b: Weight & Hallmark Specifications */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                  <label className="block text-[12px] font-semibold text-[#4A423A] mb-1">
+                    Gross Weight
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.grossWeight || ''}
+                    onChange={(e) => setFormData({ ...formData, grossWeight: e.target.value })}
+                    className="w-full bg-[#FFFFFF] border border-[#E2DCD2] rounded-lg px-3.5 py-2 text-[13.5px] font-admin-mono focus:ring-2 focus:ring-[#8D6725]/30 focus:border-[#8D6725] focus:outline-none"
+                    placeholder="e.g. 15.350 g"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[12px] font-semibold text-[#4A423A] mb-1">
+                    Net Weight
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.netWeight || ''}
+                    onChange={(e) => setFormData({ ...formData, netWeight: e.target.value })}
+                    className="w-full bg-[#FFFFFF] border border-[#E2DCD2] rounded-lg px-3.5 py-2 text-[13.5px] font-admin-mono focus:ring-2 focus:ring-[#8D6725]/30 focus:border-[#8D6725] focus:outline-none"
+                    placeholder="e.g. 15.350 g"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[12px] font-semibold text-[#4A423A] mb-1">
+                    Hallmark Inscription
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.hallmarkDetails || ''}
+                    onChange={(e) => setFormData({ ...formData, hallmarkDetails: e.target.value })}
+                    className="w-full bg-[#FFFFFF] border border-[#E2DCD2] rounded-lg px-3.5 py-2 text-[13.5px] focus:ring-2 focus:ring-[#8D6725]/30 focus:border-[#8D6725] focus:outline-none"
+                    placeholder="e.g. VRTM 925 BIS Hallmarked"
+                  />
+                </div>
+              </div>
+
+              {/* Row 4c: QR Tag Identifier & Location */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[12px] font-semibold text-[#4A423A] mb-1">
+                    QR Tag Identifier
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.qrCode || ''}
+                    onChange={(e) => setFormData({ ...formData, qrCode: e.target.value })}
+                    className="w-full bg-[#FFFFFF] border border-[#E2DCD2] rounded-lg px-3.5 py-2 text-[13.5px] font-admin-mono focus:ring-2 focus:ring-[#8D6725]/30 focus:border-[#8D6725] focus:outline-none"
+                    placeholder="e.g. 26FPC25G23"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[12px] font-semibold text-[#4A423A] mb-1">
+                    Showroom Location
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.location || ''}
+                    onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                    className="w-full bg-[#FFFFFF] border border-[#E2DCD2] rounded-lg px-3.5 py-2 text-[13.5px] focus:ring-2 focus:ring-[#8D6725]/30 focus:border-[#8D6725] focus:outline-none"
+                    placeholder="e.g. Showroom Counter 3 - Silver Section"
+                  />
+                </div>
               </div>
 
               {/* Product Visual Images: Maximum 3 Ordered Slots */}
@@ -1602,6 +1896,13 @@ export default function AdminProductsPage({
           </div>
         </div>
       )}
+
+      {/* ================= 7. QR CODE SCANNER MODAL ================= */}
+      <QRScannerModal
+        isOpen={isQRScannerOpen}
+        onClose={() => setIsQRScannerOpen(false)}
+        onScanSuccess={handleQRScanSuccess}
+      />
     </div>
   );
 }

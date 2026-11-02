@@ -7,9 +7,10 @@ import time
 from typing import Any, Dict, Optional, Tuple
 from fastapi import HTTPException, status
 import httpx
+import socket
 
-from app.core.config import settings
-from app.schemas.price import (
+from ..core.config import settings
+from ..schemas.price import (
     PriceResponse,
     FormattedRates,
     RawRates,
@@ -20,6 +21,24 @@ logger = logging.getLogger("vedharadha_api.prices")
 
 # Indian Standard Time (IST) is UTC+5:30
 IST = timezone(timedelta(hours=5, minutes=30))
+
+# Fallback IP for thejewellersassociation.org if local DNS resolver experiences intermittent timeout/gaierror
+FALLBACK_HOST_IPS = {
+    "thejewellersassociation.org": "216.137.184.104"
+}
+
+_orig_getaddrinfo = socket.getaddrinfo
+
+def _resilient_getaddrinfo(host, port, *args, **kwargs):
+    try:
+        return _orig_getaddrinfo(host, port, *args, **kwargs)
+    except socket.gaierror:
+        if isinstance(host, str) and host in FALLBACK_HOST_IPS:
+            logger.info("Local DNS lookup failed for %s, using fallback IP %s", host, FALLBACK_HOST_IPS[host])
+            return _orig_getaddrinfo(FALLBACK_HOST_IPS[host], port, *args, **kwargs)
+        raise
+
+socket.getaddrinfo = _resilient_getaddrinfo
 
 
 def format_inr(amount: float, decimals: int = 0) -> str:
@@ -388,6 +407,8 @@ class PriceService:
                 if self._cached_data is not None and self._cached_at is not None:
                     age = int(time.time() - self._cached_at)
                     logger.info("Serving stale cached rates (age %d s) from %s", age, self._cached_data.get("update_time"))
+                    # Apply a 60-second backoff so intermittent failures do not re-block subsequent requests immediately
+                    self._cached_at = time.time() - max(0, self.ttl_seconds - 60)
                     return self._build_price_response(
                         self._cached_data,
                         status_name="stale_fallback",

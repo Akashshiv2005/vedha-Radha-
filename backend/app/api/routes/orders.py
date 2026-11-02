@@ -1,4 +1,5 @@
 import random
+import uuid
 from datetime import datetime
 from decimal import Decimal
 from typing import List, Optional
@@ -10,7 +11,7 @@ from ...db.session import get_db
 from ...models.admin_user import AdminUser
 from ...models.product import Product
 from ...models.order import Order
-from ...schemas.order import OrderCreate, OrderPublic
+from ...schemas.order import OrderCreate, OrderStatusUpdate, OrderPublic
 from ..deps import get_current_admin
 from ...services.product_service import get_product_by_id_or_sku
 
@@ -111,3 +112,42 @@ async def create_new_order(
     db.refresh(new_order)
 
     return OrderPublic.model_validate(new_order)
+
+
+@router.patch("/{order_id_or_number}/status", response_model=OrderPublic)
+@router.put("/{order_id_or_number}/status", response_model=OrderPublic)
+async def update_order_status(
+    order_id_or_number: str,
+    payload: OrderStatusUpdate,
+    db: Session = Depends(get_db),
+    current_admin: AdminUser = Depends(get_current_admin),
+):
+    """
+    Update the status of an order by its UUID id or order_number (e.g. VR-2026-90750).
+    Optionally appends a note / audit log entry.
+    """
+    order = None
+    try:
+        val_uuid = uuid.UUID(order_id_or_number)
+        order = db.query(Order).filter(Order.id == val_uuid).first()
+    except (ValueError, AttributeError):
+        pass
+
+    if not order:
+        order = db.query(Order).filter(Order.order_number == order_id_or_number).first()
+
+    if not order:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"success": False, "error": f"Order '{order_id_or_number}' not found."}
+        )
+
+    order.order_status = payload.status.strip().lower()
+    if payload.notes:
+        existing_notes = order.notes or ""
+        order.notes = f"{existing_notes}\n[{datetime.now().strftime('%Y-%m-%d %H:%M')}: {payload.notes}]".strip()
+
+    db.commit()
+    db.refresh(order)
+
+    return OrderPublic.model_validate(order)

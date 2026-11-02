@@ -1,6 +1,6 @@
 from typing import List, Optional, Union
 import json
-from pydantic import field_validator
+from pydantic import field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from pathlib import Path
 
@@ -73,6 +73,16 @@ class Settings(BaseSettings):
         elif isinstance(v, list):
             return list(v)
         return []
+
+    @model_validator(mode="after")
+    def validate_production_security(self):
+        if self.ENVIRONMENT.lower() in ("production", "prod"):
+            if "change_in_production" in self.JWT_SECRET_KEY or self.JWT_SECRET_KEY == "vr_super_secret_jwt_key_change_in_production_2026_xyz":
+                raise ValueError(
+                    "CRITICAL SECURITY CONFIGURATION ERROR: "
+                    "JWT_SECRET_KEY must be changed to a cryptographically strong, unique secret when running in production!"
+                )
+        return self
 
     model_config = SettingsConfigDict(
         env_file=str(BASE_DIR / ".env"),
