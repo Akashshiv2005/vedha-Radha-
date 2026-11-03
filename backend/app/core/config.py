@@ -37,9 +37,27 @@ class Settings(BaseSettings):
     ADMIN_BOOTSTRAP_PASSWORD: str = "admin@123"
     ADMIN_BOOTSTRAP_FULL_NAME: str = "Administrator"
 
+    # Customer Authentication & Session Settings
+    CUSTOMER_ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 days persistent customer session
+    SMS_PROVIDER: Optional[str] = None  # e.g., 'fast2sms', 'twilio', or None (unconfigured)
+    FAST2SMS_API_KEY: Optional[str] = None
+    TWILIO_ACCOUNT_SID: Optional[str] = None
+    TWILIO_AUTH_TOKEN: Optional[str] = None
+    TWILIO_FROM_NUMBER: Optional[str] = None
+    OTP_EXPIRE_MINUTES: int = 10
+    OTP_MAX_ATTEMPTS: int = 3
+    OTP_RESEND_COOLDOWN_SECONDS: int = 60
+
     # Rate Limiting
     RATE_LIMIT_LOGIN_MAX_ATTEMPTS: int = 5
     RATE_LIMIT_LOGIN_WINDOW_SECONDS: int = 60
+
+    # Payment & Checkout Settings
+    ENABLE_COD: bool = True
+    ENABLE_PAY_AT_SHOWROOM: bool = True
+    RAZORPAY_KEY_ID: Optional[str] = None
+    RAZORPAY_KEY_SECRET: Optional[str] = None
+    ORDER_TOKEN_SECRET: str = "vr_order_access_token_secret_key_2026"
 
     # The Jewellers Association Source URL & Cache TTL (300 seconds = 5 minutes)
     JEWELLERS_ASSOCIATION_URL: str = "https://thejewellersassociation.org/"
@@ -56,6 +74,14 @@ class Settings(BaseSettings):
     MINIO_AUTO_CREATE_BUCKET: bool = True
     MINIO_PRESIGNED_EXPIRY_SECONDS: int = 86400  # 24 hours
     MAX_IMAGE_UPLOAD_BYTES: int = 5 * 1024 * 1024  # 5 MB
+
+    # Payment Gateway & Checkout Configuration
+    RAZORPAY_KEY_ID: Optional[str] = None
+    RAZORPAY_KEY_SECRET: Optional[str] = None
+    RAZORPAY_WEBHOOK_SECRET: Optional[str] = None
+    FREE_DELIVERY_THRESHOLD: float = 5000.0
+    STANDARD_DELIVERY_CHARGE: float = 250.0
+    JEWELLERY_GST_PERCENT: float = 3.0
 
     @field_validator("CORS_ORIGINS", mode="before")
     @classmethod

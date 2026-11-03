@@ -14,13 +14,18 @@ import ContactPage from './pages/ContactPage';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminLoginPage from './pages/admin/AdminLoginPage';
 import { AuthProvider, RequireAuth } from './context/AuthContext';
+import { CustomerAuthProvider } from './context/CustomerAuthContext';
 
 import ProductDetailPage from './pages/ProductDetailPage';
+import CartPage from './pages/CartPage';
+import CheckoutPage from './pages/CheckoutPage';
+import OrderConfirmationPage from './pages/OrderConfirmationPage';
 import ProductDetailModal from './components/ProductDetailModal';
 import ShowroomModal from './components/ShowroomModal';
 import CartDrawer from './components/CartDrawer';
 import AccountModal from './components/AccountModal';
 import WishlistModal from './components/WishlistModal';
+import { cartClient } from './api/cartClient';
 
 // Scroll to top helper on route change
 function ScrollToTop() {
@@ -51,19 +56,83 @@ export default function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
 
-  // Cart state - initialized empty for real user interactions
+  // Cart state - loaded from PostgreSQL backend via anonymous cart token
   const [cartItems, setCartItems] = useState([]);
 
   // Wishlist state - initialized empty for real user interactions
   const [wishlistItems, setWishlistItems] = useState([]);
 
-  const handleAddToCart = (product) => {
-    setCartItems(prev => [...prev, product]);
+  useEffect(() => {
+    let isMounted = true;
+    async function initCart() {
+      const res = await cartClient.getCart();
+      if (isMounted && res.success) {
+        setCartItems(res.items);
+      }
+    }
+    initCart();
+    return () => { isMounted = false; };
+  }, []);
+
+  useEffect(() => {
+    if (isCartOpen) {
+      cartClient.getCart().then(res => {
+        if (res.success) setCartItems(res.items);
+      });
+    }
+  }, [isCartOpen]);
+
+  const handleAddToCart = async (product) => {
+    const prodId = product?.id || product?.sku;
+    if (prodId) {
+      const res = await cartClient.addItem(prodId, 1);
+      if (res.success) {
+        setCartItems(res.items);
+      } else if (res.error) {
+        alert(res.error);
+      }
+    }
     setIsCartOpen(true);
   };
 
-  const handleRemoveFromCart = (index) => {
+  const handleRemoveFromCart = async (item, index) => {
+    const targetItem = item && item.id ? item : cartItems[index];
+    if (targetItem?.id) {
+      const res = await cartClient.removeItem(targetItem.id);
+      if (res.success) {
+        setCartItems(res.items);
+        return;
+      }
+    }
     setCartItems(prev => prev.filter((_, idx) => idx !== index));
+  };
+
+  const handleClearCart = async () => {
+    await cartClient.clearCart();
+    setCartItems([]);
+  };
+
+  const handleUpdateCartQuantity = async (item, newQuantity) => {
+    if (!item?.id) return;
+    if (newQuantity < 1) return;
+
+    if (item.isUnique && newQuantity > 1) {
+      alert("This authentic handcrafted jewellery piece is unique. Only 1 piece is available.");
+      return;
+    }
+
+    try {
+      const res = await cartClient.updateQuantity(item.id, newQuantity);
+      if (res.success) {
+        setCartItems(res.items);
+      } else if (res.error) {
+        alert(res.error);
+        const refreshRes = await cartClient.getCart();
+        if (refreshRes.success) setCartItems(refreshRes.items);
+      }
+    } catch (err) {
+      console.warn('Failed to update quantity:', err);
+    }
   };
 
   const handleAddToWishlist = (product) => {
@@ -80,8 +149,14 @@ export default function App() {
     setWishlistItems(prev => prev.filter((_, idx) => idx !== index));
   };
 
-  const handleMoveToBag = (item, index) => {
-    setCartItems(prev => [...prev, item]);
+  const handleMoveToBag = async (item, index) => {
+    const prodId = item?.id || item?.sku;
+    if (prodId) {
+      const res = await cartClient.addItem(prodId, 1);
+      if (res.success) {
+        setCartItems(res.items);
+      }
+    }
     setWishlistItems(prev => prev.filter((_, idx) => idx !== index));
     setIsCartOpen(true);
   };
@@ -115,7 +190,8 @@ export default function App() {
   }
 
   return (
-    <AuthProvider>
+    <CustomerAuthProvider>
+      <AuthProvider>
       <div className="min-h-screen bg-[#FAF7F2] text-[#2C2420] flex flex-col font-sans selection:bg-[#581923] selection:text-white relative">
         <ScrollToTop />
 
@@ -123,7 +199,7 @@ export default function App() {
         <Header
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
-          cartCount={cartItems.length}
+          cartCount={cartItems.reduce((acc, item) => acc + (item.quantity || 1), 0)}
           wishlistCount={wishlistItems.length}
           onOpenCart={() => setIsCartOpen(true)}
           onOpenAccount={() => setIsAccountOpen(true)}
@@ -341,6 +417,35 @@ export default function App() {
             element={<ContactPage />} 
           />
 
+          {/* Full Shopping Cart Page */}
+          <Route 
+            path="/cart" 
+            element={
+              <CartPage 
+                onCartUpdated={(items) => {
+                  setCartItems(items);
+                }} 
+              />
+            } 
+          />
+
+          {/* Checkout & Order Fulfillment Flow */}
+          <Route 
+            path="/checkout" 
+            element={
+              <CheckoutPage 
+                onCartUpdated={async () => {
+                  const res = await cartClient.getCart();
+                  if (res.success) setCartItems(res.items);
+                }} 
+              />
+            } 
+          />
+          <Route 
+            path="/order-confirmation/:orderNumber" 
+            element={<OrderConfirmationPage />} 
+          />
+
           {/* Dedicated Full Product Page Route */}
           <Route 
             path="/product/:productId" 
@@ -417,11 +522,13 @@ export default function App() {
         onClose={() => setIsCartOpen(false)}
         cartItems={cartItems}
         onRemoveItem={handleRemoveFromCart}
-        onClearCart={() => setCartItems([])}
+        onUpdateQuantity={handleUpdateCartQuantity}
+        onClearCart={handleClearCart}
       />
 
       </div>
-    </AuthProvider>
+      </AuthProvider>
+    </CustomerAuthProvider>
   );
 }
 

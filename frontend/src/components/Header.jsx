@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import GoldRateModal from './header/GoldRateModal';
 import { usePreciousRates } from '../hooks/usePreciousRates';
+import { useCustomerAuth } from '../context/CustomerAuthContext';
 import {
   coinsBarsNavItems,
   collectionsNavItems
@@ -34,6 +35,7 @@ export default function Header({
   onOpenWishlist = () => { }
 }) {
   const location = useLocation();
+  const { customer, isAuthenticated } = useCustomerAuth();
   const navigate = useNavigate();
 
   // Precious metal rates
@@ -545,11 +547,21 @@ export default function Header({
 
             <button
               onClick={onOpenAccount}
-              className="p-1 xs:p-1.5 sm:p-2 hover:text-[#581923] rounded-full hover:bg-[#F3EAD3]/60 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 min-w-[32px] min-h-[32px] xs:min-w-[36px] xs:min-h-[36px] sm:min-w-[38px] sm:min-h-[38px] flex items-center justify-center"
-              aria-label="My Account and Privilege Club"
-              title="Vedha Radha Privilege Club"
+              className="p-1 xs:p-1.5 sm:p-2 hover:text-[#581923] rounded-full hover:bg-[#F3EAD3]/60 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 min-w-[32px] min-h-[32px] xs:min-w-[36px] xs:min-h-[36px] sm:min-w-[38px] sm:min-h-[38px] flex items-center justify-center gap-1.5"
+              aria-label={isAuthenticated ? `Account of ${customer?.customer_name}` : "My Account and Privilege Club"}
+              title={isAuthenticated ? `${customer?.customer_name} (Privilege Member)` : "Vedha Radha Privilege Club"}
             >
-              <User className="w-4 h-4 xs:w-4.5 xs:h-4.5 sm:w-5 sm:h-5 stroke-[1.75]" />
+              <div className="relative flex items-center justify-center">
+                <User className="w-4 h-4 xs:w-4.5 xs:h-4.5 sm:w-5 sm:h-5 stroke-[1.75]" />
+                {isAuthenticated && (
+                  <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-[#C49A45] border border-white rounded-full ring-1 ring-[#581923]" />
+                )}
+              </div>
+              {isAuthenticated && customer?.customer_name && (
+                <span className="hidden xl:inline text-[11px] font-semibold text-[#581923] max-w-[80px] truncate leading-none">
+                  {customer.customer_name.split(' ')[0]}
+                </span>
+              )}
             </button>
 
             <button
@@ -710,6 +722,32 @@ export default function Header({
                   className="text-[10.5px] bg-[#581923] text-white px-2.5 py-1 rounded font-semibold hover:bg-[#431219]"
                 >
                   Details
+                </button>
+              </div>
+
+              {/* Mobile Customer Account Strip */}
+              <div className="p-3 bg-gradient-to-r from-[#4A141D] to-[#581923] text-white border-b border-[#3B1117] flex items-center justify-between">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="w-8 h-8 rounded-full bg-[#FAF7F2] text-[#581923] flex items-center justify-center font-bold text-xs shrink-0 border border-[#C49A45]">
+                    {isAuthenticated ? (customer?.customer_name?.charAt(0)?.toUpperCase() || 'V') : <User className="w-4 h-4" />}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-xs font-semibold truncate text-[#FDFBF7]">
+                      {isAuthenticated ? customer?.customer_name : 'Vedha Radha Privilege'}
+                    </p>
+                    <p className="text-[10px] text-[#DECDBB] truncate">
+                      {isAuthenticated ? `+91 ${customer?.mobile_number}` : 'Member login & orders'}
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenAccount();
+                  }}
+                  className="shrink-0 text-[10.5px] font-semibold bg-[#C49A45] hover:bg-[#B88D39] text-[#241716] px-3 py-1.5 rounded-lg transition-colors cursor-pointer"
+                >
+                  {isAuthenticated ? 'My Account' : 'Sign In'}
                 </button>
               </div>
 

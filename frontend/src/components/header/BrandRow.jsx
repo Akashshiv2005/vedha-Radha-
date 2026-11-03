@@ -76,7 +76,7 @@ export default function BrandRow({
             onClick={onOpenCart}
             className="relative p-1.5 text-[#48161E] hover:text-[#8C6D2D] rounded-full hover:bg-[#F3EAD3]/40 transition-colors cursor-pointer group"
             aria-label={`Shopping bag containing ${cartCount} items`}
-            title="Reserved Jewellery Bag"
+            title="Shopping Cart"
           >
             <ShoppingBag className="w-5 h-5 stroke-[1.75]" />
             <span className="absolute -top-0.5 -right-0.5 bg-[#581923] text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-xs">

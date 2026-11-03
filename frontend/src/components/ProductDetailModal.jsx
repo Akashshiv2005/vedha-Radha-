@@ -1201,7 +1201,7 @@ export default function ProductDetailModal({
                   className="w-full bg-[#581923] hover:bg-[#431219] text-white py-3.5 sm:py-4 px-6 rounded-full text-sm sm:text-base font-semibold tracking-wide transition-all duration-200 cursor-pointer shadow-md hover:shadow-lg flex items-center justify-center gap-2.5 active:scale-[0.99]"
                 >
                   <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5 text-[#F3EAD3]" />
-                  <span>Reserve Piece / Add to Bag</span>
+                  <span>Add to Cart</span>
                 </button>
               </div>
 

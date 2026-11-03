@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 
 from ..db.session import get_db
 from ..models.admin_user import AdminUser
+from ..models.customer import Customer
 from ..core.security import decode_access_token
 from ..services.auth_service import token_blacklist
 
@@ -46,6 +47,13 @@ async def get_current_admin(
             detail={"success": False, "error": "Invalid or expired session token."},
         )
 
+    # Prevent customer token from being accepted on admin routes
+    if payload.get("role") == "customer":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={"success": False, "error": "Forbidden: Customer accounts do not have staff administrator privileges."},
+        )
+
     user_id_str = payload.get("sub")
     if not user_id_str:
         raise HTTPException(
@@ -69,3 +77,82 @@ async def get_current_admin(
         )
 
     return user
+
+
+async def get_current_customer(
+    token: Optional[str] = Depends(get_token_from_request),
+    db: Session = Depends(get_db),
+) -> Customer:
+    """Dependency that validates customer JWT and returns active Customer."""
+    if not token:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail={"success": False, "error": "Authentication required. Please log in to your Vedha Radha account."},
+        )
+
+    if token_blacklist.is_revoked(token):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail={"success": False, "error": "Session expired or logged out. Please log in again."},
+        )
+
+    payload = decode_access_token(token)
+    if not payload:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail={"success": False, "error": "Invalid or expired login session."},
+        )
+
+    # Strictly enforce that this token is a customer token
+    if payload.get("role") != "customer":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={"success": False, "error": "Access denied: Valid customer credentials required."},
+        )
+
+    customer_id_str = payload.get("sub")
+    if not customer_id_str:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail={"success": False, "error": "Malformed session token."},
+        )
+
+    try:
+        customer_uuid = uuid.UUID(customer_id_str)
+    except ValueError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail={"success": False, "error": "Invalid customer identifier."},
+        )
+
+    customer = db.query(Customer).filter(Customer.id == customer_uuid).first()
+    if not customer or not customer.is_active:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail={"success": False, "error": "Customer account not found or has been deactivated."},
+        )
+
+    return customer
+
+
+async def get_optional_customer(
+    token: Optional[str] = Depends(get_token_from_request),
+    db: Session = Depends(get_db),
+) -> Optional[Customer]:
+    """Optional customer dependency for public routes that adapt when customer is logged in."""
+    if not token or token_blacklist.is_revoked(token):
+        return None
+
+    payload = decode_access_token(token)
+    if not payload or payload.get("role") != "customer":
+        return None
+
+    customer_id_str = payload.get("sub")
+    if not customer_id_str:
+        return None
+
+    try:
+        customer_uuid = uuid.UUID(customer_id_str)
+        return db.query(Customer).filter(Customer.id == customer_uuid, Customer.is_active == True).first()
+    except Exception:
+        return None
