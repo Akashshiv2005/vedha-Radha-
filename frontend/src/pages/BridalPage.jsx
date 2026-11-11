@@ -2,7 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { storefrontClient } from '../api/storefrontProductsClient';
 import { ProductGridSkeleton } from '../components/common/ProductCardSkeleton';
-import { Sparkles, Heart, ShoppingBag, Calendar, CheckCircle2, ChevronRight, PhoneCall, Award } from 'lucide-react';
+import LuxuryProductCard from '../components/common/LuxuryProductCard';
+import { Sparkles, Heart, ShoppingBag, Calendar, CheckCircle2, ChevronRight, PhoneCall, Award, ArrowRight, ShieldCheck } from 'lucide-react';
 
 export default function BridalPage({
   onViewProduct = () => {},
@@ -42,82 +43,140 @@ export default function BridalPage({
   // Filter bridal items from database
   const bridalProducts = dbProducts.filter(p => p.isBridal || p.category?.toLowerCase().includes('bridal') || p.category?.toLowerCase().includes('gold'));
 
-  const bridalSets = [
-    {
-      title: 'Muhurtham Grand Set',
-      pieces: 'Lakshmi Haram + Choker + Vanki + Jhumkas',
-      goldWeight: '120g &ndash; 180g (Customizable)',
-      highlight: '0% Making Charge on Selected Items',
-      image: '/images/col_bridal.jpg'
-    },
-    {
-      title: 'Chettinad Heritage Set',
-      pieces: 'Manga Malai + Antique Oddiyanam + Kadas',
-      goldWeight: '95g &ndash; 140g (Customizable)',
-      highlight: 'Pure Hand-Chased Temple Art',
-      image: '/images/col_handcrafted.jpg'
-    },
-    {
-      title: 'Contemporary Reception Set',
-      pieces: 'Diamond & Kemp Choker + Royal Bangles',
-      goldWeight: '80g &ndash; 110g (Customizable)',
-      highlight: 'BIS Hallmarked Natural Gemstones',
-      image: '/images/product_necklace.jpg'
-    }
-  ];
-
   return (
-    <div className="bg-[#FAF7F2] min-h-screen py-8 sm:py-12 border-b border-[#EAE2D5]">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-8">
-        
-        {/* Breadcrumbs */}
-        <div className="flex items-center gap-2 text-xs text-[#7A6E65] mb-4">
-          <button onClick={() => navigate('/')} className="hover:text-[#581923] cursor-pointer">Home</button>
-          <ChevronRight className="w-3.5 h-3.5 text-[#B38E46]" />
-          <span className="font-semibold text-[#581923]">Bridal Trousseau</span>
+    <div className="bg-[#FAF7F2] min-h-screen border-b border-[#EAE2D5] select-none font-sans">
+      
+      {/* 1. Full-Bleed Split Luxury Bridal Hero Banner matching reference design */}
+      <section className="relative bg-[#1A0407] text-white overflow-hidden border-b border-[#C5A253]/35 min-h-[520px] lg:min-h-[580px] flex items-center">
+        {/* Background stage showcase on the right */}
+        <div className="absolute inset-0 pointer-events-none">
+          <img
+            src="/images/bridal_luxury_stage_hero.png"
+            alt="Opulent Royal South Indian Bridal Jewellery Suite"
+            className="w-full h-full object-cover object-[75%_center] lg:object-right"
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = '/images/bridal_luxury_stage_hero.jpg';
+            }}
+          />
+          {/* Crisp Left-Only Fade: Leaves the entire right jewelry showcase 100% clear and luminous */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1A0407] via-[#1A0407]/90 via-35% md:via-42% to-transparent to-60% md:to-58% pointer-events-none" />
         </div>
 
-        {/* Wide Desktop Bridal Collection Hero Banner */}
-        <div className="mb-10">
-          <div className="relative w-full aspect-[21/9] min-h-[360px] sm:min-h-[420px] lg:min-h-[460px] rounded-2xl overflow-hidden border border-[#C49A45]/40 shadow-[0_12px_36px_rgba(101,31,43,0.12)] bg-[#450F18]">
-            <img
-              src="/images/bridal_hero_clean.jpg"
-              alt="South Indian bridal temple jewellery collection on rich maroon silk"
-              className="absolute inset-0 w-full h-full object-cover object-right sm:object-center"
-              loading="eager"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#380911]/90 via-[#450F18]/60 to-transparent pointer-events-none" />
-            <div className="relative z-10 h-full flex flex-col justify-center px-6 sm:px-12 lg:px-16 xl:px-20 max-w-xl lg:max-w-2xl py-8">
-              <div className="flex items-center gap-3 mb-3 sm:mb-4">
-                <span className="h-[1px] w-8 sm:w-10 bg-[#C49A45]"></span>
-                <span className="text-[#C49A45] text-[10.5px] sm:text-xs font-semibold tracking-[0.22em] uppercase font-sans">
-                  BRIDAL COLLECTION
-                </span>
+        <div className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 py-12 lg:py-16">
+          <div className="max-w-2xl lg:max-w-xl xl:max-w-2xl">
+            {/* Breadcrumbs */}
+            <div className="flex items-center gap-2 text-xs text-[#E5B5B5] mb-4 font-medium tracking-wide">
+              <button onClick={() => navigate('/')} className="hover:text-white transition-colors cursor-pointer">Home</button>
+              <ChevronRight className="w-3.5 h-3.5 text-[#C5A253]" />
+              <span className="text-[#FCEB9C] font-semibold">Bridal Trousseau &amp; Muhurtham</span>
+            </div>
+
+            {/* Pill Tag */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#350810]/90 border border-[#C5A253]/60 text-[#F5DE98] text-[11px] font-semibold mb-4 tracking-widest uppercase shadow-[0_2px_12px_rgba(197,162,83,0.2)]">
+              <Sparkles className="w-3.5 h-3.5 text-[#E7C878]" />
+              <span>ROYAL SOUTH INDIAN HERITAGE &bull; 22K PURE GOLD</span>
+            </div>
+
+            {/* Title */}
+            <h1 
+              style={{ fontFamily: "'Playfair Display', 'Cormorant Garamond', Georgia, serif" }}
+              className="text-3xl sm:text-5xl lg:text-[52px] font-bold text-white tracking-tight leading-[1.12]"
+            >
+              The <span className="font-serif">Bridal Collection</span>
+            </h1>
+
+            {/* Filigree horizontal divider */}
+            <div className="flex items-center gap-3 my-3.5">
+              <div className="h-[1px] w-12 bg-gradient-to-r from-transparent via-[#C5A253] to-[#C5A253]"></div>
+              <span className="text-[#C5A253] text-xs">✦</span>
+              <div className="h-[1px] w-28 bg-gradient-to-r from-[#C5A253] to-transparent"></div>
+            </div>
+
+            {/* Subtitle */}
+            <p 
+              style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+              className="text-base sm:text-xl text-[#E5C058] italic font-normal"
+            >
+              Where Every Bride Becomes a Sacred Tradition.
+            </p>
+
+            {/* Narrative description */}
+            <p className="text-xs sm:text-sm text-[#F3DCDD] mt-3 font-light leading-relaxed max-w-xl">
+              Curated for generations of South Indian brides, our bridal trousseau unites antique nakshi temple chokers, multilayered mango harams, and handcrafted temple vaddanams in 22K BIS 916 pure gold.
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-wrap items-center gap-3.5 mt-7">
+              <button
+                type="button"
+                onClick={() => {
+                  const el = document.getElementById('bridal-products');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="bg-gradient-to-r from-[#D4AF37] via-[#FCEB9C] to-[#C59B27] hover:brightness-110 text-[#1A0407] font-bold text-xs sm:text-sm px-6 py-3 rounded-full shadow-[0_4px_20px_rgba(212,175,55,0.35)] transition-all cursor-pointer flex items-center gap-2"
+              >
+                <span>Explore Bridal Masterpieces</span>
+                <ArrowRight className="w-4 h-4 stroke-[2.2]" />
+              </button>
+              <button
+                type="button"
+                onClick={() => navigate('/contact')}
+                className="bg-[#2D060E]/90 hover:bg-[#3D0A14] border border-[#C5A253]/60 hover:border-[#C5A253] text-[#F3E5C8] font-medium text-xs sm:text-sm px-5 py-3 rounded-full backdrop-blur-sm transition-all cursor-pointer flex items-center gap-2 shadow-sm"
+              >
+                <Calendar className="w-3.5 h-3.5 text-[#C5A253]" />
+                <span>Book Bridal Consultation</span>
+              </button>
+            </div>
+
+            {/* Trust Badges matching reference design */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8 pt-6 border-t border-white/10 max-w-2xl">
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full bg-[#350810] border border-[#C5A253]/50 flex items-center justify-center shrink-0">
+                  <Award className="w-3.5 h-3.5 text-[#E7C878]" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold text-white leading-tight">100% BIS 916</p>
+                  <p className="text-[10px] text-[#E5B5B5] leading-tight">Hallmarked Gold</p>
+                </div>
               </div>
-              <h1 className="text-2xl sm:text-4xl lg:text-[44px] xl:text-[48px] font-normal text-[#F8F4EC] leading-[1.16] tracking-tight">
-                Where Every Bride<br />
-                Becomes a Tradition
-              </h1>
-              <p className="text-[#F8F4EC]/90 font-sans text-xs sm:text-sm lg:text-[14.5px] font-normal leading-relaxed mt-3 sm:mt-4 max-w-md sm:max-w-lg">
-                Heirloom-inspired gold jewellery, designed to shine through sacred rituals and timeless celebrations.
-              </p>
-              <div className="mt-6 sm:mt-7">
-                <button
-                  type="button"
-                  onClick={() => {
-                    const el = document.getElementById('bridal-products');
-                    if (el) el.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  className="group inline-flex items-center justify-center px-5 sm:px-7 py-2.5 sm:py-3 rounded border border-[#C49A45] bg-[#3B0B14]/40 hover:bg-[#651F2B] hover:border-[#E5C278] text-[#F8F4EC] hover:text-white transition-all duration-300 shadow-sm cursor-pointer"
-                >
-                  <span className="text-[10.5px] sm:text-[11.5px] font-medium tracking-[0.2em] uppercase font-sans">
-                    EXPLORE COLLECTION
-                  </span>
-                </button>
+
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full bg-[#350810] border border-[#C5A253]/50 flex items-center justify-center shrink-0">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#E7C878]" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold text-white leading-tight">Antique Nakshi</p>
+                  <p className="text-[10px] text-[#E5B5B5] leading-tight">Master Craft</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full bg-[#350810] border border-[#C5A253]/50 flex items-center justify-center shrink-0">
+                  <Sparkles className="w-3.5 h-3.5 text-[#E7C878]" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold text-white leading-tight">0% Making Benefit</p>
+                  <p className="text-[10px] text-[#E5B5B5] leading-tight">Select Sets</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full bg-[#350810] border border-[#C5A253]/50 flex items-center justify-center shrink-0">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#E7C878]" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold text-white leading-tight">Custom Trousseau</p>
+                  <p className="text-[10px] text-[#E5B5B5] leading-tight">Tailored Weight</p>
+                </div>
               </div>
             </div>
+
           </div>
         </div>
+      </section>
+
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 py-8 sm:py-12">
 
         {/* 3 Steps Bridal Assurance */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
@@ -149,47 +208,6 @@ export default function BridalPage({
               <h3 className="text-sm font-bold text-[#241716]">Bespoke Artisan Customization</h3>
               <p className="text-xs text-[#73655C] mt-0.5">Tailor necklaces, waist belts, and bangles to your saree fabric and neckline.</p>
             </div>
-          </div>
-        </div>
-
-        {/* Featured Bridal Sets */}
-        <div className="mb-12">
-          <div className="text-center max-w-xl mx-auto mb-8">
-            <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#8C6D2D]">Curated Packages</span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#241716] mt-1">
-              Signature Wedding Sets
-            </h2>
-            <p className="text-xs text-[#73655C] mt-1">
-              Pre-matched heritage combinations for wedding ceremonies, reception, and traditional rituals.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {bridalSets.map((set, idx) => (
-              <div key={idx} className="bg-white rounded-xl border border-[#E8DFC0] overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
-                <div className="aspect-16/10 overflow-hidden bg-[#ECE4D8]">
-                  <img src={set.image} alt={set.title} className="w-full h-full object-cover object-center" />
-                </div>
-                <div className="p-5 flex-1 flex flex-col justify-between">
-                  <div>
-                    <span className="text-[10px] font-bold text-[#8C6D2D] uppercase tracking-wider bg-[#F8F2E6] px-2 py-0.5 rounded">
-                      {set.highlight}
-                    </span>
-                    <h3 className="text-lg font-bold text-[#241716] mt-2">{set.title}</h3>
-                    <p className="text-xs text-[#4A403A] mt-1 font-medium">{set.pieces}</p>
-                    <p className="text-[11px] text-[#7A6E65] mt-1 font-mono">Approx. Weight: {set.goldWeight}</p>
-                  </div>
-                  <div className="mt-4 pt-3 border-t border-[#F0E8DC]">
-                    <button
-                      onClick={() => navigate('/contact')}
-                      className="w-full bg-[#581923] hover:bg-[#431219] text-white py-2 rounded-lg text-xs font-semibold transition-colors cursor-pointer"
-                    >
-                      Inquire / Book Try-On
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
 
@@ -226,62 +244,17 @@ export default function BridalPage({
               <p className="text-xs text-[#7A6E65] mt-1">New bridal designs will be showcased here as soon as they are added to the vault inventory.</p>
             </div>
           ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {bridalProducts.map((item) => {
-              const isWishlisted = wishlistItems.some(w => w.id === item.id);
-              return (
-                <div
-                  key={item.id}
-                  className="bg-white rounded-xl border border-[#E8DFC0] overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between group"
-                >
-                  <div className="relative aspect-4/3 overflow-hidden bg-[#EFE8DC]">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = '/images/product_gold_chain.jpg';
-                      }}
-                    />
-                    <button
-                      onClick={() => onAddToWishlist(item)}
-                      className="absolute top-3 right-3 p-2 rounded-full bg-white/90 hover:bg-white text-[#581923] shadow-md cursor-pointer"
-                      title="Save to Bridal Wishlist"
-                    >
-                      <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-[#D32F2F] text-[#D32F2F]' : ''}`} />
-                    </button>
-                  </div>
-
-                  <div className="p-5 flex-1 flex flex-col justify-between">
-                    <div>
-                      <span className="text-[10.5px] font-bold text-[#8C6D2D] uppercase tracking-wider">{item.details}</span>
-                      <h3 className="text-base font-bold text-[#241716] mt-1">{item.name}</h3>
-                      <p className="text-xs text-[#63574F] line-clamp-2 mt-1">{item.description}</p>
-                    </div>
-
-                    <div className="mt-4 pt-3 border-t border-[#EAE2D5] flex items-center justify-between">
-                      <span className="text-lg font-bold text-[#48161E]">{item.price}</span>
-                      <div className="flex gap-2">
-                        <button
-                          onClick={() => onViewProduct(item)}
-                          className="px-3 py-1.5 rounded-md border border-[#581923] text-[#581923] hover:bg-[#FAF0E1] text-xs font-semibold cursor-pointer"
-                        >
-                          Details
-                        </button>
-                        <button
-                          onClick={() => onAddToCart(item)}
-                          className="px-3 py-1.5 rounded-md bg-[#581923] text-white hover:bg-[#431219] text-xs font-semibold flex items-center gap-1 cursor-pointer"
-                        >
-                          <ShoppingBag className="w-3.5 h-3.5" />
-                          <span>Add</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+          <div className="w-full max-w-[1440px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 lg:gap-8 my-8">
+            {bridalProducts.map((item) => (
+              <LuxuryProductCard
+                key={item.id}
+                item={item}
+                wishlistItems={wishlistItems}
+                onAddToCart={onAddToCart}
+                onAddToWishlist={onAddToWishlist}
+                onViewProduct={onViewProduct}
+              />
+            ))}
           </div>
           )}
         </div>

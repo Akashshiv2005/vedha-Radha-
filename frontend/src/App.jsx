@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, useLocation, Link } from 'react-router-dom';
+import { Routes, Route, useLocation, Link, useNavigate, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import HomePage from './pages/HomePage';
 import GoldPage from './pages/GoldPage';
@@ -16,6 +16,10 @@ import AdminLoginPage from './pages/admin/AdminLoginPage';
 import { AuthProvider, RequireAuth } from './context/AuthContext';
 import { CustomerAuthProvider } from './context/CustomerAuthContext';
 
+import TempleHeritagePage from './pages/TempleHeritagePage';
+import DiamondPage from './pages/DiamondPage';
+import SilverPoojaPage from './pages/SilverPoojaPage';
+import JewelleryCarePage from './pages/JewelleryCarePage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
@@ -26,13 +30,52 @@ import CartDrawer from './components/CartDrawer';
 import AccountModal from './components/AccountModal';
 import WishlistModal from './components/WishlistModal';
 import { cartClient } from './api/cartClient';
+import { getProductUrl } from './utils/productSlug';
 
-// Scroll to top helper on route change
+// Scroll to top or anchor on route change with progressive layout stabilization
 function ScrollToTop() {
-  const { pathname, search } = useLocation();
+  const { pathname, search, hash } = useLocation();
   const prevPathRef = React.useRef(pathname);
 
   useEffect(() => {
+    if (hash) {
+      const id = hash.replace('#', '');
+      let attempts = 0;
+      let lastTop = -1;
+      let stableCount = 0;
+      let timeoutId = null;
+
+      const checkAndScroll = () => {
+        const el = document.getElementById(id);
+        if (el) {
+          const headerOffset = 90;
+          const currentTop = Math.round(el.getBoundingClientRect().top + window.pageYOffset - headerOffset);
+          
+          if (currentTop !== lastTop || attempts === 0) {
+            lastTop = currentTop;
+            stableCount = 0;
+            window.scrollTo({
+              top: Math.max(0, currentTop),
+              behavior: attempts <= 1 ? 'auto' : 'smooth'
+            });
+          } else {
+            stableCount++;
+          }
+        }
+        
+        attempts++;
+        // Keep verifying until layout is completely stable for 3 checks or max 14 attempts (~2.5s)
+        if (attempts < 14 && stableCount < 3) {
+          timeoutId = setTimeout(checkAndScroll, 180);
+        }
+      };
+
+      timeoutId = setTimeout(checkAndScroll, 60);
+      return () => {
+        if (timeoutId) clearTimeout(timeoutId);
+      };
+    }
+
     const isGoldSubNavigation = pathname.startsWith('/gold') && prevPathRef.current.startsWith('/gold');
     const isSilverSubNavigation = pathname.startsWith('/silver') && prevPathRef.current.startsWith('/silver');
 
@@ -40,14 +83,26 @@ function ScrollToTop() {
       window.scrollTo(0, 0);
     }
     prevPathRef.current = pathname;
-  }, [pathname, search]);
+  }, [pathname, search, hash]);
 
   return null;
 }
 
 export default function App() {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleViewProduct = (product) => {
+    if (!product) return;
+    const url = getProductUrl(product);
+    if (url) {
+      navigate(url, { state: { product } });
+    } else {
+      setSelectedProduct(product);
+    }
+  };
   const isAdminRoute = location.pathname.startsWith('/admin');
+  const isProductPage = location.pathname.startsWith('/product/');
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -195,16 +250,18 @@ export default function App() {
       <div className="min-h-screen bg-[#FAF7F2] text-[#2C2420] flex flex-col font-sans selection:bg-[#581923] selection:text-white relative">
         <ScrollToTop />
 
-        {/* Shared Persistent Header Across All Storefront Routes */}
-        <Header
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          cartCount={cartItems.reduce((acc, item) => acc + (item.quantity || 1), 0)}
-          wishlistCount={wishlistItems.length}
-          onOpenCart={() => setIsCartOpen(true)}
-          onOpenAccount={() => setIsAccountOpen(true)}
-          onOpenWishlist={() => setIsWishlistOpen(true)}
-        />
+        {/* Shared Persistent Header Across All Storefront Routes (hidden on dedicated product page) */}
+        {!isProductPage && (
+          <Header
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            cartCount={(Array.isArray(cartItems) ? cartItems : []).reduce((acc, item) => acc + (item.quantity || 1), 0)}
+            wishlistCount={(Array.isArray(wishlistItems) ? wishlistItems : []).length}
+            onOpenCart={() => setIsCartOpen(true)}
+            onOpenAccount={() => setIsAccountOpen(true)}
+            onOpenWishlist={() => setIsWishlistOpen(true)}
+          />
+        )}
 
         {/* Multi-Page Routes for Gold, Silver, Coins & Bars, New Arrivals, Collections */}
         <main className="flex-grow">
@@ -234,7 +291,10 @@ export default function App() {
             element={
               <HomePage 
                 searchQuery={searchQuery}
-                onViewProduct={(p) => setSelectedProduct(p)}
+                onViewProduct={handleViewProduct}
+                onAddToCart={handleAddToCart}
+                onAddToWishlist={handleAddToWishlist}
+                wishlistItems={wishlistItems}
               />
             } 
           />
@@ -245,7 +305,7 @@ export default function App() {
             element={
               <GoldPage 
                 searchQuery={searchQuery}
-                onViewProduct={(p) => setSelectedProduct(p)}
+                onViewProduct={handleViewProduct}
                 onAddToCart={handleAddToCart}
                 onAddToWishlist={handleAddToWishlist}
                 wishlistItems={wishlistItems}
@@ -257,7 +317,7 @@ export default function App() {
             element={
               <GoldPage 
                 searchQuery={searchQuery}
-                onViewProduct={(p) => setSelectedProduct(p)}
+                onViewProduct={handleViewProduct}
                 onAddToCart={handleAddToCart}
                 onAddToWishlist={handleAddToWishlist}
                 wishlistItems={wishlistItems}
@@ -269,7 +329,7 @@ export default function App() {
             element={
               <GoldPage 
                 searchQuery={searchQuery}
-                onViewProduct={(p) => setSelectedProduct(p)}
+                onViewProduct={handleViewProduct}
                 onAddToCart={handleAddToCart}
                 onAddToWishlist={handleAddToWishlist}
                 wishlistItems={wishlistItems}
@@ -283,7 +343,7 @@ export default function App() {
             element={
               <SilverPage 
                 searchQuery={searchQuery}
-                onViewProduct={(p) => setSelectedProduct(p)}
+                onViewProduct={handleViewProduct}
                 onAddToCart={handleAddToCart}
                 onAddToWishlist={handleAddToWishlist}
                 wishlistItems={wishlistItems}
@@ -295,7 +355,7 @@ export default function App() {
             element={
               <SilverPage 
                 searchQuery={searchQuery}
-                onViewProduct={(p) => setSelectedProduct(p)}
+                onViewProduct={handleViewProduct}
                 onAddToCart={handleAddToCart}
                 onAddToWishlist={handleAddToWishlist}
                 wishlistItems={wishlistItems}
@@ -307,7 +367,7 @@ export default function App() {
             element={
               <SilverPage 
                 searchQuery={searchQuery}
-                onViewProduct={(p) => setSelectedProduct(p)}
+                onViewProduct={handleViewProduct}
                 onAddToCart={handleAddToCart}
                 onAddToWishlist={handleAddToWishlist}
                 wishlistItems={wishlistItems}
@@ -315,13 +375,13 @@ export default function App() {
             } 
           />
 
-          {/* 3. Coins & Bars Routes */}
+          {/* 3. Coins & Bars Routes (supports hyphen and underscore aliases) */}
           <Route 
             path="/coins-bars" 
             element={
               <CoinsBarsPage 
                 searchQuery={searchQuery}
-                onViewProduct={(p) => setSelectedProduct(p)}
+                onViewProduct={handleViewProduct}
                 onAddToCart={handleAddToCart}
                 onAddToWishlist={handleAddToWishlist}
                 wishlistItems={wishlistItems}
@@ -333,7 +393,31 @@ export default function App() {
             element={
               <CoinsBarsPage 
                 searchQuery={searchQuery}
-                onViewProduct={(p) => setSelectedProduct(p)}
+                onViewProduct={handleViewProduct}
+                onAddToCart={handleAddToCart}
+                onAddToWishlist={handleAddToWishlist}
+                wishlistItems={wishlistItems}
+              />
+            } 
+          />
+          <Route 
+            path="/coins_bars" 
+            element={
+              <CoinsBarsPage 
+                searchQuery={searchQuery}
+                onViewProduct={handleViewProduct}
+                onAddToCart={handleAddToCart}
+                onAddToWishlist={handleAddToWishlist}
+                wishlistItems={wishlistItems}
+              />
+            } 
+          />
+          <Route 
+            path="/coins_bars/:subCategory" 
+            element={
+              <CoinsBarsPage 
+                searchQuery={searchQuery}
+                onViewProduct={handleViewProduct}
                 onAddToCart={handleAddToCart}
                 onAddToWishlist={handleAddToWishlist}
                 wishlistItems={wishlistItems}
@@ -341,13 +425,25 @@ export default function App() {
             } 
           />
 
-          {/* 4. New Arrivals Route */}
+          {/* 4. New Arrivals Route (supports hyphen and underscore aliases) */}
           <Route 
             path="/new-arrivals" 
             element={
               <NewArrivalsPage 
                 searchQuery={searchQuery}
-                onViewProduct={(p) => setSelectedProduct(p)}
+                onViewProduct={handleViewProduct}
+                onAddToCart={handleAddToCart}
+                onAddToWishlist={handleAddToWishlist}
+                wishlistItems={wishlistItems}
+              />
+            } 
+          />
+          <Route 
+            path="/new_arrivals" 
+            element={
+              <NewArrivalsPage 
+                searchQuery={searchQuery}
+                onViewProduct={handleViewProduct}
                 onAddToCart={handleAddToCart}
                 onAddToWishlist={handleAddToWishlist}
                 wishlistItems={wishlistItems}
@@ -361,7 +457,7 @@ export default function App() {
             element={
               <CollectionsCatalogPage 
                 searchQuery={searchQuery}
-                onViewProduct={(p) => setSelectedProduct(p)}
+                onViewProduct={handleViewProduct}
                 onAddToCart={handleAddToCart}
                 onAddToWishlist={handleAddToWishlist}
                 wishlistItems={wishlistItems}
@@ -373,7 +469,7 @@ export default function App() {
             element={
               <CollectionsCatalogPage 
                 searchQuery={searchQuery}
-                onViewProduct={(p) => setSelectedProduct(p)}
+                onViewProduct={handleViewProduct}
                 onAddToCart={handleAddToCart}
                 onAddToWishlist={handleAddToWishlist}
                 wishlistItems={wishlistItems}
@@ -382,11 +478,78 @@ export default function App() {
           />
 
           {/* Additional / Footer Routes */}
+          {/* Temple Heritage Collection */}
+          <Route 
+            path="/temple-heritage" 
+            element={
+              <TempleHeritagePage 
+                onViewProduct={handleViewProduct}
+                onAddToCart={handleAddToCart}
+                onAddToWishlist={handleAddToWishlist}
+                wishlistItems={wishlistItems}
+              />
+            } 
+          />
+          <Route 
+            path="/temple" 
+            element={
+              <TempleHeritagePage 
+                onViewProduct={handleViewProduct}
+                onAddToCart={handleAddToCart}
+                onAddToWishlist={handleAddToWishlist}
+                wishlistItems={wishlistItems}
+              />
+            } 
+          />
+
+          {/* Diamond Collection */}
+          <Route 
+            path="/diamonds" 
+            element={
+              <DiamondPage 
+                onViewProduct={handleViewProduct}
+                onAddToCart={handleAddToCart}
+                onAddToWishlist={handleAddToWishlist}
+                wishlistItems={wishlistItems}
+              />
+            } 
+          />
+          <Route 
+            path="/diamond" 
+            element={
+              <DiamondPage 
+                onViewProduct={handleViewProduct}
+                onAddToCart={handleAddToCart}
+                onAddToWishlist={handleAddToWishlist}
+                wishlistItems={wishlistItems}
+              />
+            } 
+          />
+
+          {/* Silver Pooja Articles */}
+          <Route 
+            path="/silver-pooja" 
+            element={
+              <SilverPoojaPage 
+                onViewProduct={handleViewProduct}
+                onAddToCart={handleAddToCart}
+                onAddToWishlist={handleAddToWishlist}
+                wishlistItems={wishlistItems}
+              />
+            } 
+          />
+
+          {/* Jewellery Care & Purity Guide */}
+          <Route 
+            path="/jewellery-care" 
+            element={<JewelleryCarePage />} 
+          />
+
           <Route 
             path="/bridal" 
             element={
               <BridalPage 
-                onViewProduct={(p) => setSelectedProduct(p)}
+                onViewProduct={handleViewProduct}
                 onAddToCart={handleAddToCart}
                 onAddToWishlist={handleAddToWishlist}
                 wishlistItems={wishlistItems}
@@ -397,7 +560,7 @@ export default function App() {
             path="/jewellery" 
             element={
               <GoldPage 
-                onViewProduct={(p) => setSelectedProduct(p)}
+                onViewProduct={handleViewProduct}
                 onAddToCart={handleAddToCart}
                 onAddToWishlist={handleAddToWishlist}
                 wishlistItems={wishlistItems}
@@ -414,7 +577,7 @@ export default function App() {
           />
           <Route 
             path="/contact" 
-            element={<ContactPage />} 
+            element={<Navigate to="/#contact-concierge" replace />} 
           />
 
           {/* Full Shopping Cart Page */}
@@ -464,7 +627,7 @@ export default function App() {
             element={
               <HomePage 
                 searchQuery={searchQuery}
-                onViewProduct={(p) => setSelectedProduct(p)}
+                onViewProduct={handleViewProduct}
               />
             } 
           />
@@ -472,7 +635,7 @@ export default function App() {
       </main>
 
       {/* Bottom Center Credit for all other storefront pages */}
-      {location.pathname !== '/' && (
+      {location.pathname !== '/' && !isProductPage && (
         <footer className="bg-[#FAF7F2] border-t border-[#DECDBB]/60 py-4 text-center text-xs text-[#73655C]">
           <div className="max-w-[1400px] mx-auto px-4 sm:px-8">
             <span>Designed &amp; Developed by </span>

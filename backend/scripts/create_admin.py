@@ -34,7 +34,7 @@ def main():
     args = parser.parse_args()
 
     print("================================================================")
-    print(" VEDHA RADHA THANGAMAALIGAI — ADMIN ACCOUNT SETUP")
+    print(" VEDHA RADHA THANGAMAALIGAI - ADMIN ACCOUNT SETUP")
     print("================================================================")
 
     # 1. Test database connection

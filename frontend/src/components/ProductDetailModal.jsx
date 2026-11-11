@@ -5,6 +5,8 @@ import {
   ArrowLeft,
   ChevronLeft, 
   ChevronRight, 
+  ChevronUp,
+  ChevronDown,
   ZoomIn, 
   Maximize2, 
   Sparkles, 
@@ -29,10 +31,23 @@ import {
   Mic,
   Square,
   Play,
-  Pause
+  Pause,
+  Minus,
+  Plus,
+  Scale,
+  Package,
+  Calendar,
+  Headphones,
+  Tag,
+  Shield,
+  Gem
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { products } from '../data/products';
+import { diamondProducts } from '../data/diamondProducts';
+import { templeProducts } from '../data/templeProducts';
+import { poojaProducts } from '../data/poojaProducts';
+import { newArrivalsHighlightProducts } from '../data/newArrivalsHighlightProducts';
 
 import VirtualTryOnModal from './product-modal/VirtualTryOnModal';
 import Product360Modal from './product-modal/Product360Modal';
@@ -40,6 +55,7 @@ import ProductMeasurementsModal, { parseProductDimensions } from './product-moda
 import VideoConsultationModal from './product-modal/VideoConsultationModal';
 import ProductZoomModal from './product-modal/ProductZoomModal';
 import { formatCurrency } from '../utils/currency';
+import { getProductUrl, getProductIdentifier } from '../utils/productSlug';
 
 export default function ProductDetailModal({ 
   product, 
@@ -48,7 +64,8 @@ export default function ProductDetailModal({
   onAddToWishlist, 
   isWishlisted: externalIsWishlisted,
   onSelectRelatedProduct,
-  onBackToProducts
+  onBackToProducts,
+  isDedicatedPage = false
 }) {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [isZoomModalOpen, setIsZoomModalOpen] = useState(false);
@@ -82,6 +99,10 @@ export default function ProductDetailModal({
   const [audioUrl, setAudioUrl] = useState(null);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
 
+  // Quantity stepper & added toast state
+  const [quantity, setQuantity] = useState(1);
+  const [addedToCartToast, setAddedToCartToast] = useState(false);
+
   // Price Breakup collapsible state
   const [isPriceBreakupOpen, setIsPriceBreakupOpen] = useState(true);
 
@@ -106,15 +127,20 @@ export default function ProductDetailModal({
     }
   }, [externalIsWishlisted]);
 
-  // Support browser Back button to close the full page view smoothly
+  // Support browser Back button to close the modal overlay smoothly when opened from a catalog page
   useEffect(() => {
+    if (isDedicatedPage) {
+      // Real React Router dedicated page (/product/:productId) handles its own navigation natively
+      return;
+    }
+
     if (product) {
       const prevPath = window.location.pathname + window.location.search;
-      const targetPath = `/product/${product.id}`;
+      const targetPath = getProductUrl(product);
       
       // Update browser URL without full reload if not already on the product URL
       if (window.location.pathname !== targetPath) {
-        window.history.pushState({ isProductView: true, productId: product.id }, '', targetPath);
+        window.history.pushState({ isProductView: true, productId: getProductIdentifier(product) }, '', targetPath);
       }
 
       const handlePopState = () => {
@@ -129,22 +155,101 @@ export default function ProductDetailModal({
         }
       };
     }
-  }, [product?.id]);
+  }, [product?.id, isDedicatedPage]);
 
   if (!product) return null;
 
-  // Prepare up to 3 thumbnails from product.images
+  // Prepare 4 luxury gallery perspectives matching reference design
   const rawImages = (Array.isArray(product.images) && product.images.length > 0)
-    ? product.images.filter(img => typeof img === 'string' && img.trim().length > 0).slice(0, 3)
-    : (product.image ? [product.image] : ['/images/neutral_product_placeholder.svg']);
+    ? product.images.filter(img => typeof img === 'string' && img.trim().length > 0)
+    : (product.image ? [product.image] : ['/images/product_gold_chain.jpg']);
 
-  const defaultLabels = ['Front / Cover', 'Side / Angle', 'Detail / Hallmark'];
-  const thumbnailViews = rawImages.map((src, idx) => ({
-    label: defaultLabels[idx] || `View ${idx + 1}`,
-    src: src
-  }));
+  const defaultPerspectiveLabels = [
+    'Front / Overview',
+    'Center Medallion Detail',
+    'Artisan Border & Rubies',
+    'Hallmark & Clasp View',
+    'Side Filigree & Angle'
+  ];
+
+  const thumbnailViews = Array.from({ length: 5 }).map((_, idx) => {
+    const src = rawImages[idx] || rawImages[0] || product.image || '/images/product_gold_chain.jpg';
+    return {
+      id: idx,
+      label: defaultPerspectiveLabels[idx] || `View ${idx + 1}`,
+      src: src,
+      isMacro: !rawImages[idx] && idx === 1,
+      isBorder: !rawImages[idx] && idx === 2,
+      isClasp: !rawImages[idx] && idx === 3,
+    };
+  });
 
   const currentImage = thumbnailViews[activeImageIndex]?.src || thumbnailViews[0]?.src || product.image;
+  const isDarkShowcase = true; // Royal burgundy velvet presentation across signature showcase
+
+  // Heritage collection tagline
+  const collectionTagline = (() => {
+    const coll = String(product.collection || '').trim();
+    const cat = String(product.category || '').trim();
+    const sub = String(product.subCategory || product.subType || '').trim();
+    const all = `${coll} ${cat} ${sub}`.toLowerCase();
+    
+    if (all.includes('wedding') || all.includes('bridal') || product.isBridal) {
+      return 'WEDDING COLLECTION';
+    }
+    if (all.includes('temple')) {
+      return 'TEMPLE HERITAGE COLLECTION';
+    }
+    if (all.includes('antique') || all.includes('nakshi')) {
+      return 'ANTIQUE NAKSHI COLLECTION';
+    }
+    if (all.includes('silver')) {
+      return 'TEMPLE SILVER HERITAGE';
+    }
+    if (all.includes('coin') || all.includes('bar')) {
+      return '24K BULLION & COINS';
+    }
+    if (all.includes('diamond')) {
+      return 'ROYAL DIAMOND ATELIER';
+    }
+    if (sub && !sub.toLowerCase().includes('collection')) {
+      return `${sub.toUpperCase()} COLLECTION`;
+    }
+    if (coll && coll.toLowerCase() !== 'collections') {
+      return coll.toLowerCase().endsWith('collection') ? coll.toUpperCase() : `${coll.toUpperCase()} COLLECTION`;
+    }
+    if (cat && cat.toLowerCase() !== 'collections') {
+      return `${cat.toUpperCase()} COLLECTION`;
+    }
+    return 'ROYAL HERITAGE COLLECTION';
+  })();
+
+  // Diamond detection
+  const isDiamondItem = Boolean(
+    product.isDiamond ||
+    product.category?.toLowerCase() === 'diamond' ||
+    product.category?.toLowerCase() === 'diamonds' ||
+    product.department?.toLowerCase() === 'diamond' ||
+    product.department?.toLowerCase() === 'diamonds' ||
+    product.collection?.toLowerCase() === 'diamonds' ||
+    (typeof product.sku === 'string' && product.sku.toLowerCase().includes('dia')) ||
+    (typeof product.id === 'string' && (product.id.toLowerCase().startsWith('dia-') || product.id.toLowerCase().includes('diamond')))
+  );
+
+  // Silver detection
+  const isSilverItem = Boolean(
+    product.isSilver ||
+    product.category?.toLowerCase().includes('silver') ||
+    product.department?.toLowerCase().includes('silver') ||
+    product.collection?.toLowerCase().includes('silver') ||
+    product.subCategory?.toLowerCase().includes('silver') ||
+    product.name?.toLowerCase().includes('silver') ||
+    (typeof product.sku === 'string' && product.sku.toLowerCase().includes('slv')) ||
+    (typeof product.id === 'string' && (product.id.toLowerCase().includes('slv') || product.id.toLowerCase().includes('silver') || product.id.toLowerCase().startsWith('pooja-')))
+  );
+
+  // Cool platinum / sterling silver theme for Diamond and Silver items; Rich gold theme for Gold, Temple & Bridal items
+  const isSilverOrDiamond = isDiamondItem || isSilverItem;
 
   // Measurement details
   const parsedDimensions = parseProductDimensions(product);
@@ -164,7 +269,7 @@ export default function ProductDetailModal({
   }
   if (!numPrice) numPrice = 28200;
   const originalPriceFormatted = formatCurrency(Math.round((numPrice * 1.117) / 100) * 100);
-  const displayPrice = (typeof product.price === 'string' && product.price.trim().startsWith('₹') && !product.price.includes('Γ'))
+  const displayPrice = (typeof product.price === 'string' && product.price.trim().startsWith('₹'))
     ? product.price.trim()
     : formatCurrency(numPrice);
 
@@ -181,7 +286,7 @@ export default function ProductDetailModal({
     const totalFinal = Math.round(grandTotalFinal / 1.03);
     const gstFinal = grandTotalFinal - totalFinal;
 
-    // Gold value: ~86.45% of pre-tax value
+    // Metal / Stone value: ~86.45% of pre-tax value
     const goldValue = Math.round(totalFinal * 0.86454);
     const rate = Math.round(goldValue / parsedWeight);
 
@@ -195,10 +300,14 @@ export default function ProductDetailModal({
     const gstValue = Math.round(totalValue * 0.03);
     const grandTotalValue = totalValue + gstValue;
 
-    // Gold Purity Label (e.g. 91.6 Gold)
-    const purityLabel = product.purity?.includes('22') || product.purity?.includes('916') 
-      ? '91.6 Gold' 
-      : (product.category === 'silver' ? '92.5 Silver' : '91.6 Gold');
+    // Metal / Diamond Purity Label
+    const purityLabel = isDiamondItem
+      ? (product.purity || '18K White Gold / Platinum & Natural Diamonds')
+      : isSilverItem
+        ? '92.5 Sterling Silver'
+        : (product.purity?.includes('22') || product.purity?.includes('916') 
+            ? '91.6 Gold' 
+            : (product.category === 'silver' ? '92.5 Silver' : '91.6 Gold'));
 
     return {
       purityLabel,
@@ -218,8 +327,20 @@ export default function ProductDetailModal({
   })();
 
   // Find related pieces from same category or collection
-  const relatedProducts = products
-    .filter(p => p.id !== product.id && (p.category === product.category || p.subCategory === product.subCategory))
+  const allCatalogProducts = [
+    ...(diamondProducts || []),
+    ...(templeProducts || []),
+    ...(poojaProducts || []),
+    ...(newArrivalsHighlightProducts || []),
+    ...products
+  ];
+  const relatedProducts = allCatalogProducts
+    .filter(p => p.id !== product.id && (
+      (isDiamondItem && (p.category?.toLowerCase() === 'diamond' || p.category?.toLowerCase() === 'diamonds' || p.isDiamond)) ||
+      (isSilverItem && (p.category?.toLowerCase() === 'silver' || p.isSilver)) ||
+      p.category === product.category ||
+      p.subCategory === product.subCategory
+    ))
     .slice(0, 4);
 
   const handlePrevImage = (e) => {
@@ -308,6 +429,20 @@ export default function ProductDetailModal({
     setInternalWishlisted(!internalWishlisted);
     if (onAddToWishlist) {
       onAddToWishlist(product);
+    }
+  };
+
+  const handleAddToCart = () => {
+    if (onAddToCart) {
+      onAddToCart({
+        ...product,
+        quantity: quantity || 1
+      });
+    }
+    setAddedToCartToast(true);
+    setTimeout(() => setAddedToCartToast(false), 2500);
+    if (!isDedicatedPage && onClose) {
+      onClose();
     }
   };
 
@@ -471,68 +606,150 @@ export default function ProductDetailModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#FAF7F2] overflow-y-auto min-h-screen w-full flex flex-col selection:bg-[#581923] selection:text-white">
+    <div className="fixed inset-0 z-50 bg-[#FAF6EF] overflow-y-auto min-h-screen w-full flex flex-col selection:bg-[#4A1019] selection:text-white relative">
       
+      {/* Subtle ornamental temple heritage background watermark */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-[0.14] select-none">
+        {/* Right Architectural Carved Temple Pillar Motif */}
+        <div className={`absolute right-0 top-0 bottom-0 w-36 sm:w-56 bg-gradient-to-l ${
+          isSilverOrDiamond ? 'from-[#94A3B8]/25' : 'from-[#C99A38]/30'
+        } to-transparent flex flex-col justify-between items-end pr-1 sm:pr-3`}>
+          <svg className={`w-full h-full ${isSilverOrDiamond ? 'text-[#64748B]' : 'text-[#8C6D2D]'}`} viewBox="0 0 140 700" fill="currentColor">
+            <path d="M70,10 C90,10 110,25 110,45 L110,75 L30,75 L30,45 C30,25 50,10 70,10 Z" fill={isSilverOrDiamond ? '#94A3B8' : '#B38728'} opacity="0.8" />
+            <rect x="25" y="75" width="90" height="20" rx="3" fill={isSilverOrDiamond ? '#CBD5E1' : '#D4AF37'} />
+            <polygon points="15,95 125,95 105,125 35,125" fill={isSilverOrDiamond ? '#64748B' : '#8C6D2D'} />
+            <rect x="40" y="125" width="60" height="480" fill={isSilverOrDiamond ? '#94A3B8' : '#B38728'} opacity="0.6" />
+            <line x1="55" y1="125" x2="55" y2="605" stroke="#FFF" strokeWidth="2" strokeDasharray="6 6" />
+            <line x1="85" y1="125" x2="85" y2="605" stroke="#FFF" strokeWidth="2" strokeDasharray="6 6" />
+            <polygon points="35,605 105,605 125,635 15,635" fill={isSilverOrDiamond ? '#64748B' : '#8C6D2D'} />
+            <rect x="20" y="635" width="100" height="25" rx="3" fill={isSilverOrDiamond ? '#CBD5E1' : '#D4AF37'} />
+          </svg>
+        </div>
+
+        {/* Left Architectural Carved Temple Pillar Motif */}
+        <div className={`absolute left-0 top-0 bottom-0 w-36 sm:w-56 bg-gradient-to-r ${
+          isSilverOrDiamond ? 'from-[#94A3B8]/25' : 'from-[#C99A38]/30'
+        } to-transparent flex flex-col justify-between items-start pl-1 sm:pl-3`}>
+          <svg className={`w-full h-full ${isSilverOrDiamond ? 'text-[#64748B]' : 'text-[#8C6D2D]'}`} viewBox="0 0 140 700" fill="currentColor">
+            <path d="M70,10 C90,10 110,25 110,45 L110,75 L30,75 L30,45 C30,25 50,10 70,10 Z" fill={isSilverOrDiamond ? '#94A3B8' : '#B38728'} opacity="0.8" />
+            <rect x="25" y="75" width="90" height="20" rx="3" fill={isSilverOrDiamond ? '#CBD5E1' : '#D4AF37'} />
+            <polygon points="15,95 125,95 105,125 35,125" fill={isSilverOrDiamond ? '#64748B' : '#8C6D2D'} />
+            <rect x="40" y="125" width="60" height="480" fill={isSilverOrDiamond ? '#94A3B8' : '#B38728'} opacity="0.6" />
+            <line x1="55" y1="125" x2="55" y2="605" stroke="#FFF" strokeWidth="2" strokeDasharray="6 6" />
+            <line x1="85" y1="125" x2="85" y2="605" stroke="#FFF" strokeWidth="2" strokeDasharray="6 6" />
+            <polygon points="35,605 105,605 125,635 15,635" fill={isSilverOrDiamond ? '#64748B' : '#8C6D2D'} />
+            <rect x="20" y="635" width="100" height="25" rx="3" fill={isSilverOrDiamond ? '#CBD5E1' : '#D4AF37'} />
+          </svg>
+        </div>
+
+        {/* Bottom Corner Subtle Watermarks */}
+        <svg className={`absolute -left-6 bottom-0 w-44 h-44 ${isSilverOrDiamond ? 'text-[#94A3B8]' : 'text-[#C99A38]'}`} viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.2">
+          <path d="M50,20 C45,35 35,45 20,50 C35,55 45,65 50,80 C55,65 65,55 80,50 C65,45 55,35 50,20 Z" />
+          <path d="M50,30 C47,40 40,47 30,50 C40,53 47,60 50,70 C53,60 60,53 70,50 C60,47 53,40 50,30 Z" />
+        </svg>
+        <svg className={`absolute -right-6 bottom-0 w-44 h-44 ${isSilverOrDiamond ? 'text-[#94A3B8]' : 'text-[#C99A38]'}`} viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.2">
+          <path d="M50,20 C45,35 35,45 20,50 C35,55 45,65 50,80 C55,65 65,55 80,50 C65,45 55,35 50,20 Z" />
+          <path d="M50,30 C47,40 40,47 30,50 C40,53 47,60 50,70 C53,60 60,53 70,50 C60,47 53,40 50,30 Z" />
+        </svg>
+      </div>
+
       {/* ========================================================
           STICKY TOP NAVIGATION HEADER
           ======================================================== */}
-      <header className="sticky top-0 z-40 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#E8DFC0] px-4 sm:px-6 lg:px-10 py-3 flex items-center justify-between shadow-2xs">
-        <div className="flex items-center gap-3 sm:gap-4">
+      <header className={`sticky top-0 z-40 bg-[#31050D]/95 backdrop-blur-md border-b ${
+        isSilverOrDiamond ? 'border-[#94A3B8]/40' : 'border-[#C99A38]/40'
+      } px-4 sm:px-6 lg:px-10 py-3.5 flex items-center justify-between shadow-2xs`}>
+        <div className="flex items-center gap-3 sm:gap-5">
           <button 
             onClick={onBackToProducts || onClose}
-            className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#581923] hover:text-[#431219] bg-white border border-[#E8DFC0] hover:border-[#8C6D2D] px-3.5 py-1.5 rounded-full shadow-2xs transition-all cursor-pointer group"
+            className={`flex items-center gap-2 text-xs sm:text-[13px] font-semibold text-white bg-[#4A1019] hover:bg-[#5C1521] border ${
+              isSilverOrDiamond ? 'border-[#94A3B8]/80 hover:border-[#E2E8F0]' : 'border-[#C99A38]/80 hover:border-[#E8C77D]'
+            } px-4 py-2 rounded-full shadow-2xs transition-all cursor-pointer group`}
           >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
+            <ArrowLeft className={`w-4 h-4 group-hover:-translate-x-0.5 transition-transform ${isSilverOrDiamond ? 'text-[#CBD5E1]' : 'text-[#E8C77D]'}`} />
             <span>Back to Products</span>
           </button>
 
           {/* Breadcrumb Path */}
-          <nav className="hidden md:flex items-center gap-2 text-xs text-[#7A6E65]">
-            <Link to="/" className="hover:text-[#581923] cursor-pointer">Home</Link>
-            <span>/</span>
-            <Link
-              to={`/${product.category?.toLowerCase().includes('silver') ? 'silver' : 'gold'}`}
-              className="capitalize hover:text-[#581923] cursor-pointer"
-            >
-              {product.category} Jewellery
-            </Link>
-            <span>/</span>
-            <Link
-              to={`/${product.category?.toLowerCase().includes('silver') ? 'silver' : 'gold'}/${product.subCategorySlug || product.subCategory || ''}`}
-              className="capitalize hover:text-[#581923] cursor-pointer"
-            >
-              {(product.subCategory || product.subType || 'Catalog').replace(/[-_]/g, ' ')}
-            </Link>
-            <span>/</span>
-            <span className="font-semibold text-[#241716] truncate max-w-xs">{product.name}</span>
+          <nav className="hidden md:flex items-center gap-2.5 text-xs sm:text-[13px] text-[#E8DFC0]">
+            <Link to="/" className="hover:text-white cursor-pointer transition-colors">Home</Link>
+            <span className={isSilverOrDiamond ? 'text-[#94A3B8]/60' : 'text-[#C99A38]/60'}>/</span>
+            {(() => {
+              const catLower = (product.category || '').toLowerCase();
+              let mainPath = '/gold';
+              let mainLabel = `${product.category || 'Gold'} Jewellery`;
+              if (catLower.includes('diamond') || product.isDiamond) {
+                mainPath = '/diamonds';
+                mainLabel = 'Diamonds';
+              } else if (catLower.includes('silver')) {
+                mainPath = '/silver';
+              } else if (catLower.includes('coin') || catLower.includes('bar')) {
+                mainPath = '/coins-bars';
+                mainLabel = 'Coins & Bars';
+              } else if (catLower.includes('new') || product.isNewArrival) {
+                mainPath = '/new-arrivals';
+                mainLabel = 'New Arrivals';
+              } else if (catLower.includes('collection')) {
+                mainPath = '/collections';
+                mainLabel = 'Collections';
+              } else if (catLower.includes('bridal') || product.isBridal) {
+                mainPath = '/bridal';
+                mainLabel = 'Bridal Collection';
+              }
+              const subSlug = product.subCategorySlug || product.subCategory || '';
+              const subLabel = (String(product.subCategory || product.subType || 'Catalogue')).replace(/[-_]/g, ' ');
+              return (
+                <>
+                  <Link to={mainPath} className="capitalize hover:text-white text-[#E8DFC0] transition-colors cursor-pointer">
+                    {mainLabel}
+                  </Link>
+                  {subSlug && (
+                    <>
+                      <span className="text-[#C4B5A5]">/</span>
+                      <Link to={`${mainPath}/${subSlug}`} className="capitalize hover:text-white text-[#E8DFC0] transition-colors cursor-pointer">
+                        {subLabel}
+                      </Link>
+                    </>
+                  )}
+                </>
+              );
+            })()}
+            <span className="text-[#C4B5A5]">/</span>
+            <span className="font-bold text-white truncate max-w-sm">{product.name}</span>
           </nav>
         </div>
 
         {/* Right Header Actions */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           <button
             onClick={handleToggleWishlist}
-            className={`p-2 rounded-full border transition-all cursor-pointer ${
+            className={`w-10 h-10 rounded-full border transition-all cursor-pointer shadow-2xs flex items-center justify-center ${
               internalWishlisted
-                ? 'bg-[#581923]/10 border-[#581923] text-[#581923]'
-                : 'bg-white border-[#E8DFC0] text-[#4A403A] hover:bg-[#FAF7F2]'
+                ? 'bg-[#E53935]/20 border-[#E53935] text-[#E53935]'
+                : (isSilverOrDiamond
+                    ? 'bg-[#4A1019] hover:bg-[#5C1521] border-[#94A3B8]/70 text-[#FAF6EF]'
+                    : 'bg-[#4A1019] hover:bg-[#5C1521] border-[#C99A38]/70 text-[#FAF6EF]')
             }`}
             title="Save for Later"
           >
-            <Heart className={`w-4 h-4 ${internalWishlisted ? 'fill-[#581923] text-[#581923]' : 'text-[#7A6E65]'}`} />
+            <Heart className={`w-4 h-4 ${internalWishlisted ? 'fill-[#E53935] text-[#E53935]' : 'text-white'}`} />
           </button>
 
           <button
             onClick={handleShareProduct}
-            className="p-2 rounded-full bg-white border border-[#E8DFC0] text-[#4A403A] hover:bg-[#FAF7F2] transition-colors cursor-pointer"
+            className={`w-10 h-10 rounded-full bg-[#4A1019] hover:bg-[#5C1521] border ${
+              isSilverOrDiamond ? 'border-[#94A3B8]/70' : 'border-[#C99A38]/70'
+            } text-white shadow-2xs flex items-center justify-center transition-colors cursor-pointer`}
             title="Share Product"
           >
-            {shareFeedback ? <Check className="w-4 h-4 text-[#287A52]" /> : <Share2 className="w-4 h-4 text-[#7A6E65]" />}
+            {shareFeedback ? <Check className="w-4 h-4 text-[#4ADE80]" /> : <Share2 className="w-4 h-4 text-white" />}
           </button>
 
           <button
             onClick={onClose}
-            className="p-2 rounded-full bg-white hover:bg-[#FAF7F2] text-[#4A403A] hover:text-[#581923] border border-[#E8DFC0] shadow-2xs transition-all cursor-pointer ml-1"
+            className={`w-10 h-10 rounded-full bg-[#4A1019] hover:bg-[#5C1521] text-white border ${
+              isSilverOrDiamond ? 'border-[#94A3B8]/70' : 'border-[#C99A38]/70'
+            } shadow-2xs flex items-center justify-center transition-all cursor-pointer ml-1`}
             aria-label="Close full page"
             title="Close"
           >
@@ -544,38 +761,117 @@ export default function ProductDetailModal({
       {/* ========================================================
           FULL PAGE BODY CONTAINER
           ======================================================== */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <main className="flex-1 max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-10 py-5 sm:py-7 relative z-10">
         
-        {/* Main 2-Column Product Showcase */}
-        <div className="bg-white rounded-3xl border border-[#E8DFC0] shadow-sm p-4 sm:p-6 lg:p-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+        {/* Main 2-Column Product Showcase Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 xl:gap-12 items-start w-full max-w-full">
+          
+          {/* ========================================================
+              LEFT COLUMN: Vertical 5-Thumbnails Strip, Royal Arch Frame & Measurements
+              ======================================================== */}
+          <div className="w-full min-w-0 max-w-full flex flex-col">
             
-            {/* ========================================================
-                LEFT COLUMN: Interconnected Product Showcase & Measurements
-                ======================================================== */}
-            <div className="lg:col-span-5 flex flex-col gap-4">
+            {/* Gallery Section: Vertical Thumbnails Strip + Royal Arch Showcase with Gold Pedestal */}
+            <div className="flex gap-3 sm:gap-4 items-start w-full min-w-0 max-w-full">
               
-              {/* Unified Product Showcase & Measurements Card */}
-              <div className="bg-[#FAF7F2] border border-[#E8DFC0] rounded-3xl p-4 sm:p-5 shadow-xs flex flex-col">
-                
-                {/* 1. Header: Product Measurements Title & Standard Fit Badge */}
-                <div className="flex items-center justify-between mb-3.5 pb-2 border-b border-[#E8DFC0]">
-                  <div className="flex items-center gap-2">
-                    <Ruler className="w-4 h-4 text-[#8C6D2D]" />
-                    <h3 className="font-bold text-sm sm:text-base text-[#241716]">
-                      Product Measurements
-                    </h3>
-                  </div>
-                  <span className="text-xs font-semibold px-3 py-0.5 rounded-full bg-[#F5EFE6] text-[#7A6E65] border border-[#DECDBB]">
-                    Standard Fit
-                  </span>
+              {/* Left Vertical Thumbnails Strip (5 items matching mockup) */}
+              <div className="flex flex-col items-center gap-2 shrink-0 pt-2 w-14 sm:w-16">
+                {/* Up Chevron Button */}
+                <button
+                  type="button"
+                  onClick={() => setActiveImageIndex(prev => (prev === 0 ? thumbnailViews.length - 1 : prev - 1))}
+                  className={`w-7 h-7 flex items-center justify-center ${
+                    isSilverOrDiamond ? 'text-[#64748B] hover:text-[#0F172A]' : 'text-[#8C6D2D] hover:text-[#4A1019]'
+                  } transition-colors cursor-pointer`}
+                  aria-label="Previous view"
+                >
+                  <ChevronUp className="w-5 h-5" />
+                </button>
+
+                {/* 5 Perspective Thumbnails */}
+                <div className="flex flex-col gap-2">
+                  {thumbnailViews.map((thumb, idx) => {
+                    const isActive = activeImageIndex === idx;
+                    return (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => setActiveImageIndex(idx)}
+                        style={{ width: '56px', height: '56px' }}
+                        className={`w-14 h-14 rounded-[14px] overflow-hidden ${
+                          isSilverItem ? 'bg-[#F8FAFC]' : isDiamondItem ? 'bg-[#060D1A]' : 'bg-[#240408]'
+                        } relative transition-all duration-200 cursor-pointer shrink-0 ${
+                          isActive
+                            ? (isSilverItem
+                                ? 'border-2 border-[#64748B] ring-2 ring-[#94A3B8]/50 shadow-md scale-105'
+                                : isDiamondItem
+                                  ? 'border-2 border-[#94A3B8] ring-2 ring-[#38BDF8]/50 shadow-md scale-105'
+                                  : 'border-2 border-[#D4AF37] ring-2 ring-[#D4AF37]/50 shadow-md scale-105')
+                            : (isSilverItem
+                                ? 'border border-[#CBD5E1] hover:border-[#64748B] opacity-85 hover:opacity-100 shadow-2xs'
+                                : isDiamondItem
+                                  ? 'border border-[#334155] hover:border-[#94A3B8] opacity-85 hover:opacity-100 shadow-2xs'
+                                  : 'border border-[#D4AF37]/40 hover:border-[#D4AF37] opacity-85 hover:opacity-100 shadow-2xs')
+                        }`}
+                        title={thumb.label}
+                      >
+                        <img
+                          src={thumb.src}
+                          alt={thumb.label}
+                          className={`w-full h-full object-cover select-none ${
+                            thumb.isMacro ? 'scale-150 origin-center' :
+                            thumb.isBorder ? 'scale-175 origin-top' :
+                            thumb.isClasp ? 'scale-175 origin-bottom' :
+                            thumb.isProfile ? 'scale-160 origin-right' : ''
+                          }`}
+                        />
+                      </button>
+                    );
+                  })}
                 </div>
 
-                {/* 2. Main Product Image Showcase with Overlay Dimension Arrows */}
-                <div className="relative w-full">
-                  <div 
+                {/* Down Chevron Button */}
+                <button
+                  type="button"
+                  onClick={() => setActiveImageIndex(prev => (prev === thumbnailViews.length - 1 ? 0 : prev + 1))}
+                  className={`w-7 h-7 flex items-center justify-center ${
+                    isSilverOrDiamond ? 'text-[#64748B] hover:text-[#0F172A]' : 'text-[#8C6D2D] hover:text-[#4A1019]'
+                  } transition-colors cursor-pointer`}
+                  aria-label="Next view"
+                >
+                  <ChevronDown className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Large Main Showcase Container on Royal Velvet with Ornate Arch & Pedestal */}
+              <div className="flex-1 min-w-0 max-w-full flex flex-col items-center w-full">
+                
+                {/* Royal Arch Outer Wrapper with Crown Finial */}
+                <div className="relative w-full pt-4">
+                  
+                  {/* Ornate Crown Finial sitting atop the central arch apex */}
+                  <div className="absolute top-0 inset-x-0 flex justify-center z-25 pointer-events-none">
+                    <svg viewBox="0 0 160 36" className={`w-36 sm:w-44 h-auto ${isSilverOrDiamond ? 'text-[#94A3B8]' : 'text-[#D4AF37]'} filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.45)]`} fill="currentColor">
+                      {/* Central Royal Finial Motif */}
+                      <path d="M80,2 C76,10 70,14 62,15 C69,18 72,24 74,32 C77,26 83,26 86,32 C88,24 91,18 98,15 C90,14 84,10 80,2 Z" fill={isSilverOrDiamond ? '#F1F5F9' : '#FEEA98'} />
+                      <path d="M80,0 L83,9 L92,9 L85,14 L88,23 L80,18 L72,23 L75,14 L68,9 L77,9 Z" fill={isSilverOrDiamond ? '#94A3B8' : '#C99A38'} opacity="0.9" />
+                      {/* Left & Right Decorative Foliage Filigree */}
+                      <path d="M62,15 C52,14 42,18 32,24 C40,23 48,22 55,24 C50,26 42,30 38,34 C48,31 58,28 66,28 C64,24 63,19 62,15 Z" fill={isSilverOrDiamond ? '#CBD5E1' : '#D4AF37'} />
+                      <path d="M98,15 C108,14 118,18 128,24 C120,23 112,22 105,24 C110,26 118,30 122,34 C112,31 102,28 94,28 C96,24 97,19 98,15 Z" fill={isSilverOrDiamond ? '#CBD5E1' : '#D4AF37'} />
+                    </svg>
+                  </div>
+
+                  {/* Main Image Showcase Frame - Category-Blended Luxury Velvet & Studio Display */}
+                  <div
                     ref={imageContainerRef}
-                    className="relative aspect-square sm:aspect-[4/3] w-full rounded-2xl overflow-hidden bg-white border border-[#EAE2D5] flex items-center justify-center p-4 sm:p-6 select-none group cursor-crosshair shadow-2xs"
+                    className={`relative w-full rounded-[28px] overflow-hidden border-[3.5px] ${
+                      isDiamondItem
+                        ? 'border-[#94A3B8] shadow-[0_18px_45px_rgba(6,13,26,0.5)] bg-gradient-to-br from-[#060D1A] via-[#0E1A33] to-[#040812]'
+                        : isSilverItem
+                          ? 'border-[#94A3B8] shadow-[0_18px_45px_rgba(148,163,184,0.22)] bg-gradient-to-br from-[#FFFFFF] via-[#F8FAFC] to-[#EDF2F7]'
+                          : 'border-[#D4AF37] shadow-[0_18px_45px_rgba(40,4,8,0.4)] bg-gradient-to-br from-[#28040A] via-[#3A0610] to-[#1E0206]'
+                    } select-none cursor-crosshair z-10`}
+                    style={{ aspectRatio: '4 / 3', minHeight: '440px', maxHeight: '540px', width: '100%', maxWidth: '100%' }}
                     onMouseEnter={handlePointerEnter}
                     onMouseMove={handlePointerMove}
                     onMouseLeave={handlePointerLeave}
@@ -583,83 +879,124 @@ export default function ProductDetailModal({
                     onTouchMove={handleTouchMove}
                     onTouchEnd={handleTouchEnd}
                     onTouchCancel={handleTouchEnd}
+                    onClick={() => setIsZoomModalOpen(true)}
                   >
-                    {/* Badge (Top-Left) */}
-                    <div className="absolute top-3 left-3 z-20 pointer-events-none">
-                      <span className="bg-white/95 backdrop-blur-md text-[#241716] text-[11px] sm:text-xs font-semibold px-2.5 py-0.5 rounded-full border border-[#DECDBB] shadow-xs flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#8C6D2D] inline-block animate-pulse"></span>
-                        {product.badge || 'Auspicious'}
+                    {/* Category-Specific Velvet Vignette (Navy for Diamond, White for Silver, Crimson for Gold) */}
+                    <div 
+                      className="absolute inset-0 pointer-events-none"
+                      style={{
+                        background: isDiamondItem
+                          ? 'radial-gradient(ellipse at 50% 50%, rgba(20, 42, 82, 0.45) 0%, rgba(4, 8, 18, 0.95) 100%)'
+                          : isSilverItem
+                            ? 'radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.95) 0%, rgba(226, 232, 240, 0.5) 100%)'
+                            : 'radial-gradient(ellipse at 50% 50%, rgba(140, 20, 38, 0.45) 0%, rgba(24, 2, 6, 0.95) 100%)'
+                      }}
+                    />
+
+                    {/* Top-Left: Hallmark/Certification Pill */}
+                    <div className="absolute top-3.5 left-3.5 sm:top-4 sm:left-4 z-20 pointer-events-none">
+                      <span className={`inline-flex items-center gap-1.5 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-bold tracking-wide uppercase shadow-sm backdrop-blur-md ${
+                        isSilverItem
+                          ? 'bg-white/95 text-[#1E293B] border border-[#CBD5E1]'
+                          : isDiamondItem
+                            ? 'bg-[#060D1A]/90 text-[#F1F5F9] border border-[#94A3B8]/70'
+                            : 'bg-[#FFFDF9] text-[#3B0710] border border-[#DECDBB]'
+                      }`}>
+                        <span className={`${isSilverItem ? 'text-[#0284C7]' : isDiamondItem ? 'text-[#38BDF8]' : 'text-[#C99A38]'} text-[9px] font-bold`}>
+                          {isSilverOrDiamond ? '✦' : '▲'}
+                        </span>
+                        <span>
+                          {isDiamondItem
+                            ? (product.certification || product.badge || 'IGI & GIA Certified Natural')
+                            : isSilverItem
+                              ? (product.certification || product.badge || '92.5 Certified Silver')
+                              : (product.certification || product.badge || 'BIS 916 Laser Inscribed')}
+                        </span>
                       </span>
                     </div>
 
-                    {/* Image Counter (Top-Right) */}
-                    {thumbnailViews.length > 1 && (
-                      <div className="absolute top-3 right-3 z-20 pointer-events-none">
-                        <span className="bg-[#241716]/85 text-[#F3EAD3] text-[11px] font-medium px-2 py-0.5 rounded-md backdrop-blur-xs font-mono shadow-xs">
-                          {activeImageIndex + 1} / {thumbnailViews.length}
-                        </span>
-                      </div>
-                    )}
+                    {/* Top-Right: Circular Magnifying Glass Button */}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsZoomModalOpen(true);
+                      }}
+                      className={`absolute top-3.5 right-3.5 sm:top-4 sm:right-4 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full ${
+                        isSilverItem
+                          ? 'bg-white/85 hover:bg-white text-[#334155] border border-[#CBD5E1]'
+                          : isDiamondItem
+                            ? 'bg-black/50 hover:bg-black/75 text-white border border-white/25'
+                            : 'bg-black/45 hover:bg-black/65 text-[#FFF2B0] border border-[#D4AF37]/80'
+                      } backdrop-blur-md flex items-center justify-center cursor-pointer shadow-md transition-transform active:scale-95`}
+                      title="Zoom details"
+                    >
+                      <ZoomIn className="w-4 h-4" />
+                    </button>
 
-                    {/* Top-Right Quick Action Icons (Zoom & Fullscreen) */}
-                    <div className="absolute top-10 right-3 z-30 flex flex-col gap-1.5 opacity-90 group-hover:opacity-100 transition-opacity">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setIsZoomModalOpen(true);
-                        }}
-                        className="p-1.5 rounded-full bg-white/90 hover:bg-white text-[#4A403A] hover:text-[#581923] shadow-md border border-[#EAE2D5] transition-transform active:scale-95 cursor-pointer"
-                        title="Zoom details"
-                      >
-                        <ZoomIn className="w-3.5 h-3.5" />
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setIsZoomModalOpen(true);
-                        }}
-                        className="p-1.5 rounded-full bg-white/90 hover:bg-white text-[#4A403A] hover:text-[#581923] shadow-md border border-[#EAE2D5] transition-transform active:scale-95 cursor-pointer"
-                        title="Fullscreen preview"
-                      >
-                        <Maximize2 className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
+                    {/* Left & Right Interactive Carousel Navigation Arrows */}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handlePrevImage(e);
+                      }}
+                      className={`absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2 z-25 w-8 h-8 rounded-full ${
+                        isSilverItem
+                          ? 'bg-white/85 hover:bg-white text-[#334155] border border-[#CBD5E1]'
+                          : isDiamondItem
+                            ? 'bg-black/50 hover:bg-black/75 text-white border border-white/25'
+                            : 'bg-black/45 hover:bg-black/75 text-white border border-white/20'
+                      } backdrop-blur-md flex items-center justify-center transition-all active:scale-90 cursor-pointer shadow-md opacity-85 hover:opacity-100`}
+                      aria-label="Previous image"
+                      title="Previous view"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </button>
 
-                    {/* Vertical Length Measurement Arrow (Left Side) */}
-                    <div className="absolute left-2.5 sm:left-3.5 inset-y-5 flex flex-col items-center justify-between text-[#8C6D2D] z-15 pointer-events-none">
-                      <span className="w-2 h-0.5 bg-[#8C6D2D]" />
-                      <div className="h-full w-0.5 border-l border-dashed border-[#8C6D2D] relative flex items-center justify-center">
-                        <span className="absolute -left-12 rotate-[-90deg] bg-[#FAF7F2] text-[10px] sm:text-[11px] font-semibold text-[#8C6D2D] px-1.5 py-0.5 rounded shadow-2xs whitespace-nowrap border border-[#DECDBB]">
-                          {parsedDimensions.length} (Length)
-                        </span>
-                      </div>
-                      <span className="w-2 h-0.5 bg-[#8C6D2D]" />
-                    </div>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleNextImage(e);
+                      }}
+                      className={`absolute right-2.5 sm:right-3 top-1/2 -translate-y-1/2 z-25 w-8 h-8 rounded-full ${
+                        isSilverItem
+                          ? 'bg-white/85 hover:bg-white text-[#334155] border border-[#CBD5E1]'
+                          : isDiamondItem
+                            ? 'bg-black/50 hover:bg-black/75 text-white border border-white/25'
+                            : 'bg-black/45 hover:bg-black/75 text-white border border-white/20'
+                      } backdrop-blur-md flex items-center justify-center transition-all active:scale-90 cursor-pointer shadow-md opacity-85 hover:opacity-100`}
+                      aria-label="Next image"
+                      title="Next view"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
 
-                    {/* Main Product Image */}
-                    <div className="w-full h-full flex items-center justify-center p-2">
+                    {/* Main Jewelry Image - FULL FRAME Edge-to-Edge with Zero Gaps */}
+                    <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
                       <img
                         src={currentImage}
-                        alt={`${product.name} - ${thumbnailViews[activeImageIndex]?.label} view`}
-                        className="max-h-full max-w-[70%] object-contain pointer-events-none select-none filter drop-shadow-[0_8px_20px_rgba(36,23,22,0.1)]"
+                        alt={`${product.name} - ${thumbnailViews[activeImageIndex]?.label}`}
+                        className={`w-full h-full object-cover pointer-events-none select-none transition-transform duration-500 group-hover:scale-105 ${
+                          thumbnailViews[activeImageIndex]?.isMacro ? 'scale-125' :
+                          thumbnailViews[activeImageIndex]?.isBorder ? 'scale-130 origin-top' :
+                          thumbnailViews[activeImageIndex]?.isClasp ? 'scale-130 origin-bottom' :
+                          thumbnailViews[activeImageIndex]?.isProfile ? 'scale-125 origin-right' : ''
+                        }`}
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = isSilverItem ? '/images/product_silver_bowl.jpg' : '/images/product_gold_chain.jpg';
+                        }}
                       />
                     </div>
 
-                    {/* Horizontal Width Measurement Arrow (Bottom Side) */}
-                    <div className="absolute bottom-2.5 sm:bottom-3 inset-x-8 sm:inset-x-12 flex items-center justify-between text-[#8C6D2D] z-15 pointer-events-none">
-                      <span className="h-2 w-0.5 bg-[#8C6D2D]" />
-                      <div className="w-full h-0.5 border-t border-dashed border-[#8C6D2D] relative flex items-center justify-center">
-                        <span className="absolute -top-3.5 bg-[#FAF7F2] text-[10px] sm:text-[11px] font-semibold text-[#8C6D2D] px-1.5 py-0.5 rounded shadow-2xs whitespace-nowrap border border-[#DECDBB]">
-                          {parsedDimensions.width} (Width)
-                        </span>
-                      </div>
-                      <span className="h-2 w-0.5 bg-[#8C6D2D]" />
-                    </div>
-
-                    {/* Optical Zoom Lens */}
+                    {/* Interactive Optical Magnification Lens */}
                     {isZoomLensActive && (
                       <div
-                        className="absolute pointer-events-none border-2 border-white shadow-[0_12px_28px_rgba(0,0,0,0.28)] overflow-hidden z-25 bg-[#FAF6EE]"
+                        className={`absolute pointer-events-none border-2 ${
+                          isSilverOrDiamond ? 'border-[#94A3B8] bg-[#0B1220]' : 'border-[#E8C77D] bg-[#28040A]'
+                        } shadow-[0_16px_36px_rgba(0,0,0,0.65)] overflow-hidden z-30 rounded-2xl`}
                         style={{
                           width: `${lensState.lensSize}px`,
                           height: `${lensState.lensSize}px`,
@@ -675,504 +1012,348 @@ export default function ProductDetailModal({
                             height: `${lensState.containerHeight * lensState.zoomFactor}px`,
                             left: `${lensState.bgLeft}px`,
                             top: `${lensState.bgTop}px`,
-                            padding: `${24 * lensState.zoomFactor}px`,
                           }}
                           className="flex items-center justify-center pointer-events-none select-none"
                         >
                           <img
                             src={currentImage}
-                            alt="Magnified detail"
-                            className="w-full h-full object-contain pointer-events-none select-none max-w-none max-h-none"
+                            alt="Magnified jewellery detail"
+                            className="w-full h-full object-cover pointer-events-none select-none max-w-none max-h-none"
                           />
+                        </div>
+                        {/* Lens crosshair reticle badge */}
+                        <div className={`absolute bottom-2 right-2 px-1.5 py-0.5 rounded bg-black/75 backdrop-blur-xs text-[9px] ${
+                          isSilverOrDiamond ? 'text-[#94A3B8] border-[#94A3B8]/40' : 'text-[#E8C77D] border-[#E8C77D]/40'
+                        } font-mono font-bold border pointer-events-none`}>
+                          2.4× ZOOM
                         </div>
                       </div>
                     )}
 
-                    {/* Bottom-Right "Zoom" Pill Button */}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setIsZoomModalOpen(true);
-                      }}
-                      className="absolute bottom-2.5 right-2.5 z-20 bg-white/95 backdrop-blur-xs hover:bg-white text-[#241716] hover:text-[#581923] text-xs font-semibold px-2.5 py-1 rounded-full shadow-sm border border-[#EAE2D5] flex items-center gap-1.5 transition-all cursor-pointer"
-                    >
-                      <ZoomIn className="w-3.5 h-3.5 text-[#8C6D2D]" />
-                      <span>Zoom</span>
-                    </button>
-                  </div>
-
-                  {/* Carousel Previous & Next Arrow Controls (Only when > 1 image) */}
-                  {thumbnailViews.length > 1 && (
-                    <>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handlePrevImage(e);
-                        }}
-                        className="absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-white/95 hover:bg-white text-[#4A403A] hover:text-[#581923] shadow-md border border-[#EAE2D5] flex items-center justify-center transition-transform active:scale-95 cursor-pointer"
-                        aria-label="Previous image"
-                      >
-                        <ChevronLeft className="w-4 h-4" />
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleNextImage(e);
-                        }}
-                        className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-white/95 hover:bg-white text-[#4A403A] hover:text-[#581923] shadow-md border border-[#EAE2D5] flex items-center justify-center transition-transform active:scale-95 cursor-pointer"
-                        aria-label="Next image"
-                      >
-                        <ChevronRight className="w-4 h-4" />
-                      </button>
-                    </>
-                  )}
-                </div>
-
-                {/* 3. Thumbnails Row (Up to 3 Perspectives - only when multiple views) */}
-                {thumbnailViews.length > 1 && (
-                  <div className={`grid gap-2.5 sm:gap-3 mt-3.5 ${
-                    thumbnailViews.length === 2 ? 'grid-cols-2 max-w-[210px]' :
-                    'grid-cols-3 max-w-[320px]'
-                  }`}>
-                    {thumbnailViews.map((item, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => setActiveImageIndex(idx)}
-                        className={`aspect-square rounded-xl overflow-hidden bg-white p-1.5 transition-all cursor-pointer ${
-                          activeImageIndex === idx
-                            ? 'border-2 border-[#8C6D2D] ring-2 ring-[#8C6D2D]/20 shadow-xs scale-[1.02]'
-                            : 'border border-[#E8DFC0] hover:border-[#8C6D2D] opacity-80 hover:opacity-100'
-                        }`}
-                        title={`${product.name} - ${item.label}`}
-                      >
-                        <img
-                          src={item.src}
-                          alt={`${product.name} ${item.label}`}
-                          className="w-full h-full object-contain"
-                          onError={(e) => {
-                            e.target.onerror = null;
-                            e.target.src = '/images/neutral_product_placeholder.svg';
+                    {/* Bottom Carousel Indicator Dots */}
+                    <div className="absolute bottom-3 inset-x-0 flex justify-center items-center gap-2 z-20 pointer-events-auto">
+                      {thumbnailViews.map((_, idx) => (
+                        <button
+                          key={idx}
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setActiveImageIndex(idx);
                           }}
+                          className={`rounded-full transition-all cursor-pointer ${
+                            activeImageIndex === idx
+                              ? (isSilverOrDiamond ? 'w-2.5 h-2.5 bg-[#475569] ring-2 ring-[#94A3B8]/60 shadow-xs' : 'w-2.5 h-2.5 bg-[#C99A38] ring-2 ring-[#E8C77D]/60 shadow-xs')
+                              : (isSilverOrDiamond ? 'w-2 h-2 bg-[#94A3B8]/50 hover:bg-[#64748B]' : 'w-2 h-2 bg-[#DECDBB] hover:bg-[#C99A38]')
+                          }`}
+                          aria-label={`View perspective ${idx + 1}`}
                         />
-                      </button>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                )}
 
-                {/* 4. Pagination Dots Indicator (Only when > 1 image) */}
-                {thumbnailViews.length > 1 && (
-                  <div className="flex items-center justify-center gap-1.5 mt-2.5 mb-1">
-                    {thumbnailViews.map((_, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => setActiveImageIndex(idx)}
-                        className={`rounded-full transition-all cursor-pointer ${
-                          activeImageIndex === idx
-                            ? 'w-2 h-2 bg-[#8C6D2D]'
-                            : 'w-2 h-2 bg-[#D8CBB8] hover:bg-[#8C6D2D]/60'
-                        }`}
-                        aria-label={`Go to slide ${idx + 1}`}
+                  {/* 3D Tiered Carved Pedestal Stage sitting beneath the frame */}
+                  <div className="relative -mt-2.5 mx-auto w-[92%] sm:w-[88%] z-15 pointer-events-none">
+                    {/* Top Tier with bevel and shine */}
+                    <div className={`h-3 w-full rounded-t-lg shadow-xs ${
+                      isSilverOrDiamond
+                        ? 'bg-gradient-to-r from-[#475569] via-[#E2E8F0] to-[#475569] border-t border-[#F8FAFC]'
+                        : 'bg-gradient-to-r from-[#A57822] via-[#FCEB9C] to-[#A57822] border-t border-[#FFF2B0]'
+                    }`} />
+                    {/* Main Pedestal Block with engraved relief pattern */}
+                    <div className={`h-5 sm:h-6 w-full border-x flex items-center justify-center relative overflow-hidden shadow-md ${
+                      isSilverOrDiamond
+                        ? 'bg-gradient-to-r from-[#334155] via-[#94A3B8] to-[#334155] border-[#64748B]'
+                        : 'bg-gradient-to-r from-[#8B6418] via-[#DDB856] to-[#8B6418] border-[#B88E32]'
+                    }`}>
+                      {/* Ornate repousse relief pattern repeat */}
+                      <div 
+                        className="absolute inset-0 opacity-25"
+                        style={{
+                          backgroundImage: isSilverOrDiamond
+                            ? 'radial-gradient(circle at 8px 8px, #F8FAFC 2px, transparent 2.5px)'
+                            : 'radial-gradient(circle at 8px 8px, #FFFDF0 2px, transparent 2.5px)',
+                          backgroundSize: '16px 16px'
+                        }}
                       />
-                    ))}
-                  </div>
-                )}
-
-                {/* 5. Measurement Spec Rows with Circular Icon Badges */}
-                <div className="mt-3.5 border-t border-[#EDE4D5] divide-y divide-[#EDE4D5] text-xs sm:text-sm">
-                  {/* Length */}
-                  <div className="flex items-center justify-between py-2.5">
-                    <div className="flex items-center gap-2.5 text-[#5C5047]">
-                      <div className="w-7 h-7 rounded-full bg-[#FAF3E8] border border-[#E8DFC0] flex items-center justify-center text-[#8C6D2D] shrink-0">
-                        <Ruler className="w-3.5 h-3.5" />
-                      </div>
-                      <span className="font-medium text-[#4A403A]">Length</span>
+                      <div className={`w-full h-[1px] absolute top-0.5 inset-x-0 ${isSilverOrDiamond ? 'bg-[#F1F5F9]/80' : 'bg-[#FFEFA0]/70'}`} />
+                      <div className={`w-full h-[1px] absolute bottom-0.5 inset-x-0 ${isSilverOrDiamond ? 'bg-[#1E293B]/70' : 'bg-[#61450C]/60'}`} />
                     </div>
-                    <span className="font-semibold text-[#241716] font-mono text-xs sm:text-sm">
-                      {parsedDimensions.length}
-                    </span>
+                    {/* Bottom Stepped Base Tier */}
+                    <div className={`h-2.5 w-[104%] -ml-[2%] rounded-b-xl shadow-[0_12px_24px_rgba(0,0,0,0.35)] ${
+                      isSilverOrDiamond
+                        ? 'bg-gradient-to-r from-[#1E293B] via-[#64748B] to-[#1E293B] border-b border-[#0F172A]'
+                        : 'bg-gradient-to-r from-[#6E4F14] via-[#BF9B42] to-[#6E4F14] border-b border-[#523A0B]'
+                    }`} />
                   </div>
 
-                  {/* Width */}
-                  <div className="flex items-center justify-between py-2.5">
-                    <div className="flex items-center gap-2.5 text-[#5C5047]">
-                      <div className="w-7 h-7 rounded-full bg-[#FAF3E8] border border-[#E8DFC0] flex items-center justify-center text-[#8C6D2D] shrink-0">
-                        <MoveHorizontal className="w-3.5 h-3.5" />
-                      </div>
-                      <span className="font-medium text-[#4A403A]">Width</span>
-                    </div>
-                    <span className="font-semibold text-[#241716] font-mono text-xs sm:text-sm">
-                      {parsedDimensions.width}
-                    </span>
-                  </div>
-
-                  {/* Height / Thickness */}
-                  <div className="flex items-center justify-between py-2.5">
-                    <div className="flex items-center gap-2.5 text-[#5C5047]">
-                      <div className="w-7 h-7 rounded-full bg-[#FAF3E8] border border-[#E8DFC0] flex items-center justify-center text-[#8C6D2D] shrink-0">
-                        <MoveVertical className="w-3.5 h-3.5" />
-                      </div>
-                      <span className="font-medium text-[#4A403A]">Height / Thickness</span>
-                    </div>
-                    <span className="font-semibold text-[#241716] font-mono text-xs sm:text-sm">
-                      {parsedDimensions.thickness}
-                    </span>
-                  </div>
-
-                  {/* Weight */}
-                  <div className="flex items-center justify-between py-2.5">
-                    <div className="flex items-center gap-2.5 text-[#5C5047]">
-                      <div className="w-7 h-7 rounded-full bg-[#FAF3E8] border border-[#E8DFC0] flex items-center justify-center text-[#8C6D2D] shrink-0">
-                        <Weight className="w-3.5 h-3.5" />
-                      </div>
-                      <span className="font-medium text-[#4A403A]">Weight</span>
-                    </div>
-                    <span className="font-bold text-[#581923] text-xs sm:text-sm">
-                      {parsedDimensions.weight}
-                    </span>
-                  </div>
                 </div>
 
-                {/* 6. View Size Guide Button */}
-                <button
-                  onClick={() => {
-                    setMeasurementsTab('sizeguide');
-                    setIsMeasurementsOpen(true);
-                  }}
-                  className="w-full mt-4 py-2.5 px-4 bg-white hover:bg-[#FAF3E8] text-[#241716] border border-[#E8DFC0] hover:border-[#8C6D2D] rounded-xl text-xs sm:text-sm font-semibold flex items-center justify-between transition-colors shadow-2xs cursor-pointer group"
-                >
-                  <span className="flex items-center gap-2">
-                    <Ruler className="w-4 h-4 text-[#8C6D2D]" />
-                    <span>View Size Guide</span>
-                  </span>
-                  <ChevronRight className="w-4 h-4 text-[#8C6D2D] group-hover:translate-x-0.5 transition-transform" />
-                </button>
-
-              </div>
-
-              {/* Interactive Tool Cards Row (Try It On & 360° View) */}
-              <div className="grid grid-cols-2 gap-3">
-                {/* Card 1: Try It On */}
-                <button
-                  onClick={() => setIsTryOnOpen(true)}
-                  className="p-3 bg-[#FAF7F2] hover:bg-[#FAF3E8] border border-[#E8DFC0] hover:border-[#8C6D2D] rounded-2xl flex items-center justify-between text-left transition-all shadow-2xs hover:shadow-xs cursor-pointer group"
-                >
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <div className="w-9 h-9 rounded-full bg-white border border-[#DECDBB] text-[#8C6D2D] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                      <Sparkles className="w-4 h-4 text-[#8C6D2D]" />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-1.5">
-                        <span className="font-bold text-xs sm:text-sm text-[#241716] truncate">
-                          Try It On
-                        </span>
-                        <span className="bg-[#581923] text-white text-[9px] font-bold px-1.5 py-0.2 rounded-full uppercase tracking-wider">
-                          New
-                        </span>
-                      </div>
-                      <p className="text-[10px] sm:text-[11px] text-[#7A6E65] truncate">
-                        See how it looks on you
-                      </p>
-                    </div>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-[#8C6D2D] group-hover:translate-x-0.5 transition-transform shrink-0 ml-1" />
-                </button>
-
-                {/* Card 2: 360° View */}
-                <button
-                  onClick={() => setIs360Open(true)}
-                  className="p-3 bg-[#FAF7F2] hover:bg-[#FAF3E8] border border-[#E8DFC0] hover:border-[#8C6D2D] rounded-2xl flex items-center justify-between text-left transition-all shadow-2xs hover:shadow-xs cursor-pointer group"
-                >
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <div className="w-9 h-9 rounded-full bg-white border border-[#DECDBB] text-[#8C6D2D] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                      <RotateCcw className="w-4 h-4 text-[#8C6D2D]" />
-                    </div>
-                    <div className="min-w-0">
-                      <span className="font-bold text-xs sm:text-sm text-[#241716] block truncate">
-                        360° View
-                      </span>
-                      <p className="text-[10px] sm:text-[11px] text-[#7A6E65] truncate">
-                        Explore from every angle
-                      </p>
-                    </div>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-[#8C6D2D] group-hover:translate-x-0.5 transition-transform shrink-0 ml-1" />
-                </button>
               </div>
 
             </div>
 
-            {/* ========================================================
-                RIGHT COLUMN: Product Info, Specs, Measurements & Actions
-                ======================================================== */}
-            <div className="lg:col-span-7 flex flex-col justify-between space-y-6">
-              
-              {/* Top Section: Product Details & Specs */}
-              <div className="flex flex-col">
-                {/* 1. Product Code at the top */}
-                <div className="flex items-center gap-2.5 flex-wrap mb-2">
-                  <span className="text-[11px] uppercase tracking-widest text-[#8C6D2D] font-bold">
-                    Product Code:
-                  </span>
-                  <span className="font-mono text-xs font-semibold text-[#241716] bg-[#FAF5EB] px-2.5 py-0.5 rounded border border-[#E8DFC0] shadow-2xs">
-                    {productCode}
-                  </span>
-                  <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-[#F3EAD8] text-[#63574F] capitalize border border-[#E8DFC0]">
-                    {product.collection === 'wedding' ? 'Traditional Collection' : (product.collection ? `${product.collection} Collection` : `${product.category || 'Gold'} Jewellery`)}
+            {/* Product Measurements Box (Directly below showcase) */}
+            <div className="mt-6 bg-[#FFFDF9] border border-[#DECDBB] rounded-[20px] shadow-xs overflow-hidden w-full max-w-full">
+              {/* Header: Burgundy velvet ribbon tab + gold or silver flourish */}
+              <div className="flex items-center justify-between border-b border-[#EDE4D5] pr-4">
+                <div className={`inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#4A1019] via-[#3B0710] to-[#28040A] text-white rounded-br-[18px] border-r border-b ${
+                  isSilverOrDiamond ? 'border-[#94A3B8]' : 'border-[#C99A38]'
+                } shadow-xs`}>
+                  <Tag className={`w-3.5 h-3.5 ${isSilverOrDiamond ? 'text-[#E2E8F0]' : 'text-[#E8C77D]'}`} />
+                  <span className="font-serif font-bold text-xs sm:text-[13px] tracking-wide">
+                    Product Measurements
                   </span>
                 </div>
 
-                {/* 2. Product Name below Product Code */}
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#241716] leading-snug">
-                  {product.name}
-                </h1>
-
-                {/* 3. Price & Discount below Product Name */}
-                <div className="flex items-baseline gap-3 mt-2.5">
-                  <span className="text-2xl sm:text-3xl font-bold text-[#581923]">
-                    {displayPrice}
-                  </span>
-                  <span className="text-sm sm:text-base line-through text-[#8C7E75]">
-                    {originalPriceFormatted}
-                  </span>
-                  <span className="text-xs sm:text-sm font-bold text-[#287A52] bg-[#EAF5EE] px-2.5 py-0.5 rounded-md">
-                    (10% OFF)
-                  </span>
-                </div>
-
-                {/* Two-Column Specifications Table */}
-                <div className="mt-5 pt-3.5 border-t border-[#E8DFC0] space-y-2 text-xs text-[#4A403A]">
-                  <div className="flex justify-between py-1 border-b border-[#FAF0DE]">
-                    <span className="text-[#7A6E65]">Purity & Hallmark</span>
-                    <span className="font-semibold text-[#241716] text-right">
-                      {product.purity || product.details || '916 BIS Hallmarked 22 Karat Gold'}
-                    </span>
-                  </div>
-                  <div className="flex justify-between py-1 border-b border-[#FAF0DE]">
-                    <span className="text-[#7A6E65]">Gross Weight</span>
-                    <span className="font-semibold text-[#241716]">
-                      {product.weight || parsedDimensions.weight}
-                    </span>
-                  </div>
-                  <div className="flex justify-between py-1 border-b border-[#FAF0DE]">
-                    <span className="text-[#7A6E65]">Dimensions</span>
-                    <span className="font-semibold text-[#241716] text-right">
-                      {product.dimensions || `${parsedDimensions.length} ├ù ${parsedDimensions.width} with secure screw clasp`}
-                    </span>
-                  </div>
-                  <div className="flex justify-between py-1 border-b border-[#FAF0DE]">
-                    <span className="text-[#7A6E65]">Craftsmanship</span>
-                    <span className="font-semibold text-[#241716] text-right">
-                      {product.craftsmanship || 'Chettinad Peacock Repouss├⌐ Art'}
-                    </span>
-                  </div>
-                  <div className="flex justify-between py-1">
-                    <span className="text-[#7A6E65]">Certification</span>
-                    <span className="font-semibold text-[#241716] text-right">
-                      {product.certification || 'BIS Hallmark & Certified Laser Inscription'}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Stock & Delivery Status */}
-                <div className="mt-4 flex items-center gap-1.5 text-xs font-semibold text-[#287A52]">
-                  <CheckCircle2 className="w-4 h-4 text-[#287A52]" />
-                  <span>Available for immediate delivery</span>
+                {/* Center flourish ornament */}
+                <div className={`hidden sm:flex items-center gap-2 ${isSilverOrDiamond ? 'text-[#94A3B8]/70' : 'text-[#C99A38]/70'}`}>
+                  <span className={`w-10 h-[1px] bg-gradient-to-r from-transparent ${isSilverOrDiamond ? 'to-[#94A3B8]/60' : 'to-[#C99A38]/60'}`} />
+                  <span className="text-[10px]">❖</span>
+                  <span className={`w-10 h-[1px] bg-gradient-to-l from-transparent ${isSilverOrDiamond ? 'to-[#94A3B8]/60' : 'to-[#C99A38]/60'}`} />
                 </div>
               </div>
 
-              {/* Virtual Shopping Experience Section */}
-              <div className="pt-4 border-t border-[#E8DFC0]">
-                <div className="mb-3.5">
-                  <h3 className="text-base sm:text-lg font-bold text-[#241716]">
-                    Experience Jewellery Shopping
-                  </h3>
+              {/* Body: 4 circular metric badges + View Size Guide button */}
+              <div className="p-4 sm:p-5 flex items-center justify-between gap-3 sm:gap-4 flex-wrap">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 flex-1">
+                  {/* 1. Length */}
+                  <div className="flex items-center gap-2.5">
+                    <div className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 shadow-2xs ${
+                      isSilverOrDiamond
+                        ? 'bg-[#F1F5F9] border border-[#CBD5E1] text-[#475569]'
+                        : 'bg-[#FAF3E5] border border-[#E8C77D] text-[#8C6D2D]'
+                    }`}>
+                      <MoveHorizontal className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="block text-[10.5px] text-[#7A6E65] font-medium leading-none">Length</span>
+                      <span className="block text-xs sm:text-[13px] font-bold text-[#241716] font-mono mt-1">
+                        {parsedDimensions.length}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* 2. Width */}
+                  <div className="flex items-center gap-2.5">
+                    <div className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 shadow-2xs ${
+                      isSilverOrDiamond
+                        ? 'bg-[#F1F5F9] border border-[#CBD5E1] text-[#475569]'
+                        : 'bg-[#FAF3E5] border border-[#E8C77D] text-[#8C6D2D]'
+                    }`}>
+                      <MoveHorizontal className="w-4 h-4 rotate-90" />
+                    </div>
+                    <div>
+                      <span className="block text-[10.5px] text-[#7A6E65] font-medium leading-none">Width</span>
+                      <span className="block text-xs sm:text-[13px] font-bold text-[#241716] font-mono mt-1">
+                        {parsedDimensions.width}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* 3. Height / Thickness */}
+                  <div className="flex items-center gap-2.5">
+                    <div className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 shadow-2xs ${
+                      isSilverOrDiamond
+                        ? 'bg-[#F1F5F9] border border-[#CBD5E1] text-[#475569]'
+                        : 'bg-[#FAF3E5] border border-[#E8C77D] text-[#8C6D2D]'
+                    }`}>
+                      <MoveVertical className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="block text-[10.5px] text-[#7A6E65] font-medium leading-none">Height / Thickness</span>
+                      <span className="block text-xs sm:text-[13px] font-bold text-[#241716] font-mono mt-1">
+                        {parsedDimensions.thickness}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* 4. Weight */}
+                  <div className="flex items-center gap-2.5">
+                    <div className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 shadow-2xs ${
+                      isSilverOrDiamond
+                        ? 'bg-[#F1F5F9] border border-[#CBD5E1] text-[#475569]'
+                        : 'bg-[#FAF3E5] border border-[#E8C77D] text-[#8C6D2D]'
+                    }`}>
+                      <Scale className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="block text-[10.5px] text-[#7A6E65] font-medium leading-none">Weight</span>
+                      <span className="block text-xs sm:text-[13px] font-bold text-[#241716] font-mono mt-1">
+                        {parsedDimensions.weight}
+                      </span>
+                    </div>
+                  </div>
                 </div>
 
-                {/* Two Experience Cards Side by Side */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  
-                  {/* Card 1: Live Video Consultation */}
-                  <div className="bg-[#FAF1ED] border border-[#F2D7D0] rounded-2xl p-4 sm:p-5 flex flex-col justify-between relative overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
-                    <div>
-                      <div className="w-9 h-9 rounded-full bg-[#581923] text-white flex items-center justify-center shadow-xs mb-2.5">
-                        <Video className="w-4 h-4 text-[#F3EAD3]" />
-                      </div>
-                      <h4 className="font-bold text-sm sm:text-base text-[#241716]">
-                        Live Video Consultation
-                      </h4>
-                      <p className="text-xs text-[#6B5A4E] mt-1 mb-3.5 leading-relaxed">
-                        Connect with our jewellery experts for a personalized shopping experience.
-                      </p>
-                    </div>
-                    <button
-                      onClick={() => setIsVideoModalOpen(true)}
-                      className="bg-[#581923] hover:bg-[#431219] text-white text-xs font-semibold px-4 py-2 rounded-full inline-flex items-center justify-center gap-1.5 shadow-sm transition-all cursor-pointer w-fit group"
-                    >
-                      <span>Book Video Call</span>
-                      <ChevronRight className="w-3.5 h-3.5 text-white/80 group-hover:translate-x-0.5 transition-transform" />
-                    </button>
-                  </div>
+                {/* View Size Guide Button */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMeasurementsTab('sizeguide');
+                    setIsMeasurementsOpen(true);
+                  }}
+                  className={`bg-[#FFFDF9] hover:bg-[#FAF3E8] border border-[#DECDBB] ${
+                    isSilverOrDiamond ? 'hover:border-[#64748B]' : 'hover:border-[#8C6D2D]'
+                  } text-[#3B0710] font-semibold text-xs px-3.5 py-2.5 rounded-xl shadow-2xs flex items-center gap-2 transition-colors cursor-pointer shrink-0`}
+                >
+                  <Ruler className={`w-3.5 h-3.5 ${isSilverOrDiamond ? 'text-[#64748B]' : 'text-[#8C6D2D]'}`} />
+                  <span>View Size Guide</span>
+                </button>
+              </div>
+            </div>
 
-                  {/* Card 2: WhatsApp Assistance */}
-                  <div className="bg-[#EBF5EE] border border-[#D5EADB] rounded-2xl p-4 sm:p-5 flex flex-col justify-between relative overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
-                    <div>
-                      <div className="w-9 h-9 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-xs mb-2.5">
-                        <MessageCircle className="w-4 h-4 text-white" />
-                      </div>
-                      <h4 className="font-bold text-sm sm:text-base text-[#241716]">
-                        WhatsApp Assistance
-                      </h4>
-                      <p className="text-xs text-[#6B5A4E] mt-1 mb-3.5 leading-relaxed">
-                        Chat with our jewellery experts about the selected product.
-                      </p>
-                    </div>
-                    <button
-                      onClick={handleWhatsAppChat}
-                      className="bg-[#287A52] hover:bg-[#1E5C3D] text-white text-xs font-semibold px-4 py-2 rounded-full inline-flex items-center justify-center gap-1.5 shadow-sm transition-all cursor-pointer w-fit group"
-                    >
-                      <span>Chat on WhatsApp</span>
-                      <ChevronRight className="w-3.5 h-3.5 text-white/80 group-hover:translate-x-0.5 transition-transform" />
-                    </button>
-                  </div>
+            {/* Showroom Concierge & Personal Assistance Card - Perfectly Proportioned to Match Column Height */}
+            <div className="mt-3.5 sm:mt-4 bg-[#FFFDF9] border border-[#DECDBB] rounded-[20px] shadow-xs overflow-hidden w-full max-w-full">
+              {/* Header: Burgundy velvet ribbon tab + Live Status */}
+              <div className="flex items-center justify-between border-b border-[#EDE4D5] pr-3">
+                <div className={`inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#4A1019] via-[#3B0710] to-[#28040A] text-white rounded-br-[16px] border-r border-b ${
+                  isSilverOrDiamond ? 'border-[#94A3B8]' : 'border-[#C99A38]'
+                } shadow-xs`}>
+                  <Video className={`w-3.5 h-3.5 ${isSilverOrDiamond ? 'text-[#E2E8F0]' : 'text-[#E8C77D]'}`} />
+                  <span className="font-serif font-bold text-xs tracking-wide">
+                    Live Showroom Concierge
+                  </span>
+                </div>
 
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-bold">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>Available Now</span>
                 </div>
               </div>
 
-              {/* 5-Second Voice Recording Component (Matches Reference Design) */}
-              <div className="pt-3 pb-1">
-                <div className="relative flex items-center justify-between py-2 sm:py-2.5 px-3.5 sm:px-6 rounded-full bg-gradient-to-r from-[#FFF5F3] via-[#FDF0ED] to-[#FFF6F4] border border-[#F5D7D1] shadow-xs overflow-hidden">
-                  
+              {/* Body: Direct Jeweller Connection Options */}
+              <div className="p-3 sm:p-3.5 space-y-2.5">
+                {/* 2 Quick CTA Buttons: Book Video Consultation & WhatsApp */}
+                <div className="grid grid-cols-2 gap-2 sm:gap-2.5">
+                  {/* 1. Live Video Consultation */}
+                  <button
+                    type="button"
+                    onClick={() => setIsVideoModalOpen(true)}
+                    className="px-3 py-2 rounded-xl bg-gradient-to-r from-[#4A1019] via-[#3B0710] to-[#28040A] hover:from-[#5C1521] hover:to-[#38060F] text-white font-semibold text-[11px] sm:text-xs flex items-center justify-center gap-1.5 shadow-2xs hover:shadow transition-all cursor-pointer group"
+                  >
+                    <Video className="w-3.5 h-3.5 text-[#F3EAD3]" />
+                    <span className="truncate">1-on-1 Video Call</span>
+                  </button>
+
+                  {/* 2. WhatsApp Assistance */}
+                  <button
+                    type="button"
+                    onClick={handleWhatsAppChat}
+                    className="px-3 py-2 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white font-semibold text-[11px] sm:text-xs flex items-center justify-center gap-1.5 shadow-2xs hover:shadow transition-all cursor-pointer group"
+                  >
+                    <MessageCircle className="w-3.5 h-3.5 text-white" />
+                    <span className="truncate">Instant WhatsApp</span>
+                  </button>
+                </div>
+
+                {/* 5-Second Voice Recording Component */}
+                <div className="relative flex items-center justify-between py-1.5 px-2.5 sm:px-3.5 rounded-xl bg-[#FAF5EB] border border-[#DECDBB] shadow-2xs overflow-hidden">
                   {/* Left: Audio Waveform Animation Bars */}
-                  <div className="flex items-center gap-[3px] shrink-0 pr-1 sm:pr-2">
-                    {[10, 16, 24, 18, 30, 22, 14, 20, 26, 16, 12, 18, 22, 14, 8].map((h, i) => (
+                  <div className="flex items-center gap-[2.5px] shrink-0 pr-1">
+                    {[10, 16, 22, 16, 26, 18, 12, 20, 24, 14].map((h, i) => (
                       <span
                         key={i}
                         style={{
-                          height: `${h}px`,
+                          height: `${h * 0.65}px`,
                           animationDelay: `${(i % 5) * 0.12}s`,
                         }}
-                        className={`w-[2.5px] sm:w-[3px] rounded-full transition-all duration-200 ${
+                        className={`w-[2px] rounded-full transition-all duration-200 ${
                           recordingState === 'recording' || isPlayingAudio
-                            ? 'bg-[#581923] animate-audio-wave'
-                            : 'bg-[#F0C2B8]'
+                            ? 'bg-[#4A1019] animate-audio-wave'
+                            : 'bg-[#DECDBB]'
                         }`}
                       />
                     ))}
                   </div>
 
-                  {/* Center-Left: Microphone / Play Action Button with Soft Halo */}
+                  {/* Center-Left: Microphone / Play Action Button */}
                   <div className="relative flex items-center justify-center shrink-0">
                     {recordingState === 'recording' && (
-                      <span className="absolute inset-0 rounded-full bg-[#581923]/25 animate-ping" />
+                      <span className="absolute inset-0 rounded-full bg-[#4A1019]/25 animate-ping" />
                     )}
                     
                     {recordingState === 'idle' && (
-                      <div className="p-1 rounded-full bg-[#581923]/10 ring-4 ring-[#581923]/5">
+                      <div className="p-0.5 rounded-full bg-[#4A1019]/10 ring-2 ring-[#4A1019]/5">
                         <button
+                          type="button"
                           onClick={startVoiceRecording}
-                          className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#581923] text-white flex items-center justify-center shadow-md hover:bg-[#431219] transition-transform active:scale-95 cursor-pointer"
+                          className="w-7 h-7 rounded-full bg-[#4A1019] text-white flex items-center justify-center shadow-xs hover:bg-[#350911] transition-transform active:scale-95 cursor-pointer"
                           title="Tap to Record Voice"
                           aria-label="Tap to Record Voice"
                         >
-                          <Mic className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                          <Mic className="w-3.5 h-3.5 text-white" />
                         </button>
                       </div>
                     )}
 
                     {recordingState === 'recording' && (
-                      <div className="p-1 rounded-full bg-[#581923]/20 ring-4 ring-[#581923]/10">
+                      <div className="p-0.5 rounded-full bg-[#4A1019]/20 ring-2 ring-[#4A1019]/10">
                         <button
+                          type="button"
                           onClick={stopVoiceRecordingEarly}
-                          className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#581923] text-white flex items-center justify-center shadow-md hover:bg-[#431219] transition-transform active:scale-95 cursor-pointer animate-pulse"
+                          className="w-7 h-7 rounded-full bg-[#4A1019] text-white flex items-center justify-center shadow-xs hover:bg-[#350911] transition-transform active:scale-95 cursor-pointer animate-pulse"
                           title="Recording... Tap to stop"
                           aria-label="Recording... Tap to stop"
                         >
-                          <Square className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
+                          <Square className="w-3 h-3 fill-white text-white" />
                         </button>
                       </div>
                     )}
 
                     {recordingState === 'recorded' && (
-                      <div className="p-1 rounded-full bg-[#581923]/10 ring-4 ring-[#581923]/5">
+                      <div className="p-0.5 rounded-full bg-[#4A1019]/10 ring-2 ring-[#4A1019]/5">
                         <button
+                          type="button"
                           onClick={toggleAudioPlayback}
-                          className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#581923] text-white flex items-center justify-center shadow-md hover:bg-[#431219] transition-transform active:scale-95 cursor-pointer"
+                          className="w-7 h-7 rounded-full bg-[#4A1019] text-white flex items-center justify-center shadow-xs hover:bg-[#350911] transition-transform active:scale-95 cursor-pointer"
                           title={isPlayingAudio ? 'Pause Voice Note' : 'Listen to Voice Note'}
                           aria-label={isPlayingAudio ? 'Pause Voice Note' : 'Listen to Voice Note'}
                         >
                           {isPlayingAudio ? (
-                            <Pause className="w-4 h-4 text-white fill-white" />
+                            <Pause className="w-3 h-3 text-white fill-white" />
                           ) : (
-                            <Play className="w-4 h-4 text-white fill-white ml-0.5" />
+                            <Play className="w-3 h-3 text-white fill-white ml-0.5" />
                           )}
                         </button>
                       </div>
                     )}
                   </div>
 
-                  {/* Middle Text: Title & Subtitle / Countdown Info */}
-                  <div className="flex-1 min-w-0 px-2 sm:px-3">
+                  {/* Middle Text: Title & Subtitle */}
+                  <div className="flex-1 min-w-0 px-2 sm:px-2.5">
                     {recordingState === 'idle' && (
-                      <>
-                        <span className="font-bold text-xs sm:text-[13px] text-[#241716] leading-tight block truncate">
-                          Tap to Record Voice
-                        </span>
-                        <span className="text-[10px] sm:text-[11px] text-[#7A6E65] leading-tight block truncate mt-0.5">
-                          Speak in 5 seconds
-                        </span>
-                      </>
+                      <span className="font-bold text-[11px] sm:text-[11.5px] text-[#241716] leading-tight block truncate">
+                        Quick Voice Inquiry <span className="text-[10px] font-normal text-[#7A6E65]">(Tap mic to record 5s)</span>
+                      </span>
                     )}
 
                     {recordingState === 'recording' && (
-                      <>
-                        <span className="font-bold text-xs sm:text-[13px] text-[#581923] leading-tight flex items-center gap-1.5 truncate">
-                          <span className="w-2 h-2 rounded-full bg-[#581923] animate-ping" />
-                          <span>Recording Voice...</span>
-                        </span>
-                        <span className="text-[10px] sm:text-[11px] text-[#7A6E65] leading-tight block truncate mt-0.5">
-                          Auto-stops in {recordCountdown}s
-                        </span>
-                      </>
+                      <span className="font-bold text-[11px] sm:text-[11.5px] text-[#4A1019] leading-tight flex items-center gap-1.5 truncate">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#4A1019] animate-ping" />
+                        <span>Recording Voice...</span>
+                      </span>
                     )}
 
                     {recordingState === 'recorded' && (
-                      <>
-                        <span className="font-bold text-xs sm:text-[13px] text-[#241716] leading-tight flex items-center gap-1.5 truncate">
-                          <Check className="w-3.5 h-3.5 text-[#287A52]" />
-                          <span>Voice Note Recorded</span>
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-[11px] sm:text-[11.5px] text-[#241716] leading-tight flex items-center gap-1 truncate">
+                          <Check className="w-3 h-3 text-[#287A52]" />
+                          <span>Voice Recorded</span>
                         </span>
-                        <div className="flex items-center gap-2 mt-0.5">
-                          <span className="text-[10px] sm:text-[11px] text-[#581923] font-medium">
-                            {isPlayingAudio ? 'Playing back...' : 'Tap to listen'}
-                          </span>
-                          <button
-                            onClick={resetVoiceRecording}
-                            className="text-[10px] text-[#7A6E65] hover:text-[#581923] underline cursor-pointer"
-                          >
-                            Re-record
-                          </button>
-                        </div>
-                      </>
+                        <button
+                          type="button"
+                          onClick={resetVoiceRecording}
+                          className="text-[10px] text-[#7A6E65] hover:text-[#4A1019] underline cursor-pointer"
+                        >
+                          Reset
+                        </button>
+                      </div>
                     )}
                   </div>
 
-                  {/* Right: Stopwatch Icon & 5s Timer Display */}
-                  <div className="flex items-center gap-1.5 shrink-0 text-[#581923]">
-                    <svg
-                      viewBox="0 0 24 24"
-                      className="w-4 h-4 sm:w-5 sm:h-5 text-[#581923] shrink-0"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <circle cx="12" cy="13" r="8" />
-                      <path d="M12 9v4l2.5 2" />
-                      <path d="M10 2h4" />
-                      <path d="M12 2v3" />
-                    </svg>
-                    <span className="font-bold text-xs sm:text-sm font-mono tracking-tight">
+                  {/* Right: 5s indicator */}
+                  <div className="flex items-center gap-1 shrink-0 text-[#4A1019]">
+                    <span className="font-bold text-[10.5px] sm:text-[11px] font-mono">
                       {recordingState === 'recording' ? `${recordCountdown}s` : '5s'}
                     </span>
                   </div>
@@ -1186,28 +1367,357 @@ export default function ProductDetailModal({
                       className="hidden"
                     />
                   )}
-
                 </div>
               </div>
-
-              {/* Purchase Actions Bar */}
-              <div className="pt-2">
-                {/* Primary CTA: Reserve Piece / Add to Bag */}
-                <button
-                  onClick={() => {
-                    onAddToCart(product);
-                    onClose();
-                  }}
-                  className="w-full bg-[#581923] hover:bg-[#431219] text-white py-3.5 sm:py-4 px-6 rounded-full text-sm sm:text-base font-semibold tracking-wide transition-all duration-200 cursor-pointer shadow-md hover:shadow-lg flex items-center justify-center gap-2.5 active:scale-[0.99]"
-                >
-                  <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5 text-[#F3EAD3]" />
-                  <span>Add to Cart</span>
-                </button>
-              </div>
-
             </div>
 
           </div>
+
+          {/* ========================================================
+              RIGHT COLUMN: Heritage Tagline, Title, Description, Pricing,
+              3 Highlight Cards, Enclosed Specifications Box, Actions,
+              AR / 3D Pills, and Solid Royal Burgundy Velvet Trust Bar
+              ======================================================== */}
+          <div className="w-full min-w-0 max-w-full flex flex-col justify-start">
+            
+            {/* 1. Ornate Lotus Emblem & Category Tagline */}
+            <div className="flex flex-col items-center sm:items-start mb-3 sm:mb-3.5">
+              <div className={`flex items-center gap-3 mb-1.5 ${isSilverOrDiamond ? 'text-[#64748B]' : 'text-[#C99A38]'}`}>
+                <span className={`w-12 sm:w-16 h-[1px] bg-gradient-to-r from-transparent ${isSilverOrDiamond ? 'to-[#94A3B8]/70' : 'to-[#C99A38]/70'}`} />
+                <span className="text-[10px]">✦</span>
+                <svg className={`w-5 h-5 ${isSilverOrDiamond ? 'text-[#64748B]' : 'text-[#C99A38]'}`} viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 3c-1.5 2.5-3 5-3 7 0 1.66 1.34 3 3 3s3-1.34 3-3c0-2-1.5-4.5-3-7zm-4.5 5c-1.5 2-2.5 4.2-2.5 5.8 0 2.32 1.88 4.2 4.2 4.2.8 0 1.55-.22 2.2-.6-1.1-1.3-1.7-2.9-1.7-4.6 0-1.8.6-3.4 1.7-4.8H7.5zm9 0c1.1 1.4 1.7 3 1.7 4.8 0 1.7-.6 3.3-1.7 4.6.65.38 1.4.6 2.2.6 2.32 0 4.2-1.88 4.2-4.2 0-1.6-1-3.8-2.5-5.8h-3.9zM12 15c-1.1 0-2.1-.4-2.8-1.1-.7.7-1.7 1.1-2.8 1.1-2.2 0-4 1.8-4 4 0 1.1.9 2 2 2h15.6c1.1 0 2-.9 2-2 0-2.2-1.8-4-4-4-1.1 0-2.1-.4-2.8-1.1-.7.7-1.7 1.1-2.8 1.1z"/>
+                </svg>
+                <span className="text-[10px]">✦</span>
+                <span className={`w-12 sm:w-16 h-[1px] bg-gradient-to-l from-transparent ${isSilverOrDiamond ? 'to-[#94A3B8]/70' : 'to-[#C99A38]/70'}`} />
+              </div>
+              <span className={`text-[11px] sm:text-xs font-bold tracking-[0.28em] uppercase ${isSilverOrDiamond ? 'text-[#475569]' : 'text-[#A3702C]'} font-serif`}>
+                {collectionTagline}
+              </span>
+            </div>
+
+            {/* 2. Majestic Product Title - With generous line-height and letter-spacing to prevent text collisions */}
+            <h1
+              className="text-2xl sm:text-3xl lg:text-[32px] xl:text-[36px] font-bold text-[#241716] leading-[1.38] sm:leading-[1.42] tracking-normal mb-3.5 sm:mb-4.5 font-serif"
+              style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+            >
+              {product.name}
+            </h1>
+
+            {/* 3. Short Heritage Description */}
+            <p className="text-xs sm:text-sm text-[#5C4F4A] leading-[1.65] mb-4 sm:mb-5 max-w-2xl">
+              {product.description || 'Masterpiece 22K gold bridal waistband embossed with Ashtalakshmi central icon, surrounded by dancing peacocks and uncut cabochon rubies.'}
+            </p>
+
+            {/* 4. Luxury Pricing Row */}
+            <div className="flex items-baseline gap-3.5 mb-5 flex-wrap">
+              <span
+                className="text-3xl sm:text-4xl font-bold font-serif text-[#241716] tracking-tight"
+                style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+              >
+                {displayPrice}
+              </span>
+              <span className="text-base sm:text-lg line-through text-[#8C7E75] font-serif">
+                {originalPriceFormatted}
+              </span>
+              <span className={`font-bold text-xs sm:text-[13px] px-3.5 py-1 rounded-full shadow-2xs ${
+                isSilverOrDiamond
+                  ? 'bg-[#E2E8F0] text-[#1E293B] border border-[#CBD5E1]'
+                  : 'bg-[#FEECA8] text-[#8C6500] border border-[#F4D068]'
+              }`}>
+                10% OFF
+              </span>
+            </div>
+
+            {/* 5. 3 Feature Highlight Badges in a Row */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 mb-5">
+              {/* Card 1: Hallmark / Certification */}
+              <div className="p-3 rounded-2xl bg-gradient-to-b from-[#FFFDF9] to-[#FAF5EB] border border-[#DECDBB] shadow-2xs flex items-center gap-3">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 shadow-2xs ${
+                  isDiamondItem 
+                    ? 'bg-[#E0F2FE] border border-[#7DD3FC] text-[#0284C7]' 
+                    : isSilverItem
+                      ? 'bg-[#F1F5F9] border border-[#CBD5E1] text-[#475569]'
+                      : 'bg-[#FAF3E5] border border-[#E8C77D] text-[#C99A38]'
+                }`}>
+                  {isDiamondItem ? (
+                    <Gem className="w-5 h-5 text-[#0284C7]" />
+                  ) : isSilverItem ? (
+                    <Award className="w-5 h-5 text-[#475569]" />
+                  ) : (
+                    <ShieldCheck className="w-5 h-5" />
+                  )}
+                </div>
+                <div className="min-w-0">
+                  <span className="block font-bold text-xs text-[#241716] truncate">
+                    {isDiamondItem 
+                      ? 'IGI / GIA' 
+                      : (isSilverItem ? '925 Silver' : 'BIS 916')}
+                  </span>
+                  <span className="block text-[10.5px] text-[#7A6E65] truncate">
+                    {isDiamondItem 
+                      ? 'Certified Natural' 
+                      : (isSilverItem ? 'Assay Certified' : 'Laser Inscribed')}
+                  </span>
+                </div>
+              </div>
+
+              {/* Card 2: Purity / Carat */}
+              <div className="p-3 rounded-2xl bg-gradient-to-b from-[#FFFDF9] to-[#FAF5EB] border border-[#DECDBB] shadow-2xs flex items-center gap-3">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 shadow-2xs ${
+                  isDiamondItem 
+                    ? 'bg-[#E0F2FE] border border-[#7DD3FC] text-[#0284C7]' 
+                    : isSilverItem
+                      ? 'bg-[#F1F5F9] border border-[#CBD5E1] text-[#475569]'
+                      : 'bg-[#FAF3E5] border border-[#E8C77D] text-[#C99A38]'
+                }`}>
+                  <Award className="w-5 h-5" />
+                </div>
+                <div className="min-w-0">
+                  <span className="block font-bold text-xs text-[#241716] truncate">
+                    {isDiamondItem 
+                      ? (product.carat || '1.25 Carat') 
+                      : isSilverItem
+                        ? '92.5% Purity'
+                        : (product.purity ? (product.purity.includes('24') ? '24K' : product.purity.includes('18') ? '18K' : '22K') : '22K')}
+                  </span>
+                  <span className="block text-[10.5px] text-[#7A6E65] truncate">
+                    {isDiamondItem 
+                      ? (product.colorClarity ? product.colorClarity.split(',')[0] : 'Pure Colorless') 
+                      : isSilverItem
+                        ? 'Fine Sterling Silver'
+                        : 'Gold Purity'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Card 3: Craftsmanship / Diamond Quality */}
+              <div className="p-3 rounded-2xl bg-gradient-to-b from-[#FFFDF9] to-[#FAF5EB] border border-[#DECDBB] shadow-2xs flex items-center gap-3">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 shadow-2xs ${
+                  isDiamondItem 
+                    ? 'bg-[#E0F2FE] border border-[#7DD3FC] text-[#0284C7]' 
+                    : isSilverItem
+                      ? 'bg-[#F1F5F9] border border-[#CBD5E1] text-[#475569]'
+                      : 'bg-[#FAF3E5] border border-[#E8C77D] text-[#C99A38]'
+                }`}>
+                  <Sparkles className="w-5 h-5" />
+                </div>
+                <div className="min-w-0">
+                  <span className="block font-bold text-xs text-[#241716] truncate">
+                    {isDiamondItem 
+                      ? 'Hearts & Arrows' 
+                      : isSilverItem
+                        ? 'Silversmithing'
+                        : (product.craftsmanship?.split(' ')[0] || 'Chettinad')}
+                  </span>
+                  <span className="block text-[10.5px] text-[#7A6E65] truncate">
+                    {isDiamondItem 
+                      ? 'Optical Symmetry' 
+                      : isSilverItem
+                        ? 'Handcrafted Finish'
+                        : (product.craftsmanship?.split(' ').slice(1).join(' ') || 'Peacock Repousse Art')}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* 6. Enclosed Product Specifications Box with Star Flourish Header */}
+            <div className="bg-[#FFFDF9] border border-[#DECDBB] rounded-[20px] p-4 sm:p-5 shadow-2xs mb-5">
+              {/* Header with star flourishes */}
+              <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#EDE4D5]">
+                <div className={`flex items-center gap-2 font-serif font-bold text-xs sm:text-sm ${
+                  isSilverOrDiamond ? 'text-[#334155]' : 'text-[#8C6D2D]'
+                }`}>
+                  <span className={`text-xs ${isSilverOrDiamond ? 'text-[#64748B]' : 'text-[#C99A38]'}`}>✦</span>
+                  <span className="tracking-wide">Product Specifications</span>
+                  <span className={`text-xs ${isSilverOrDiamond ? 'text-[#64748B]' : 'text-[#C99A38]'}`}>✦</span>
+                </div>
+                <div className={`flex items-center gap-2 ${isSilverOrDiamond ? 'text-[#94A3B8]/70' : 'text-[#C99A38]/70'}`}>
+                  <span className={`w-10 sm:w-16 h-[1px] bg-gradient-to-r from-transparent ${isSilverOrDiamond ? 'to-[#94A3B8]/60' : 'to-[#C99A38]/60'}`} />
+                  <span className="text-xs">❖</span>
+                  <span className={`w-10 sm:w-16 h-[1px] bg-gradient-to-l from-transparent ${isSilverOrDiamond ? 'to-[#94A3B8]/60' : 'to-[#C99A38]/60'}`} />
+                </div>
+              </div>
+
+              {/* Specifications Rows */}
+              <div className="space-y-3 text-xs sm:text-[13px]">
+                <div className={`flex items-center justify-between py-1 border-b ${
+                  isSilverOrDiamond ? 'border-[#F1F5F9]' : 'border-[#FAF0DE]'
+                }`}>
+                  <span className="text-[#6B5A4E] flex items-center gap-2">
+                    <Scale className={`w-4 h-4 ${isSilverOrDiamond ? 'text-[#64748B]' : 'text-[#C99A38]'}`} />
+                    <span className="font-medium">Gross Weight</span>
+                  </span>
+                  <span className="font-bold text-[#241716] font-mono text-sm">
+                    {product.weight || parsedDimensions.weight}
+                  </span>
+                </div>
+
+                {isDiamondItem && (product.carat || product.colorClarity) && (
+                  <div className={`flex items-center justify-between py-1 border-b ${
+                    isSilverOrDiamond ? 'border-[#F1F5F9]' : 'border-[#FAF0DE]'
+                  }`}>
+                    <span className="text-[#6B5A4E] flex items-center gap-2">
+                      <Gem className="w-4 h-4 text-[#0284C7]" />
+                      <span className="font-medium">Diamond Grade</span>
+                    </span>
+                    <span className="font-semibold text-[#0F172A] text-right font-mono text-xs">
+                      {[product.carat, product.colorClarity].filter(Boolean).join(' • ')}
+                    </span>
+                  </div>
+                )}
+
+                <div className={`flex items-center justify-between py-1 border-b ${
+                  isSilverOrDiamond ? 'border-[#F1F5F9]' : 'border-[#FAF0DE]'
+                }`}>
+                  <span className="text-[#6B5A4E] flex items-center gap-2">
+                    <Package className={`w-4 h-4 ${isSilverOrDiamond ? 'text-[#64748B]' : 'text-[#C99A38]'}`} />
+                    <span className="font-medium">Dimensions</span>
+                  </span>
+                  <span className="font-semibold text-[#241716] text-right font-mono">
+                    {product.dimensions || `${parsedDimensions.length} × ${parsedDimensions.width} with secure screw clasp`}
+                  </span>
+                </div>
+
+                <div className="flex items-center justify-between py-1">
+                  <span className="text-[#6B5A4E] flex items-center gap-2">
+                    <Sparkles className={`w-4 h-4 ${isSilverOrDiamond ? 'text-[#64748B]' : 'text-[#C99A38]'}`} />
+                    <span className="font-medium">Craftsmanship</span>
+                  </span>
+                  <span className="font-semibold text-[#241716] text-right">
+                    {product.craftsmanship || (
+                      isDiamondItem 
+                        ? 'Four-Prong Archival Crown • Platinum Mirror Polish' 
+                        : isSilverItem 
+                          ? 'Authentic South Indian Silversmithing' 
+                          : 'Chettinad Peacock Repousse Art'
+                    )}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* 7. Action Controls: Quantity Stepper, Wishlist, Add to Cart */}
+            <div className="flex items-center gap-3 sm:gap-4 flex-wrap mb-4">
+              {/* Quantity Stepper Pill */}
+              <div className="h-12 px-3.5 rounded-full border border-[#DECDBB] bg-[#FFFDF9] flex items-center gap-3.5 shadow-2xs">
+                <button
+                  type="button"
+                  onClick={() => setQuantity(q => Math.max(1, q - 1))}
+                  className="w-7 h-7 rounded-full hover:bg-[#FAF3E8] flex items-center justify-center text-[#4A1019] transition-colors cursor-pointer"
+                  aria-label="Decrease quantity"
+                >
+                  <Minus className="w-3.5 h-3.5" />
+                </button>
+                <span className="font-bold text-sm text-[#241716] min-w-[16px] text-center font-mono">
+                  {quantity}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setQuantity(q => q + 1)}
+                  className="w-7 h-7 rounded-full hover:bg-[#FAF3E8] flex items-center justify-center text-[#4A1019] transition-colors cursor-pointer"
+                  aria-label="Increase quantity"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
+              {/* Add to Wishlist Button */}
+              <button
+                type="button"
+                onClick={handleToggleWishlist}
+                className={`h-12 px-6 rounded-full border transition-all cursor-pointer shadow-2xs flex items-center gap-2 text-xs sm:text-sm font-semibold ${
+                  internalWishlisted
+                    ? 'bg-[#4A1019]/10 border-[#4A1019] text-[#4A1019]'
+                    : 'bg-[#FFFDF9] hover:bg-[#FAF3E8] border-[#DECDBB] text-[#4A1019]'
+                }`}
+              >
+                <Heart className={`w-4 h-4 ${internalWishlisted ? 'fill-[#4A1019] text-[#4A1019]' : 'text-[#4A1019]'}`} />
+                <span>{internalWishlisted ? 'Wishlisted' : 'Add to Wishlist'}</span>
+              </button>
+
+              {/* Add to Cart CTA */}
+              <button
+                type="button"
+                onClick={handleAddToCart}
+                className={`h-12 flex-1 sm:flex-initial px-8 rounded-full bg-gradient-to-r from-[#4A1019] via-[#3B0710] to-[#28040A] hover:from-[#5C1521] hover:to-[#38060F] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2.5 border ${
+                  isSilverOrDiamond ? 'border-[#94A3B8]' : 'border-[#C99A38]'
+                } shadow-md hover:shadow-xl hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer`}
+              >
+                <ShoppingBag className={`w-4 h-4 ${isSilverOrDiamond ? 'text-[#E2E8F0]' : 'text-[#E8C77D]'}`} />
+                <span>{addedToCartToast ? 'Added to Cart ✓' : 'Add to Cart'}</span>
+              </button>
+            </div>
+
+            {/* 8. Interactive 3D / AR Links Row (Directly below Add to Cart row) */}
+            <div className="grid grid-cols-2 gap-3.5 mb-5">
+              <button
+                type="button"
+                onClick={() => setIsTryOnOpen(true)}
+                className={`h-11 rounded-full bg-gradient-to-r from-[#FFFDF9] via-[#FAF5EB] to-[#FFFDF9] hover:bg-[#FAF3E5] border border-[#DECDBB] ${
+                  isSilverOrDiamond ? 'hover:border-[#64748B]' : 'hover:border-[#8C6D2D]'
+                } text-[#3B0710] font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-2xs transition-all cursor-pointer group`}
+              >
+                <Sparkles className={`w-4 h-4 ${isSilverOrDiamond ? 'text-[#64748B]' : 'text-[#8C6D2D]'} group-hover:scale-110 transition-transform`} />
+                <span>Virtual Try-On</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setIs360Open(true)}
+                className={`h-11 rounded-full bg-gradient-to-r from-[#FFFDF9] via-[#FAF5EB] to-[#FFFDF9] hover:bg-[#FAF3E5] border border-[#DECDBB] ${
+                  isSilverOrDiamond ? 'hover:border-[#64748B]' : 'hover:border-[#8C6D2D]'
+                } text-[#3B0710] font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-2xs transition-all cursor-pointer group`}
+              >
+                <RotateCcw className={`w-4 h-4 ${isSilverOrDiamond ? 'text-[#64748B]' : 'text-[#8C6D2D]'} group-hover:rotate-45 transition-transform`} />
+                <span>360° Interactive View</span>
+              </button>
+            </div>
+
+            {/* 9. 4 Delivery Trust Pillars inside Solid Royal Burgundy Velvet Bar */}
+            <div className={`p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-[#4A1019] via-[#35070E] to-[#250308] border ${
+              isSilverOrDiamond ? 'border-[#94A3B8]/60' : 'border-[#C99A38]/50'
+            } shadow-md`}>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 items-center">
+                {/* 1. Free Insured Shipping */}
+                <div className="flex items-center gap-2.5">
+                  <Truck className={`w-5 h-5 ${isSilverOrDiamond ? 'text-[#E2E8F0]' : 'text-[#E8C77D]'} shrink-0`} />
+                  <div>
+                    <span className="block font-bold text-xs sm:text-[13px] text-white leading-tight">Free</span>
+                    <span className={`block text-[10.5px] sm:text-[11px] ${isSilverOrDiamond ? 'text-[#CBD5E1]' : 'text-[#E8DFC0]'} leading-tight`}>Insured Shipping</span>
+                  </div>
+                </div>
+
+                {/* 2. Secure Packaging */}
+                <div className="flex items-center gap-2.5">
+                  <Package className={`w-5 h-5 ${isSilverOrDiamond ? 'text-[#E2E8F0]' : 'text-[#E8C77D]'} shrink-0`} />
+                  <div>
+                    <span className="block font-bold text-xs sm:text-[13px] text-white leading-tight">Secure</span>
+                    <span className={`block text-[10.5px] sm:text-[11px] ${isSilverOrDiamond ? 'text-[#CBD5E1]' : 'text-[#E8DFC0]'} leading-tight`}>Packaging</span>
+                  </div>
+                </div>
+
+                {/* 3. Easy Returns */}
+                <div className="flex items-center gap-2.5">
+                  <Calendar className={`w-5 h-5 ${isSilverOrDiamond ? 'text-[#E2E8F0]' : 'text-[#E8C77D]'} shrink-0`} />
+                  <div>
+                    <span className="block font-bold text-xs sm:text-[13px] text-white leading-tight">Easy</span>
+                    <span className={`block text-[10.5px] sm:text-[11px] ${isSilverOrDiamond ? 'text-[#CBD5E1]' : 'text-[#E8DFC0]'} leading-tight`}>Returns (7 Days)</span>
+                  </div>
+                </div>
+
+                {/* 4. Expert Assistance */}
+                <div className="flex items-center gap-2.5">
+                  <Headphones className={`w-5 h-5 ${isSilverOrDiamond ? 'text-[#E2E8F0]' : 'text-[#E8C77D]'} shrink-0`} />
+                  <div>
+                    <span className="block font-bold text-xs sm:text-[13px] text-white leading-tight">Expert</span>
+                    <span className={`block text-[10.5px] sm:text-[11px] ${isSilverOrDiamond ? 'text-[#CBD5E1]' : 'text-[#E8DFC0]'} leading-tight`}>Assistance</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
         </div>
 
         {/* ========================================================
@@ -1241,10 +1751,10 @@ export default function ProductDetailModal({
                   </tr>
                 </thead>
                 <tbody>
-                  {/* Category Subhead: Gold */}
+                  {/* Category Subhead: Gold or Diamond or Silver */}
                   <tr>
                     <td colSpan={6} className="pt-3.5 pb-1 px-3 font-bold text-[#241716] text-xs sm:text-sm">
-                      Gold
+                      {isDiamondItem ? 'Natural Diamond & Metal Setting' : isSilverItem ? 'Pure Silver (925 Fine)' : 'Gold'}
                     </td>
                   </tr>
 
@@ -1306,35 +1816,53 @@ export default function ProductDetailModal({
         {/* ========================================================
             TRUST & BENEFITS CARD SECTION (4 Pillars)
             ======================================================== */}
-        <div className="mt-8 p-3 sm:p-4 bg-gradient-to-r from-[#FFFDF9] via-[#FAF5EA] to-[#FFFDF9] border border-[#E8DFC0] rounded-2xl shadow-xs">
+        <div className={`mt-8 p-3 sm:p-4 bg-gradient-to-r from-[#FFFDF9] via-[#FAF5EA] to-[#FFFDF9] border ${
+          isSilverOrDiamond ? 'border-[#CBD5E1]' : 'border-[#E8DFC0]'
+        } rounded-2xl shadow-xs`}>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-0 md:divide-x md:divide-[#E2D2B8] items-center">
             
-            {/* 1. 100% BIS 916 Hallmarked */}
+            {/* 1. 100% BIS 916 Hallmarked or IGI/GIA Certified */}
             <div className="flex items-center gap-3 md:px-4 lg:px-6">
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-b from-[#FFFFFF] via-[#FAF6EE] to-[#F2E5D0] border-2 border-[#D8BE8A] flex items-center justify-center shrink-0 shadow-[0_2px_6px_rgba(180,140,75,0.22),inset_0_1px_1px_rgba(255,255,255,0.9)]">
-                <svg viewBox="0 0 32 32" className="w-5 h-5 sm:w-6 sm:h-6 text-[#8C6D2D]" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M16 3.5 L7 7.5 V15.5 C7 21.5 10.8 26.5 16 28.5 C21.2 26.5 25 21.5 25 15.5 V7.5 Z" />
-                  <path d="M11.5 12.5 L14.5 15.5 L20.5 9.5" strokeWidth="2" />
-                  <text x="16" y="22.5" textAnchor="middle" fontSize="6" fontWeight="bold" fill="currentColor" stroke="none" fontFamily="sans-serif" letterSpacing="0.5">BIS</text>
-                </svg>
+              <div className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center shrink-0 shadow-2xs ${
+                isDiamondItem
+                  ? 'bg-gradient-to-b from-[#FFFFFF] via-[#F0F9FF] to-[#E0F2FE] border-2 border-[#7DD3FC] text-[#0284C7]'
+                  : isSilverItem
+                    ? 'bg-gradient-to-b from-[#FFFFFF] via-[#F8FAFC] to-[#E2E8F0] border-2 border-[#94A3B8] text-[#475569]'
+                    : 'bg-gradient-to-b from-[#FFFFFF] via-[#FAF6EE] to-[#F2E5D0] border-2 border-[#D8BE8A] text-[#8C6D2D]'
+              }`}>
+                {isDiamondItem ? (
+                  <Gem className="w-5 h-5 text-[#0284C7]" />
+                ) : isSilverItem ? (
+                  <Award className="w-5 h-5 sm:w-6 sm:h-6 text-[#475569]" />
+                ) : (
+                  <svg viewBox="0 0 32 32" className="w-5 h-5 sm:w-6 sm:h-6 text-[#8C6D2D]" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M16 3.5 L7 7.5 V15.5 C7 21.5 10.8 26.5 16 28.5 C21.2 26.5 25 21.5 25 15.5 V7.5 Z" />
+                    <path d="M11.5 12.5 L14.5 15.5 L20.5 9.5" strokeWidth="2" />
+                    <text x="16" y="22.5" textAnchor="middle" fontSize="6" fontWeight="bold" fill="currentColor" stroke="none" fontFamily="sans-serif" letterSpacing="0.5">BIS</text>
+                  </svg>
+                )}
               </div>
               <div className="min-w-0">
                 <span className="font-bold text-[#241716] text-xs sm:text-sm leading-tight block truncate">
-                  100% BIS 916
+                  {isDiamondItem ? 'IGI & GIA' : isSilverItem ? '925 Silver' : '100% BIS 916'}
                 </span>
                 <span className="text-[#581923] font-semibold text-[11px] sm:text-xs leading-tight block truncate">
-                  Hallmarked
+                  {isDiamondItem ? 'Certified Natural' : isSilverItem ? 'Assay Certified' : 'Hallmarked'}
                 </span>
               </div>
             </div>
 
             {/* 2. Lifetime Guarantee */}
             <div className="flex items-center gap-3 md:px-4 lg:px-6">
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-b from-[#FFFFFF] via-[#FAF6EE] to-[#F2E5D0] border-2 border-[#D8BE8A] flex items-center justify-center shrink-0 shadow-[0_2px_6px_rgba(180,140,75,0.22),inset_0_1px_1px_rgba(255,255,255,0.9)]">
-                <svg viewBox="0 0 32 32" className="w-5 h-5 sm:w-6 sm:h-6 text-[#8C6D2D]" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <div className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center shrink-0 shadow-2xs ${
+                isSilverOrDiamond
+                  ? 'bg-gradient-to-b from-[#FFFFFF] via-[#F8FAFC] to-[#E2E8F0] border-2 border-[#94A3B8] text-[#475569]'
+                  : 'bg-gradient-to-b from-[#FFFFFF] via-[#FAF6EE] to-[#F2E5D0] border-2 border-[#D8BE8A] text-[#8C6D2D]'
+              }`}>
+                <svg viewBox="0 0 32 32" className={`w-5 h-5 sm:w-6 sm:h-6 ${isSilverOrDiamond ? 'text-[#475569]' : 'text-[#8C6D2D]'}`} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M11 20 L8.5 28 L13 25.5 L17.5 28 L15 20" fill="currentColor" fillOpacity="0.15" />
                   <path d="M21 20 L23.5 28 L19 25.5 L14.5 28 L17 20" fill="currentColor" fillOpacity="0.15" />
-                  <circle cx="16" cy="13" r="8.5" fill="#FAF4E8" strokeWidth="1.8" />
+                  <circle cx="16" cy="13" r="8.5" fill={isSilverOrDiamond ? '#F1F5F9' : '#FAF4E8'} strokeWidth="1.8" />
                   <circle cx="16" cy="13" r="6" strokeDasharray="2 2" strokeWidth="1.2" />
                   <path d="M13 13 L15 15 L19 11" strokeWidth="2" />
                 </svg>
@@ -1351,9 +1879,13 @@ export default function ProductDetailModal({
 
             {/* 3. Authentic & Certified */}
             <div className="flex items-center gap-3 md:px-4 lg:px-6">
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-b from-[#FFFFFF] via-[#FAF6EE] to-[#F2E5D0] border-2 border-[#D8BE8A] flex items-center justify-center shrink-0 shadow-[0_2px_6px_rgba(180,140,75,0.22),inset_0_1px_1px_rgba(255,255,255,0.9)]">
-                <svg viewBox="0 0 32 32" className="w-5 h-5 sm:w-6 sm:h-6 text-[#8C6D2D]" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M8 5.5 C8 4.7 8.7 4 9.5 4 H18.5 L24 9.5 V24.5 C24 25.3 23.3 26 22.5 26 H9.5 C8.7 26 8 25.3 8 24.5 Z" fill="#FAF4E8" />
+              <div className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center shrink-0 shadow-2xs ${
+                isSilverOrDiamond
+                  ? 'bg-gradient-to-b from-[#FFFFFF] via-[#F8FAFC] to-[#E2E8F0] border-2 border-[#94A3B8] text-[#475569]'
+                  : 'bg-gradient-to-b from-[#FFFFFF] via-[#FAF6EE] to-[#F2E5D0] border-2 border-[#D8BE8A] text-[#8C6D2D]'
+              }`}>
+                <svg viewBox="0 0 32 32" className={`w-5 h-5 sm:w-6 sm:h-6 ${isSilverOrDiamond ? 'text-[#475569]' : 'text-[#8C6D2D]'}`} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M8 5.5 C8 4.7 8.7 4 9.5 4 H18.5 L24 9.5 V24.5 C24 25.3 23.3 26 22.5 26 H9.5 C8.7 26 8 25.3 8 24.5 Z" fill={isSilverOrDiamond ? '#F1F5F9' : '#FAF4E8'} />
                   <path d="M18 4 V10 H24" />
                   <line x1="11" y1="11" x2="15" y2="11" strokeWidth="1.6" />
                   <line x1="11" y1="15" x2="16" y2="15" strokeWidth="1.6" />
@@ -1376,13 +1908,17 @@ export default function ProductDetailModal({
 
             {/* 4. Free Insured Shipping */}
             <div className="flex items-center gap-3 md:px-4 lg:px-6">
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-b from-[#FFFFFF] via-[#FAF6EE] to-[#F2E5D0] border-2 border-[#D8BE8A] flex items-center justify-center shrink-0 shadow-[0_2px_6px_rgba(180,140,75,0.22),inset_0_1px_1px_rgba(255,255,255,0.9)]">
-                <svg viewBox="0 0 32 32" className="w-5 h-5 sm:w-6 sm:h-6 text-[#8C6D2D]" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <div className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center shrink-0 shadow-2xs ${
+                isSilverOrDiamond
+                  ? 'bg-gradient-to-b from-[#FFFFFF] via-[#F8FAFC] to-[#E2E8F0] border-2 border-[#94A3B8] text-[#475569]'
+                  : 'bg-gradient-to-b from-[#FFFFFF] via-[#FAF6EE] to-[#F2E5D0] border-2 border-[#D8BE8A] text-[#8C6D2D]'
+              }`}>
+                <svg viewBox="0 0 32 32" className={`w-5 h-5 sm:w-6 sm:h-6 ${isSilverOrDiamond ? 'text-[#475569]' : 'text-[#8C6D2D]'}`} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="3" y1="12" x2="6" y2="12" strokeWidth="1.5" />
                   <line x1="2" y1="16" x2="5" y2="16" strokeWidth="1.5" />
                   <line x1="4" y1="20" x2="7" y2="20" strokeWidth="1.5" />
-                  <path d="M7 10 H19 V22 H7 Z" fill="#FAF4E8" />
-                  <path d="M19 13 H24 L27 17 V22 H19 Z" fill="#FAF4E8" />
+                  <path d="M7 10 H19 V22 H7 Z" fill={isSilverOrDiamond ? '#F1F5F9' : '#FAF4E8'} />
+                  <path d="M19 13 H24 L27 17 V22 H19 Z" fill={isSilverOrDiamond ? '#F1F5F9' : '#FAF4E8'} />
                   <circle cx="11" cy="23" r="2.5" fill="#FFFFFF" strokeWidth="1.8" />
                   <circle cx="23" cy="23" r="2.5" fill="#FFFFFF" strokeWidth="1.8" />
                   <path d="M13 12.5 L10.5 14 V17 C10.5 19 12 20.2 13 20.8 C14 20.2 15.5 19 15.5 17 V14 Z" fill="#FFFFFF" strokeWidth="1.3" />
@@ -1426,7 +1962,9 @@ export default function ProductDetailModal({
                 <div
                   key={item.id}
                   onClick={() => handleSelectRelated(item)}
-                  className="bg-white rounded-2xl border border-[#E8DFC0] hover:border-[#8C6D2D] p-3 shadow-2xs hover:shadow-md transition-all cursor-pointer flex flex-col justify-between group"
+                  className={`bg-white rounded-2xl border ${
+                    isSilverOrDiamond ? 'border-[#CBD5E1] hover:border-[#64748B]' : 'border-[#E8DFC0] hover:border-[#8C6D2D]'
+                  } p-3 shadow-2xs hover:shadow-md transition-all cursor-pointer flex flex-col justify-between group`}
                 >
                   <div className="relative aspect-square rounded-xl bg-[#FAF6EE] overflow-hidden p-2 mb-2 flex items-center justify-center">
                     <img
@@ -1441,7 +1979,7 @@ export default function ProductDetailModal({
                     )}
                   </div>
                   <div>
-                    <p className="text-[10px] text-[#8C6D2D] font-bold uppercase tracking-wider">
+                    <p className={`text-[10px] ${isSilverOrDiamond ? 'text-[#64748B]' : 'text-[#8C6D2D]'} font-bold uppercase tracking-wider`}>
                       {item.category}
                     </p>
                     <h5 className="font-bold text-xs sm:text-sm text-[#241716] line-clamp-1 group-hover:text-[#581923] transition-colors">

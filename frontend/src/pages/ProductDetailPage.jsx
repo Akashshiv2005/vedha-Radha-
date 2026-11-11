@@ -1,31 +1,158 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
 import { products } from '../data/products';
+import { exclusiveNewArrivals } from '../data/newArrivalsData';
+import { diamondProducts } from '../data/diamondProducts';
+import { newArrivalsHighlightProducts } from '../data/newArrivalsHighlightProducts';
+import { templeProducts } from '../data/templeProducts';
+import { poojaProducts } from '../data/poojaProducts';
+import { NEW_ARRIVALS_SHOWCASE } from '../components/NewArrivalsSection';
 import { storefrontClient } from '../api/storefrontProductsClient';
 import ProductDetailModal from '../components/ProductDetailModal';
 import { ArrowLeft, Sparkles, Loader2 } from 'lucide-react';
+import { doesProductMatchIdentifier, getProductIdentifier, getProductUrl } from '../utils/productSlug';
+
+const allStaticCatalogs = [
+  ...newArrivalsHighlightProducts,
+  ...diamondProducts,
+  ...templeProducts,
+  ...poojaProducts,
+  ...exclusiveNewArrivals,
+  ...NEW_ARRIVALS_SHOWCASE,
+  ...products
+];
+
+function normalizeProductForDisplay(raw) {
+  if (!raw) return null;
+  const p = { ...raw };
+
+  // 1. Ensure images array
+  if (!Array.isArray(p.images) || p.images.length === 0) {
+    p.images = p.image ? [p.image] : ['/images/product_gold_chain.jpg'];
+  } else {
+    p.images = p.images.filter(img => typeof img === 'string' && img.trim().length > 0);
+    if (p.images.length === 0 && p.image) {
+      p.images = [p.image];
+    }
+  }
+  if (!p.image && p.images[0]) {
+    p.image = p.images[0];
+  }
+
+  // 2. Ensure numeric price & formattedPrice
+  if (p.price && !p.numericPrice) {
+    if (typeof p.price === 'number') {
+      p.numericPrice = p.price;
+      p.formattedPrice = `₹ ${Number(p.price).toLocaleString('en-IN')}*`;
+    } else {
+      const cleaned = String(p.price).replace(/[^0-9]/g, '');
+      if (cleaned) {
+        p.numericPrice = parseInt(cleaned, 10);
+      }
+    }
+  }
+  if (!p.formattedPrice && p.numericPrice) {
+    p.formattedPrice = `₹ ${Number(p.numericPrice).toLocaleString('en-IN')}*`;
+  }
+  if (!p.price && p.numericPrice) {
+    p.price = `₹ ${Number(p.numericPrice).toLocaleString('en-IN')}`;
+  }
+
+  // 3. Ensure weight & purity
+  if (!p.weight && p.grossWeight) p.weight = p.grossWeight;
+  if (!p.grossWeight && p.weight) p.grossWeight = p.weight;
+  if (!p.purity && p.goldPurity) p.purity = p.goldPurity;
+  if (!p.goldPurity && p.purity) p.goldPurity = p.purity;
+
+  // 4. Ensure badge
+  if (!p.badge) {
+    if (p.isDiamond || p.category?.toLowerCase() === 'diamond') {
+      p.badge = 'IGI Certified Natural';
+      p.badgeType = 'certified';
+    } else if (p.isSilver || p.category?.toLowerCase()?.includes('silver')) {
+      p.badge = '925 Sacred Silver';
+      p.badgeType = 'hallmarked';
+    } else {
+      p.badge = 'BIS 916 Hallmarked';
+      p.badgeType = 'hallmarked';
+    }
+  }
+
+  return p;
+}
+
+function findLocalProduct(idOrSlug) {
+  if (!idOrSlug) return null;
+  const matched = allStaticCatalogs.find(p => doesProductMatchIdentifier(p, idOrSlug));
+  if (!matched) return null;
+
+  // If this item is a showcase card that points to a richer parent item in another catalog:
+  if (matched.id) {
+    const richParent = allStaticCatalogs.find(p => 
+      p !== matched && 
+      p.id === matched.id && 
+      (Array.isArray(p.images) && p.images.length > 1 || Boolean(p.fourCs) || (p.description && p.description.length > 40))
+    );
+    if (richParent) {
+      return normalizeProductForDisplay({ ...richParent, ...matched, images: richParent.images || matched.images });
+    }
+  }
+
+  return normalizeProductForDisplay(matched);
+}
 
 export default function ProductDetailPage({ onAddToCart, onAddToWishlist, wishlistItems = [] }) {
   const { productId } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
-  const [product, setProduct] = useState(() => products.find((p) => p.id === productId) || null);
+
+  // Initial lookup: check static catalog, then check location.state.product
+  const [product, setProduct] = useState(() => {
+    const local = findLocalProduct(productId);
+    if (local) return local;
+    if (location.state?.product) {
+      const stateProd = location.state.product;
+      const matched = findLocalProduct(stateProd.id) || 
+                      findLocalProduct(stateProd.fullName) || 
+                      findLocalProduct(stateProd.name);
+      return matched || normalizeProductForDisplay(stateProd);
+    }
+    return null;
+  });
   const [loading, setLoading] = useState(!product);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const local = products.find((p) => p.id === productId);
-    if (local) {
-      setProduct(local);
+
+    // 1. Try static catalog first
+    let resolved = findLocalProduct(productId);
+
+    // 2. If not found by URL slug, check location.state
+    if (!resolved && location.state?.product) {
+      const stateProd = location.state.product;
+      resolved = findLocalProduct(stateProd.id) || 
+                 findLocalProduct(stateProd.fullName) || 
+                 findLocalProduct(stateProd.name) || 
+                 normalizeProductForDisplay(stateProd);
+    }
+
+    if (resolved) {
+      setProduct(resolved);
       setLoading(false);
       return;
     }
-    // Fetch from backend API if not in static list
+
+    // 3. Fetch from backend API if not in static list
     let isMounted = true;
     setLoading(true);
     storefrontClient.getStorefrontProduct(productId)
       .then((apiProduct) => {
         if (!isMounted) return;
-        setProduct(apiProduct || null);
+        if (apiProduct) {
+          setProduct(normalizeProductForDisplay(apiProduct));
+        } else {
+          setProduct(null);
+        }
         setLoading(false);
       })
       .catch(() => {
@@ -35,7 +162,35 @@ export default function ProductDetailPage({ onAddToCart, onAddToWishlist, wishli
       });
 
     return () => { isMounted = false; };
-  }, [productId]);
+  }, [productId, location.state]);
+
+  // Synchronize browser address bar to show the clean jewellery name slug instead of raw UUID
+  useEffect(() => {
+    if (product) {
+      const canonicalSlug = getProductIdentifier(product);
+      if (canonicalSlug) {
+        const canonicalPath = `/product/${encodeURIComponent(canonicalSlug)}`;
+        if (window.location.pathname !== canonicalPath) {
+          window.history.replaceState({ isProductView: true, productId: canonicalSlug, product }, '', canonicalPath);
+        }
+      }
+    }
+  }, [product]);
+
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      const cat = (product?.category || '').toLowerCase();
+      if (cat.includes('silver')) navigate('/silver');
+      else if (cat.includes('coin') || cat.includes('bar')) navigate('/coins-bars');
+      else if (cat.includes('new') || product?.isNewArrival) navigate('/new-arrivals');
+      else if (cat.includes('temple')) navigate('/temple-heritage');
+      else if (cat.includes('diamond')) navigate('/diamonds');
+      else if (cat.includes('collection')) navigate('/collections');
+      else navigate('/gold');
+    }
+  };
 
   if (loading) {
     return (
@@ -71,14 +226,15 @@ export default function ProductDetailPage({ onAddToCart, onAddToWishlist, wishli
 
   return (
     <ProductDetailModal
-      key={product.id}
+      key={product.id || product.sku}
       product={product}
-      onClose={() => navigate(-1)}
-      onBackToProducts={() => navigate('/gold')}
+      isDedicatedPage={true}
+      onClose={handleBack}
+      onBackToProducts={handleBack}
       onAddToCart={onAddToCart}
       onAddToWishlist={onAddToWishlist}
       isWishlisted={wishlistItems.some((item) => item.id === product.id)}
-      onSelectRelatedProduct={(related) => navigate(`/product/${related.id}`)}
+      onSelectRelatedProduct={(related) => navigate(getProductUrl(related), { state: { product: related } })}
     />
   );
 }

@@ -60,7 +60,7 @@ export default function AdminReturnsSettingsPage() {
   const [isEditSettingsOpen, setIsEditSettingsOpen] = useState(false);
   const [settingsFormData, setSettingsFormData] = useState({
     returnWindow: settings.returnWindow || '7 days from delivery',
-    inspectionPeriod: settings.inspectionPeriod || '2–3 business days',
+    inspectionPeriod: settings.inspectionPeriod || '2-3 business days',
     returnMethod: settings.returnMethod || 'Courier / In-Store',
     refundMethod: settings.refundMethod || 'Original payment method',
     returnEligibility: settings.returnEligibility || 'Only unused & undamaged items'
@@ -811,7 +811,7 @@ export default function AdminReturnsSettingsPage() {
                     Inspection Period
                   </div>
                   <div className="text-[12px] text-[#6B7280] leading-tight mt-0.5">
-                    {settings.inspectionPeriod || '2–3 business days'}
+                    {settings.inspectionPeriod || '2-3 business days'}
                   </div>
                 </div>
               </div>
@@ -996,7 +996,7 @@ export default function AdminReturnsSettingsPage() {
                   className="w-full bg-white border border-[#D1D5DB] rounded-xl px-3.5 py-2 text-[13px] focus:ring-2 focus:ring-[#A87B3B]/30 focus:border-[#A87B3B] focus:outline-none"
                 >
                   <option value="return_to_inventory">Approve &amp; Return to Available Inventory</option>
-                  <option value="mark_damaged">Reject / Metal Damaged — Send to Melting Safe</option>
+                  <option value="mark_damaged">Reject / Metal Damaged - Send to Melting Safe</option>
                   <option value="escalate_owner">Escalate to Managing Director for Purity Verification</option>
                 </select>
               </div>
@@ -1170,13 +1170,13 @@ export default function AdminReturnsSettingsPage() {
                 <>
                   <p><strong>1. Valuation on Return:</strong> Gold value is credited according to standard BIS 916 purity benchmarks verified at the showroom bench.</p>
                   <p><strong>2. Custom &amp; Bespoke Orders:</strong> 1-of-1 bridal bespoke pieces modified to customer measurements require owner managerial review.</p>
-                  <p><strong>3. Refund Dispatch:</strong> Bank RTGS / UPI refunds are processed within 2–3 working days following metal assay clearance.</p>
+                  <p><strong>3. Refund Dispatch:</strong> Bank RTGS / UPI refunds are processed within 2-3 working days following metal assay clearance.</p>
                 </>
               )}
               {activePolicyModal === 'support' && (
                 <>
                   <p><strong>Showroom Concierge Desk:</strong> Direct phone: +91 70108 94104</p>
-                  <p><strong>WhatsApp Support:</strong> Available 10:00 AM – 08:30 PM for instant live video inspection and hold consultations.</p>
+                  <p><strong>WhatsApp Support:</strong> Available 10:00 AM - 08:30 PM for instant live video inspection and hold consultations.</p>
                   <p><strong>Email:</strong> support@vedaradha.com</p>
                 </>
               )}

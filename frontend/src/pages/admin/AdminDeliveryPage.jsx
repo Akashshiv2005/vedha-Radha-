@@ -1178,7 +1178,7 @@ export default function AdminDeliveryPage() {
         {/* 6. Pagination Footer */}
         <div className="border-t border-[#E5E7EB] px-5 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-[13px] text-[#6B7280]">
           <div>
-            Showing {totalOrders === 0 ? 0 : startIndex + 1}–{endIndex} of {totalOrders} orders
+            Showing {totalOrders === 0 ? 0 : startIndex + 1}-{endIndex} of {totalOrders} orders
           </div>
 
           <div className="flex items-center gap-4 self-center sm:self-auto">

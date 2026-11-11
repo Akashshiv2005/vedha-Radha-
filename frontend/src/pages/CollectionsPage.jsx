@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { storefrontClient } from '../api/storefrontProductsClient';
 import { ProductGridSkeleton } from '../components/common/ProductCardSkeleton';
+import { matchesCollectionSlug } from './CollectionsCatalogPage';
 import { Sparkles, ChevronRight, Gem, Shield, Heart, ShoppingBag, Layers, Eye } from 'lucide-react';
 
 export default function CollectionsPage({
@@ -66,9 +67,9 @@ export default function CollectionsPage({
     {
       id: 'mens-accessories',
       slug: 'mens-accessories',
-      title: 'Men’s Accessories',
+      title: "Men's Accessories",
       subtitle: 'Solid 22K Gold Kadas & Fine Masculine Heirlooms',
-      description: 'A commanding solid 22K gold men’s kada crowned with dual sculpted lion (Simha) heads biting a central gold ring, flanked by deeply fluted torc ridges and brushed satin panels.',
+      description: "A commanding solid 22K gold men's kada crowned with dual sculpted lion (Simha) heads biting a central gold ring, flanked by deeply fluted torc ridges and brushed satin panels.",
       image: '/images/collections/collections-mens-exclusive-01.jpg',
       artisan: 'Royal Armoury Goldsmiths',
       productId: 'collections-mens-exclusive-01'
@@ -76,7 +77,7 @@ export default function CollectionsPage({
     {
       id: 'girls-accessories',
       slug: 'girls-accessories',
-      title: 'Girls’ Accessories',
+      title: "Girls' Accessories",
       subtitle: 'Delicate Laser-Cut Charms & Lightweight Bracelets',
       description: 'A whimsical and lightweight 22K yellow gold charm bracelet designed for girls and teens, featuring three fluttering laser-cut butterflies with pink sapphire accents and Italian rolo chain.',
       image: '/images/collections/collections-girls-exclusive-01.jpg',
@@ -117,7 +118,9 @@ export default function CollectionsPage({
 
   const exclusiveProductIds = collectionLines.map(c => c.productId);
 
-  // Filter products by active collection tab & search query
+  // Filter products by active collection tab & search query with deduplication
+  const seenImages = new Set();
+  const seenNames = new Set();
   const filteredProducts = dbProducts.filter(item => {
     // Search query check
     if (searchQuery && searchQuery.trim()) {
@@ -132,25 +135,16 @@ export default function CollectionsPage({
       if (!match) return false;
     }
 
-    if (activeCollectionTab === 'All') {
-      return exclusiveProductIds.includes(item.id);
-    }
+    if (!matchesCollectionSlug(item, activeCollectionTab)) return false;
 
-    if (activeCollectionTab === 'gift-collection' || activeCollectionTab === 'Gift Collection') {
-      return (
-        item.collection === 'gift-collection' ||
-        item.subCategory === 'Gift Collection' ||
-        item.subCategorySlug === 'gift-collection' ||
-        item.id.startsWith('collections-gift-')
-      );
-    }
-
-    const targetLine = collectionLines.find(c => c.id === activeCollectionTab || c.title === activeCollectionTab);
-    if (targetLine) {
-      return item.id === targetLine.productId;
-    }
-
-    return item.collection === activeCollectionTab;
+    // Strict deduplication: ensure no product image or identical name is displayed more than once
+    const imgKey = String(item.image || '').trim().toLowerCase();
+    const nameKey = String(item.name || '').trim().toLowerCase();
+    if (imgKey && seenImages.has(imgKey)) return false;
+    if (nameKey && seenNames.has(nameKey)) return false;
+    if (imgKey) seenImages.add(imgKey);
+    if (nameKey) seenNames.add(nameKey);
+    return true;
   });
 
   const handleCardImageSelect = (productId, imageIndex) => {

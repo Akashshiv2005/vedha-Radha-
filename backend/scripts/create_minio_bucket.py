@@ -1,6 +1,6 @@
 """
 Standalone MinIO Bucket Creation Script.
-Vedha Radha Thangamaaligai — Jewellery E-commerce Platform.
+Vedha Radha Thangamaaligai - Jewellery E-commerce Platform.
 
 Features:
   - Connects to MinIO Object Storage using credentials from .env.
@@ -78,7 +78,7 @@ def create_bucket(bucket_name: Optional[str] = None, make_public: bool = True) -
     target_bucket = (bucket_name or settings.MINIO_BUCKET).strip()
 
     print("=" * 70)
-    print("VEDHA RADHA THANGAMAALIGAI — MINIO BUCKET CREATION")
+    print("VEDHA RADHA THANGAMAALIGAI - MINIO BUCKET CREATION")
     print("=" * 70)
     print(f"[INFO] MinIO Endpoint:  {settings.MINIO_ENDPOINT}")
     print(f"[INFO] Access Key:      {settings.MINIO_ACCESS_KEY}")

@@ -728,7 +728,7 @@ export default function AdminProductsPage({
               <ShieldCheck className="w-4.5 h-4.5" />
             </div>
             <div className="text-[13px] leading-snug">
-              <span className="font-semibold text-[#292521]">Unique item reserved — </span>
+              <span className="font-semibold text-[#292521]">Unique item reserved - </span>
               <span className="text-[#695D4E]">blocked from duplicate orders.</span>
             </div>
           </div>
@@ -1252,7 +1252,7 @@ export default function AdminProductsPage({
               <div className="flex items-center gap-2.5">
                 <Gem className="w-5 h-5 text-[#C49A45]" />
                 <h3 className="font-admin-body font-semibold text-[20px] sm:text-[22px] text-white">
-                  {editingProduct ? `Edit Piece — ${editingProduct.sku}` : 'Register New Jewellery Piece'}
+                  {editingProduct ? `Edit Piece - ${editingProduct.sku}` : 'Register New Jewellery Piece'}
                 </h3>
               </div>
               <button 

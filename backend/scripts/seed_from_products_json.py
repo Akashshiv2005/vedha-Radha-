@@ -1,6 +1,6 @@
 """
 Seed Products from frontend/src/data/products.json with Pre-Flight Deduplication & Verification.
-Vedha Radha Thangamaaligai — Jewellery E-commerce Platform.
+Vedha Radha Thangamaaligai - Jewellery E-commerce Platform.
 
 Features:
   - Strict pre-flight verification: guarantees NO duplicate IDs, NO duplicate product names, and NO duplicate primary images.
@@ -364,7 +364,7 @@ def run_seed_from_json(
     public_dir = find_frontend_public_dir()
 
     print("=" * 76)
-    print("VEDHA RADHA THANGAMAALIGAI — PRODUCT CATALOGUE VERIFICATION & SEED")
+    print("VEDHA RADHA THANGAMAALIGAI - PRODUCT CATALOGUE VERIFICATION & SEED")
     print("=" * 76)
     print(f"[INFO] Source JSON:     {json_path}")
     print(f"[INFO] Public Assets:   {public_dir}")

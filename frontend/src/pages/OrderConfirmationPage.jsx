@@ -8,13 +8,14 @@ import {
   Mail, 
   ShieldCheck, 
   ArrowRight, 
-  ShoppingBag,
-  Truck,
-  Sparkles,
-  CreditCard,
-  AlertCircle
+  ShoppingBag, 
+  Truck, 
+  Sparkles, 
+  CreditCard, 
+  AlertCircle 
 } from 'lucide-react';
 import { checkoutClient } from '../api/checkoutClient';
+import { initiateRazorpayPayment } from '../api/paymentClient';
 
 export default function OrderConfirmationPage() {
   const { orderNumber } = useParams();
@@ -23,6 +24,7 @@ export default function OrderConfirmationPage() {
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [paying, setPaying] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -49,6 +51,40 @@ export default function OrderConfirmationPage() {
     }
     return () => { isMounted = false; };
   }, [orderNumber, location.state]);
+
+  const handlePayNow = async () => {
+    if (!order) return;
+    setPaying(true);
+    try {
+      const payRes = await checkoutClient.createPayment(order.order_number);
+      if (!payRes.success || !payRes.payment) {
+        alert(payRes.error || 'Failed to initialize payment gateway.');
+        setPaying(false);
+        return;
+      }
+      await initiateRazorpayPayment({
+        orderData: payRes.payment,
+        onSuccess: async () => {
+          setPaying(false);
+          const token = location.state?.orderToken || sessionStorage.getItem(`vr_token_${orderNumber}`);
+          const updated = await checkoutClient.getOrder(orderNumber, token);
+          if (updated.success && updated.order) {
+            setOrder(updated.order);
+          }
+        },
+        onError: (err) => {
+          setPaying(false);
+          alert(err.message || 'Payment not completed.');
+        },
+        onDismiss: () => {
+          setPaying(false);
+        }
+      });
+    } catch (err) {
+      setPaying(false);
+      alert(err.message || 'Payment error');
+    }
+  };
 
   if (loading) {
     return (
@@ -100,7 +136,7 @@ export default function OrderConfirmationPage() {
           </span>
 
           <h1 className="text-2xl sm:text-3xl font-serif font-bold text-[#35151B] mt-1">
-            {isPendingPayment ? 'Order Placed — Awaiting Payment' : 'Order Placed & Confirmed!'}
+            {isPendingPayment ? 'Order Placed - Awaiting Payment' : 'Order Placed & Confirmed!'}
           </h1>
 
           <p className="text-xs sm:text-sm text-[#7A6E65] max-w-lg mx-auto mt-2 leading-relaxed">
@@ -129,7 +165,7 @@ export default function OrderConfirmationPage() {
             <div className="text-xs text-[#52443C] space-y-2 leading-relaxed">
               <p className="font-semibold text-sm text-[#2C2420]">{order.customer_name}</p>
               <p>{order.shipping_address}</p>
-              <p>{order.city}, {order.state} — {order.pin_code}</p>
+              <p>{order.city}, {order.state} - {order.pin_code}</p>
               <div className="pt-2 border-t border-[#F4EFE6] space-y-1 text-[#7A6E65]">
                 <p className="flex items-center gap-2">
                   <Phone className="w-3.5 h-3.5" />
@@ -180,6 +216,19 @@ export default function OrderConfirmationPage() {
                   <Truck className="w-3.5 h-3.5" /> Insured Transit
                 </span>
               </div>
+
+              {isPendingPayment && (
+                <div className="pt-3 border-t border-[#F4EFE6]">
+                  <button
+                    onClick={handlePayNow}
+                    disabled={paying}
+                    className="w-full bg-[#581923] hover:bg-[#431219] text-white py-2.5 rounded-lg text-xs font-semibold tracking-wide flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs active:scale-[0.99]"
+                  >
+                    <CreditCard className="w-4 h-4 text-[#F3EAD3]" />
+                    <span>{paying ? 'Opening Razorpay Gateway...' : `Pay Now via Razorpay - ₹ ${(order.total_amount || 0).toLocaleString('en-IN')}`}</span>
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -235,7 +284,7 @@ export default function OrderConfirmationPage() {
             </div>
             <div className="flex justify-between">
               <span>Insured Courier:</span>
-              <span className="font-semibold text-emerald-700">Complimentary</span>
+              <span className="font-medium text-emerald-700">Complimentary</span>
             </div>
             <div className="flex justify-between items-baseline text-sm font-bold text-[#35151B] border-t border-[#EAE2D5] pt-2">
               <span>Total Paid / Payable:</span>
@@ -244,25 +293,17 @@ export default function OrderConfirmationPage() {
           </div>
         </div>
 
-        {/* Bottom Actions */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4">
+        {/* Back to Catalog */}
+        <div className="text-center pt-4">
           <Link
-            to="/"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#581923] hover:bg-[#431219] text-white px-6 py-3 rounded text-xs font-semibold tracking-wider uppercase transition-colors"
+            to="/gold"
+            className="inline-flex items-center gap-2 bg-[#581923] hover:bg-[#431219] text-white px-6 py-2.5 rounded text-xs font-semibold tracking-wide transition-colors"
           >
-            <span>Continue Shopping</span>
+            <span>Explore More Fine Jewellery</span>
             <ArrowRight className="w-4 h-4" />
-          </Link>
-
-          <Link
-            to="/contact"
-            className="text-xs text-[#7A6E65] hover:text-[#581923] transition-colors underline"
-          >
-            Need assistance? Contact our Madurai Showroom Concierge
           </Link>
         </div>
       </div>
     </div>
   );
 }
-

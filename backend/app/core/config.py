@@ -79,6 +79,7 @@ class Settings(BaseSettings):
     RAZORPAY_KEY_ID: Optional[str] = None
     RAZORPAY_KEY_SECRET: Optional[str] = None
     RAZORPAY_WEBHOOK_SECRET: Optional[str] = None
+    RAZORPAY_CURRENCY: str = "INR"
     FREE_DELIVERY_THRESHOLD: float = 5000.0
     STANDARD_DELIVERY_CHARGE: float = 250.0
     JEWELLERY_GST_PERCENT: float = 3.0

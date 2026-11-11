@@ -52,6 +52,8 @@ export default {
           800: '#5C1D27',
           900: '#48161E',
           950: '#340E14',
+          deep: '#4E0C16',
+          royal: '#581923',
         },
         gold: {
           50: '#FAF6EE',
@@ -62,6 +64,8 @@ export default {
           500: '#B38E46',
           600: '#967433',
           700: '#735724',
+          primary: '#D4AF37',
+          warm: '#E5C058',
         },
         ivory: {
           50: '#FDFCFA',
@@ -74,8 +78,10 @@ export default {
       },
       fontFamily: {
         sans: ['"Inter"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
-        serif: ['"Inter"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
-        display: ['"Inter"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+        serif: ['"Playfair Display"', '"Cormorant Garamond"', 'Georgia', 'serif'],
+        display: ['"Playfair Display"', '"Cinzel"', 'serif'],
+        cinzel: ['"Cinzel"', 'serif'],
+        cormorant: ['"Cormorant Garamond"', 'serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
         'admin-heading': ['"Inter"', 'system-ui', 'sans-serif'],
         'admin-body': ['"Inter"', 'system-ui', 'sans-serif'],
@@ -84,6 +90,7 @@ export default {
       boxShadow: {
         'soft': '0 4px 20px -2px rgba(92, 29, 39, 0.06)',
         'card': '0 2px 12px -1px rgba(0, 0, 0, 0.05)',
+        'luxury': '0 10px 30px -5px rgba(88, 25, 35, 0.08)',
       }
     },
   },

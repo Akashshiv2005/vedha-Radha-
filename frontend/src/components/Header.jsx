@@ -1,73 +1,102 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import {
-  Truck,
-  ShieldCheck,
+  MapPin,
   Phone,
-  ChevronDown,
-  ChevronRight,
-  X,
   Search,
-  User,
   Heart,
   ShoppingBag,
-  TrendingUp,
-  TrendingDown,
-  Sparkles,
-  Coins,
-  Menu
+  Calendar,
+  ChevronDown,
+  ChevronRight,
+  Menu,
+  X
 } from 'lucide-react';
+import BookAppointmentModal from './BookAppointmentModal';
+import TrackOrderModal from './header/TrackOrderModal';
 import GoldRateModal from './header/GoldRateModal';
 import { usePreciousRates } from '../hooks/usePreciousRates';
 import { useCustomerAuth } from '../context/CustomerAuthContext';
 import {
-  coinsBarsNavItems,
   collectionsNavItems
 } from '../data/navigationData';
 
 export default function Header({
   searchQuery = '',
-  setSearchQuery = () => { },
+  setSearchQuery = () => {},
   cartCount = 0,
   wishlistCount = 0,
-  onOpenCart = () => { },
-  onOpenAccount = () => { },
-  onOpenWishlist = () => { }
+  onOpenCart = () => {},
+  onOpenAccount = () => {},
+  onOpenWishlist = () => {}
 }) {
   const location = useLocation();
-  const { customer, isAuthenticated } = useCustomerAuth();
   const navigate = useNavigate();
+  const { customer, isAuthenticated } = useCustomerAuth();
 
-  // Precious metal rates
   const {
     rates,
     status,
     isLoading,
-    isLive,
-    isStale,
-    disclaimer,
-    refreshRates,
-    updateManualRates
+    disclaimer
   } = usePreciousRates();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(null); // 'gold' | 'silver' | 'coins-bars' | 'collections' | null
+  const [activeDropdown, setActiveDropdown] = useState(null); // 'collections' | 'jewellery' | 'about' | null
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isAppointmentOpen, setIsAppointmentOpen] = useState(false);
+  const [isTrackOrderOpen, setIsTrackOrderOpen] = useState(false);
   const [isGoldRateModalOpen, setIsGoldRateModalOpen] = useState(false);
-  const [mobileAccordion, setMobileAccordion] = useState(null);
-
-  // Active route tracking
-  const currentPath = location.pathname;
-  const isHome = currentPath === '/';
-  const isGold = currentPath.startsWith('/gold');
-  const isSilver = currentPath.startsWith('/silver');
-  const isCoinsBars = currentPath.startsWith('/coins-bars');
-  const isNewArrivals = currentPath === '/new-arrivals';
-  const isCollections = currentPath.startsWith('/collections');
 
   const dropdownRef = useRef(null);
   const hoverTimeoutRef = useRef(null);
   const searchInputRef = useRef(null);
+
+  const currentPath = location.pathname;
+  const isHome = currentPath === '/';
+  const isBridal = currentPath === '/bridal' || currentPath.startsWith('/bridal');
+  const isDiamonds = currentPath === '/diamonds' || currentPath === '/diamond';
+  const isCollections = currentPath.startsWith('/collections');
+  const isSilverPooja = currentPath === '/silver' || currentPath.startsWith('/silver');
+  const isJewellery = (currentPath.startsWith('/gold') || currentPath.startsWith('/jewellery') || currentPath === '/coins-bars') && !isSilverPooja;
+  const isOffers = currentPath === '/offers' || currentPath.startsWith('/offers');
+  const isAbout = currentPath === '/about' || currentPath === '/jewellery-care' || currentPath === '/temple-heritage';
+  const isContact = currentPath === '/contact' || location.hash === '#contact-concierge';
+
+  const scrollToContactSection = () => {
+    const el = document.getElementById('contact-concierge');
+    if (el) {
+      const headerOffset = 90;
+      const targetY = Math.round(el.getBoundingClientRect().top + window.pageYOffset - headerOffset);
+      window.scrollTo({
+        top: Math.max(0, targetY),
+        behavior: 'smooth'
+      });
+      return true;
+    }
+    return false;
+  };
+
+  const handleContactClick = (e) => {
+    e.preventDefault();
+    if (mobileMenuOpen) setMobileMenuOpen(false);
+
+    if (location.pathname === '/') {
+      scrollToContactSection();
+      if (window.location.hash !== '#contact-concierge') {
+        window.history.pushState(null, '', '/#contact-concierge');
+      }
+    } else {
+      navigate('/#contact-concierge');
+    }
+  };
+
+  const getNavLinkClass = (isActive) =>
+    `px-3.5 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
+      isActive
+        ? 'bg-[#540B16] text-[#FAF5EE] shadow-[0_2px_8px_rgba(84,11,22,0.35)]'
+        : 'text-[#2C221E] hover:text-[#581923] hover:bg-[#F6EFE6]'
+    }`;
 
   const handleMouseEnter = (menu) => {
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
@@ -80,46 +109,14 @@ export default function Header({
     }, 180);
   };
 
-  const handleKeyDownMenu = (e, menu, route) => {
-    if (e.key === 'Enter') {
-      navigate(route);
-      setActiveDropdown(null);
-    } else if (e.key === ' ' || e.key === 'ArrowDown') {
-      e.preventDefault();
-      setActiveDropdown(prev => prev === menu ? null : menu);
-    }
-  };
-
-  // Close dropdowns on outside click or Escape
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setActiveDropdown(null);
-      }
-    };
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') {
-        setActiveDropdown(null);
-        setIsSearchOpen(false);
-        setMobileMenuOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    document.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, []);
-
-  // Close mobile drawer and search on route change
+  // Close dropdowns on route changes
   useEffect(() => {
     setMobileMenuOpen(false);
     setActiveDropdown(null);
     setIsSearchOpen(false);
   }, [location.pathname, location.search]);
 
-  // Focus search input when search opens
+  // Focus search input when open
   useEffect(() => {
     if (isSearchOpen && searchInputRef.current) {
       searchInputRef.current.focus();
@@ -129,815 +126,653 @@ export default function Header({
   const handleSearchSubmit = (e) => {
     if (e) e.preventDefault();
     if (searchQuery.trim()) {
-      navigate(`/gold`);
+      navigate('/gold');
       setIsSearchOpen(false);
     }
   };
 
-  const handleTagSearch = (tag, path = '/gold') => {
-    setSearchQuery(tag);
-    navigate(path);
-    setIsSearchOpen(false);
-  };
-
   return (
-    <header className="sticky top-0 z-50 w-full select-none font-sans shadow-xs">
-
+    <header className="sticky top-0 z-50 w-full select-none font-sans bg-[#FAF7F2]">
       {/* ========================================================================= */}
-      {/* 1. TOP UTILITY BAR (Deep Maroon Row)                                      */}
+      {/* 1. TOP UTILITY STRIP (Deep Maroon #4E0C16)                                */}
       {/* ========================================================================= */}
-      <div className="bg-[#3B1117] text-[#EAD8D8] text-[10px] xs:text-[11px] sm:text-[11.5px] border-b border-[#521B24] px-2.5 xs:px-3 sm:px-6 lg:px-8 py-1 sm:py-1.5">
-        <div className="max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-1 sm:gap-3 lg:gap-4">
-
-          {/* Left: Free Shipping */}
-          <div className="flex items-center justify-center sm:justify-start gap-1.5 sm:gap-2 shrink-0 w-full sm:w-auto text-center sm:text-left py-0.5 sm:py-0">
-            <Truck className="w-3.5 h-3.5 text-[#E5C278] shrink-0" aria-hidden="true" />
-            <span className="tracking-wide text-[#EAD8D8] font-normal truncate sm:overflow-visible">
-              Free Shipping on Orders Above ₹5,000
-            </span>
+      <div className="bg-[#4E0C16] text-[#EAD8D8] text-[11px] sm:text-[12px] border-b border-[#631422] px-3 sm:px-6 lg:px-8 py-1.5">
+        <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-3">
+          
+          {/* Left: Location & Contact Phone */}
+          <div className="flex items-center gap-2 sm:gap-4 text-[#F4EBE8] text-xs font-normal">
+            <div className="flex items-center gap-1.5 hover:text-white transition-colors">
+              <MapPin className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" />
+              <span className="tracking-wide">Trichy, Tamil Nadu</span>
+            </div>
+            <span className="text-[#842737] hidden xs:inline">|</span>
+            <a
+              href="tel:+919876543210"
+              className="hidden xs:flex items-center gap-1.5 hover:text-[#D4AF37] transition-colors"
+            >
+              <Phone className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" />
+              <span>+91 98765 43210</span>
+            </a>
           </div>
 
-          <div className="hidden lg:block h-3.5 w-px bg-[#692F39] shrink-0" />
-
-          {/* Center: Live Benchmark Gold & Silver Rate Pill */}
-          <div className="flex items-center justify-center my-0.5 sm:my-0 w-full sm:w-auto overflow-hidden">
+          {/* Center: Benchmark Rate Pill (Responsive) */}
+          <div className="hidden md:flex items-center justify-center">
             <button
               onClick={() => setIsGoldRateModalOpen(true)}
-              className="relative inline-flex items-center gap-1 xs:gap-1.5 sm:gap-2.5 px-2 xs:px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded-full bg-gradient-to-r from-[#FFF4DF] via-[#FDF0D5] to-[#F7E1B5] text-[#2C1D18] border border-[#D4AF37]/80 shadow-[0_0_12px_rgba(212,175,55,0.25)] hover:shadow-[0_0_16px_rgba(212,175,55,0.5)] hover:scale-[1.01] transition-all duration-200 cursor-pointer group max-w-full text-[9.5px] xs:text-[10.5px] sm:text-[11.5px] shrink-0"
-              title={`Click for multi-purity rates & conversion details. ${disclaimer}`}
-              aria-label={`Today's 22K Gold: ₹${rates.gold22k}/g, Silver: ₹${rates.silver1g}/g. Last updated ${rates.lastUpdated}.`}
+              className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-[#3B070F] text-[#F3EAD3] border border-[#D4AF37]/50 text-[11px] hover:border-[#D4AF37] transition-all cursor-pointer"
             >
-              {/* Gold Bars Icon */}
-              <div className="text-[#9E7324] shrink-0">
-                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M4 10L7 4H17L20 10H4Z" opacity="0.85" />
-                  <path d="M2 11H22V13L20 19H4L2 13V11Z" />
-                  <rect x="7" y="14" width="10" height="2" rx="1" fill="#FFF4DF" opacity="0.5" />
-                </svg>
-              </div>
-
-              {/* Gold Rate */}
-              <div className="flex items-center gap-0.5 xs:gap-1">
-                <span className="font-normal text-[9px] xs:text-[10px] sm:text-[11px] text-[#554133]">
-                  Gold (22K):
-                </span>
-                <span className="font-bold text-[9.5px] xs:text-[10.5px] sm:text-[11.5px] text-[#1F1511]">
-                  ₹{rates.gold22k} <span className="font-normal text-[8px] xs:text-[8.5px] sm:text-[9.5px] text-[#695444]">/g</span>
-                </span>
-              </div>
-
-              <span className="text-[#C5A059]/70 font-light">|</span>
-
-              {/* Silver Rate */}
-              <div className="flex items-center gap-0.5 xs:gap-1">
-                <span className="font-normal text-[9px] xs:text-[10px] sm:text-[11px] text-[#554133]">
-                  Silver:
-                </span>
-                <span className="font-bold text-[9.5px] xs:text-[10.5px] sm:text-[11.5px] text-[#1F1511]">
-                  ₹{rates.silver1g} <span className="font-normal text-[8px] xs:text-[8.5px] sm:text-[9.5px] text-[#695444]">/g</span>
-                </span>
-              </div>
-
-              {/* Daily Change Indicator */}
-              {rates.change && (
-                <span className={`text-[9.5px] font-semibold items-center gap-0.5 px-1.5 py-0.2 rounded-full hidden sm:inline-flex ${rates.isUp ? 'bg-emerald-100/90 text-[#167034] border border-emerald-200' : 'bg-red-100/90 text-red-700 border border-red-200'
-                  }`}>
-                  {rates.isUp ? (
-                    <TrendingUp className="w-2.5 h-2.5 text-[#167034] shrink-0" aria-hidden="true" />
-                  ) : (
-                    <TrendingDown className="w-2.5 h-2.5 text-red-700 shrink-0" aria-hidden="true" />
-                  )}
-                  <span>{rates.change}</span>
-                </span>
-              )}
-
-              {/* Status Dot */}
-              <span
-                className={`w-1.5 h-1.5 rounded-full shrink-0 ${isLive ? 'bg-emerald-600 animate-pulse' : isStale ? 'bg-amber-600' : 'bg-[#9E7324]'
-                  }`}
-                title={isLive ? 'Live spot rate' : isStale ? 'Cached rate' : 'Indicative benchmark'}
-              />
-
-              <ChevronRight className="w-3 h-3 text-[#9E7324] group-hover:translate-x-0.5 transition-transform shrink-0" aria-hidden="true" />
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Gold (22K): <strong>₹{rates.gold22k}/g</strong></span>
+              <span className="text-[#842737]">|</span>
+              <span>Silver: <strong>₹{rates.silver1g}/g</strong></span>
             </button>
           </div>
 
-          <div className="hidden lg:block h-3.5 w-px bg-[#692F39] shrink-0" />
-
-          {/* Right: Hallmark + Showroom Phone + Language Selector */}
-          <div className="hidden lg:flex items-center gap-3.5 xl:gap-4.5 text-[11px] text-[#EAD8D8] shrink-0">
-
-            <div className="flex items-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#E5C278] shrink-0" aria-hidden="true" />
-              <span className="tracking-wide">100% Hallmark Gold</span>
-            </div>
-
-            <div className="h-3.5 w-px bg-[#692F39] shrink-0" />
-
-            <a
-              href="tel:+914428341999"
-              className="flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer"
-              title="Call Mylapore Showroom"
+          {/* Right: Track Order | Wishlist | Login / Sign Up */}
+          <div className="flex items-center gap-2.5 sm:gap-4 text-xs text-[#EAD8D8]">
+            <button
+              onClick={() => setIsTrackOrderOpen(true)}
+              className="hover:text-white transition-colors cursor-pointer text-[11.5px] sm:text-xs"
             >
-              <Phone className="w-3.5 h-3.5 text-[#E5C278] shrink-0" aria-hidden="true" />
-              <span>+91 44 2834 1999</span>
-            </a>
+              Track Order
+            </button>
+            <span className="text-[#842737]">|</span>
+            <button
+              onClick={onOpenWishlist}
+              className="flex items-center gap-1 hover:text-white transition-colors cursor-pointer text-[11.5px] sm:text-xs"
+            >
+              <Heart className="w-3.5 h-3.5 text-[#D4AF37]" />
+              <span>Wishlist</span>
+              {wishlistCount > 0 && (
+                <span className="bg-[#D4AF37] text-[#4E0C16] text-[9.5px] font-bold px-1.5 rounded-full ml-0.5">
+                  {wishlistCount}
+                </span>
+              )}
+            </button>
+            <span className="text-[#842737]">|</span>
+            <button
+              onClick={onOpenAccount}
+              className="hover:text-white transition-colors cursor-pointer font-medium text-[11.5px] sm:text-xs"
+            >
+              {isAuthenticated ? (customer?.customer_name?.split(' ')[0] || 'My Account') : 'Login / Sign Up'}
+            </button>
           </div>
 
         </div>
       </div>
 
       {/* ========================================================================= */}
-      {/* 2. MAIN NAVIGATION ROW (Warm Ivory Row with New Navigation Structure)      */}
+      {/* 2. ROYAL HERITAGE NAV RIBBON WITH RUBY DROPLET & ORNATE CORNERS           */}
       {/* ========================================================================= */}
-      <div className="bg-[#FAF7F2] border-b border-[#E8DFC0]/90 py-2 sm:py-3 px-2.5 xs:px-3 sm:px-6 lg:px-8 relative">
-        <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-1 xs:gap-1.5 sm:gap-4">
+      <div className="relative w-full bg-gradient-to-b from-[#FFF5DE] via-[#FFF9EE] to-[#F7EAC7] border-b border-[#CCA44C] shadow-[0_4px_24px_rgba(202,164,76,0.18)]">
+        
+        {/* Top Inner Golden Highlight Line */}
+        <div className="absolute top-0 inset-x-0 h-[1.5px] bg-gradient-to-r from-[#CCA44C] via-[#FCE39E] to-[#CCA44C] pointer-events-none" />
 
-          {/* Left: Brand Logo & Wordmark + Mobile Hamburger (< lg) */}
-          <div className="flex items-center gap-1 xs:gap-2 sm:gap-4 shrink-0 min-w-0">
+        {/* Left Ornate Maroon Corner with Golden Filigree Blossom */}
+        <div className="absolute top-0 left-0 pointer-events-none hidden xl:block z-20">
+          <svg viewBox="0 0 64 64" className="w-14 h-14" fill="none">
+            <defs>
+              <linearGradient id="cornerMaroonL" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#43070E" />
+                <stop offset="65%" stopColor="#540B16" />
+                <stop offset="100%" stopColor="#6B1020" />
+              </linearGradient>
+              <linearGradient id="leafGoldL" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#FFF2B8" />
+                <stop offset="50%" stopColor="#D4AF37" />
+                <stop offset="100%" stopColor="#A07818" />
+              </linearGradient>
+            </defs>
+            {/* Corner Maroon Shield */}
+            <path d="M0 0 H50 C38 10 25 24 17 38 C13 44 8 49 0 54 V0 Z" fill="url(#cornerMaroonL)" />
+            {/* Double Golden Inset Arc */}
+            <path d="M52 0 C40 11 27 25 19 40 C15 46 10 51 0 56" stroke="url(#leafGoldL)" strokeWidth="1.5" strokeLinecap="round" />
+            <path d="M56 0 C44 12 31 27 23 42 C19 48 14 53 2 58" stroke="url(#leafGoldL)" strokeWidth="0.8" opacity="0.6" strokeLinecap="round" />
+            {/* Golden Floral Blossom & Vines */}
+            <circle cx="16" cy="16" r="2.2" fill="url(#leafGoldL)" />
+            <path d="M16 10 C17.2 12.5 17.2 13.5 16 14 C14.8 13.5 14.8 12.5 16 10 Z" fill="url(#leafGoldL)" />
+            <path d="M16 22 C17.2 19.5 17.2 18.5 16 18 C14.8 18.5 14.8 19.5 16 22 Z" fill="url(#leafGoldL)" />
+            <path d="M10 16 C12.5 14.8 13.5 14.8 14 16 C13.5 17.2 12.5 17.2 10 16 Z" fill="url(#leafGoldL)" />
+            <path d="M22 16 C19.5 14.8 18.5 14.8 18 16 C18.5 17.2 19.5 17.2 22 16 Z" fill="url(#leafGoldL)" />
+            <path d="M12 12 C13.5 13 14 13.8 14.2 14.5 C13.5 14.5 12.8 14 12 12 Z" fill="url(#leafGoldL)" />
+            <path d="M20 12 C18.5 13 18 13.8 17.8 14.5 C18.5 14.5 19.2 14 20 12 Z" fill="url(#leafGoldL)" />
+            {/* Botanical Tendrils */}
+            <path d="M8 8 C10 11 12 11 14 10" stroke="url(#leafGoldL)" strokeWidth="0.9" fill="none" />
+            <path d="M8 24 C10 21 12 21 14 22" stroke="url(#leafGoldL)" strokeWidth="0.9" fill="none" />
+            <circle cx="7" cy="8" r="1.1" fill="url(#leafGoldL)" />
+            <circle cx="7" cy="24" r="1.1" fill="url(#leafGoldL)" />
+            <circle cx="28" cy="7" r="1.2" fill="url(#leafGoldL)" />
+            {/* Terminal Golden Curl below corner */}
+            <path d="M0 56 C6 54 11 58 12 62 C12.5 64 11 66 9 65 C7 64 7 62 9 61" stroke="url(#leafGoldL)" strokeWidth="1.2" fill="none" strokeLinecap="round" />
+          </svg>
+        </div>
 
-            {/* Mobile Hamburger Menu Button (< lg) */}
-            <button
-              onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden p-1 xs:p-1.5 sm:p-2 -ml-1 text-[#2C1D18] hover:text-[#581923] hover:bg-[#F3EAD3]/60 rounded-lg transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 shrink-0"
-              aria-label="Open mobile navigation menu"
-              title="Open Navigation Menu"
-            >
-              <Menu className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2]" />
-            </button>
+        {/* Right Ornate Maroon Corner with Golden Filigree Blossom (Mirrored) */}
+        <div className="absolute top-0 right-0 pointer-events-none hidden xl:block z-20 scale-x-[-1]">
+          <svg viewBox="0 0 64 64" className="w-14 h-14" fill="none">
+            <defs>
+              <linearGradient id="cornerMaroonR" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#43070E" />
+                <stop offset="65%" stopColor="#540B16" />
+                <stop offset="100%" stopColor="#6B1020" />
+              </linearGradient>
+              <linearGradient id="leafGoldR" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#FFF2B8" />
+                <stop offset="50%" stopColor="#D4AF37" />
+                <stop offset="100%" stopColor="#A07818" />
+              </linearGradient>
+            </defs>
+            <path d="M0 0 H50 C38 10 25 24 17 38 C13 44 8 49 0 54 V0 Z" fill="url(#cornerMaroonR)" />
+            <path d="M52 0 C40 11 27 25 19 40 C15 46 10 51 0 56" stroke="url(#leafGoldR)" strokeWidth="1.5" strokeLinecap="round" />
+            <path d="M56 0 C44 12 31 27 23 42 C19 48 14 53 2 58" stroke="url(#leafGoldR)" strokeWidth="0.8" opacity="0.6" strokeLinecap="round" />
+            <circle cx="16" cy="16" r="2.2" fill="url(#leafGoldR)" />
+            <path d="M16 10 C17.2 12.5 17.2 13.5 16 14 C14.8 13.5 14.8 12.5 16 10 Z" fill="url(#leafGoldR)" />
+            <path d="M16 22 C17.2 19.5 17.2 18.5 16 18 C14.8 18.5 14.8 19.5 16 22 Z" fill="url(#leafGoldR)" />
+            <path d="M10 16 C12.5 14.8 13.5 14.8 14 16 C13.5 17.2 12.5 17.2 10 16 Z" fill="url(#leafGoldR)" />
+            <path d="M22 16 C19.5 14.8 18.5 14.8 18 16 C18.5 17.2 19.5 17.2 22 16 Z" fill="url(#leafGoldR)" />
+            <path d="M12 12 C13.5 13 14 13.8 14.2 14.5 C13.5 14.5 12.8 14 12 12 Z" fill="url(#leafGoldR)" />
+            <path d="M20 12 C18.5 13 18 13.8 17.8 14.5 C18.5 14.5 19.2 14 20 12 Z" fill="url(#leafGoldR)" />
+            <path d="M8 8 C10 11 12 11 14 10" stroke="url(#leafGoldR)" strokeWidth="0.9" fill="none" />
+            <path d="M8 24 C10 21 12 21 14 22" stroke="url(#leafGoldR)" strokeWidth="0.9" fill="none" />
+            <circle cx="7" cy="8" r="1.1" fill="url(#leafGoldR)" />
+            <circle cx="7" cy="24" r="1.1" fill="url(#leafGoldR)" />
+            <circle cx="28" cy="7" r="1.2" fill="url(#leafGoldR)" />
+            <path d="M0 56 C6 54 11 58 12 62 C12.5 64 11 66 9 65 C7 64 7 62 9 61" stroke="url(#leafGoldR)" strokeWidth="1.2" fill="none" strokeLinecap="round" />
+          </svg>
+        </div>
 
-            {/* Vedha Radha Logo & Wordmark */}
-            <Link
-              to="/"
-              className="flex items-center gap-1 xs:gap-2 sm:gap-3 group cursor-pointer min-w-0"
-              aria-label="Vedha Radha Thanga Maaligai Homepage"
-            >
-              <div className="w-7 h-7 xs:w-8 xs:h-8 sm:w-10 sm:h-10 text-[#B8924B] shrink-0 transition-transform duration-300 group-hover:scale-105">
-                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full drop-shadow-2xs">
-                  <path d="M50 10 C42 32 30 50 18 64 C28 72 40 76 50 76 C60 76 72 72 82 64 C70 50 58 32 50 10 Z" stroke="#B8924B" strokeWidth="2.5" fill="#FAF6EE" />
-                  <path d="M50 18 C46 36 40 52 50 70 C60 52 54 36 50 18 Z" fill="#C5A059" stroke="#947130" strokeWidth="1.5" />
-                  <path d="M50 70 C34 66 22 52 24 38 C34 46 44 56 50 70 Z" stroke="#B8924B" strokeWidth="2" fill="#E6D3A3" />
-                  <path d="M50 70 C66 66 78 52 76 38 C66 46 56 56 50 70 Z" stroke="#B8924B" strokeWidth="2" fill="#E6D3A3" />
-                  <path d="M30 76 C40 84 60 84 70 76 C62 88 38 88 30 76 Z" fill="#B8924B" />
-                  <circle cx="50" cy="50" r="3" fill="#581923" />
-                </svg>
-              </div>
+        {/* Main Ribbon Content Container */}
+        <div className="relative max-w-[1440px] mx-auto px-3 xs:px-4 sm:px-6 lg:px-8 xl:px-14 py-1 sm:py-1.5 flex items-center justify-between gap-2 sm:gap-4 overflow-visible">
 
-              <div className="flex flex-col justify-center min-w-0">
-                <span className="text-[15px] xs:text-[18px] sm:text-[23px] font-bold text-[#241716] leading-none tracking-tight group-hover:text-[#581923] transition-colors whitespace-nowrap">
-                  Vedha Radha
-                </span>
-                <span className="font-sans text-[6px] xs:text-[7.5px] sm:text-[9px] font-semibold tracking-[0.2em] xs:tracking-[0.26em] text-[#7A6252] uppercase mt-0.5 sm:mt-1 whitespace-nowrap">
-                  THANGAMAALIGAI
-                </span>
-              </div>
-            </Link>
-
-          </div>
-
-          {/* Center: Main Navigation: Home | Gold | Silver | Coins & Bars ▼ | New Arrivals | Collections ▼ */}
-          <nav
-            ref={dropdownRef}
-            className="hidden lg:flex items-center gap-3.5 xl:gap-6 2xl:gap-8 text-[12.5px] xl:text-[13.5px] font-medium text-[#3A2E28]"
-            aria-label="Main Navigation"
-          >
-            {/* 0. HOME */}
-            <Link
-              to="/"
-              className={`relative py-1 transition-colors cursor-pointer focus:outline-none ${isHome ? 'text-[#581923] font-semibold' : 'hover:text-[#581923]'
-                }`}
-            >
-              <span>Home</span>
-              {isHome && (
-                <span className="absolute -bottom-2.5 left-0 right-0 h-[2px] bg-[#C5A059] rounded-full" />
-              )}
-            </Link>
-
-            {/* 1. GOLD */}
-            <Link
-              to="/gold"
-              className={`relative py-1 transition-colors cursor-pointer focus:outline-none ${isGold ? 'text-[#581923] font-semibold' : 'hover:text-[#581923]'
-                }`}
-            >
-              <span>Gold</span>
-              {isGold && (
-                <span className="absolute -bottom-2.5 left-0 right-0 h-[2px] bg-[#C5A059] rounded-full" />
-              )}
-            </Link>
-
-            {/* 2. SILVER */}
-            <Link
-              to="/silver"
-              className={`relative py-1 transition-colors cursor-pointer focus:outline-none ${isSilver ? 'text-[#581923] font-semibold' : 'hover:text-[#581923]'
-                }`}
-            >
-              <span>Silver</span>
-              {isSilver && (
-                <span className="absolute -bottom-2.5 left-0 right-0 h-[2px] bg-[#C5A059] rounded-full" />
-              )}
-            </Link>
-
-            {/* 3. COINS & BARS ▼ */}
-            <div
-              className="relative"
-              onMouseEnter={() => handleMouseEnter('coins-bars')}
-              onMouseLeave={handleMouseLeave}
-            >
+            {/* Left: Mobile Hamburger + Brand Logo */}
+            <div className="flex items-center gap-2 sm:gap-3 shrink-0 xl:pl-4">
               <button
-                onClick={() => navigate('/coins-bars')}
-                onKeyDown={(e) => handleKeyDownMenu(e, 'coins-bars', '/coins-bars')}
-                aria-expanded={activeDropdown === 'coins-bars'}
-                aria-haspopup="true"
-                className={`flex items-center gap-1 py-1 transition-colors cursor-pointer focus:outline-none ${isCoinsBars || activeDropdown === 'coins-bars'
-                    ? 'text-[#581923] font-semibold'
-                    : 'hover:text-[#581923]'
-                  }`}
+                onClick={() => setMobileMenuOpen(true)}
+                className="lg:hidden p-1.5 -ml-1 text-[#4E0C16] hover:bg-[#F6EFE6] rounded-lg transition-colors cursor-pointer"
+                aria-label="Open navigation menu"
               >
-                <span>Coins & Bars</span>
-                <ChevronDown className={`w-3.5 h-3.5 text-[#8C6D2D] transition-transform duration-200 ${activeDropdown === 'coins-bars' ? 'rotate-180 text-[#581923]' : ''}`} />
+                <Menu className="w-5 h-5" />
               </button>
 
-              {isCoinsBars && (
-                <span className="absolute -bottom-2.5 left-0 right-0 h-[2px] bg-[#C5A059] rounded-full" />
-              )}
+              {/* Official Brand Logo (Sleek Compact Size) */}
+              <Link to="/" className="flex items-center gap-2 group cursor-pointer py-0.5">
+                <img 
+                  src="/images/vedha_radha_official_logo.png" 
+                  alt="Vedha Radha Thangha Maalighai" 
+                  className="h-8 sm:h-9 md:h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                />
+              </Link>
+            </div>
 
-              {/* Coins & Bars Dropdown Content */}
-              {activeDropdown === 'coins-bars' && (
-                <div
-                  className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-72 bg-[#FAF7F2] rounded-2xl shadow-2xl border border-[#DECDBB] p-3 z-50 animate-fadeIn text-xs"
-                  role="menu"
-                  aria-label="Coins and Bars Menu"
+            {/* Delicate Golden Divider Line between Brand and Nav */}
+            <div className="hidden lg:block h-6 w-[1px] bg-[#CCA44C]/60 mx-1 xl:mx-2 shrink-0" />
+
+            {/* Center: Desktop Navigation Bar with exact typography & layout */}
+            <nav
+              ref={dropdownRef}
+              className="hidden lg:flex items-center gap-2 xl:gap-3.5 text-[13px] xl:text-[13.5px] font-medium text-[#2C221E]"
+              aria-label="Main Navigation"
+            >
+              {/* Home */}
+              <div className="relative inline-flex items-center">
+                <Link
+                  to="/"
+                  className={getNavLinkClass(isHome)}
                 >
-                  <div className="px-2.5 py-1.5 font-bold text-[#8C6D2D] border-b border-[#EAE2D5] text-[11px] uppercase tracking-wider flex items-center justify-between">
-                    <span>Bullion & Investment</span>
-                    <span className="text-[10px] text-[#7A6E65] font-semibold bg-[#EFE7D8] px-1.5 py-0.5 rounded">999.9 Fine</span>
-                  </div>
-                  <div className="space-y-1 mt-1.5">
-                    {coinsBarsNavItems.filter(item => !item.isAll).map((item) => (
-                      <Link
-                        key={item.name}
-                        to={item.path}
-                        onClick={() => setActiveDropdown(null)}
-                        className="group w-full text-left p-2 rounded-xl hover:bg-white border border-transparent hover:border-[#EAE2D5] transition-all flex items-center justify-between shadow-none hover:shadow-2xs cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30"
-                        role="menuitem"
-                      >
-                        <div className="flex items-center gap-2.5 min-w-0">
-                          <div className="w-9 h-9 rounded-lg overflow-hidden bg-white border border-[#EAE2D5] shrink-0">
-                            <img
-                              src={item.image}
-                              alt={item.name}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                              loading="lazy"
-                            />
-                          </div>
-                          <div className="min-w-0">
-                            <span className="text-[12.5px] font-semibold text-[#2C2420] group-hover:text-[#581923] transition-colors block truncate">
-                              {item.name}
-                            </span>
-                            <span className="text-[10.5px] text-[#7A6E65] block truncate">
-                              {item.count}
-                            </span>
-                          </div>
-                        </div>
-                        <ChevronRight className="w-3.5 h-3.5 text-[#B38E46] group-hover:text-[#581923] group-hover:translate-x-0.5 transition-all shrink-0 ml-2" />
-                      </Link>
-                    ))}
+                  Home
+                </Link>
+                {isHome && (
+                  <span 
+                    className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-[#540B16] pointer-events-none z-10" 
+                    aria-hidden="true"
+                  />
+                )}
+              </div>
 
+              {/* Collections ⌵ */}
+              <div
+                className="relative inline-flex items-center"
+                onMouseEnter={() => handleMouseEnter('collections')}
+                onMouseLeave={handleMouseLeave}
+              >
+                <button
+                  onClick={() => navigate('/collections')}
+                  className={getNavLinkClass(isCollections)}
+                >
+                  <span>Collections</span>
+                  <ChevronDown className={`w-3 h-3 transition-transform ${isCollections ? 'text-[#FAF5EE]' : activeDropdown === 'collections' ? 'rotate-180 text-[#581923]' : 'text-[#CCA44C]'}`} />
+                </button>
+                {isCollections && (
+                  <span 
+                    className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-[#540B16] pointer-events-none z-10" 
+                    aria-hidden="true"
+                  />
+                )}
+
+                {activeDropdown === 'collections' && (
+                  <div className="absolute top-full left-0 mt-3 w-72 bg-[#FAF7F2] rounded-2xl shadow-xl border border-[#DECDBB] p-3 z-50 animate-fadeIn text-xs">
+                    <div className="px-3 py-1.5 font-bold text-[#8C6D2D] border-b border-[#EAE2D5] text-[11px] uppercase tracking-wider">
+                      Curated Collections
+                    </div>
+                    <div className="space-y-1 mt-2">
+                      {collectionsNavItems.map((item) => (
+                        <Link
+                          key={item.name}
+                          to={item.path}
+                          onClick={() => setActiveDropdown(null)}
+                          className="flex items-center justify-between p-2 rounded-xl hover:bg-white transition-all text-[#2C2420] hover:text-[#581923]"
+                        >
+                          <span className="font-medium">{item.name}</span>
+                          <ChevronRight className="w-3.5 h-3.5 text-[#C5A059]" />
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Jewellery ⌵ */}
+              <div
+                className="relative inline-flex items-center"
+                onMouseEnter={() => handleMouseEnter('jewellery')}
+                onMouseLeave={handleMouseLeave}
+              >
+                <button
+                  onClick={() => navigate('/gold')}
+                  className={getNavLinkClass(isJewellery)}
+                >
+                  <span>Jewellery</span>
+                  <ChevronDown className={`w-3 h-3 transition-transform ${isJewellery ? 'text-[#FAF5EE]' : activeDropdown === 'jewellery' ? 'rotate-180 text-[#581923]' : 'text-[#CCA44C]'}`} />
+                </button>
+                {isJewellery && (
+                  <span 
+                    className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-[#540B16] pointer-events-none z-10" 
+                    aria-hidden="true"
+                  />
+                )}
+
+                {activeDropdown === 'jewellery' && (
+                  <div className="absolute top-full left-0 mt-3 w-64 bg-[#FAF7F2] rounded-2xl shadow-xl border border-[#DECDBB] p-3 z-50 animate-fadeIn text-xs space-y-1">
+                    <Link
+                      to="/gold"
+                      onClick={() => setActiveDropdown(null)}
+                      className="flex items-center justify-between p-2 rounded-xl hover:bg-white font-medium text-[#2C2420] hover:text-[#581923]"
+                    >
+                      <span>22K Gold Jewellery</span>
+                      <ChevronRight className="w-3.5 h-3.5 text-[#C5A059]" />
+                    </Link>
+                    <Link
+                      to="/diamonds"
+                      onClick={() => setActiveDropdown(null)}
+                      className="flex items-center justify-between p-2 rounded-xl hover:bg-white font-medium text-[#2C2420] hover:text-[#581923]"
+                    >
+                      <span className="flex items-center gap-1.5">
+                        <span>Certified Diamonds</span>
+                        <span className="text-[9px] text-[#A57822] bg-[#FAF3E5] px-1.5 py-0.2 rounded font-bold">Natural</span>
+                      </span>
+                      <ChevronRight className="w-3.5 h-3.5 text-[#C5A059]" />
+                    </Link>
+                    <Link
+                      to="/silver"
+                      onClick={() => setActiveDropdown(null)}
+                      className="flex items-center justify-between p-2 rounded-xl hover:bg-white font-medium text-[#2C2420] hover:text-[#581923]"
+                    >
+                      <span>92.5 Fine Silver</span>
+                      <ChevronRight className="w-3.5 h-3.5 text-[#C5A059]" />
+                    </Link>
                     <Link
                       to="/coins-bars"
                       onClick={() => setActiveDropdown(null)}
-                      className="w-full text-left px-3 py-2 rounded-xl hover:bg-white font-bold text-[#581923] hover:text-[#3B1117] border-t border-[#EAE2D5] mt-1 transition-all flex items-center justify-between group cursor-pointer"
-                      role="menuitem"
+                      className="flex items-center justify-between p-2 rounded-xl hover:bg-white font-medium text-[#2C2420] hover:text-[#581923]"
                     >
-                      <span className="text-xs">View All Coins & Bars</span>
-                      <ChevronRight className="w-3.5 h-3.5 text-[#581923] group-hover:translate-x-0.5 transition-transform" />
+                      <span>Coins &amp; Bars (999.9)</span>
+                      <ChevronRight className="w-3.5 h-3.5 text-[#C5A059]" />
                     </Link>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* 4. NEW ARRIVALS */}
-            <Link
-              to="/new-arrivals"
-              className={`relative py-1 transition-colors cursor-pointer focus:outline-none ${isNewArrivals ? 'text-[#241716] font-semibold' : 'hover:text-[#581923]'
-                }`}
-            >
-              <span className="flex items-center gap-1">
-                <span>New Arrivals</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
-              </span>
-              {isNewArrivals && (
-                <span className="absolute -bottom-2.5 left-0 right-0 h-[2px] bg-[#C5A059] rounded-full" />
-              )}
-            </Link>
-
-            {/* 5. COLLECTIONS ▼ */}
-            <div
-              className="relative"
-              onMouseEnter={() => handleMouseEnter('collections')}
-              onMouseLeave={handleMouseLeave}
-            >
-              <button
-                onClick={() => navigate('/collections')}
-                onKeyDown={(e) => handleKeyDownMenu(e, 'collections', '/collections')}
-                aria-expanded={activeDropdown === 'collections'}
-                aria-haspopup="true"
-                className={`flex items-center gap-1 py-1 transition-colors cursor-pointer focus:outline-none ${isCollections || activeDropdown === 'collections'
-                    ? 'text-[#581923] font-semibold'
-                    : 'hover:text-[#581923]'
-                  }`}
-              >
-                <span>Collections</span>
-                <ChevronDown className={`w-3.5 h-3.5 text-[#8C6D2D] transition-transform duration-200 ${activeDropdown === 'collections' ? 'rotate-180 text-[#581923]' : ''}`} />
-              </button>
-
-              {isCollections && (
-                <span className="absolute -bottom-2.5 left-0 right-0 h-[2px] bg-[#C5A059] rounded-full" />
-              )}
-
-              {/* Collections Image-Led Mega Menu Dropdown */}
-              {activeDropdown === 'collections' && (
-                <div
-                  className="absolute top-full right-0 lg:-right-24 xl:-right-16 mt-3 w-[92vw] max-w-[760px] bg-[#FAF7F2] rounded-2xl shadow-2xl border border-[#DECDBB] p-5 sm:p-6 z-50 animate-fadeIn text-xs"
-                  role="menu"
-                  aria-label="Collections Mega Menu"
-                >
-                  {/* Curated Collection Image-Led Cards Grid */}
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5">
-                    {collectionsNavItems.filter(item => !item.isAll).map((item) => (
-                      <Link
-                        key={item.name}
-                        to={item.path}
-                        onClick={() => setActiveDropdown(null)}
-                        className="group bg-white rounded-xl border border-[#EAE2D5] hover:border-[#581923]/40 p-3 transition-all duration-300 flex flex-col items-center text-center shadow-2xs hover:shadow-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#581923]/20"
-                        role="menuitem"
-                      >
-                        <div className="w-full aspect-square rounded-lg overflow-hidden bg-[#FAF6EE] border border-[#EAE2D5] relative mb-2.5">
-                          <img
-                            src={item.image}
-                            alt={item.name}
-                            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                            loading="lazy"
-                          />
-                        </div>
-                        <span className="text-[13px] sm:text-[13.5px] font-semibold text-[#2C2420] group-hover:text-[#581923] transition-colors line-clamp-1">
-                          {item.name}
-                        </span>
-                      </Link>
-                    ))}
-                  </div>
-
-                  {/* Pale-Ivory Promotional Strip */}
-                  <div className="mt-4 bg-[#F4EDE2]/80 rounded-xl p-3.5 border border-[#DECDBB] flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-3 min-w-0">
-                      {/* Small jewellery collage preview */}
-                      <div className="flex -space-x-2 shrink-0 overflow-hidden py-0.5">
-                        <img
-                          src="/images/col_wedding.jpg"
-                          alt="Signature Collection"
-                          className="w-9 h-9 rounded-full object-cover border-2 border-white shadow-xs"
-                        />
-                        <img
-                          src="/images/col_girls.jpg"
-                          alt="Signature Collection"
-                          className="w-9 h-9 rounded-full object-cover border-2 border-white shadow-xs"
-                        />
-                        <img
-                          src="/images/col_silver_idol.jpg"
-                          alt="Signature Collection"
-                          className="w-9 h-9 rounded-full object-cover border-2 border-white shadow-xs"
-                        />
-                      </div>
-                      <div className="min-w-0">
-                        <h4 className="text-[13px] sm:text-[13.5px] font-bold text-[#2C2420] leading-tight truncate">
-                          Curated Collections • Just for You.
-                        </h4>
-                        <p className="text-[11px] sm:text-[11.5px] text-[#7A6E65] truncate mt-0.5">
-                          Discover Our Signature Designs.
-                        </p>
-                      </div>
-                    </div>
-
                     <Link
-                      to="/collections"
+                      to="/collections/wedding"
                       onClick={() => setActiveDropdown(null)}
-                      className="shrink-0 border border-[#581923] text-[#581923] hover:bg-[#581923] hover:text-white px-4 py-1.5 rounded-full font-semibold text-[11.5px] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#581923]/30"
+                      className="flex items-center justify-between p-2 rounded-xl hover:bg-white font-medium text-[#2C2420] hover:text-[#581923]"
                     >
-                      View All
+                      <span>Temple Heritage Jewellery</span>
+                      <ChevronRight className="w-3.5 h-3.5 text-[#C5A059]" />
                     </Link>
                   </div>
-                </div>
-              )}
-            </div>
-
-          </nav>
-
-          {/* Right: Fine-line Search, Account, Wishlist, Shopping-Bag Icons */}
-          <div className="flex items-center gap-0.5 xs:gap-1 sm:gap-2.5 text-[#2C1D18] shrink-0 pr-0.5 sm:pr-0">
-
-            <button
-              onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="p-1 xs:p-1.5 sm:p-2 hover:text-[#581923] rounded-full hover:bg-[#F3EAD3]/60 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 min-w-[32px] min-h-[32px] xs:min-w-[36px] xs:min-h-[36px] sm:min-w-[38px] sm:min-h-[38px] flex items-center justify-center"
-              aria-label="Search jewellery collection"
-              title="Search collection"
-            >
-              <Search className="w-4 h-4 xs:w-4.5 xs:h-4.5 sm:w-5 sm:h-5 stroke-[1.75]" />
-            </button>
-
-            <button
-              onClick={onOpenAccount}
-              className="p-1 xs:p-1.5 sm:p-2 hover:text-[#581923] rounded-full hover:bg-[#F3EAD3]/60 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 min-w-[32px] min-h-[32px] xs:min-w-[36px] xs:min-h-[36px] sm:min-w-[38px] sm:min-h-[38px] flex items-center justify-center gap-1.5"
-              aria-label={isAuthenticated ? `Account of ${customer?.customer_name}` : "My Account and Privilege Club"}
-              title={isAuthenticated ? `${customer?.customer_name} (Privilege Member)` : "Vedha Radha Privilege Club"}
-            >
-              <div className="relative flex items-center justify-center">
-                <User className="w-4 h-4 xs:w-4.5 xs:h-4.5 sm:w-5 sm:h-5 stroke-[1.75]" />
-                {isAuthenticated && (
-                  <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-[#C49A45] border border-white rounded-full ring-1 ring-[#581923]" />
                 )}
               </div>
-              {isAuthenticated && customer?.customer_name && (
-                <span className="hidden xl:inline text-[11px] font-semibold text-[#581923] max-w-[80px] truncate leading-none">
-                  {customer.customer_name.split(' ')[0]}
-                </span>
-              )}
-            </button>
 
-            <button
-              onClick={onOpenWishlist}
-              className="relative p-1 xs:p-1.5 sm:p-2 hover:text-[#581923] rounded-full hover:bg-[#F3EAD3]/60 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 min-w-[32px] min-h-[32px] xs:min-w-[36px] xs:min-h-[36px] sm:min-w-[38px] sm:min-h-[38px] flex items-center justify-center"
-              aria-label={`Wishlist containing ${wishlistCount} saved items`}
-              title={`Saved Wishlist (${wishlistCount})`}
-            >
-              <Heart className="w-4 h-4 xs:w-4.5 xs:h-4.5 sm:w-5 sm:h-5 stroke-[1.75]" />
-              {wishlistCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 xs:top-0 xs:right-0 bg-[#D32F2F] text-white text-[8px] xs:text-[9.5px] font-bold w-3.5 h-3.5 xs:w-4 xs:h-4 rounded-full flex items-center justify-center shadow-xs animate-scaleIn pointer-events-none leading-none z-10">
-                  {wishlistCount}
-                </span>
-              )}
-            </button>
+              {/* Diamonds */}
+              <div className="relative inline-flex items-center">
+                <Link
+                  to="/diamonds"
+                  className={getNavLinkClass(isDiamonds)}
+                >
+                  <span>Diamonds</span>
+                </Link>
+                {isDiamonds && (
+                  <span 
+                    className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-[#540B16] pointer-events-none z-10" 
+                    aria-hidden="true"
+                  />
+                )}
+              </div>
 
-            <button
-              onClick={onOpenCart}
-              className="relative p-1 xs:p-1.5 sm:p-2 hover:text-[#581923] rounded-full hover:bg-[#F3EAD3]/60 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#581923]/30 min-w-[32px] min-h-[32px] xs:min-w-[36px] xs:min-h-[36px] sm:min-w-[38px] sm:min-h-[38px] flex items-center justify-center"
-              aria-label={`Shopping bag containing ${cartCount} items`}
-              title={`Shopping Bag (${cartCount})`}
-            >
-              <ShoppingBag className="w-4 h-4 xs:w-4.5 xs:h-4.5 sm:w-5 sm:h-5 stroke-[1.75]" />
-              {cartCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 xs:top-0 xs:right-0 bg-[#D32F2F] text-white text-[8px] xs:text-[9.5px] font-bold w-3.5 h-3.5 xs:w-4 xs:h-4 rounded-full flex items-center justify-center shadow-xs animate-scaleIn pointer-events-none leading-none z-10">
+              {/* Bridal */}
+              <div className="relative inline-flex items-center">
+                <Link
+                  to="/bridal"
+                  className={getNavLinkClass(isBridal)}
+                >
+                  <span>Bridal</span>
+                </Link>
+                {isBridal && (
+                  <span 
+                    className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-[#540B16] pointer-events-none z-10" 
+                    aria-hidden="true"
+                  />
+                )}
+              </div>
+
+              {/* Silver Pooja */}
+              <div className="relative inline-flex items-center">
+                <Link
+                  to="/silver"
+                  className={getNavLinkClass(isSilverPooja)}
+                >
+                  <span>Silver Pooja</span>
+                </Link>
+                {isSilverPooja && (
+                  <span 
+                    className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-[#540B16] pointer-events-none z-10" 
+                    aria-hidden="true"
+                  />
+                )}
+              </div>
+
+              {/* Offers */}
+              <div className="relative inline-flex items-center">
+                <Link
+                  to="/offers"
+                  className={getNavLinkClass(isOffers)}
+                >
+                  <span>Offers</span>
+                </Link>
+                {isOffers && (
+                  <span 
+                    className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-[#540B16] pointer-events-none z-10" 
+                    aria-hidden="true"
+                  />
+                )}
+              </div>
+
+              {/* About */}
+              <div className="relative inline-flex items-center">
+                <Link
+                  to="/about"
+                  className={getNavLinkClass(isAbout)}
+                >
+                  <span>About</span>
+                </Link>
+                {isAbout && (
+                  <span 
+                    className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-[#540B16] pointer-events-none z-10" 
+                    aria-hidden="true"
+                  />
+                )}
+              </div>
+
+              {/* Contact - Smoothly goes to Home page Contact Concierge section */}
+              <div className="relative inline-flex items-center">
+                <a
+                  href="/#contact-concierge"
+                  onClick={handleContactClick}
+                  className={getNavLinkClass(isContact)}
+                >
+                  <span>Contact</span>
+                </a>
+                {isContact && (
+                  <span 
+                    className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-[#540B16] pointer-events-none z-10" 
+                    aria-hidden="true"
+                  />
+                )}
+              </div>
+            </nav>
+
+            {/* Delicate Golden Divider Line between Nav and Right Tools */}
+            <div className="hidden lg:block h-6 w-[1px] bg-[#CCA44C]/60 mx-1 xl:mx-2 shrink-0" />
+
+            {/* Right: Search, Cart Icon & Maroon Book Appointment CTA Button */}
+            <div className="flex items-center gap-2.5 sm:gap-3.5 shrink-0 xl:pr-4">
+              {/* Search Icon */}
+              <button
+                onClick={() => setIsSearchOpen(!isSearchOpen)}
+                className="p-1.5 text-[#2C221E] hover:text-[#581923] hover:bg-[#F6EFE6] rounded-full transition-colors cursor-pointer"
+                title="Search Collection"
+                aria-label="Search Collection"
+              >
+                <Search className="w-4 h-4 sm:w-[18px] sm:h-[18px] stroke-[1.85]" />
+              </button>
+
+              {/* Shopping Bag with Red Circular Badge matching design */}
+              <button
+                onClick={onOpenCart}
+                className="relative p-1.5 text-[#2C221E] hover:text-[#581923] hover:bg-[#F6EFE6] rounded-full transition-colors cursor-pointer"
+                title="View Cart"
+                aria-label={`Cart containing ${cartCount} items`}
+              >
+                <ShoppingBag className="w-4 h-4 sm:w-[18px] sm:h-[18px] stroke-[1.85]" />
+                <span className="absolute -top-1 -right-1 bg-[#8C1D2A] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center leading-none shadow-xs border border-white">
                   {cartCount}
                 </span>
-              )}
-            </button>
+              </button>
+
+              {/* Book Appointment CTA Button (Exact Maroon Pill Button with Calendar Icon) */}
+              <button
+                onClick={() => setIsAppointmentOpen(true)}
+                className="inline-flex items-center gap-2 bg-[#540B16] hover:bg-[#43070E] active:scale-95 text-[#FAF7F2] px-3.5 sm:px-4 py-2 rounded-full text-xs font-semibold shadow-xs hover:shadow-md transition-all duration-200 cursor-pointer whitespace-nowrap border border-[#D4AF37]/50"
+              >
+                <Calendar className="w-3.5 h-3.5 text-[#E5C578] stroke-[2]" />
+                <span className="hidden xs:inline">Book Appointment</span>
+                <span className="xs:hidden">Book</span>
+              </button>
+            </div>
 
           </div>
 
-        </div>
-
-        {/* ========================================================================= */}
-        {/* INTERACTIVE SEARCH OVERLAY                                                */}
-        {/* ========================================================================= */}
+        {/* Search Overlay dropdown */}
         {isSearchOpen && (
-          <div className="absolute top-full left-0 right-0 bg-[#FAF7F2] border-b border-[#DECDBB] shadow-xl p-4 sm:p-5 animate-fadeIn z-40">
-            <form onSubmit={handleSearchSubmit} className="max-w-3xl mx-auto space-y-3">
-              <div className="relative flex items-center">
-                <Search className="w-4 h-4 text-[#8C6D2D] absolute left-3.5 pointer-events-none" />
+          <div className="max-w-[1440px] mx-auto border-t border-[#EAE2D5] mt-2 pt-3 animate-fadeIn">
+            <form onSubmit={handleSearchSubmit} className="max-w-2xl mx-auto flex items-center gap-2">
+              <div className="relative flex-1">
+                <Search className="w-4 h-4 text-[#8C6D2D] absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   ref={searchInputRef}
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search 22K gold necklaces, 92.5 silver anklets, gold coins, pooja articles..."
-                  className="w-full bg-white border border-[#DECDBB] focus:border-[#581923] rounded-lg px-4 py-2.5 pl-10 text-xs sm:text-sm text-[#2C1D18] focus:outline-none shadow-xs"
+                  placeholder="Search gold necklaces, diamond rings, silver pooja items..."
+                  className="w-full bg-white border border-[#DECDBB] rounded-lg pl-9 pr-4 py-2 text-xs focus:outline-none focus:border-[#581923]"
                 />
-                {searchQuery && (
-                  <button
-                    type="button"
-                    onClick={() => setSearchQuery('')}
-                    className="absolute right-20 text-xs text-[#7A6E65] hover:text-[#581923] p-1 cursor-pointer"
-                    aria-label="Clear search"
-                  >
-                    Clear
-                  </button>
-                )}
-                <button
-                  type="submit"
-                  className="ml-2 bg-[#581923] hover:bg-[#431219] text-white px-4 py-2 rounded-lg text-xs font-semibold cursor-pointer"
-                >
-                  Search
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setIsSearchOpen(false)}
-                  className="ml-2 text-xs text-[#7A6E65] hover:text-[#581923] px-2 py-2 cursor-pointer"
-                >
-                  Close
-                </button>
               </div>
-
-              {/* Quick Search Tags */}
-              <div className="flex items-center gap-2 flex-wrap text-xs text-[#7A6E65] pt-1">
-                <span className="font-semibold text-[#581923] text-[11px]">Popular Searches:</span>
-                {[
-                  { tag: 'Gold Necklaces', path: '/gold/necklaces' },
-                  { tag: 'Silver Anklets', path: '/silver/anklets' },
-                  { tag: 'Gold Coins', path: '/coins-bars/gold-coins' },
-                  { tag: 'Silver Pooja Items', path: '/silver/pooja-items' },
-                  { tag: 'Bridal Jewellery', path: '/gold/bridal-jewellery' }
-                ].map((item) => (
-                  <button
-                    key={item.tag}
-                    type="button"
-                    onClick={() => handleTagSearch(item.tag, item.path)}
-                    className="px-2.5 py-1 bg-white hover:bg-[#F3EAD3] text-[#3D332D] hover:text-[#581923] rounded-full border border-[#DECDBB] text-[11px] transition-colors cursor-pointer"
-                  >
-                    {item.tag}
-                  </button>
-                ))}
-              </div>
+              <button
+                type="submit"
+                className="bg-[#581923] text-white px-4 py-2 rounded-lg text-xs font-semibold cursor-pointer"
+              >
+                Search
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsSearchOpen(false)}
+                className="text-xs text-[#7A6E65] hover:text-[#581923] px-2 py-2 cursor-pointer"
+              >
+                Cancel
+              </button>
             </form>
           </div>
         )}
-
       </div>
 
       {/* ========================================================================= */}
-      {/* MOBILE NAVIGATION DRAWER (Full Synchronization with New Navigation)       */}
+      {/* 3. MOBILE NAVIGATION DRAWER                                               */}
       {/* ========================================================================= */}
       {mobileMenuOpen && (
-        <div 
-          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex justify-start animate-fadeIn lg:hidden cursor-pointer"
+        <div
+          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex justify-start animate-fadeIn lg:hidden"
           onClick={() => setMobileMenuOpen(false)}
         >
           <div
-            className="bg-[#FAF7F2] w-[86%] max-w-sm h-full shadow-2xl flex flex-col justify-between overflow-y-auto cursor-auto"
+            className="bg-[#FAF7F2] w-[85%] max-w-sm h-full shadow-2xl flex flex-col justify-between overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Mobile Navigation"
           >
             <div>
-              {/* Drawer Top Header */}
-              <div className="p-4 bg-[#3B1117] text-white flex items-center justify-between border-b border-[#521B24]">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-7 h-7 text-[#B8924B]">
+              {/* Drawer Top */}
+              <div className="p-4 bg-[#4E0C16] text-white flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-7 h-7 text-[#D4AF37]">
                     <svg viewBox="0 0 100 100" fill="none" className="w-full h-full">
-                      <path d="M50 18 C46 36 40 52 50 70 C60 52 54 36 50 18 Z" fill="#C5A059" />
-                      <path d="M50 70 C34 66 22 52 24 38 C34 46 44 56 50 70 Z" fill="#E6D3A3" />
-                      <path d="M50 70 C66 66 78 52 76 38 C66 46 56 56 50 70 Z" fill="#E6D3A3" />
+                      <path d="M50 12 C44 28 32 46 16 60 C26 68 38 72 50 72 C62 72 74 68 84 60 C68 46 56 28 50 12 Z" fill="#D4AF37" />
+                      <circle cx="50" cy="48" r="3" fill="#4E0C16" />
                     </svg>
                   </div>
                   <div>
-                    <span className="text-base font-bold text-white leading-tight block">Vedha Radha</span>
-                    <span className="text-[9px] text-[#E5C278] tracking-widest uppercase">Thanga Maaligai</span>
+                    <span className="font-serif font-bold text-base block leading-tight">VEDHA RADHA</span>
+                    <span className="text-[8px] text-[#D4AF37] tracking-widest uppercase">Signature Collection</span>
                   </div>
                 </div>
                 <button
                   onClick={() => setMobileMenuOpen(false)}
-                  className="p-1.5 rounded-full text-white/80 hover:text-white hover:bg-white/10 cursor-pointer"
-                  aria-label="Close navigation"
+                  className="p-1 rounded-full text-white/80 hover:text-white"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
-              {/* Mobile Rate Strip */}
-              <div className="p-3 bg-[#FAF3E3] border-b border-[#E8DFC0] flex items-center justify-between text-xs">
-                <div className="space-y-0.5">
-                  <div className="flex items-center gap-1.5 text-[#581923]">
-                    <TrendingUp className="w-3.5 h-3.5 text-[#8C6D2D]" />
-                    <span className="font-bold text-[11px]">22K Gold: ₹{rates.gold22k}/g</span>
-                  </div>
-                  <div className="text-[10px] text-[#695444] font-mono pl-5">
-                    Silver: ₹{rates.silver1g}/g &bull; {rates.lastUpdated}
-                  </div>
-                </div>
+              {/* Mobile Appointment CTA */}
+              <div className="p-3 bg-[#FAF3E3] border-b border-[#E8DFC0]">
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false);
-                    setIsGoldRateModalOpen(true);
+                    setIsAppointmentOpen(true);
                   }}
-                  className="text-[10.5px] bg-[#581923] text-white px-2.5 py-1 rounded font-semibold hover:bg-[#431219]"
+                  className="w-full bg-[#581923] text-white py-2.5 rounded-full text-xs font-semibold flex items-center justify-center gap-2 shadow-sm border border-[#D4AF37]/40"
                 >
-                  Details
+                  <Calendar className="w-4 h-4 text-[#D4AF37]" />
+                  <span>Book Appointment in Showroom</span>
                 </button>
               </div>
 
-              {/* Mobile Customer Account Strip */}
-              <div className="p-3 bg-gradient-to-r from-[#4A141D] to-[#581923] text-white border-b border-[#3B1117] flex items-center justify-between">
-                <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="w-8 h-8 rounded-full bg-[#FAF7F2] text-[#581923] flex items-center justify-center font-bold text-xs shrink-0 border border-[#C49A45]">
-                    {isAuthenticated ? (customer?.customer_name?.charAt(0)?.toUpperCase() || 'V') : <User className="w-4 h-4" />}
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-xs font-semibold truncate text-[#FDFBF7]">
-                      {isAuthenticated ? customer?.customer_name : 'Vedha Radha Privilege'}
-                    </p>
-                    <p className="text-[10px] text-[#DECDBB] truncate">
-                      {isAuthenticated ? `+91 ${customer?.mobile_number}` : 'Member login & orders'}
-                    </p>
-                  </div>
-                </div>
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    onOpenAccount();
-                  }}
-                  className="shrink-0 text-[10.5px] font-semibold bg-[#C49A45] hover:bg-[#B88D39] text-[#241716] px-3 py-1.5 rounded-lg transition-colors cursor-pointer"
-                >
-                  {isAuthenticated ? 'My Account' : 'Sign In'}
-                </button>
-              </div>
-
-              {/* Mobile Navigation Links */}
+              {/* Mobile Links */}
               <div className="p-4 space-y-1 text-xs font-medium text-[#2C1D18]">
-
-                {/* 0. Home */}
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    navigate('/');
-                  }}
-                  className={`w-full text-left px-3 py-2.5 rounded-md transition-colors ${isHome ? 'bg-[#581923] text-white font-semibold' : 'hover:bg-[#F3EAD3]'
-                    }`}
+                <Link
+                  to="/"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`block px-3 py-2.5 rounded-lg transition-colors ${
+                    isHome ? 'bg-[#540B16] text-[#FAF5EE] font-semibold' : 'hover:bg-white'
+                  }`}
                 >
                   Home
-                </button>
-
-                {/* 1. Gold */}
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    navigate('/gold');
-                  }}
-                  className={`w-full text-left px-3 py-2.5 rounded-md transition-colors ${isGold ? 'bg-[#581923] text-white font-semibold' : 'hover:bg-[#F3EAD3]'
-                    }`}
+                </Link>
+                <Link
+                  to="/collections"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`block px-3 py-2.5 rounded-lg transition-colors ${
+                    isCollections ? 'bg-[#540B16] text-[#FAF5EE] font-semibold' : 'hover:bg-white'
+                  }`}
                 >
-                  Gold
-                </button>
-
-                {/* 2. Silver */}
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    navigate('/silver');
-                  }}
-                  className={`w-full text-left px-3 py-2.5 rounded-md transition-colors ${isSilver ? 'bg-[#581923] text-white font-semibold' : 'hover:bg-[#F3EAD3]'
-                    }`}
+                  Collections
+                </Link>
+                <Link
+                  to="/gold"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`block px-3 py-2.5 rounded-lg transition-colors ${
+                    isJewellery ? 'bg-[#540B16] text-[#FAF5EE] font-semibold' : 'hover:bg-white'
+                  }`}
                 >
-                  Silver
-                </button>
-
-                {/* 3. Coins & Bars Accordion */}
-                <div className="border border-[#E8DFC0] rounded-md overflow-hidden my-1">
-                  <button
-                    onClick={() => setMobileAccordion(mobileAccordion === 'coins-bars' ? null : 'coins-bars')}
-                    className="w-full flex items-center justify-between px-3 py-2.5 bg-[#FAF8F5] text-[#3A2E28] font-semibold"
-                  >
-                    <span className={isCoinsBars ? 'text-[#581923] font-bold' : ''}>Coins & Bars</span>
-                    <ChevronDown className={`w-3.5 h-3.5 text-[#8C6D2D] transition-transform ${mobileAccordion === 'coins-bars' ? 'rotate-180' : ''}`} />
-                  </button>
-
-                  {mobileAccordion === 'coins-bars' && (
-                    <div className="p-2.5 bg-white space-y-1.5 border-t border-[#E8DFC0]">
-                      {coinsBarsNavItems.filter(item => !item.isAll).map(item => (
-                        <button
-                          key={item.name}
-                          onClick={() => {
-                            setMobileMenuOpen(false);
-                            navigate(item.path);
-                          }}
-                          className="w-full text-left p-2 rounded-lg hover:bg-[#FAF8F5] border border-transparent hover:border-[#EAE2D5] transition-colors flex items-center justify-between group cursor-pointer"
-                        >
-                          <div className="flex items-center gap-2.5 min-w-0">
-                            <img
-                              src={item.image}
-                              alt={item.name}
-                              className="w-8 h-8 rounded-md object-cover border border-[#EAE2D5] shrink-0"
-                            />
-                            <div className="min-w-0">
-                              <span className="font-semibold text-xs text-[#241716] block truncate">
-                                {item.name}
-                              </span>
-                              <span className="text-[10px] text-[#7A6E65] block truncate">
-                                {item.count}
-                              </span>
-                            </div>
-                          </div>
-                          <ChevronRight className="w-3.5 h-3.5 text-[#8C6D2D]" />
-                        </button>
-                      ))}
-
-                      <button
-                        onClick={() => {
-                          setMobileMenuOpen(false);
-                          navigate('/coins-bars');
-                        }}
-                        className="w-full text-left px-3 py-2 rounded-lg font-bold text-xs text-[#581923] bg-[#FAF3E3] hover:bg-[#F3EAD3] border border-[#E8DFC0] transition-colors flex items-center justify-between mt-1 cursor-pointer"
-                      >
-                        <span>View All Coins & Bars</span>
-                        <ChevronRight className="w-3.5 h-3.5 text-[#581923]" />
-                      </button>
-                    </div>
-                  )}
-                </div>
-
-                {/* 4. New Arrivals */}
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    navigate('/new-arrivals');
-                  }}
-                  className={`w-full text-left px-3 py-2.5 rounded-md transition-colors ${isNewArrivals ? 'bg-[#581923] text-white font-semibold' : 'hover:bg-[#F3EAD3]'
-                    }`}
+                  Jewellery
+                </Link>
+                <Link
+                  to="/diamonds"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`block px-3 py-2.5 rounded-lg transition-colors flex items-center justify-between ${
+                    isDiamonds ? 'bg-[#540B16] text-[#FAF5EE] font-semibold' : 'hover:bg-white'
+                  }`}
                 >
-                  New Arrivals
-                </button>
-
-                {/* 5. Collections Accordion */}
-                <div className="border border-[#E8DFC0] rounded-md overflow-hidden my-1">
-                  <button
-                    onClick={() => setMobileAccordion(mobileAccordion === 'collections' ? null : 'collections')}
-                    className="w-full flex items-center justify-between px-3 py-2.5 bg-[#FAF8F5] text-[#3A2E28] font-semibold"
-                  >
-                    <span className={isCollections ? 'text-[#581923] font-bold' : ''}>Collections</span>
-                    <ChevronDown className={`w-3.5 h-3.5 text-[#8C6D2D] transition-transform ${mobileAccordion === 'collections' ? 'rotate-180' : ''}`} />
-                  </button>
-
-                  {mobileAccordion === 'collections' && (
-                    <div className="p-3 bg-white space-y-3 border-t border-[#E8DFC0]">
-                      <div className="grid grid-cols-2 gap-2">
-                        {collectionsNavItems.filter(item => !item.isAll).map(item => (
-                          <button
-                            key={item.name}
-                            onClick={() => {
-                              setMobileMenuOpen(false);
-                              navigate(item.path);
-                            }}
-                            className="w-full text-left p-2 rounded-xl bg-[#FAF8F5] hover:bg-[#F3EAD3] border border-[#EAE2D5] transition-colors flex flex-col items-center text-center gap-1.5 group cursor-pointer"
-                          >
-                            <div className="w-full aspect-square rounded-lg overflow-hidden bg-white border border-[#EAE2D5]">
-                              <img
-                                src={item.image}
-                                alt={item.name}
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                                loading="lazy"
-                              />
-                            </div>
-                            <span className="font-semibold text-[11.5px] text-[#241716] block truncate w-full">
-                              {item.name}
-                            </span>
-                          </button>
-                        ))}
-                      </div>
-
-                      {/* Mobile Curated Promo Strip */}
-                      <div className="bg-[#FAF3E3] rounded-xl p-2.5 border border-[#E8DFC0] flex items-center justify-between gap-2">
-                        <div className="min-w-0 text-left">
-                          <span className="font-bold text-xs text-[#2C2420] block truncate">
-                            Curated Collections
-                          </span>
-                          <span className="text-[10px] text-[#7A6E65] block truncate">
-                            Discover Signature Designs
-                          </span>
-                        </div>
-                        <button
-                          onClick={() => {
-                            setMobileMenuOpen(false);
-                            navigate('/collections');
-                          }}
-                          className="shrink-0 border border-[#581923] text-[#581923] hover:bg-[#581923] hover:text-white px-3 py-1 rounded-full font-semibold text-[10.5px] transition-colors"
-                        >
-                          View All
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
+                  <span>Diamonds</span>
+                  <span className={`text-[10px] px-2 py-0.5 rounded-full border ${isDiamonds ? 'bg-[#FAF3E5] text-[#540B16] border-white' : 'text-[#A57822] bg-[#FAF3E5] border-[#E8C77D]'}`}>Natural</span>
+                </Link>
+                <Link
+                  to="/bridal"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`block px-3 py-2.5 rounded-lg transition-colors ${
+                    isBridal ? 'bg-[#540B16] text-[#FAF5EE] font-semibold' : 'hover:bg-white'
+                  }`}
+                >
+                  Bridal
+                </Link>
+                <Link
+                  to="/silver"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`block px-3 py-2.5 rounded-lg transition-colors ${
+                    isSilverPooja ? 'bg-[#540B16] text-[#FAF5EE] font-semibold' : 'hover:bg-white'
+                  }`}
+                >
+                  Silver Pooja
+                </Link>
+                <Link
+                  to="/offers"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`block px-3 py-2.5 rounded-lg transition-colors ${
+                    isOffers ? 'bg-[#540B16] text-[#FAF5EE] font-semibold' : 'hover:bg-white'
+                  }`}
+                >
+                  Offers
+                </Link>
+                <Link
+                  to="/about"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`block px-3 py-2.5 rounded-lg transition-colors ${
+                    isAbout ? 'bg-[#540B16] text-[#FAF5EE] font-semibold' : 'hover:bg-white'
+                  }`}
+                >
+                  About
+                </Link>
+                <a
+                  href="/#contact-concierge"
+                  onClick={handleContactClick}
+                  className={`block px-3 py-2.5 rounded-lg transition-colors ${
+                    isContact ? 'bg-[#540B16] text-[#FAF5EE] font-semibold' : 'hover:bg-white'
+                  }`}
+                >
+                  Contact
+                </a>
               </div>
             </div>
 
-            {/* Mobile Drawer Bottom Info */}
-            <div className="p-4 bg-[#FAF8F5] border-t border-[#EAE2D5] space-y-2 text-center text-xs text-[#7A6E65]">
-              <div className="flex items-center justify-center gap-1.5 text-[#581923] font-semibold">
-                <Phone className="w-3.5 h-3.5 text-[#8C6D2D]" />
-                <a href="tel:+914428341999">+91 44 2834 1999</a>
-              </div>
-              <p className="text-[10.5px]">48, South Mada Street, Mylapore, Chennai</p>
-              <div className="flex items-center justify-center gap-1 text-[#8C6D2D] text-[10px] font-medium pt-1">
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span>100% Hallmarked 916 Gold Guaranteed</span>
-              </div>
+            {/* Bottom info */}
+            <div className="p-4 border-t border-[#EAE2D5] text-xs text-[#7A6E65] space-y-2">
+              <p className="flex items-center gap-2">
+                <MapPin className="w-3.5 h-3.5 text-[#581923]" />
+                <span>Trichy &bull; Tamil Nadu</span>
+              </p>
+              <p className="flex items-center gap-2">
+                <Phone className="w-3.5 h-3.5 text-[#581923]" />
+                <span>+91 98765 43210</span>
+              </p>
             </div>
-
           </div>
         </div>
       )}
 
-      {/* Gold Rate Modal */}
+      {/* Shared Modals */}
+      <BookAppointmentModal
+        isOpen={isAppointmentOpen}
+        onClose={() => setIsAppointmentOpen(false)}
+      />
+      <TrackOrderModal
+        isOpen={isTrackOrderOpen}
+        onClose={() => setIsTrackOrderOpen(false)}
+      />
       <GoldRateModal
         isOpen={isGoldRateModalOpen}
         onClose={() => setIsGoldRateModalOpen(false)}
@@ -945,10 +780,7 @@ export default function Header({
         status={status}
         isLoading={isLoading}
         disclaimer={disclaimer}
-        onRefresh={refreshRates}
-        onUpdateRates={updateManualRates}
       />
-
     </header>
   );
 }

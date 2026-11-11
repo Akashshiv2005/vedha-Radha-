@@ -14,6 +14,7 @@ import {
   Sparkles
 } from 'lucide-react';
 import { cartClient } from '../api/cartClient.js';
+import { getProductUrl } from '../utils/productSlug.js';
 
 export default function CartPage({ onCartUpdated = () => {} }) {
   const navigate = useNavigate();
@@ -384,7 +385,7 @@ export default function CartPage({ onCartUpdated = () => {} }) {
                               />
                               <div className="min-w-0 space-y-1">
                                 <Link
-                                  to={`/product/${item.productId || item.sku}`}
+                                  to={getProductUrl(item)}
                                   className="font-medium text-[#2C2420] hover:text-[#581923] text-sm sm:text-base line-clamp-2 transition-colors"
                                 >
                                   {item.name}

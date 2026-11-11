@@ -1,4 +1,4 @@
-﻿import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { ChevronDown, ChevronRight, ChevronLeft, Sparkles } from 'lucide-react';
 import { goldCategories } from '../data/categoryData';

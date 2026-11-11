@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { X, Sparkles, Award, ShieldCheck, Hammer } from 'lucide-react';
 
 export default function CraftsmanshipModal({ isOpen, onClose }) {
@@ -42,7 +42,7 @@ export default function CraftsmanshipModal({ isOpen, onClose }) {
             <div>
               <h4 className="text-sm font-bold text-[#241716]">Heritage Nakshi & Temple Artistry</h4>
               <p className="text-[#6E5F55] mt-0.5 leading-relaxed">
-                Hand-engraved by master karigars from Mylapore and Chettinad, using ancient repouss├⌐ techniques passed down across four generations.
+                Hand-engraved by master karigars from Mylapore and Chettinad, using ancient repousse techniques passed down across four generations.
               </p>
             </div>
           </div>

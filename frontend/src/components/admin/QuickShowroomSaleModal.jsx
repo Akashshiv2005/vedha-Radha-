@@ -81,7 +81,7 @@ export default function QuickShowroomSaleModal({ isOpen, onClose }) {
                 .filter(p => p.status !== 'sold_showroom')
                 .map(p => (
                   <option key={p.sku} value={p.sku}>
-                    [{p.sku}] {p.name} — {p.price} ({p.isUnique ? 'Unique 1-of-1' : 'Stock'}) • Status: {p.status}
+                    [{p.sku}] {p.name} - {p.price} ({p.isUnique ? 'Unique 1-of-1' : 'Stock'}) • Status: {p.status}
                   </option>
                 ))}
             </select>

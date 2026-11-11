@@ -102,7 +102,7 @@ def authenticate_admin(
         login_rate_limiter.record_attempt(rate_key)
         return False, None, GENERIC_AUTH_ERROR, 401
 
-    # 4. Success — reset rate limiter
+    # 4. Success - reset rate limiter
     login_rate_limiter.reset(rate_key)
     return True, user, None, 200
 

@@ -45,7 +45,7 @@ export default function TopUtilityStrip({
             title="Click to view or configure board rates"
           >
             <TrendingUp className="w-3 h-3 text-[#E6C37A] group-hover:scale-110 transition-transform" />
-            <span className="font-semibold text-white">Today’s Board Rate:</span>
+            <span className="font-semibold text-white">Today's Board Rate:</span>
             <span className="text-[#E6C37A]">Gold 22K/g: ₹ {rates.gold22k}</span>
             <span className="opacity-40">|</span>
             <span className="text-[#EFEAE1]">Silver/g: ₹ {rates.silver1g}</span>

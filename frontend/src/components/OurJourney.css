@@ -1,0 +1,167 @@
+/* ========================================================================= */
+/* OUR JOURNEY - LUXURY HERITAGE TIMELINE STYLESHEET                         */
+/* Vedha Radha Thanga Maaligai                                               */
+/* ========================================================================= */
+
+:root {
+  --journey-burgundy-deep: #240308;
+  --journey-burgundy: #4A0813;
+  --journey-burgundy-rich: #780C1D;
+  --journey-gold-bright: #FFE8A3;
+  --journey-gold-main: #D4AF37;
+  --journey-gold-dark: #8C6D2D;
+  --journey-cream: #FAF5EB;
+  --journey-parchment: #FFFDF8;
+}
+
+/* Base Container */
+.journey-section {
+  position: relative;
+  width: 100%;
+  background-color: var(--journey-cream);
+  overflow: hidden;
+}
+
+/* ========================================================================= */
+/* ANIMATED HERITAGE TYPOGRAPHY & GLOW EFFECTS                               */
+/* ========================================================================= */
+@keyframes goldMilestoneShine {
+  0% {
+    filter: drop-shadow(0 0 1px rgba(212, 175, 55, 0.3));
+    letter-spacing: -0.02em;
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(255, 220, 130, 0.75));
+    letter-spacing: -0.01em;
+  }
+  100% {
+    filter: drop-shadow(0 0 1px rgba(212, 175, 55, 0.3));
+    letter-spacing: -0.02em;
+  }
+}
+
+.journey-year-glow {
+  animation: goldMilestoneShine 3.6s ease-in-out infinite;
+}
+
+/* Movable Drag Cursors & Interaction */
+.cursor-grab {
+  cursor: grab !important;
+  user-select: none;
+}
+
+.cursor-grab:active,
+.active\:cursor-grabbing:active {
+  cursor: grabbing !important;
+}
+
+/* ========================================================================= */
+/* NOTCHED BURGUNDY & GOLD SWALLOWTAIL TITLE RIBBON                          */
+/* ========================================================================= */
+.temple-ribbon-tag {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 14px;
+  background: linear-gradient(90deg, #660C1E 0%, #430711 50%, #660C1E 100%);
+  border-top: 1px solid rgba(229, 199, 138, 0.9);
+  border-bottom: 1px solid rgba(229, 199, 138, 0.9);
+  box-shadow: 0 2px 6px rgba(50, 4, 12, 0.35);
+  clip-path: polygon(7px 0%, calc(100% - 7px) 0%, 100% 50%, calc(100% - 7px) 100%, 7px 100%, 0% 50%);
+}
+
+.temple-ribbon-tag-gold {
+  background: linear-gradient(90deg, #D4AF37 0%, #F8E7B2 50%, #D4AF37 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* ========================================================================= */
+/* 3D GOLDEN NODE SPHERE ORBS (Stationed exactly on the Timeline Path)       */
+/* ========================================================================= */
+.temple-orb-sphere {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #FFFFFF 0%, #FFF4C2 25%, #E5BE53 55%, #8A5F12 100%);
+  box-shadow: 
+    0 3px 8px rgba(0, 0, 0, 0.35), 
+    0 0 12px rgba(255, 225, 140, 0.75),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.temple-orb-sphere:hover {
+  transform: scale(1.3);
+}
+
+/* Radar Pulse Wave */
+@keyframes templePulseRing {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.85;
+  }
+  65% {
+    transform: scale(2.0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+}
+
+.temple-orb-pulse {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1.8px solid #FFEAA7;
+  animation: templePulseRing 2.8s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+  pointer-events: none;
+}
+
+/* ========================================================================= */
+/* FLOATING STATS SUMMARY BANNER BAR PLAQUE (Ivory Porcelain with Gold Trim) */
+/* ========================================================================= */
+.temple-stats-plaque {
+  position: relative;
+  border-radius: 9999px; /* Pill capsule */
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFFDF9 60%, #FAF4E9 100%);
+  border: 1.8px solid #D4AF37;
+  box-shadow: 
+    0 12px 30px rgba(50, 20, 5, 0.16),
+    0 2px 6px rgba(212, 175, 55, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+@media (max-width: 1023px) {
+  .temple-stats-plaque {
+    border-radius: 20px;
+  }
+}
+
+/* Mobile Timeline Connector */
+@media (max-width: 1023px) {
+  .journey-mobile-timeline {
+    position: relative;
+    padding-left: 28px;
+  }
+
+  .journey-mobile-timeline::before {
+    content: "";
+    position: absolute;
+    left: 10px;
+    top: 20px;
+    bottom: 20px;
+    width: 3px;
+    background: linear-gradient(180deg, #D4AF37 0%, #8C6D2D 50%, #4A0813 100%);
+    border-radius: 2px;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+  }
+}

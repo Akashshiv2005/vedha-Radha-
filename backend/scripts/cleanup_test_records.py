@@ -1,6 +1,6 @@
 """
 Explicit, Safe Test Record Cleanup Script.
-Vedha Radha Thangamaaligai — Jewellery E-commerce Platform.
+Vedha Radha Thangamaaligai - Jewellery E-commerce Platform.
 
 Features:
 - Targets ONLY verified development test record IDs and test SKUs.

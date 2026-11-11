@@ -99,7 +99,7 @@ export default function SimulateReservationModal({ isOpen, onClose }) {
               <option value="">-- Choose a showroom product --</option>
               {products.map(p => (
                 <option key={p.sku} value={p.sku}>
-                  [{p.sku}] {p.name} — {p.price} ({p.isUnique ? '1-of-1 Unique' : 'Repeatable Stock'} • Currently: {p.status})
+                  [{p.sku}] {p.name} - {p.price} ({p.isUnique ? '1-of-1 Unique' : 'Repeatable Stock'} • Currently: {p.status})
                 </option>
               ))}
             </select>

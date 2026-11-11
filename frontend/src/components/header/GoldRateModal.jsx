@@ -4,7 +4,7 @@ import { X, TrendingUp, Sparkles, Check, Edit2, RefreshCw, ShieldCheck, AlertCir
 export default function GoldRateModal({
   isOpen,
   onClose,
-  rates,
+  rates = {},
   status = 'unconfigured_indicative',
   isLoading = false,
   error = null,
@@ -13,9 +13,9 @@ export default function GoldRateModal({
   onUpdateRates = () => {}
 }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [tempGold22k, setTempGold22k] = useState(rates.gold22k || '6,742');
-  const [tempGold24k, setTempGold24k] = useState(rates.gold24k || '7,355');
-  const [tempSilver1g, setTempSilver1g] = useState(rates.silver1g || '94.50');
+  const [tempGold22k, setTempGold22k] = useState(rates?.gold22k || '6,742');
+  const [tempGold24k, setTempGold24k] = useState(rates?.gold24k || '7,355');
+  const [tempSilver1g, setTempSilver1g] = useState(rates?.silver1g || '94.50');
   const [savedSuccess, setSavedSuccess] = useState(false);
 
   if (!isOpen) return null;
@@ -86,7 +86,7 @@ export default function GoldRateModal({
               <TrendingUp className="w-5 h-5" />
             </div>
             <div>
-              <h3 id="gold-rate-title" className="text-lg font-bold">Today’s Board Rate</h3>
+              <h3 id="gold-rate-title" className="text-lg font-bold">Today's Board Rate</h3>
               <p className="text-[11px] text-[#E6C37A]">Vedha Radha Thanga Maaligai &bull; Chennai Benchmark</p>
             </div>
           </div>
@@ -220,7 +220,7 @@ export default function GoldRateModal({
                 </div>
                 <p className="text-[11px] leading-relaxed">
                   &bull; Rates are calculated from international spot prices where <strong>1 Troy Ounce = 31.1035 grams</strong>.<br />
-                  &bull; 22K rate is derived at exact BIS standard purity: <strong>24K ├ù (22 / 24)</strong>.<br />
+                  &bull; 22K rate is derived at exact BIS standard purity: <strong>24K × (22 / 24)</strong>.<br />
                   &bull; Silver rate represents 92.5% assayed fine silver.
                 </p>
               </div>
@@ -249,7 +249,7 @@ export default function GoldRateModal({
             /* Staff Manual Edit Form */
             <form onSubmit={handleSave} className="space-y-4 my-2">
               <p className="text-xs text-[#63574F]">
-                Staff Control: Override today’s daily showroom board rate displayed across the site header.
+                Staff Control: Override today's daily showroom board rate displayed across the site header.
               </p>
 
               <div>

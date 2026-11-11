@@ -32,6 +32,14 @@ export const coinsBarsNavItems = [
 
 export const collectionsNavItems = [
   { 
+    name: 'Certified Diamonds', 
+    slug: 'diamonds',
+    path: '/diamonds', 
+    image: '/images/generated/diamond_solitaire_luxe.jpg',
+    tag: 'Solitaires & Fine Diamonds',
+    desc: 'Certified natural diamond engagement rings, tennis bracelets, and halo harams.'
+  },
+  { 
     name: 'Wedding Collections', 
     slug: 'wedding',
     path: '/collections/wedding', 
@@ -48,7 +56,7 @@ export const collectionsNavItems = [
     desc: 'Protective Nazariya bangles, waist cords, and gentle 22K gold charms.'
   },
   { 
-    name: 'Men’s Accessories', 
+    name: "Men's Accessories", 
     slug: 'mens-accessories',
     path: '/collections/mens-accessories', 
     image: '/images/col_mens.jpg',
@@ -56,7 +64,7 @@ export const collectionsNavItems = [
     desc: 'Heavy fluted gold kadas, gemstone signet rings, and durable neck chains.'
   },
   { 
-    name: 'Girls’ Accessories', 
+    name: "Girls' Accessories", 
     slug: 'girls-accessories',
     path: '/collections/girls-accessories', 
     image: '/images/col_girls.jpg',

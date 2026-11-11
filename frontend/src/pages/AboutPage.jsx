@@ -1,167 +1,130 @@
-﻿import React from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ShieldCheck, Award, Heart, Sparkles, MapPin, Phone, ChevronRight, Clock, Users, ArrowRight } from 'lucide-react';
+import { ArrowRight, Sparkles, MapPin, Phone, ShieldCheck } from 'lucide-react';
+import AboutHeroSection from '../components/AboutHeroSection';
+import OurJourney from '../components/OurJourney';
+import FourPillarsSection from '../components/FourPillarsSection';
 
 export default function AboutPage() {
   const navigate = useNavigate();
 
-  const pillars = [
-    {
-      icon: ShieldCheck,
-      title: '100% BIS 916 Hallmark',
-      description: 'Every gold ornament undergoes laser assaying and bears the official Bureau of Indian Standards hallmark for uncompromising purity.'
-    },
-    {
-      icon: Award,
-      title: 'Four Generations of Mastery',
-      description: 'Preserving ancient South Indian repouss├⌐, nakshi, and filigree techniques perfected by hereditary master goldsmiths.'
-    },
-    {
-      icon: Heart,
-      title: 'Devotional Purity & Trust',
-      description: 'From sacred temple jewels to wedding trousseaus, we treat each creation as an auspicious family heirloom.'
-    },
-    {
-      icon: Users,
-      title: 'Transparent Ethical Pricing',
-      description: 'Exact weight breakdown, zero hidden wastage deductions, and prevailing showroom board rates guaranteed.'
-    }
-  ];
-
   return (
-    <div className="bg-[#FAF7F2] min-h-screen py-8 sm:py-12 border-b border-[#EAE2D5]">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-8">
+    <div className="bg-[#FAF7F2] min-h-screen text-[#2C2420] font-serif selection:bg-[#B38E46]/20">
+      
+      {/* ========================================================================= */}
+      {/* 1. PANORAMIC ABOUT US HERO SECTION (Exact Match to Design)                */}
+      {/* ========================================================================= */}
+      <AboutHeroSection />
+
+      {/* ========================================================================= */}
+      {/* 2. OUR JOURNEY: A LEGACY OF TRUST & CRAFTSMANSHIP (Full-Width Panorama)   */}
+      {/* ========================================================================= */}
+      <div className="w-full">
+        <OurJourney />
+      </div>
+
+      {/* ========================================================================= */}
+      {/* 3. OUR FOUNDATION: THE FOUR PILLARS OF VEDHA RADHA (Wide Luxury Showcase) */}
+      {/* ========================================================================= */}
+      <div className="w-full max-w-[1680px] mx-auto px-2 sm:px-4 lg:px-6 py-2 sm:py-4">
+        <div className="relative rounded-3xl shadow-2xl border-2 border-[#D8C7A5] overflow-hidden">
+          <FourPillarsSection />
+        </div>
+      </div>
+
+      <div className="max-w-[1360px] mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6">
         
-        {/* Breadcrumbs */}
-        <div className="flex items-center gap-2 text-xs text-[#7A6E65] mb-4">
-          <button onClick={() => navigate('/')} className="hover:text-[#581923] cursor-pointer">Home</button>
-          <ChevronRight className="w-3.5 h-3.5 text-[#B38E46]" />
-          <span className="font-semibold text-[#581923]">About Us & Heritage</span>
-        </div>
+        {/* ========================================================================= */}
+        {/* MAIN LUXURY INFOGRAPHIC POSTER CONTAINER                                 */}
+        {/* ========================================================================= */}
+        <div className="relative bg-[#FAF5EB] rounded-3xl shadow-2xl border border-[#D8C7A5] overflow-hidden">
 
-        {/* Hero Banner */}
-        <div className="relative rounded-2xl overflow-hidden mb-12 border border-[#E8DFC0] shadow-xl">
-          <div className="aspect-21/9 min-h-[320px] relative">
-            <img 
-              src="/images/hero_panoramic.jpg" 
-              alt="Vedha Radha Heritage Showroom" 
-              className="w-full h-full object-cover object-center"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#2C0A10]/95 via-[#48141C]/80 to-transparent flex items-center p-6 sm:p-12">
-              <div className="max-w-xl text-white space-y-3">
-                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#E6C37A] block">
-                  Heritage Since 1952 &bull; Mylapore, Chennai
-                </span>
-                <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-white leading-tight">
-                  The Legacy of Vedha Radha
-                </h1>
-                <p className="text-xs sm:text-sm text-[#EAD8D8] leading-relaxed">
-                  For over seven decades, Vedha Radha Thanga Maaligai has stood as a sanctuary of South Indian jewelry craftsmanship, blending sacred temple artistry with enduring purity.
-                </p>
+          {/* ======================================================================= */}
+          {/* 5. OUR PROMISE: ROYAL MAROON BANNER WITH TEMPLE GOPURAM & VILAKKU       */}
+          {/* ======================================================================= */}
+          <div className="relative bg-gradient-to-r from-[#380710] via-[#480B16] to-[#250308] text-white py-12 sm:py-16 px-6 sm:px-12 overflow-hidden border-t-2 border-[#D4AF37]">
+            
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#E5C378] to-transparent"></div>
+
+            <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+              
+              {/* Left Side: Temple Gopuram Silhouette Illustration */}
+              <div className="w-24 h-24 sm:w-28 sm:h-28 shrink-0 flex items-center justify-center opacity-85">
+                <img 
+                  src="/images/about/temple_gopuram.png" 
+                  alt="Tiruchirappalli Temple Heritage"
+                  className="max-h-full max-w-full object-contain filter drop-shadow-[0_4px_12px_rgba(229,195,120,0.3)] brightness-125"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/images/hero_arch_temple_showcase.png';
+                  }}
+                />
               </div>
-            </div>
-          </div>
-        </div>
 
-        {/* Brand Story Narrative */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center mb-16">
-          <div className="space-y-4 text-xs sm:text-sm text-[#4A3E38] leading-relaxed">
-            <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#8C6D2D] block">
-              Our Journey
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#241716] leading-snug">
-              Crafting Heirloom Memories for Every Generation
-            </h2>
-            <p>
-              Founded in the heart of historic Mylapore near the sacred Kapaleeshwarar Temple, Vedha Radha Thanga Maaligai was established with a singular devotion: to craft gold and silver jewelry that carries divine blessings, generational artistry, and guaranteed hallmark purity.
-            </p>
-            <p>
-              What started as an artisanal goldsmith atelier catering to traditional Chennai families has evolved into a premier destination for bridal trousseau, temple art revivals, and 92.5 sterling silver articles, all while retaining the warm, personal concierge experience our patrons cherish.
-            </p>
-            <div className="pt-2 flex gap-4">
-              <button
-                onClick={() => navigate('/jewellery')}
-                className="bg-[#581923] hover:bg-[#431219] text-white px-5 py-2.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer"
-              >
-                Explore Jewellery Range
-              </button>
-              <button
-                onClick={() => navigate('/contact')}
-                className="border border-[#581923] text-[#581923] hover:bg-[#FAF0E1] px-5 py-2.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer"
-              >
-                Visit Flagship Showroom
-              </button>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div className="rounded-xl overflow-hidden shadow-sm border border-[#E8DFC0] aspect-4/5">
-              <img src="/images/col_gold.jpg" alt="Master Goldsmithing" className="w-full h-full object-cover" />
-            </div>
-            <div className="rounded-xl overflow-hidden shadow-sm border border-[#E8DFC0] aspect-4/5 translate-y-6">
-              <img src="/images/col_handcrafted.jpg" alt="Temple Jewellery Art" className="w-full h-full object-cover" />
-            </div>
-          </div>
-        </div>
-
-        {/* 4 Pillars of Trust */}
-        <div className="mb-16">
-          <div className="text-center max-w-xl mx-auto mb-10">
-            <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#8C6D2D]">Our Foundation</span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#241716] mt-1">
-              The Four Pillars of Vedha Radha
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {pillars.map((p, idx) => {
-              const Icon = p.icon;
-              return (
-                <div key={idx} className="bg-white rounded-xl border border-[#E8DFC0] p-6 shadow-2xs text-center flex flex-col items-center">
-                  <div className="w-12 h-12 rounded-full bg-[#F3EAD3] text-[#581923] flex items-center justify-center mb-3">
-                    <Icon className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-base font-bold text-[#241716] mb-1.5">{p.title}</h3>
-                  <p className="text-xs text-[#73655C] leading-relaxed">{p.description}</p>
+              {/* Center: The Sacred Brand Promise */}
+              <div className="text-center space-y-3 flex-1">
+                <div className="flex items-center justify-center gap-3">
+                  <div className="h-[1px] w-6 bg-[#E5C378]/60"></div>
+                  <span className="text-[11px] uppercase tracking-[0.3em] text-[#E5C378] font-sans font-semibold">
+                    Our Promise
+                  </span>
+                  <div className="h-[1px] w-6 bg-[#E5C378]/60"></div>
                 </div>
-              );
-            })}
-          </div>
-        </div>
 
-        {/* Flagship Mylapore Showroom Details */}
-        <div className="bg-[#FAF3E6] rounded-2xl p-6 sm:p-10 border border-[#E5D5BA] flex flex-col lg:flex-row items-center justify-between gap-8">
-          <div className="space-y-3 max-w-2xl">
-            <span className="text-[10.5px] font-bold uppercase tracking-wider text-[#8C6D2D] bg-[#F7ECD8] px-3 py-1 rounded-full">
-              Flagship Destination
-            </span>
-            <h3 className="text-2xl sm:text-3xl font-bold text-[#241716]">
-              Visit Our Heritage Mylapore Showroom
-            </h3>
-            <p className="text-xs sm:text-sm text-[#63574F] leading-relaxed">
-              Step into our landmark showroom in Mylapore to experience the weight, luster, and artistry of our jewels in person with our senior bridal consultants.
-            </p>
-            <div className="flex flex-wrap gap-4 text-xs text-[#4A3E38] pt-2">
-              <span className="flex items-center gap-1.5">
-                <MapPin className="w-4 h-4 text-[#581923]" />
-                48, South Mada Street, Mylapore, Chennai - 600004
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Clock className="w-4 h-4 text-[#581923]" />
-                Open 7 Days: 9:30 AM &ndash; 8:30 PM
-              </span>
+                <h3 className="text-xl sm:text-2xl lg:text-3xl font-normal text-transparent bg-clip-text bg-gradient-to-r from-[#FFF8E7] via-[#F8DEAA] to-[#E5C378] leading-tight">
+                  Every Ornament Tells a Story.<br className="hidden sm:inline" />
+                  Every Relationship Deserves Trust.
+                </h3>
+
+                <div className="flex items-center justify-center gap-2 pt-1 text-[#E5C378]">
+                  <div className="h-[1px] w-10 bg-[#D4AF37]/50"></div>
+                  <div className="w-1.5 h-1.5 rotate-45 bg-[#E5C378]"></div>
+                  <div className="h-[1px] w-10 bg-[#D4AF37]/50"></div>
+                </div>
+
+                <p className="text-xs sm:text-sm text-[#F0DFD1] font-sans tracking-wide font-light">
+                  Vedha Radha Thanga Maaligai &mdash; Where Heritage Meets Trust.
+                </p>
+
+                <div className="pt-3 flex flex-wrap gap-3 justify-center font-sans">
+                  <button
+                    onClick={() => navigate('/contact')}
+                    className="bg-[#D4AF37] hover:bg-[#E5C378] text-[#3B0710] font-bold text-xs px-6 py-2.5 rounded-full shadow-lg transition-colors cursor-pointer"
+                  >
+                    Visit Trichy Showroom
+                  </button>
+                  <button
+                    onClick={() => navigate('/jewellery')}
+                    className="border border-[#E5C378]/60 hover:bg-white/10 text-[#FFF3DC] text-xs px-6 py-2.5 rounded-full transition-colors cursor-pointer"
+                  >
+                    Browse Collections
+                  </button>
+                </div>
+              </div>
+
+              {/* Right Side: Traditional Brass Kuthu Vilakku Motif */}
+              <div className="w-20 h-24 sm:w-24 sm:h-28 shrink-0 flex items-center justify-center opacity-85">
+                <svg viewBox="0 0 64 96" fill="none" className="w-full h-full text-[#E5C378] filter drop-shadow-[0_2px_8px_rgba(255,224,130,0.5)]">
+                  <path d="M32 6C34 10 37 14 37 18C37 21 34.8 23 32 23C29.2 23 27 21 27 18C27 14 30 10 32 6Z" fill="#FFF5DC" />
+                  <path d="M32 9C33.5 12 35 14 35 17C35 19 33.7 20.5 32 20.5C30.3 20.5 29 19 29 17C29 14 30.5 12 32 9Z" fill="#FFB74D" />
+                  <path d="M32 23V28" stroke="currentColor" strokeWidth="2.5" />
+                  <path d="M18 28C18 35 46 35 46 28H18Z" fill="currentColor" />
+                  <ellipse cx="32" cy="28" rx="14" ry="2.5" fill="#FFE082" />
+                  <path d="M30 33V75H34V33H30Z" fill="currentColor" />
+                  <circle cx="32" cy="42" r="4" fill="#FFE082" stroke="currentColor" strokeWidth="1.2" />
+                  <circle cx="32" cy="58" r="5" fill="#FFE082" stroke="currentColor" strokeWidth="1.2" />
+                  <path d="M22 75H42L46 84H18L22 75Z" fill="currentColor" />
+                  <rect x="14" y="84" width="36" height="4" rx="1" fill="#FFE082" stroke="currentColor" strokeWidth="1" />
+                </svg>
+              </div>
+
             </div>
           </div>
 
-          <button
-            onClick={() => navigate('/contact')}
-            className="bg-[#581923] hover:bg-[#431219] text-white px-6 py-3 rounded-lg text-xs font-semibold whitespace-nowrap shadow-md transition-colors cursor-pointer"
-          >
-            Showroom Directions & Contact
-          </button>
         </div>
 
       </div>
+
     </div>
   );
 }

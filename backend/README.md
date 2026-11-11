@@ -1,4 +1,4 @@
-# Vedha Radha Thangamaaligai — FastAPI Backend
+# Vedha Radha Thangamaaligai - FastAPI Backend
 
 FastAPI backend with PostgreSQL, SQLAlchemy 2.x, Alembic, and JWT-based authentication for the Vedha Radha Thangamaaligai luxury jewellery e-commerce platform.
 

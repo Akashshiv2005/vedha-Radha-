@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 import { storefrontClient } from '../api/storefrontProductsClient';
 import { ProductGridSkeleton } from '../components/common/ProductCardSkeleton';
+import LuxuryProductCard from '../components/common/LuxuryProductCard';
 import { collectionsNavItems } from '../data/navigationData';
-import { Sparkles, ChevronRight, Heart, ShoppingBag, ShieldCheck, ArrowLeft, PhoneCall, Gem, Layers, Eye } from 'lucide-react';
+import { Sparkles, ChevronRight, ChevronDown, Heart, ShoppingBag, ShieldCheck, ArrowLeft, PhoneCall, Gem, Layers, Eye, Award, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 const COLLECTIONS_MAP = {
   'wedding': { 
@@ -23,11 +24,11 @@ const COLLECTIONS_MAP = {
     desc: 'Auspicious black bead nazariya bracelets, child-safe rounded bangles, silver anklets, and protective charms crafted with smooth skin-safe hypoallergenic finishes.' 
   },
   'mens-accessories': { 
-    title: 'Men’s Fine Accessories', 
+    title: "Men's Fine Accessories", 
     desc: 'Solid 22K gold Veera Simha kadas, certified gemstone signet rings, heavy silver chains, and executive gold cufflinks.' 
   },
   'girls-accessories': { 
-    title: 'Girls’ & Teen Accessories', 
+    title: "Girls' & Teen Accessories", 
     desc: 'Delicate butterfly charm bracelets, lightweight floral earrings, chiming silver payals, and everyday modern pendants.' 
   },
   'pooja-items': { 
@@ -44,11 +45,11 @@ const COLLECTIONS_MAP = {
   },
   'gift-collection': { 
     title: 'Artisanal Pure Silver Gift Collection', 
-    desc: 'Cherished pure 92.5 hallmarked silver bowl sets, royal dinnerware, and auspicious presentation gifts tailored for life’s grand celebrations.' 
+    desc: "Cherished pure 92.5 hallmarked silver bowl sets, royal dinnerware, and auspicious presentation gifts tailored for life's grand celebrations." 
   },
   'gift': { 
     title: 'Artisanal Pure Silver Gift Collection', 
-    desc: 'Cherished pure 92.5 hallmarked silver bowl sets, royal dinnerware, and auspicious presentation gifts tailored for life’s grand celebrations.' 
+    desc: "Cherished pure 92.5 hallmarked silver bowl sets, royal dinnerware, and auspicious presentation gifts tailored for life's grand celebrations." 
   }
 };
 
@@ -67,164 +68,131 @@ const COLLECTION_EXCLUSIVE_PRODUCT_MAP = {
   'gift': 'collections-gift-exclusive-01'
 };
 
-const EXCLUSIVE_PRODUCT_IDS = Object.values(COLLECTION_EXCLUSIVE_PRODUCT_MAP);
+const COLLECTION_HERO_IMAGES = {
+  'wedding': '/images/col_wedding_2k.jpg',
+  'wedding-collections': '/images/col_wedding_2k.jpg',
+  'baby': '/images/col_baby.jpg',
+  'baby-collections': '/images/col_baby.jpg',
+  'mens-accessories': '/images/col_mens.jpg',
+  'girls-accessories': '/images/col_girls.jpg',
+  'pooja-items': '/images/silver_pooja_luxury_stage_hero.jpg',
+  'silver-idols': '/images/col_silver_idol.jpg',
+  'silver-idol': '/images/col_silver_idol.jpg',
+  'gift-collection': '/images/col_gift.jpg',
+  'gift': '/images/col_gift.jpg'
+};
 
-// Reusable Interactive Card with Thumbnail Gallery Switching
-function CollectionProductCard({ item, wishlistItems, onAddToCart, onAddToWishlist, onViewProduct }) {
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const isWishlisted = wishlistItems.some(w => w.id === item.id);
-  const isGiftCard = item.collection === 'gift-collection' || item.subCategory === 'Gift Collection' || !!item.suitableFor;
-  const images = (!isGiftCard && item.images && item.images.length > 0) ? item.images : [item.image];
-  const currentImage = images[activeImageIndex] || item.image;
+// Matching logic to accurately route products to their curated collection
+function matchesCollectionSlug(item, slug) {
+  if (!item) return false;
+  const cat = (item.category || '').toLowerCase();
+  const sub = (item.subCategory || '').toLowerCase();
+  const subSlug = (item.subCategorySlug || '').toLowerCase();
+  const name = (item.name || '').toLowerCase();
+  const desc = (item.description || '').toLowerCase();
+  const coll = (item.collection || '').toLowerCase();
+  const sku = (item.sku || '').toLowerCase();
+  const id = String(item.id || '').toLowerCase();
+
+  if (!slug || slug === 'all') {
+    return (
+      cat === 'collections' ||
+      coll.includes('collection') ||
+      sku.includes('coll') ||
+      matchesCollectionSlug(item, 'wedding') ||
+      matchesCollectionSlug(item, 'baby') ||
+      matchesCollectionSlug(item, 'mens-accessories') ||
+      matchesCollectionSlug(item, 'girls-accessories') ||
+      matchesCollectionSlug(item, 'pooja-items') ||
+      matchesCollectionSlug(item, 'silver-idols') ||
+      matchesCollectionSlug(item, 'gift-collection')
+    );
+  }
+
+  const s = slug.toLowerCase().trim();
+
+  if (s === 'wedding' || s === 'wedding-collections' || s === 'bridal') {
+    return (
+      item.isBridal === true ||
+      coll.includes('wedding') || coll.includes('bridal') ||
+      sub.includes('wedding') || sub.includes('bridal') ||
+      subSlug.includes('wedding') || subSlug.includes('bridal') ||
+      sku.includes('wed') || id.includes('wedding') ||
+      name.includes('wedding') || name.includes('bridal') || name.includes('muhurtham') ||
+      name.includes('haar') || name.includes('vaddanam') || name.includes('vanki') || name.includes('kasu')
+    );
+  }
+
+  if (s === 'baby' || s === 'baby-collections') {
+    return (
+      coll.includes('baby') || coll.includes('kids') ||
+      sub.includes('baby') || sub.includes('kids') ||
+      subSlug.includes('baby') || subSlug.includes('kids') ||
+      sku.includes('baby') || id.includes('baby') ||
+      name.includes('baby') || name.includes('nazariya') || name.includes('kids') || name.includes('child') ||
+      desc.includes('baby') || desc.includes('infant')
+    );
+  }
+
+  if (s === 'mens-accessories' || s === 'mens' || s === 'men') {
+    return (
+      coll.includes('men') ||
+      sub.includes('men') ||
+      subSlug.includes('men') ||
+      sku.includes('mens') || sku.includes('men') || id.includes('mens') ||
+      name.includes("men's") || name.includes('mens') || name.includes('kada') || name.includes('simha') || name.includes('cufflink') ||
+      desc.includes("men's") || desc.includes('masculine')
+    );
+  }
+
+  if (s === 'girls-accessories' || s === 'girls' || s === 'girl') {
+    return (
+      coll.includes('girl') || coll.includes('teen') ||
+      sub.includes('girl') || sub.includes('teen') ||
+      subSlug.includes('girl') || subSlug.includes('teen') ||
+      sku.includes('girls') || sku.includes('girl') || id.includes('girls') ||
+      name.includes('girl') || name.includes('butterfly') || name.includes('charm') || name.includes('dainty') ||
+      desc.includes('girl') || desc.includes('teen')
+    );
+  }
+
+  if (s === 'pooja-items' || s === 'pooja' || s === 'pooja-collection') {
+    return (
+      coll.includes('pooja') || coll.includes('puja') ||
+      sub.includes('pooja') || sub.includes('puja') ||
+      subSlug.includes('pooja') || subSlug.includes('puja') ||
+      sku.includes('pooja') || id.includes('pooja') ||
+      name.includes('pooja') || name.includes('puja') || name.includes('deepam') ||
+      name.includes('kalash') || name.includes('thali') || name.includes('diya') || name.includes('bell') ||
+      desc.includes('pooja') || desc.includes('temple lamp')
+    );
+  }
+
+  if (s === 'silver-idols' || s === 'silver-idol') {
+    return (
+      coll.includes('idol') || coll.includes('murti') ||
+      sub.includes('idol') || sub.includes('murti') ||
+      subSlug.includes('idol') || subSlug.includes('murti') ||
+      sku.includes('idol') || id.includes('idol') ||
+      name.includes('idol') || name.includes('murti') || name.includes('balaji') ||
+      name.includes('vinayagar') || name.includes('anjaneya') || name.includes('hanuman') ||
+      desc.includes('murti') || desc.includes('idol')
+    );
+  }
+
+  if (s === 'gift-collection' || s === 'gift') {
+    return (
+      coll.includes('gift') ||
+      sub.includes('gift') ||
+      subSlug.includes('gift') ||
+      sku.includes('gift') || id.includes('gift') ||
+      name.includes('gift') || name.includes('katori') || name.includes('spoon') || name.includes('ensemble') || name.includes('bowl') ||
+      desc.includes('gift')
+    );
+  }
 
   return (
-    <div className="bg-[#FAF8F5] rounded-xl border border-[#E8DFC0] overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between group">
-      {/* Product Image Stage */}
-      <div className="relative aspect-4/3 overflow-hidden bg-[#EFE8DC]">
-        <img
-          src={currentImage}
-          alt={`${item.name} - View ${activeImageIndex + 1}`}
-          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-          loading="lazy"
-        />
-
-        {/* Collection Badge */}
-        <div className="absolute top-3 left-3 z-10">
-          <span className="inline-block px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-[#FAF3E3] text-[#581923] border border-[#E8DFC0] shadow-xs">
-            {item.badge}
-          </span>
-        </div>
-
-        {/* View Index Badge */}
-        {images.length > 1 && (
-          <div className="absolute top-3 left-1/2 -translate-x-1/2 z-10">
-            <span className="bg-black/60 text-[#E5C278] text-[10px] font-medium px-2 py-0.5 rounded-full backdrop-blur-xs flex items-center gap-1">
-              <Eye className="w-3 h-3" />
-              View {activeImageIndex + 1} of {images.length}
-            </span>
-          </div>
-        )}
-
-        {/* Wishlist Button */}
-        <button
-          onClick={() => onAddToWishlist(item)}
-          className="absolute top-3 right-3 p-2 rounded-full bg-white/90 hover:bg-white text-[#581923] shadow-md transition-transform active:scale-95 cursor-pointer z-10"
-          title={isWishlisted ? "Item in Wishlist" : "Add to Wishlist"}
-          aria-label={isWishlisted ? "Item in Wishlist" : "Add to Wishlist"}
-        >
-          <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-[#D32F2F] text-[#D32F2F]' : ''}`} />
-        </button>
-
-        {/* Interactive 3-Image Thumbnail Strip at bottom of preview */}
-        {images.length > 1 && (
-          <div className="absolute bottom-2 inset-x-0 flex justify-center gap-1.5 px-3 py-1 bg-black/40 backdrop-blur-xs rounded-full max-w-fit mx-auto z-10">
-            {images.map((imgSrc, idx) => (
-              <button
-                key={idx}
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setActiveImageIndex(idx);
-                }}
-                className={`relative w-8 h-8 rounded-md overflow-hidden border transition-all cursor-pointer ${
-                  activeImageIndex === idx
-                    ? 'border-[#FAF7F2] ring-2 ring-[#581923] scale-110'
-                    : 'border-white/50 opacity-75 hover:opacity-100'
-                }`}
-                title={`Switch to View ${idx + 1}`}
-                aria-label={`View angle ${idx + 1}`}
-              >
-                <img
-                  src={imgSrc}
-                  alt={`Thumbnail ${idx + 1}`}
-                  className="w-full h-full object-cover"
-                />
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Product Details Section */}
-      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between gap-3">
-        <div className="space-y-2">
-          {/* Category/Purity & Weight Header Row */}
-          <div className="flex items-center justify-between gap-2">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C6D2D] bg-[#FAF3E3] px-2 py-0.5 rounded border border-[#E8DFC0]/70 truncate">
-              {item.purity || item.details || item.material}
-            </span>
-            {item.weight && (
-              <span className="text-[10.5px] font-semibold text-[#581923] bg-[#FAF0E1] px-2 py-0.5 rounded border border-[#E0D2C0] shrink-0 whitespace-nowrap">
-                {item.weight}
-              </span>
-            )}
-          </div>
-
-          {/* Product Title */}
-          <h3 
-            onClick={() => onViewProduct(item)}
-            className="text-[15px] sm:text-base font-bold text-[#241716] group-hover:text-[#581923] transition-colors line-clamp-2 leading-snug cursor-pointer pt-0.5"
-            title={item.name}
-          >
-            {item.name}
-          </h3>
-
-          {/* Product Description */}
-          <p className="text-xs text-[#63574F] line-clamp-2 leading-relaxed">
-            {item.description}
-          </p>
-
-          {/* Suitable For Label - ONLY on relevant gift collection cards */}
-          {item.suitableFor && (
-            <div className="pt-1 flex items-center gap-2">
-              <span className="text-[10.5px] font-bold uppercase tracking-wider text-[#8C6D2D] shrink-0">
-                Suitable For:
-              </span>
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#FAF0E1] text-[#581923] border border-[#E0D2C0]">
-                {item.suitableFor}
-              </span>
-            </div>
-          )}
-
-          {/* Dimensions Specs Tag */}
-          {item.dimensions && (
-            <div className="pt-0.5">
-              <span className="inline-block text-[11px] text-[#63574F] bg-[#F7F2EA] px-2.5 py-0.5 rounded border border-[#E8DFC0]/70 max-w-full truncate" title={item.dimensions}>
-                <span className="font-semibold text-[#8C6D2D] mr-1">Dimensions:</span>
-                {item.dimensions}
-              </span>
-            </div>
-          )}
-        </div>
-
-        {/* Pricing & CTA Controls */}
-        <div className="mt-3 pt-3 border-t border-[#EAE2D5] flex items-center justify-between gap-2">
-          <div>
-            <span className="text-[10px] text-[#7A6E65] block font-medium">Showroom Price</span>
-            <span className="text-lg font-bold text-[#48161E]">
-              {item.price}
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2 shrink-0">
-            <button
-              onClick={() => onViewProduct(item)}
-              className="px-3 py-1.5 rounded-lg border border-[#581923] text-[#581923] hover:bg-[#FAF0E1] text-xs font-semibold transition-colors cursor-pointer flex items-center gap-1"
-            >
-              <Layers className="w-3.5 h-3.5" />
-              <span>Details</span>
-            </button>
-            <button
-              onClick={() => onAddToCart(item)}
-              className="px-3 py-1.5 rounded-lg bg-[#581923] hover:bg-[#431219] text-white text-xs font-semibold flex items-center gap-1 transition-colors cursor-pointer shadow-xs"
-            >
-              <ShoppingBag className="w-3.5 h-3.5" />
-              <span>Add</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    cat.includes(s) || sub.includes(s) || subSlug.includes(s) || coll.includes(s) || name.includes(s) || sku.includes(s)
   );
 }
 
@@ -269,10 +237,12 @@ export default function CollectionsCatalogPage({
   const activeSlug = subCategory ? subCategory.toLowerCase() : 'all';
   const categoryInfo = COLLECTIONS_MAP[activeSlug] || {
     title: 'Curated Signature Collections',
-    desc: 'Discover bespoke jewelry lines tailored for auspicious family milestones, weddings, baby ceremonies, men’s heirlooms, and sacred temple rituals.'
+    desc: "Discover bespoke jewelry lines tailored for auspicious family milestones, weddings, baby ceremonies, men's heirlooms, and sacred temple rituals."
   };
 
-  // Filter products strictly for collection
+  // Filter products strictly for collection and ensure no duplicate product or image shows again
+  const seenImages = new Set();
+  const seenNames = new Set();
   const filteredProducts = dbProducts.filter(item => {
     // 1. Search Query Filter if active
     if (searchQuery && searchQuery.trim()) {
@@ -287,75 +257,170 @@ export default function CollectionsCatalogPage({
       if (!match) return false;
     }
 
-    if (!subCategory || activeSlug === 'all') {
-      return true;
-    }
+    if (!matchesCollectionSlug(item, activeSlug)) return false;
 
-    // Gift Collection displays all gift collection products
-    if (activeSlug === 'gift-collection' || activeSlug === 'gift') {
-      return (
-        item.collection === 'gift-collection' ||
-        item.subCategory === 'Gift Collection' ||
-        item.subCategorySlug === 'gift-collection' ||
-        item.id.startsWith('collections-gift-')
-      );
-    }
-
-    const assignedId = COLLECTION_EXCLUSIVE_PRODUCT_MAP[activeSlug];
-    if (assignedId) {
-      return item.id === assignedId;
-    }
-
-    return item.collection === activeSlug;
+    // Strict deduplication: ensure no product image or identical name is displayed more than once
+    const imgKey = String(item.image || '').trim().toLowerCase();
+    const nameKey = String(item.name || '').trim().toLowerCase();
+    if (imgKey && seenImages.has(imgKey)) return false;
+    if (nameKey && seenNames.has(nameKey)) return false;
+    if (imgKey) seenImages.add(imgKey);
+    if (nameKey) seenNames.add(nameKey);
+    return true;
   });
+
+  const WEDDING_PRIORITY = [
+    'VR-COLL-WED-02',
+    'VR-COLL-WED-03',
+    'VR-COLL-WED-04',
+    'VR-COLL-WED-01'
+  ];
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     if (sortBy === 'price-low') return a.numericPrice - b.numericPrice;
     if (sortBy === 'price-high') return b.numericPrice - a.numericPrice;
+    if (activeSlug === 'wedding' || activeSlug === 'wedding-collections') {
+      const idxA = WEDDING_PRIORITY.findIndex(sku => a.sku === sku || a.id === sku || (a.name && a.name.includes(sku.replace('VR-COLL-WED-', ''))));
+      const idxB = WEDDING_PRIORITY.findIndex(sku => b.sku === sku || b.id === sku || (b.name && b.name.includes(sku.replace('VR-COLL-WED-', ''))));
+      if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+      if (idxA !== -1) return -1;
+      if (idxB !== -1) return 1;
+    }
     return 0;
   });
 
   return (
-    <div className="bg-[#FAF7F2] min-h-screen py-8 sm:py-12 border-b border-[#EAE2D5]">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-8">
-        
-        {/* Breadcrumb Navigation */}
-        <div className="flex items-center gap-2 text-xs text-[#7A6E65] mb-4">
-          <Link to="/" className="hover:text-[#581923]">Home</Link>
-          <ChevronRight className="w-3.5 h-3.5 text-[#B38E46]" />
-          <Link to="/collections" className={`hover:text-[#581923] ${!subCategory ? 'font-bold text-[#581923]' : ''}`}>
-            Collections
-          </Link>
-          {subCategory && (
-            <>
-              <ChevronRight className="w-3.5 h-3.5 text-[#B38E46]" />
-              <span className="font-semibold text-[#581923] capitalize">
-                {subCategory.replace(/-/g, ' ')}
-              </span>
-            </>
-          )}
+    <div className="bg-[#FAF7F2] min-h-screen border-b border-[#EAE2D5] select-none font-sans">
+      
+      {/* Full-Bleed Split Luxury Collection Hero Banner */}
+      <section className="relative bg-[#1A0408] text-white overflow-hidden border-b border-[#C5A253]/35 min-h-[480px] lg:min-h-[540px] flex items-center mb-8 sm:mb-10">
+        {/* Background stage showcase on the right */}
+        <div className="absolute inset-0 pointer-events-none">
+          <img
+            src={COLLECTION_HERO_IMAGES[activeSlug] || '/images/col_wedding_2k.jpg'}
+            alt={categoryInfo.title}
+            className="w-full h-full object-cover object-[75%_center] lg:object-right"
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = '/images/col_gold_2k.jpg';
+            }}
+          />
+          {/* Crisp Left-Only Fade: Leaves the entire right jewelry showcase 100% clear and luminous */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1A0408] via-[#1A0408]/90 via-35% md:via-42% to-transparent to-60% md:to-58% pointer-events-none" />
         </div>
 
-        {/* Hero Header Banner */}
-        <div className="bg-gradient-to-r from-[#4A161E] via-[#5C1D27] to-[#3D0E15] text-[#FAF6EE] rounded-2xl p-6 sm:p-10 mb-8 border border-[#7A2A37] shadow-lg relative overflow-hidden">
-          <div className="relative z-10 max-w-2xl">
-            <span className="inline-block text-[11px] uppercase tracking-[0.25em] text-[#E6C37A] font-semibold mb-2">
-              Curated Theme Collections
-            </span>
-            <h1 className="text-2xl sm:text-4xl font-bold text-white tracking-tight">
+        <div className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 py-12 lg:py-16">
+          <div className="max-w-2xl lg:max-w-xl xl:max-w-2xl">
+            {/* Breadcrumb Navigation inside Hero */}
+            <div className="flex items-center gap-2 text-xs text-[#E5B5B5] mb-4 font-medium tracking-wide">
+              <Link to="/" className="hover:text-white transition-colors cursor-pointer">Home</Link>
+              <ChevronRight className="w-3.5 h-3.5 text-[#C5A253]" />
+              <Link to="/collections" className="hover:text-white transition-colors cursor-pointer">Collections</Link>
+              {subCategory && (
+                <>
+                  <ChevronRight className="w-3.5 h-3.5 text-[#C5A253]" />
+                  <span className="text-[#FCEB9C] capitalize font-semibold">{subCategory.replace(/-/g, ' ')}</span>
+                </>
+              )}
+            </div>
+
+            {/* Pill Tag */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#350810]/90 border border-[#C5A253]/60 text-[#F5DE98] text-[11px] font-semibold mb-4 tracking-widest uppercase shadow-[0_2px_12px_rgba(197,162,83,0.2)]">
+              <Sparkles className="w-3.5 h-3.5 text-[#E7C878]" />
+              <span>CURATED THEME COLLECTION &bull; VEDHA RADHA EXCLUSIVE</span>
+            </div>
+
+            {/* Title */}
+            <h1 
+              style={{ fontFamily: "'Playfair Display', 'Cormorant Garamond', Georgia, serif" }}
+              className="text-3xl sm:text-5xl lg:text-[50px] font-bold text-white tracking-tight leading-[1.12]"
+            >
               {categoryInfo.title}
             </h1>
-            <p className="text-xs sm:text-sm text-[#E6D4D6] mt-2 leading-relaxed">
+
+            {/* Filigree horizontal divider */}
+            <div className="flex items-center gap-3 my-3.5">
+              <div className="h-[1px] w-12 bg-gradient-to-r from-transparent via-[#C5A253] to-[#C5A253]"></div>
+              <span className="text-[#C5A253] text-xs">✦</span>
+              <div className="h-[1px] w-28 bg-gradient-to-r from-[#C5A253] to-transparent"></div>
+            </div>
+
+            {/* Narrative description */}
+            <p className="text-xs sm:text-sm text-[#F3DCDD] mt-3 font-light leading-relaxed max-w-xl">
               {categoryInfo.desc}
             </p>
-          </div>
-          {/* Decorative motif */}
-          <div className="absolute -right-10 -bottom-10 w-64 h-64 text-[#B8924B]/15 pointer-events-none">
-            <svg viewBox="0 0 100 100" fill="currentColor" className="w-full h-full">
-              <circle cx="50" cy="50" r="45" />
-            </svg>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-wrap items-center gap-3.5 mt-7">
+              <button
+                type="button"
+                onClick={() => {
+                  const el = document.getElementById('collection-catalog-grid');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="bg-gradient-to-r from-[#D4AF37] via-[#FCEB9C] to-[#C59B27] hover:brightness-110 text-[#1A0407] font-bold text-xs sm:text-sm px-6 py-3 rounded-full shadow-[0_4px_20px_rgba(212,175,55,0.35)] transition-all cursor-pointer flex items-center gap-2"
+              >
+                <span>Explore Curated Pieces</span>
+                <ArrowRight className="w-4 h-4 stroke-[2.2]" />
+              </button>
+              <button
+                type="button"
+                onClick={() => navigate('/contact')}
+                className="bg-[#2D060E]/90 hover:bg-[#3D0A14] border border-[#C5A253]/60 hover:border-[#C5A253] text-[#F3E5C8] font-medium text-xs sm:text-sm px-5 py-3 rounded-full backdrop-blur-sm transition-all cursor-pointer flex items-center gap-2 shadow-sm"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-[#C5A253]" />
+                <span>Custom Order Inquiry</span>
+              </button>
+            </div>
+
+            {/* Trust Badges matching reference design */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8 pt-6 border-t border-white/10 max-w-2xl">
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full bg-[#350810] border border-[#C5A253]/50 flex items-center justify-center shrink-0">
+                  <Award className="w-3.5 h-3.5 text-[#E7C878]" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold text-white leading-tight">Certified Purity</p>
+                  <p className="text-[10px] text-[#E5B5B5] leading-tight">BIS 916 &amp; 925</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full bg-[#350810] border border-[#C5A253]/50 flex items-center justify-center shrink-0">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#E7C878]" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold text-white leading-tight">Master Craft</p>
+                  <p className="text-[10px] text-[#E5B5B5] leading-tight">South Indian Heritage</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full bg-[#350810] border border-[#C5A253]/50 flex items-center justify-center shrink-0">
+                  <Sparkles className="w-3.5 h-3.5 text-[#E7C878]" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold text-white leading-tight">Exclusive Designs</p>
+                  <p className="text-[10px] text-[#E5B5B5] leading-tight">Curated Themes</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full bg-[#350810] border border-[#C5A253]/50 flex items-center justify-center shrink-0">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#E7C878]" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold text-white leading-tight">Insured Shipping</p>
+                  <p className="text-[10px] text-[#E5B5B5] leading-tight">Across India</p>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
+      </section>
+
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-8">
 
         {/* Subcategory Navigation Pills Bar */}
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 pb-6 border-b border-[#DECDBB]">
@@ -417,9 +482,9 @@ export default function CollectionsCatalogPage({
             <p className="text-xs text-[#7A6E65]">Please verify your backend connection or try again later.</p>
           </div>
         ) : sortedProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 my-8">
+          <div id="collection-catalog-grid" className="w-full max-w-[1440px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 lg:gap-8 my-8">
             {sortedProducts.map((item) => (
-              <CollectionProductCard
+              <LuxuryProductCard
                 key={item.id}
                 item={item}
                 wishlistItems={wishlistItems}

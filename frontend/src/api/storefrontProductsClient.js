@@ -1,4 +1,5 @@
 import { buildApiUrl } from './config.js';
+import { doesProductMatchIdentifier } from '../utils/productSlug.js';
 
 /**
  * Public Storefront Products API Client.
@@ -174,7 +175,7 @@ export const storefrontClient = {
   },
 
   /**
-   * Fetch single product by UUID or SKU
+   * Fetch single product by UUID, SKU, or human-readable name slug
    */
   async getStorefrontProduct(idOrSku) {
     if (!idOrSku) return null;
@@ -186,11 +187,25 @@ export const storefrontClient = {
         }
       });
 
-      if (!response.ok) return null;
-      const data = await response.json();
-      return adaptStorefrontProduct(data);
-    } catch {
-      return null;
+      if (response.ok) {
+        const data = await response.json();
+        return adaptStorefrontProduct(data);
+      }
+    } catch (err) {
+      console.warn('Direct product fetch failed:', err);
     }
+
+    // Fallback: search across all active catalog products to resolve human-readable slug
+    try {
+      const allRes = await this.getStorefrontProducts({ page_size: 250 });
+      if (allRes && allRes.success && Array.isArray(allRes.items)) {
+        const match = allRes.items.find(item => doesProductMatchIdentifier(item, idOrSku));
+        if (match) return match;
+      }
+    } catch (fallbackErr) {
+      console.warn('Fallback product slug resolution failed:', fallbackErr);
+    }
+
+    return null;
   }
 };

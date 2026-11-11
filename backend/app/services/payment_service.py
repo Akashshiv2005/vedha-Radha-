@@ -39,18 +39,24 @@ def create_gateway_order(order: Order, db: Session) -> Dict[str, Any]:
             }
         })
 
-        # Update payment record with provider order id
+        # Update payment and order records with provider order id
         payment = db.query(Payment).filter(Payment.order_id == order.id).first()
         if payment:
             payment.provider_order_id = razorpay_order.get("id")
-            db.commit()
+        order.razorpay_order_id = razorpay_order.get("id")
+        db.commit()
 
         return {
             "key_id": settings.RAZORPAY_KEY_ID,
             "razorpay_order_id": razorpay_order.get("id"),
             "amount": amount_paisa,
-            "currency": "INR",
+            "currency": getattr(settings, "RAZORPAY_CURRENCY", "INR"),
             "order_number": order.order_number,
+            "customer": {
+                "name": order.customer_name,
+                "contact": order.phone,
+                "email": order.email or "",
+            }
         }
     except Exception as e:
         raise HTTPException(
@@ -118,6 +124,9 @@ def verify_gateway_payment(
 
     order.payment_status = "paid"
     order.order_status = "Confirmed"
+    order.razorpay_order_id = razorpay_order_id
+    order.razorpay_payment_id = razorpay_payment_id
+    order.razorpay_signature = signature
 
     # Deduct stock for all order items
     for item in order.items:
@@ -139,5 +148,11 @@ def verify_gateway_payment(
         "success": True,
         "payment_status": "paid",
         "order_status": "Confirmed",
+        "order": {
+            "order_number": order.order_number,
+            "total_amount": float(order.total_amount),
+            "razorpay_payment_id": razorpay_payment_id,
+            "payment_status": "paid",
+        }
     }
 

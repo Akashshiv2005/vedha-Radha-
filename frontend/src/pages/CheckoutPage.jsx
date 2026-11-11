@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { useCustomerAuth } from '../context/CustomerAuthContext';
 import { checkoutClient } from '../api/checkoutClient';
+import { initiateRazorpayPayment } from '../api/paymentClient';
 
 export default function CheckoutPage({ onCartUpdated = () => {} }) {
   const navigate = useNavigate();
@@ -133,18 +134,58 @@ export default function CheckoutPage({ onCartUpdated = () => {} }) {
     };
 
     const res = await checkoutClient.placeOrder(payload);
-    setSubmitting(false);
 
     if (res.success && res.order) {
       const placedOrder = res.order;
       if (placedOrder.order_token) {
         sessionStorage.setItem(`vr_token_${placedOrder.order_number}`, placedOrder.order_token);
       }
-      onCartUpdated?.();
-      navigate(`/order-confirmation/${placedOrder.order_number}`, {
-        state: { orderToken: placedOrder.order_token }
-      });
+
+      if (formData.paymentMethod === 'RAZORPAY') {
+        const payRes = await checkoutClient.createPayment(placedOrder.order_number);
+        if (!payRes.success || !payRes.payment) {
+          setSubmitting(false);
+          setError(payRes.error || 'Failed to initialize payment gateway.');
+          onCartUpdated?.();
+          navigate(`/order-confirmation/${placedOrder.order_number}`, {
+            state: { orderToken: placedOrder.order_token }
+          });
+          return;
+        }
+
+        await initiateRazorpayPayment({
+          orderData: payRes.payment,
+          onSuccess: () => {
+            setSubmitting(false);
+            onCartUpdated?.();
+            navigate(`/order-confirmation/${placedOrder.order_number}`, {
+              state: { orderToken: placedOrder.order_token }
+            });
+          },
+          onError: (err) => {
+            setSubmitting(false);
+            onCartUpdated?.();
+            navigate(`/order-confirmation/${placedOrder.order_number}`, {
+              state: { orderToken: placedOrder.order_token }
+            });
+          },
+          onDismiss: () => {
+            setSubmitting(false);
+            onCartUpdated?.();
+            navigate(`/order-confirmation/${placedOrder.order_number}`, {
+              state: { orderToken: placedOrder.order_token }
+            });
+          }
+        });
+      } else {
+        setSubmitting(false);
+        onCartUpdated?.();
+        navigate(`/order-confirmation/${placedOrder.order_number}`, {
+          state: { orderToken: placedOrder.order_token }
+        });
+      }
     } else {
+      setSubmitting(false);
       setError(res.error || 'Failed to place order. Please check availability and try again.');
     }
   };
@@ -196,7 +237,7 @@ export default function CheckoutPage({ onCartUpdated = () => {} }) {
               Secure Checkout
             </h1>
             <p className="text-xs sm:text-sm text-[#7A6E65] mt-0.5">
-              Vedha Radha Thangamaaligai — Authentic Hallmarked Jewellery
+              Vedha Radha Thangamaaligai - Authentic Hallmarked Jewellery
             </p>
           </div>
           <div className="hidden sm:flex items-center gap-2 bg-[#F3ECE4] text-[#8C6D2D] px-3 py-1.5 rounded-full text-xs font-medium border border-[#E5D7C5]">
@@ -519,7 +560,7 @@ export default function CheckoutPage({ onCartUpdated = () => {} }) {
                 ) : (
                   <>
                     <Lock className="w-4 h-4 text-[#F3EAD3]" />
-                    <span>Place Order — ₹ {(quote?.total_amount || 0).toLocaleString('en-IN')}</span>
+                    <span>Place Order - ₹ {(quote?.total_amount || 0).toLocaleString('en-IN')}</span>
                   </>
                 )}
               </button>

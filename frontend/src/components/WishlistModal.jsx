@@ -63,7 +63,13 @@ export default function WishlistModal({
                   key={item.id || idx}
                   className="bg-white rounded-lg border border-[#E8DFC0] p-3.5 flex items-center justify-between gap-3 shadow-2xs hover:shadow-sm transition-all"
                 >
-                  <div className="w-16 h-16 rounded-md bg-[#FAF7F2] overflow-hidden shrink-0 border border-[#E8DFC0]">
+                  <div 
+                    onClick={() => {
+                      onViewProduct(item);
+                      onClose();
+                    }}
+                    className="w-16 h-16 rounded-md bg-[#FAF7F2] overflow-hidden shrink-0 border border-[#E8DFC0] cursor-pointer hover:opacity-90 transition-opacity"
+                  >
                     <img 
                       src={item.image} 
                       alt={item.name} 
@@ -75,8 +81,14 @@ export default function WishlistModal({
                     />
                   </div>
 
-                  <div className="flex-1 min-w-0">
-                    <h4 className="text-xs font-bold text-[#241716] truncate">
+                  <div 
+                    onClick={() => {
+                      onViewProduct(item);
+                      onClose();
+                    }}
+                    className="flex-1 min-w-0 cursor-pointer"
+                  >
+                    <h4 className="text-xs font-bold text-[#241716] truncate hover:text-[#581923] transition-colors">
                       {item.name}
                     </h4>
                     <p className="text-[10.5px] text-[#7A6E65]">{item.details}</p>

@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 import { goldCategories } from '../data/categoryData';
 import { storefrontClient } from '../api/storefrontProductsClient';
 import { ProductGridSkeleton } from '../components/common/ProductCardSkeleton';
+import LuxuryProductCard from '../components/common/LuxuryProductCard';
 import {
   Sparkles,
   ChevronRight,
@@ -19,7 +20,10 @@ import {
   Filter,
   Layers,
   Check,
-  X
+  X,
+  Award,
+  ArrowRight,
+  CheckCircle2
 } from 'lucide-react';
 
 const CATEGORY_MAP = {
@@ -148,7 +152,7 @@ const CATEGORY_MAP = {
   },
   'pendants': {
     title: '22K Gold Pendants',
-    desc: 'Sacred temple deities, peacock medallions, and floral repoussé lockets in 22K gold.',
+    desc: 'Sacred temple deities, peacock medallions, and floral repousse lockets in 22K gold.',
     parent: null
   },
   'anklets': {
@@ -438,8 +442,16 @@ export default function GoldPage({
     const catLower = (item.category || '').toLowerCase();
     const prodTypeLower = (item.productType || item.product_type || '').toLowerCase();
 
-    // 1. Strictly exclude silver jewellery and silver products from Gold Page
-    if (prodTypeLower === 'silver' || catLower.includes('silver') || (item.purity && item.purity.toLowerCase().includes('silver'))) {
+    // 1. Strictly exclude silver jewellery, coins/bars, and diamond jewellery from Gold Page
+    if (
+      item.isDiamond ||
+      catLower === 'diamond' ||
+      catLower.includes('diamond') ||
+      prodTypeLower === 'diamond' ||
+      prodTypeLower === 'silver' ||
+      catLower.includes('silver') ||
+      (item.purity && item.purity.toLowerCase().includes('silver'))
+    ) {
       return false;
     }
 
@@ -654,78 +666,148 @@ export default function GoldPage({
   return (
     <div className="bg-[#FAF7F2] min-h-screen border-b border-[#EAE2D5] font-sans selection:bg-[#581923] selection:text-white">
 
-      {/* Breadcrumb Navigation Container */}
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 pt-4 sm:pt-6 pb-3">
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-[#7A6E65] flex-wrap">
-          <Link to="/" className="hover:text-[#581923] transition-colors">Home</Link>
-          <ChevronRight className="w-3.5 h-3.5 text-[#B38E46] shrink-0" />
-          <Link to="/gold" className={`hover:text-[#581923] transition-colors ${activeKey === 'all' ? 'font-bold text-[#581923]' : ''}`}>
-            Gold Jewellery
-          </Link>
-
-          {categoryInfo.parent && (
-            <>
-              <ChevronRight className="w-3.5 h-3.5 text-[#B38E46] shrink-0" />
-              <Link to={categoryInfo.parent.path} className="hover:text-[#581923] transition-colors">
-                {categoryInfo.parent.name}
-              </Link>
-            </>
-          )}
-
-          {activeKey !== 'all' && (
-            <>
-              <ChevronRight className="w-3.5 h-3.5 text-[#B38E46] shrink-0" />
-              <span className="font-semibold text-[#581923] capitalize">
-                {activeKey.replace(/-/g, ' ')}
-              </span>
-            </>
-          )}
-        </nav>
-      </div>
-
       {/* ========================================================================= */}
-      {/* FULL-WIDTH PREMIUM SPLIT HERO BANNER                                      */}
+      {/* FULL-WIDTH SPLIT LUXURY HERO BANNER MATCHING REFERENCE DESIGN             */}
       {/* ========================================================================= */}
-      <div className="w-full bg-[#2D0F15] overflow-hidden shadow-lg border-y border-[#521B24] mb-8 sm:mb-10">
-        <div className="w-full grid grid-cols-1 lg:grid-cols-2 min-h-[300px] lg:min-h-[440px]">
+      <section className="relative bg-[#190408] text-white overflow-hidden border-b border-[#C5A253]/35 min-h-[520px] lg:min-h-[580px] flex items-center mb-8 sm:mb-12">
+        {/* Background stage showcase on the right */}
+        <div className="absolute inset-0 pointer-events-none">
+          <img
+            src="/images/hero_luxury_indian_gold_display.png"
+            alt="Authentic 22K Hallmarked Gold Heritage Jewellery"
+            className="w-full h-full object-cover object-[75%_center] lg:object-right"
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = '/images/col_gold_2k.jpg';
+            }}
+          />
+          {/* Crisp Left-Only Fade: Leaves the entire right jewelry showcase 100% clear and luminous */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#190408] via-[#190408]/90 via-35% md:via-42% to-transparent to-60% md:to-58% pointer-events-none" />
+        </div>
 
-          {/* Left Column: Lifestyle Image with Traditional Saree & Gold Jewellery */}
-          <div className="relative w-full h-[280px] sm:h-[360px] lg:h-full min-h-[280px] lg:min-h-[440px] overflow-hidden bg-[#1E080D]">
-            <img
-              src="/images/col_gold.jpg"
-              alt="South Indian Traditional Gold Jewellery with Saree"
-              className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700 ease-out"
-              loading="eager"
-            />
-            {/* Subtle inner shadow gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-black/50 via-transparent to-transparent pointer-events-none" />
-          </div>
+        <div className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 py-12 lg:py-16">
+          <div className="max-w-2xl lg:max-w-xl xl:max-w-2xl">
+            {/* Breadcrumb Navigation inside Hero */}
+            <div className="flex items-center gap-2 text-xs text-[#E5B5B5] mb-4 font-medium tracking-wide">
+              <Link to="/" className="hover:text-white transition-colors cursor-pointer">Home</Link>
+              <ChevronRight className="w-3.5 h-3.5 text-[#C5A253]" />
+              <Link to="/gold" className="hover:text-white transition-colors cursor-pointer">Gold Jewellery</Link>
+              {categoryInfo.parent && (
+                <>
+                  <ChevronRight className="w-3.5 h-3.5 text-[#C5A253]" />
+                  <Link to={categoryInfo.parent.path} className="hover:text-white transition-colors cursor-pointer">
+                    {categoryInfo.parent.name}
+                  </Link>
+                </>
+              )}
+              {activeKey !== 'all' && (
+                <>
+                  <ChevronRight className="w-3.5 h-3.5 text-[#C5A253]" />
+                  <span className="text-[#FCEB9C] capitalize font-semibold">{activeKey.replace(/-/g, ' ')}</span>
+                </>
+              )}
+            </div>
 
-          {/* Right Column: Deep Maroon / Chocolate Panel with Warm Gold & Ivory Copy */}
-          <div className="p-8 sm:p-12 lg:p-16 xl:p-20 flex flex-col justify-center bg-gradient-to-br from-[#3B1117] via-[#2E0E15] to-[#240B10] text-[#FAF6EE] relative">
-            {/* Eyebrow */}
-            <span className="text-[11px] sm:text-xs font-bold tracking-[0.25em] text-[#E5C278] uppercase mb-2 sm:mb-3 block font-sans">
-              VEDA RADHA THANGAMAALIGAI
-            </span>
+            {/* Pill Tag */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#350810]/90 border border-[#C5A253]/60 text-[#F5DE98] text-[11px] font-semibold mb-4 tracking-widest uppercase shadow-[0_2px_12px_rgba(197,162,83,0.2)]">
+              <Crown className="w-3.5 h-3.5 text-[#E7C878]" />
+              <span>VEDA RADHA THANGAMAALIGAI &bull; 22K (916) BIS HALLMARKED</span>
+            </div>
 
-            {/* Main Heading */}
-            <h1 className="text-2xl sm:text-4xl lg:text-[44px] font-bold text-white tracking-tight leading-[1.15]">
-              The Radiance of Pure Gold
+            {/* Title */}
+            <h1 
+              style={{ fontFamily: "'Playfair Display', 'Cormorant Garamond', Georgia, serif" }}
+              className="text-3xl sm:text-5xl lg:text-[52px] font-bold text-white tracking-tight leading-[1.12]"
+            >
+              The <span className="font-serif">Gold Collection</span>
             </h1>
 
-            {/* Supporting Description */}
-            <p className="text-xs sm:text-sm text-[#E6D4D6] mt-3 sm:mt-4 leading-relaxed max-w-xl font-sans">
-              Discover timeless South Indian jewellery for life’s most treasured moments—from everyday elegance to wedding celebrations.
+            {/* Filigree horizontal divider */}
+            <div className="flex items-center gap-3 my-3.5">
+              <div className="h-[1px] w-12 bg-gradient-to-r from-transparent via-[#C5A253] to-[#C5A253]"></div>
+              <span className="text-[#C5A253] text-xs">✦</span>
+              <div className="h-[1px] w-28 bg-gradient-to-r from-[#C5A253] to-transparent"></div>
+            </div>
+
+            {/* Subtitle */}
+            <p 
+              style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+              className="text-base sm:text-xl text-[#E5C058] italic font-normal"
+            >
+              The Radiance of Pure 22K Gold Heritage Craft.
             </p>
 
-            {/* Subtle BIS 916 Hallmark Assurance Pill */}
-            <div className="mt-6 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-[#E5C278]/30 text-[#E5C278] text-[11px] font-medium self-start">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#E5C278]" />
-              <span>22K (916) BIS Hallmarked Heritage Craft</span>
+            {/* Narrative description */}
+            <p className="text-xs sm:text-sm text-[#F3DCDD] mt-3 font-light leading-relaxed max-w-xl">
+              Discover timeless South Indian heirloom jewellery for life's most treasured moments — from sacred temple chokers and grand kasu malas to everyday lightweight bangles and jhumkas.
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-wrap items-center gap-3.5 mt-7">
+              <button
+                type="button"
+                onClick={scrollToCatalog}
+                className="bg-gradient-to-r from-[#D4AF37] via-[#FCEB9C] to-[#C59B27] hover:brightness-110 text-[#190408] font-bold text-xs sm:text-sm px-6 py-3 rounded-full shadow-[0_4px_20px_rgba(212,175,55,0.35)] transition-all cursor-pointer flex items-center gap-2"
+              >
+                <span>Explore Gold Masterpieces</span>
+                <ArrowRight className="w-4 h-4 stroke-[2.2]" />
+              </button>
+              <button
+                type="button"
+                onClick={() => navigate('/contact')}
+                className="bg-[#2D060E]/90 hover:bg-[#3D0A14] border border-[#C5A253]/60 hover:border-[#C5A253] text-[#F3E5C8] font-medium text-xs sm:text-sm px-5 py-3 rounded-full backdrop-blur-sm transition-all cursor-pointer flex items-center gap-2 shadow-sm"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-[#C5A253]" />
+                <span>Book Gold Consultation</span>
+              </button>
             </div>
+
+            {/* Trust Badges matching reference design */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8 pt-6 border-t border-white/10 max-w-2xl">
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full bg-[#350810] border border-[#C5A253]/50 flex items-center justify-center shrink-0">
+                  <Award className="w-3.5 h-3.5 text-[#E7C878]" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold text-white leading-tight">100% BIS 916</p>
+                  <p className="text-[10px] text-[#E5B5B5] leading-tight">Laser Assayed Purity</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full bg-[#350810] border border-[#C5A253]/50 flex items-center justify-center shrink-0">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#E7C878]" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold text-white leading-tight">Lifetime Exchange</p>
+                  <p className="text-[10px] text-[#E5B5B5] leading-tight">Transparent Value</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full bg-[#350810] border border-[#C5A253]/50 flex items-center justify-center shrink-0">
+                  <Sparkles className="w-3.5 h-3.5 text-[#E7C878]" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold text-white leading-tight">Temple Nakshi</p>
+                  <p className="text-[10px] text-[#E5B5B5] leading-tight">Master Goldsmiths</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full bg-[#350810] border border-[#C5A253]/50 flex items-center justify-center shrink-0">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#E7C878]" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold text-white leading-tight">Insured Shipping</p>
+                  <p className="text-[10px] text-[#E5B5B5] leading-tight">Pan-India Transit</p>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
-      </div>
+      </section>
 
       {/* ========================================================================= */}
       {/* MAIN CATALOG CONTENT CONTAINER                                            */}
@@ -987,140 +1069,17 @@ export default function GoldPage({
             <p className="text-xs text-[#63574F]">Please verify your backend connection or try again later.</p>
           </div>
         ) : sortedProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 my-8">
-            {sortedProducts.map((item) => {
-              const isWishlisted = wishlistItems.some(w => w.id === item.id);
-              const cardImage = (item.images && item.images.length > 0) ? item.images[0] : item.image;
-
-              return (
-                <div
-                  key={item.id}
-                  className="bg-white rounded-2xl border border-[#E8DFC0] overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:border-[#C8A058] relative"
-                >
-                  {/* Product Image Container */}
-                  <div
-                    className="relative aspect-square overflow-hidden bg-[#FAF6EE] cursor-pointer"
-                    onClick={() => onViewProduct(item)}
-                  >
-                    <img
-                      src={cardImage}
-                      alt={item.altText || item.name}
-                      className={`w-full h-full object-contain p-2 transition-all duration-500 ${
-                        item.images && item.images.length > 1
-                          ? 'group-hover:opacity-0 group-hover:scale-105'
-                          : 'group-hover:scale-105'
-                      }`}
-                      loading="lazy"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = '/images/neutral_product_placeholder.svg';
-                      }}
-                    />
-                    {item.images && item.images.length > 1 && (
-                      <img
-                        src={item.images[1]}
-                        alt={`${item.altText || item.name} - alternate view`}
-                        className="absolute inset-0 w-full h-full object-contain p-2 opacity-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 pointer-events-none"
-                        loading="lazy"
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src = cardImage;
-                        }}
-                      />
-                    )}
-
-                    {/* Status Badge */}
-                    <div className="absolute top-3 left-3 flex flex-col gap-1.5">
-                      <span className="inline-block px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-[#DCF0DF] text-[#1E5C2D] border border-[#C1E3C6] shadow-xs">
-                        {item.badge || '22K BIS 916'}
-                      </span>
-                    </div>
-
-                    {/* 3-View Indicator Pill */}
-                    {item.images && item.images.length > 1 && (
-                      <div className="absolute bottom-3 left-3">
-                        <span className="bg-[#241716]/80 text-[#E5C278] text-[10px] font-semibold px-2 py-0.5 rounded-md backdrop-blur-xs flex items-center gap-1 shadow-xs">
-                          <span>{item.images.length} Views</span>
-                        </span>
-                      </div>
-                    )}
-
-                    {/* Wishlist Button */}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onAddToWishlist(item);
-                      }}
-                      className={`absolute top-3 right-3 p-2 rounded-full border shadow-md transition-all active:scale-95 cursor-pointer z-10 ${isWishlisted
-                        ? 'bg-[#FDF2F2] border-[#F8B4B4] text-[#D32F2F]'
-                        : 'bg-white/90 hover:bg-white text-[#581923] border-[#EAE2D5]'
-                        }`}
-                      title={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
-                      aria-label={`${isWishlisted ? 'Remove' : 'Add'} ${item.name} ${isWishlisted ? 'from' : 'to'} Wishlist`}
-                    >
-                      <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-[#D32F2F] text-[#D32F2F]' : ''}`} />
-                    </button>
-                  </div>
-
-                  {/* Card Content */}
-                  <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
-                    <div>
-                      {/* Category & Purity Tags */}
-                      <div className="flex items-center justify-between gap-2 mb-1.5 flex-wrap">
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C6D2D] bg-[#FAF3E3] px-2 py-0.5 rounded border border-[#E8DFC0]/70">
-                          {item.purity || item.details || '22K BIS 916'}
-                        </span>
-                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-[#F4EFE6] text-[#63574F] capitalize">
-                          {activeMainCat === 'occasion' && item.occasion
-                            ? item.occasion.replace(/-/g, ' ')
-                            : (item.subType ? item.subType.replace(/-/g, ' ') : item.subCategory)}
-                        </span>
-                      </div>
-
-                      {/* Product Name */}
-                      <h3
-                        onClick={() => onViewProduct(item)}
-                        className="text-base font-bold text-[#241716] group-hover:text-[#581923] transition-colors line-clamp-1 mt-1 cursor-pointer"
-                        title={item.name}
-                      >
-                        {item.name}
-                      </h3>
-
-                      {/* Product Description */}
-                      <p className="text-xs text-[#63574F] line-clamp-2 mt-1 leading-relaxed">
-                        {item.description}
-                      </p>
-                    </div>
-
-                    {/* Card Bottom: Price & Action Buttons */}
-                    <div className="mt-4 pt-3 border-t border-[#EAE2D5] flex items-center justify-between gap-2">
-                      <div>
-                        <span className="text-[10px] text-[#7A6E65] block font-medium">Showroom Price</span>
-                        <span className="text-lg font-bold text-[#48161E]">
-                          {item.price}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-2 shrink-0">
-                        <button
-                          onClick={() => onViewProduct(item)}
-                          className="px-3 py-1.5 rounded-lg border border-[#581923] text-[#581923] hover:bg-[#FAF0E1] text-xs font-semibold transition-colors cursor-pointer"
-                        >
-                          Details
-                        </button>
-                        <button
-                          onClick={() => onAddToCart(item)}
-                          className="px-3 py-1.5 rounded-lg bg-[#581923] hover:bg-[#431219] text-white text-xs font-semibold flex items-center gap-1 transition-colors cursor-pointer shadow-2xs"
-                        >
-                          <ShoppingBag className="w-3.5 h-3.5" />
-                          <span>Add</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+          <div className="w-full max-w-[1440px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 lg:gap-8 my-8">
+            {sortedProducts.map((item) => (
+              <LuxuryProductCard
+                key={item.id}
+                item={item}
+                wishlistItems={wishlistItems}
+                onAddToCart={onAddToCart}
+                onAddToWishlist={onAddToWishlist}
+                onViewProduct={onViewProduct}
+              />
+            ))}
           </div>
         ) : (
           /* Small consistent empty state message inside existing product-list area */

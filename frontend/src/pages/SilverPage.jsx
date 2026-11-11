@@ -3,17 +3,19 @@ import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 import { silverCategories } from '../data/categoryData';
 import { storefrontClient } from '../api/storefrontProductsClient';
 import { ProductGridSkeleton } from '../components/common/ProductCardSkeleton';
+import LuxuryProductCard from '../components/common/LuxuryProductCard';
 import { 
   Sparkles, 
   ChevronRight, 
-  ChevronLeft,
+  ChevronLeft, 
   Heart, 
   ShoppingBag, 
   ShieldCheck, 
   ArrowLeft, 
   PhoneCall, 
-  ArrowRight,
-  Award
+  ArrowRight, 
+  Award,
+  CheckCircle2
 } from 'lucide-react';
 
 const SILVER_CATEGORY_MAP = {
@@ -599,78 +601,145 @@ export default function SilverPage({
   return (
     <div className="bg-[#FAF7F2] min-h-screen border-b border-[#EAE2D5] font-sans selection:bg-[#1E293B] selection:text-white">
       
-      {/* Breadcrumb Navigation Container */}
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 pt-4 sm:pt-6 pb-3">
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-[#7A6E65] flex-wrap">
-          <Link to="/" className="hover:text-[#1E293B] transition-colors">Home</Link>
-          <ChevronRight className="w-3.5 h-3.5 text-[#B38E46] shrink-0" />
-          <Link to="/silver" className={`hover:text-[#1E293B] transition-colors ${activeKey === 'all' ? 'font-bold text-[#1E293B]' : ''}`}>
-            Silver Collection
-          </Link>
-          
-          {categoryInfo.parent && (
-            <>
-              <ChevronRight className="w-3.5 h-3.5 text-[#B38E46] shrink-0" />
-              <Link to={categoryInfo.parent.path} className="hover:text-[#1E293B] transition-colors">
-                {categoryInfo.parent.name}
-              </Link>
-            </>
-          )}
-
-          {activeKey !== 'all' && (
-            <>
-              <ChevronRight className="w-3.5 h-3.5 text-[#B38E46] shrink-0" />
-              <span className="font-semibold text-[#1E293B] capitalize">
-                {activeKey.replace(/-/g, ' ')}
-              </span>
-            </>
-          )}
-        </nav>
-      </div>
-
       {/* ========================================================================= */}
-      {/* FULL-WIDTH PHOTOGRAPHIC HERO BANNER                                       */}
+      {/* FULL-WIDTH SPLIT LUXURY HERO BANNER MATCHING REFERENCE DESIGN             */}
       {/* ========================================================================= */}
-      <div className="w-full mb-8 sm:mb-10">
-        <div className="relative w-full overflow-hidden min-h-[340px] sm:min-h-[420px] lg:min-h-[460px] shadow-lg border-y border-[#334155]/40 flex items-center bg-[#0B0F14]">
-          
-          {/* High-Resolution Handcrafted Silver Photographic Background */}
+      <section className="relative bg-[#070B10] text-white overflow-hidden border-b border-[#94A3B8]/30 min-h-[520px] lg:min-h-[580px] flex items-center mb-8 sm:mb-12">
+        {/* Background stage showcase on the right */}
+        <div className="absolute inset-0 pointer-events-none">
           <img
             src="/images/silver_hero_bg.jpg"
-            alt="Authentic South Indian Handcrafted Silver Jewellery - Salem Ghungroo Payals, Carved Silver Bangles, Temple Harams and Diya"
-            className="absolute inset-0 w-full h-full object-cover object-right md:object-center transform scale-[1.01] pointer-events-none"
+            alt="Authentic South Indian Handcrafted Silver Jewellery"
+            className="w-full h-full object-cover object-[75%_center] lg:object-right"
             loading="eager"
           />
+          {/* Crisp Left-Only Fade: Leaves the entire right jewelry showcase 100% clear and luminous */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#070B10] via-[#070B10]/90 via-35% md:via-42% to-transparent to-60% md:to-58% pointer-events-none" />
+        </div>
 
-          {/* Subtle Translucent Scrim on Left Only - Keeping Silver Jewellery Bright & Luminous */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/35 md:via-black/15 to-transparent pointer-events-none" />
+        <div className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 py-12 lg:py-16">
+          <div className="max-w-2xl lg:max-w-xl xl:max-w-2xl">
+            {/* Breadcrumb Navigation inside Hero */}
+            <div className="flex items-center gap-2 text-xs text-[#94A3B8] mb-4 font-medium tracking-wide">
+              <Link to="/" className="hover:text-white transition-colors cursor-pointer">Home</Link>
+              <ChevronRight className="w-3.5 h-3.5 text-[#CBD5E1]" />
+              <Link to="/silver" className="hover:text-white transition-colors cursor-pointer">Silver Collection</Link>
+              {categoryInfo.parent && (
+                <>
+                  <ChevronRight className="w-3.5 h-3.5 text-[#CBD5E1]" />
+                  <Link to={categoryInfo.parent.path} className="hover:text-white transition-colors cursor-pointer">
+                    {categoryInfo.parent.name}
+                  </Link>
+                </>
+              )}
+              {activeKey !== 'all' && (
+                <>
+                  <ChevronRight className="w-3.5 h-3.5 text-[#CBD5E1]" />
+                  <span className="text-[#F1F5F9] capitalize font-semibold">{activeKey.replace(/-/g, ' ')}</span>
+                </>
+              )}
+            </div>
 
-          {/* Banner Content Panel (Aligned Exactly like Gold Hero) */}
-          <div className="relative z-10 px-6 sm:px-12 lg:px-16 xl:px-20 py-10 sm:py-14 lg:py-16 max-w-2xl text-left flex flex-col justify-center">
-            {/* Eyebrow */}
-            <span className="text-[11px] sm:text-xs font-bold tracking-[0.25em] text-[#C5D0DE] uppercase mb-2 sm:mb-3 block font-sans drop-shadow-sm">
-              AUTHENTIC SOUTH INDIAN SILVERSMITHING
-            </span>
+            {/* Pill Tag */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#111827]/90 border border-[#CBD5E1]/50 text-[#F1F5F9] text-[11px] font-semibold mb-4 tracking-widest uppercase shadow-[0_2px_12px_rgba(203,213,225,0.12)]">
+              <Sparkles className="w-3.5 h-3.5 text-[#E2E8F0]" />
+              <span>AUTHENTIC SOUTH INDIAN SILVERSMITHING &bull; 92.5 STERLING</span>
+            </div>
 
-            {/* Main Heading */}
-            <h1 className="text-2xl sm:text-4xl lg:text-[44px] font-bold text-white tracking-tight leading-[1.15] drop-shadow-md">
-              Timeless radiance in pure silver.
+            {/* Title */}
+            <h1 
+              style={{ fontFamily: "'Playfair Display', 'Cormorant Garamond', Georgia, serif" }}
+              className="text-3xl sm:text-5xl lg:text-[52px] font-bold text-white tracking-tight leading-[1.12]"
+            >
+              The <span className="font-serif">Silver Collection</span>
             </h1>
 
-            {/* Supporting Description */}
-            <p className="text-xs sm:text-sm text-[#F1F5F9] mt-3 sm:mt-4 leading-relaxed max-w-xl font-sans drop-shadow-sm">
+            {/* Filigree horizontal divider */}
+            <div className="flex items-center gap-3 my-3.5">
+              <div className="h-[1px] w-12 bg-gradient-to-r from-transparent via-[#CBD5E1] to-[#CBD5E1]"></div>
+              <span className="text-[#CBD5E1] text-xs">✦</span>
+              <div className="h-[1px] w-28 bg-gradient-to-r from-[#CBD5E1] to-transparent"></div>
+            </div>
+
+            {/* Subtitle */}
+            <p 
+              style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+              className="text-base sm:text-xl text-[#E5C058] italic font-normal"
+            >
+              Timeless Radiance in Pure 92.5 Sterling Silver.
+            </p>
+
+            {/* Narrative description */}
+            <p className="text-xs sm:text-sm text-[#CBD5E1] mt-3 font-light leading-relaxed max-w-xl">
               Discover melodic Salem ghungroo payals, sacred Ashtalakshmi thalis, Kamakshi lamps, and fine sterling silver chains crafted for auspicious family traditions.
             </p>
 
-            {/* Subtle 92.5% Hallmark Assurance Pill at Bottom */}
-            <div className="mt-6 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-[#F1F5F9] text-[11px] font-medium self-start shadow-sm">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#CBD5E1]" />
-              <span>92.5% (925) Certified Silver Fineness &bull; Assay Hallmarked</span>
+            {/* CTA Buttons */}
+            <div className="flex flex-wrap items-center gap-3.5 mt-7">
+              <button
+                type="button"
+                onClick={scrollToCatalog}
+                className="bg-gradient-to-r from-[#D4AF37] via-[#FCEB9C] to-[#C59B27] hover:brightness-110 text-[#070B10] font-bold text-xs sm:text-sm px-6 py-3 rounded-full shadow-[0_4px_20px_rgba(212,175,55,0.35)] transition-all cursor-pointer flex items-center gap-2"
+              >
+                <span>Explore Silver Masterpieces</span>
+                <ArrowRight className="w-4 h-4 stroke-[2.2]" />
+              </button>
+              <button
+                type="button"
+                onClick={() => navigate('/contact')}
+                className="bg-[#111827]/90 hover:bg-[#1E293B] border border-[#CBD5E1]/50 hover:border-[#CBD5E1] text-[#F1F5F9] font-medium text-xs sm:text-sm px-5 py-3 rounded-full backdrop-blur-sm transition-all cursor-pointer flex items-center gap-2 shadow-sm"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-[#CBD5E1]" />
+                <span>Custom Silver Orders</span>
+              </button>
             </div>
-          </div>
 
+            {/* Trust Badges matching reference design */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8 pt-6 border-t border-white/10 max-w-2xl">
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full bg-[#111827] border border-[#CBD5E1]/40 flex items-center justify-center shrink-0">
+                  <Award className="w-3.5 h-3.5 text-[#E2E8F0]" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold text-white leading-tight">92.5% Purity</p>
+                  <p className="text-[10px] text-[#94A3B8] leading-tight">Assay Hallmarked</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full bg-[#111827] border border-[#CBD5E1]/40 flex items-center justify-center shrink-0">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#E2E8F0]" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold text-white leading-tight">Salem Craft</p>
+                  <p className="text-[10px] text-[#94A3B8] leading-tight">Heirloom Artistry</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full bg-[#111827] border border-[#CBD5E1]/40 flex items-center justify-center shrink-0">
+                  <Sparkles className="w-3.5 h-3.5 text-[#E2E8F0]" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold text-white leading-tight">Anti-Tarnish</p>
+                  <p className="text-[10px] text-[#94A3B8] leading-tight">Organic Finish</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full bg-[#111827] border border-[#CBD5E1]/40 flex items-center justify-center shrink-0">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#E2E8F0]" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold text-white leading-tight">Insured Shipping</p>
+                  <p className="text-[10px] text-[#94A3B8] leading-tight">Safe Delivery</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
-      </div>
+      </section>
 
       {/* ========================================================================= */}
       {/* MAIN CATALOG CONTENT CONTAINER                                            */}
@@ -929,111 +998,17 @@ export default function SilverPage({
             <p className="text-xs text-[#475569]">Please verify your backend connection or try again later.</p>
           </div>
         ) : sortedProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 my-8">
-            {sortedProducts.map((item) => {
-              const isWishlisted = wishlistItems.some(w => w.id === item.id);
-              return (
-                <div
-                  key={item.id}
-                  className="bg-white rounded-xl border border-[#CBD5E1] overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between group"
-                >
-                  <div 
-                    className="relative aspect-4/3 overflow-hidden bg-[#FAF6EE] cursor-pointer"
-                    onClick={() => onViewProduct(item)}
-                  >
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className={`w-full h-full object-cover object-center transition-all duration-500 ${
-                        item.images && item.images.length > 1
-                          ? 'group-hover:opacity-0 group-hover:scale-105'
-                          : 'group-hover:scale-105'
-                      }`}
-                      loading="lazy"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = '/images/neutral_product_placeholder.svg';
-                      }}
-                    />
-                    {item.images && item.images.length > 1 && (
-                      <img
-                        src={item.images[1]}
-                        alt={`${item.name} - angle view`}
-                        className="absolute inset-0 w-full h-full object-cover object-center opacity-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 pointer-events-none"
-                        loading="lazy"
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src = item.image;
-                        }}
-                      />
-                    )}
-                    <div className="absolute top-3 left-3">
-                      <span className="inline-block px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-[#F1F5F9] text-[#1E293B] border border-[#CBD5E1]">
-                        {item.badge || '92.5 Silver'}
-                      </span>
-                    </div>
-
-                    <button
-                      onClick={() => onAddToWishlist(item)}
-                      className="absolute top-3 right-3 p-2 rounded-full bg-white/90 hover:bg-white text-[#1E293B] shadow-md transition-transform active:scale-95 cursor-pointer"
-                      title={isWishlisted ? "Item in Wishlist" : "Add to Wishlist"}
-                      aria-label={`Add ${item.name} to Wishlist`}
-                    >
-                      <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-[#D32F2F] text-[#D32F2F]' : ''}`} />
-                    </button>
-                  </div>
-
-                  <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
-                    <div>
-                      <div className="flex items-center justify-between gap-2 mb-1">
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-[#64748B]">
-                          {item.purity || item.details}
-                        </span>
-                        {item.weight && (
-                          <span className="text-[10px] font-semibold text-[#1E293B] bg-[#F1F5F9] px-2 py-0.5 rounded border border-[#E2E8F0] shrink-0">
-                            {item.weight}
-                          </span>
-                        )}
-                      </div>
-                      <h3 
-                        onClick={() => onViewProduct(item)}
-                        className="text-base font-bold text-[#0F172A] group-hover:text-[#1E293B] transition-colors line-clamp-1 mt-1 cursor-pointer"
-                      >
-                        {item.name}
-                      </h3>
-                      <p className="text-xs text-[#475569] line-clamp-2 mt-1 leading-relaxed">
-                        {item.description}
-                      </p>
-                    </div>
-
-                    <div className="mt-4 pt-3 border-t border-[#E2E8F0] flex items-center justify-between">
-                      <div>
-                        <span className="text-[10px] text-[#64748B] block">Showroom Price</span>
-                        <span className="text-lg font-bold text-[#0F172A]">
-                          {item.price}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => onViewProduct(item)}
-                          className="px-3 py-1.5 rounded-md border border-[#1E293B] text-[#1E293B] hover:bg-[#F1F5F9] text-xs font-semibold transition-colors cursor-pointer"
-                        >
-                          Details
-                        </button>
-                        <button
-                          onClick={() => onAddToCart(item)}
-                          className="px-3 py-1.5 rounded-md bg-[#1E293B] hover:bg-[#0F172A] text-white text-xs font-semibold flex items-center gap-1 transition-colors cursor-pointer shadow-xs"
-                        >
-                          <ShoppingBag className="w-3.5 h-3.5" />
-                          <span>Add</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+          <div className="w-full max-w-[1440px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 lg:gap-8 my-8">
+            {sortedProducts.map((item) => (
+              <LuxuryProductCard
+                key={item.id}
+                item={item}
+                wishlistItems={wishlistItems}
+                onAddToCart={onAddToCart}
+                onAddToWishlist={onAddToWishlist}
+                onViewProduct={onViewProduct}
+              />
+            ))}
           </div>
         ) : (
           /* Small consistent empty state message inside existing product-list area */

@@ -113,7 +113,7 @@ function AdminDashboardInner() {
         {/* Admin Footer Disclaimer */}
         <footer className="bg-[#FFFFFF] border-t border-[#E5E7EB] py-3.5 px-6 text-center text-[12px] font-admin-body text-[#6B7280]">
           <p>
-            <strong className="font-admin-heading font-semibold text-[14px] text-[#292521]">Vedha Radha Thangamaaligai</strong> — Luxury Showroom & Inventory Management Dashboard
+            <strong className="font-admin-heading font-semibold text-[14px] text-[#292521]">Vedha Radha Thangamaaligai</strong> - Luxury Showroom & Inventory Management Dashboard
           </p>
         </footer>
       </div>

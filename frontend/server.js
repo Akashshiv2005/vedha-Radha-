@@ -1,5 +1,5 @@
 /**
- * Vedha Radha Thangamaaligai — Production HTTP Server
+ * Vedha Radha Thangamaaligai - Production HTTP Server
  *
  * Purpose: Serves the Vite-built static SPA from dist/ AND handles all
  *          /api/* routes (auth + precious metal rates) using the same
@@ -31,7 +31,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ─── Middleware ────────────────────────────────────────────────────────────────
+// --- Middleware ----------------------------------------------------------------
 
 // Parse JSON request bodies
 app.use(express.json());
@@ -45,7 +45,7 @@ app.use((req, res, next) => {
 
 const BACKEND_API_URL = process.env.BACKEND_API_URL || process.env.VITE_API_BASE_URL || process.env.BACKEND_URL || '';
 
-// ─── API Routes ────────────────────────────────────────────────────────────────
+// --- API Routes ----------------------------------------------------------------
 
 /**
  * POST /api/auth/login
@@ -180,7 +180,7 @@ app.all(['/api/rates', '/api/prices*', '/api/gold-rates*'], async (req, res) => 
   }
 });
 
-// ─── Serve Static SPA ──────────────────────────────────────────────────────────
+// --- Serve Static SPA ----------------------------------------------------------
 
 const distPath = path.join(__dirname, 'dist');
 
@@ -195,14 +195,14 @@ app.use(express.static(distPath, {
 
 // For all non-API routes, serve index.html (React Router SPA fallback)
 app.get('/{*path}', (req, res) => {
-  // Do not fall through for /api paths — those should be handled above or 404
+  // Do not fall through for /api paths - those should be handled above or 404
   if (req.path.startsWith('/api/')) {
     return res.status(404).json({ success: false, error: 'API endpoint not found' });
   }
   res.sendFile(path.join(distPath, 'index.html'));
 });
 
-// ─── Start ─────────────────────────────────────────────────────────────────────
+// --- Start ---------------------------------------------------------------------
 
 app.listen(PORT, () => {
   console.log(`[vedharadha] Production server running on http://localhost:${PORT}`);

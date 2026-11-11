@@ -758,7 +758,7 @@ export default function AdminOrdersPage({
               onChange={(e) => setDateRangeFilter(e.target.value)}
               className="appearance-none bg-white border border-[#E5E7EB] hover:border-[#D1D5DB] rounded-xl pl-8 pr-8 py-2 text-[13px] font-medium text-[#292521] shadow-xs focus:outline-none focus:ring-2 focus:ring-[#C49A45]/30 cursor-pointer"
             >
-              <option value="all">03 Sep 2024 – 09 Sep 2024</option>
+              <option value="all">03 Sep 2024 - 09 Sep 2024</option>
               <option value="today">Today</option>
               <option value="week">Last 7 Days</option>
               <option value="month">Last 30 Days</option>
@@ -1202,7 +1202,7 @@ export default function AdminOrdersPage({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1">
         {/* Left: Count Text */}
         <div className="text-[13px] text-[#6B7280]">
-          Showing <span className="font-medium text-[#292521]">{totalItems > 0 ? `${startIndex + 1}–${endIndex}` : '0'}</span> of{' '}
+          Showing <span className="font-medium text-[#292521]">{totalItems > 0 ? `${startIndex + 1}-${endIndex}` : '0'}</span> of{' '}
           <span className="font-medium text-[#292521]">{totalItems}</span> orders
         </div>
 

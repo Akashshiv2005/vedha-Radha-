@@ -20,7 +20,7 @@ export const exclusiveNewArrivals = [
     "numericPrice": 58500,
     "badge": "Exclusive Launch",
     "badgeType": "in-stock",
-    "craftsmanship": "Chettinad Peacock Repoussé & Micro Pearl Tassels",
+    "craftsmanship": "Chettinad Peacock Repousse & Micro Pearl Tassels",
     "certification": "BIS Hallmarked & 100% Purity Assay Certificate",
     "image": "/images/new-arrivals/new-arrival-exclusive-peacock-earrings-01.jpg",
     "images": [
@@ -107,7 +107,7 @@ export const exclusiveNewArrivals = [
     "numericPrice": 258000,
     "badge": "Exclusive Launch",
     "badgeType": "in-stock",
-    "craftsmanship": "Chettinad Nakshi Repoussé & Chased Temple Pillars",
+    "craftsmanship": "Chettinad Nakshi Repousse & Chased Temple Pillars",
     "certification": "BIS Hallmarked & Master Craftsman Assay",
     "image": "/images/new-arrivals/new-arrival-exclusive-temple-choker-01.jpg",
     "images": [

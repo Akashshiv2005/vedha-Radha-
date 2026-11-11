@@ -44,7 +44,7 @@ export default function GoldJewellerySection({ onViewProduct }) {
               Gold Jewellery Collection
             </h2>
             <p className="text-xs sm:text-sm text-[#695D56] mt-1.5 max-w-2xl leading-relaxed">
-              From majestic temple harams and antique jhumkas to daily wear pendants and chains—discover authentic 22K hallmarked masterpieces crafted with centuries of heritage.
+              From majestic temple harams and antique jhumkas to daily wear pendants and chains - discover authentic 22K hallmarked masterpieces crafted with centuries of heritage.
             </p>
           </div>
 

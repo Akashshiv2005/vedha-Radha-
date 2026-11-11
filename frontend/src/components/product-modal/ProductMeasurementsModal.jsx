@@ -6,8 +6,8 @@ export function parseProductDimensions(product) {
   const dim = product?.dimensions || '';
   const weight = product?.weight || '7.1 grams';
 
-  // Match e.g. "16 mm ├ù 14 mm with secure screw clasp" or "16mm x 14mm"
-  const match2 = dim.match(/(\d+(?:\.\d+)?\s*(?:mm|cm|in|inch))\s*[├ùxX]\s*(\d+(?:\.\d+)?\s*(?:mm|cm|in|inch))/i);
+  // Match e.g. "16 mm × 14 mm with secure screw clasp" or "16mm x 14mm"
+  const match2 = dim.match(/(\d+(?:\.\d+)?\s*(?:mm|cm|in|inch))\s*[×xX]\s*(\d+(?:\.\d+)?\s*(?:mm|cm|in|inch))/i);
   if (match2) {
     return {
       length: match2[1].trim(),
@@ -219,17 +219,17 @@ export default function ProductMeasurementsModal({ isOpen, onClose, product, ini
                     <tbody className="divide-y divide-[#FAF6EE] text-[#4A403A]">
                       <tr>
                         <td className="py-2 font-medium">Daily Petite Studs</td>
-                        <td className="py-2">8 mm – 12 mm</td>
+                        <td className="py-2">8 mm - 12 mm</td>
                         <td className="py-2 text-[#7A6E65]">Office, daily wear, lightweight</td>
                       </tr>
                       <tr className="bg-[#FAF7F2]/50">
                         <td className="py-2 font-medium text-[#581923]">Medium Statement (This Piece)</td>
-                        <td className="py-2 font-bold text-[#581923]">14 mm – 18 mm</td>
+                        <td className="py-2 font-bold text-[#581923]">14 mm - 18 mm</td>
                         <td className="py-2 text-[#581923]">Festivals, pujas, weddings</td>
                       </tr>
                       <tr>
                         <td className="py-2 font-medium">Grand Temple Jhumkas</td>
-                        <td className="py-2">25 mm – 45 mm</td>
+                        <td className="py-2">25 mm - 45 mm</td>
                         <td className="py-2 text-[#7A6E65]">Bridal, classical dance, grand muhurtham</td>
                       </tr>
                     </tbody>

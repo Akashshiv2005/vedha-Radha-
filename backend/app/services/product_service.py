@@ -221,7 +221,7 @@ SEED_PRODUCTS = [
             "/images/products/gold/rings/gold_engagement_rings_26-02.jpg",
             "/images/products/gold/rings/gold_engagement_rings_26-03.jpg",
         ],
-        "description": "Majestic 22K yellow gold dual-channel band crowned with a brilliant centre gemstone flanked by micropavé sparkle accents.",
+        "description": "Majestic 22K yellow gold dual-channel band crowned with a brilliant centre gemstone flanked by micropave sparkle accents.",
         "purity": "22K 916 BIS Hallmarked",
         "gross_weight": "7.80 g",
         "net_weight": "7.50 g",
@@ -580,7 +580,7 @@ def get_products(
 
 
 def get_product_by_id_or_sku(db: Session, identifier: str, include_inactive: bool = False) -> Optional[Product]:
-    """Lookup product by UUID or case-insensitive SKU."""
+    """Lookup product by UUID, SKU, QR code, or human-readable name slug."""
     clean_id = identifier.strip()
     try:
         product_uuid = uuid.UUID(clean_id)
@@ -603,7 +603,38 @@ def get_product_by_id_or_sku(db: Session, identifier: str, include_inactive: boo
     q = db.query(Product).filter(func.lower(Product.qr_code) == clean_id.lower())
     if not include_inactive:
         q = q.filter(Product.is_active == True)
-    return q.first()
+    product = q.first()
+    if product:
+        return product
+
+    # Match by product name or slug (e.g. gajalakshmi-nakshi-handcrafted-22k-gold-bridal-vaddanam)
+    clean_slug = clean_id.lower().replace("_", "-")
+    name_guess = clean_slug.replace("-", " ")
+    q_name = db.query(Product).filter(
+        or_(
+            func.lower(Product.name) == name_guess,
+            func.lower(Product.name) == clean_id.lower(),
+            func.lower(func.replace(Product.name, " ", "-")) == clean_slug,
+        )
+    )
+    if not include_inactive:
+        q_name = q_name.filter(Product.is_active == True)
+    product = q_name.first()
+    if product:
+        return product
+
+    # Tolerant slug match
+    target_norm = "".join(c for c in clean_slug if c.isalnum())
+    if len(target_norm) >= 4:
+        q_all = db.query(Product)
+        if not include_inactive:
+            q_all = q_all.filter(Product.is_active == True)
+        for cand in q_all.limit(200).all():
+            cand_norm = "".join(c for c in (cand.name or "").lower() if c.isalnum())
+            if cand_norm == target_norm or (len(cand_norm) > 6 and cand_norm in target_norm) or (len(target_norm) > 6 and target_norm in cand_norm):
+                return cand
+
+    return None
 
 
 def create_product(db: Session, payload: ProductCreate) -> Product:

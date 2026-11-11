@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { X, Trash2, ShoppingBag } from 'lucide-react';
 import { cartClient } from '../api/cartClient.js';
+import { getProductUrl } from '../utils/productSlug.js';
 
 export default function CartDrawer({
   isOpen,
@@ -107,7 +108,14 @@ export default function CartDrawer({
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="w-16 h-16 object-cover rounded bg-[#F4EFE6] shrink-0 border border-[#EFE8DD] mt-0.5"
+                  onClick={() => {
+                    const url = getProductUrl(item);
+                    if (url) {
+                      navigate(url);
+                      onClose();
+                    }
+                  }}
+                  className="w-16 h-16 object-cover rounded bg-[#F4EFE6] shrink-0 border border-[#EFE8DD] mt-0.5 cursor-pointer hover:opacity-90 transition-opacity"
                   onError={(e) => {
                     e.target.onerror = null;
                     e.target.src = '/images/neutral_product_placeholder.svg';
@@ -115,7 +123,16 @@ export default function CartDrawer({
                 />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-1">
-                    <h4 className="text-xs sm:text-[13px] font-bold text-[#241716] truncate pr-1">
+                    <h4 
+                      onClick={() => {
+                        const url = getProductUrl(item);
+                        if (url) {
+                          navigate(url);
+                          onClose();
+                        }
+                      }}
+                      className="text-xs sm:text-[13px] font-bold text-[#241716] truncate pr-1 cursor-pointer hover:text-[#581923] transition-colors"
+                    >
                       {item.name}
                     </h4>
                     <button

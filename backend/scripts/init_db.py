@@ -1,5 +1,5 @@
 """Database & Storage Initialization Script for Hosting & Deployment.
-Vedha Radha Thangamaaligai — Luxury Jewellery Platform.
+Vedha Radha Thangamaaligai - Luxury Jewellery Platform.
 
 This script executes the complete database preparation pipeline:
 1. Verifies PostgreSQL connectivity.
@@ -39,7 +39,7 @@ from app.services.minio_service import minio_service
 
 def run_init(seed_data: bool = False, dry_run: bool = False) -> bool:
     print("=" * 70)
-    print("VEDHA RADHA THANGAMAALIGAI — PRODUCTION DATABASE INITIALIZATION")
+    print("VEDHA RADHA THANGAMAALIGAI - PRODUCTION DATABASE INITIALIZATION")
     print("=" * 70)
 
     # 1. Verify PostgreSQL Database Connection

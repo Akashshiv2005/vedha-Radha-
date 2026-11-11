@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TrendingUp } from 'lucide-react';
 
 /**
- * Generates a smooth natural cubic Bézier curve SVG path string through an array of {x, y} points
+ * Generates a smooth natural cubic Bezier curve SVG path string through an array of {x, y} points
  */
 function getSmoothCurvePath(points) {
   if (!points || points.length === 0) return '';
@@ -92,7 +92,7 @@ export default function OrdersTrendChart() {
     return { x, y, val: d.orders, label: d.day, meta: d };
   });
 
-  // Smooth Bézier curve line and area paths
+  // Smooth Bezier curve line and area paths
   const pathEnqLine = getSmoothCurvePath(pointsEnq);
   const pathEnqArea = `${pathEnqLine} L ${pointsEnq[pointsEnq.length - 1].x} ${baselineY} L ${pointsEnq[0].x} ${baselineY} Z`;
 

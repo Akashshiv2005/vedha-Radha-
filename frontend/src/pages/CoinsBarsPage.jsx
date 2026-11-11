@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 import { storefrontClient } from '../api/storefrontProductsClient';
 import { ProductGridSkeleton } from '../components/common/ProductCardSkeleton';
+import LuxuryProductCard from '../components/common/LuxuryProductCard';
 import { coinsBarsNavItems } from '../data/navigationData';
-import { Sparkles, ChevronRight, Heart, ShoppingBag, ShieldCheck, Award, ArrowLeft, RefreshCcw } from 'lucide-react';
+import { Sparkles, ChevronRight, Heart, ShoppingBag, ShieldCheck, Award, ArrowLeft, RefreshCcw, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 const COINS_MAP = {
   'gold-coins': { title: '24K 999 Pure Gold Coins', desc: 'Auspicious Lakshmi, Ganesha, and Vedha Radha trust emblem stamped gold coins in tamper-proof certicards.' },
@@ -20,6 +21,7 @@ export default function CoinsBarsPage({
   wishlistItems = []
 }) {
   const { subCategory } = useParams();
+  const navigate = useNavigate();
   const location = useLocation();
   const [sortBy, setSortBy] = useState('featured');
   const [dbProducts, setDbProducts] = useState([]);
@@ -86,65 +88,145 @@ export default function CoinsBarsPage({
   });
 
   return (
-    <div className="bg-[#FAF7F2] min-h-screen py-8 sm:py-12 border-b border-[#EAE2D5]">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-8">
-        
-        {/* Breadcrumb Navigation */}
-        <div className="flex items-center gap-2 text-xs text-[#7A6E65] mb-4">
-          <Link to="/" className="hover:text-[#581923]">Home</Link>
-          <ChevronRight className="w-3.5 h-3.5 text-[#B38E46]" />
-          <Link to="/coins-bars" className={`hover:text-[#581923] ${!subCategory ? 'font-bold text-[#581923]' : ''}`}>
-            Coins & Bars
-          </Link>
-          {subCategory && (
-            <>
-              <ChevronRight className="w-3.5 h-3.5 text-[#B38E46]" />
-              <span className="font-semibold text-[#581923] capitalize">
-                {subCategory.replace(/-/g, ' ')}
-              </span>
-            </>
-          )}
+    <div className="bg-[#FAF7F2] min-h-screen border-b border-[#EAE2D5] select-none font-sans">
+      
+      {/* Full-Bleed Split Luxury Bullion Hero Banner matching reference design */}
+      <section className="relative bg-[#180D03] text-white overflow-hidden border-b border-[#C5A253]/35 min-h-[480px] lg:min-h-[540px] flex items-center mb-8 sm:mb-10">
+        {/* Background stage showcase on the right */}
+        <div className="absolute inset-0 pointer-events-none">
+          <img
+            src="/images/bar_gold.jpg"
+            alt="24K Pure Gold and Silver Bullion"
+            className="w-full h-full object-cover object-[75%_center] lg:object-right"
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = '/images/coin_gold.jpg';
+            }}
+          />
+          {/* Crisp Left-Only Fade: Leaves the entire right jewelry showcase 100% clear and luminous */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#180D03] via-[#180D03]/90 via-35% md:via-42% to-transparent to-60% md:to-58% pointer-events-none" />
         </div>
 
-        {/* Hero Header Banner */}
-        <div className="bg-gradient-to-r from-[#543818] via-[#734E24] to-[#422C12] text-[#FAF6EE] rounded-2xl p-6 sm:p-10 mb-8 border border-[#916733] shadow-lg relative overflow-hidden">
-          <div className="relative z-10 max-w-2xl">
-            <span className="inline-block text-[11px] uppercase tracking-[0.25em] text-[#F3EAD3] font-semibold mb-2">
-              24K 999.9 Fine Gold &bull; 999 Pure Silver Bullion
-            </span>
-            <h1 className="text-2xl sm:text-4xl font-bold text-white tracking-tight">
-              {categoryInfo.title}
+        <div className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 py-12 lg:py-16">
+          <div className="max-w-2xl lg:max-w-xl xl:max-w-2xl">
+            {/* Breadcrumb Navigation inside Hero */}
+            <div className="flex items-center gap-2 text-xs text-[#E5B5B5] mb-4 font-medium tracking-wide">
+              <Link to="/" className="hover:text-white transition-colors cursor-pointer">Home</Link>
+              <ChevronRight className="w-3.5 h-3.5 text-[#C5A253]" />
+              <Link to="/coins-bars" className="hover:text-white transition-colors cursor-pointer">Coins &amp; Bars</Link>
+              {subCategory && (
+                <>
+                  <ChevronRight className="w-3.5 h-3.5 text-[#C5A253]" />
+                  <span className="text-[#FCEB9C] capitalize font-semibold">{subCategory.replace(/-/g, ' ')}</span>
+                </>
+              )}
+            </div>
+
+            {/* Pill Tag */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#2A1504]/90 border border-[#C5A253]/60 text-[#F5DE98] text-[11px] font-semibold mb-4 tracking-widest uppercase shadow-[0_2px_12px_rgba(197,162,83,0.2)]">
+              <Sparkles className="w-3.5 h-3.5 text-[#E7C878]" />
+              <span>24K 999.9 FINE GOLD &bull; 999 PURE SILVER BULLION</span>
+            </div>
+
+            {/* Title */}
+            <h1 
+              style={{ fontFamily: "'Playfair Display', 'Cormorant Garamond', Georgia, serif" }}
+              className="text-3xl sm:text-5xl lg:text-[50px] font-bold text-white tracking-tight leading-[1.12]"
+            >
+              Precious Gold &amp; Silver Coins &amp; Bars
             </h1>
-            <p className="text-xs sm:text-sm text-[#F0E6D8] mt-2 leading-relaxed">
+
+            {/* Filigree horizontal divider */}
+            <div className="flex items-center gap-3 my-3.5">
+              <div className="h-[1px] w-12 bg-gradient-to-r from-transparent via-[#C5A253] to-[#C5A253]"></div>
+              <span className="text-[#C5A253] text-xs">✦</span>
+              <div className="h-[1px] w-28 bg-gradient-to-r from-[#C5A253] to-transparent"></div>
+            </div>
+
+            {/* Subtitle */}
+            <p 
+              style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+              className="text-base sm:text-xl text-[#E5C058] italic font-normal"
+            >
+              Certified Investment-Grade Bullion with 100% Transparent Assay.
+            </p>
+
+            {/* Narrative description */}
+            <p className="text-xs sm:text-sm text-[#F3DCDD] mt-3 font-light leading-relaxed max-w-xl">
               {categoryInfo.desc}
             </p>
-          </div>
-        </div>
 
-        {/* Investment Highlights */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div className="p-4 bg-white rounded-xl border border-[#E8DFC0] shadow-2xs flex items-center gap-3">
-            <Award className="w-8 h-8 text-[#B38E46] shrink-0" />
-            <div>
-              <h4 className="text-xs font-bold text-[#241716]">999 / 999.9 Certified Purity</h4>
-              <p className="text-[11px] text-[#7A6E65]">Assayed with international tamper-proof certicards.</p>
+            {/* CTA Buttons */}
+            <div className="flex flex-wrap items-center gap-3.5 mt-7">
+              <button
+                type="button"
+                onClick={() => {
+                  const el = document.getElementById('bullion-catalog-grid');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="bg-gradient-to-r from-[#D4AF37] via-[#FCEB9C] to-[#C59B27] hover:brightness-110 text-[#180D03] font-bold text-xs sm:text-sm px-6 py-3 rounded-full shadow-[0_4px_20px_rgba(212,175,55,0.35)] transition-all cursor-pointer flex items-center gap-2"
+              >
+                <span>Explore Bullion Products</span>
+                <ArrowRight className="w-4 h-4 stroke-[2.2]" />
+              </button>
+              <button
+                type="button"
+                onClick={() => navigate('/contact')}
+                className="bg-[#241203]/90 hover:bg-[#381B05] border border-[#C5A253]/60 hover:border-[#C5A253] text-[#F3E5C8] font-medium text-xs sm:text-sm px-5 py-3 rounded-full backdrop-blur-sm transition-all cursor-pointer flex items-center gap-2 shadow-sm"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-[#C5A253]" />
+                <span>Bulk Investment Desk</span>
+              </button>
             </div>
-          </div>
-          <div className="p-4 bg-white rounded-xl border border-[#E8DFC0] shadow-2xs flex items-center gap-3">
-            <RefreshCcw className="w-8 h-8 text-[#B38E46] shrink-0" />
-            <div>
-              <h4 className="text-xs font-bold text-[#241716]">0% Deduction Buyback</h4>
-              <p className="text-[11px] text-[#7A6E65]">100% market spot value buyback guarantee.</p>
+
+            {/* Trust Badges matching reference design */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8 pt-6 border-t border-white/10 max-w-2xl">
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full bg-[#2A1504] border border-[#C5A253]/50 flex items-center justify-center shrink-0">
+                  <Award className="w-3.5 h-3.5 text-[#E7C878]" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold text-white leading-tight">999.9 Purity</p>
+                  <p className="text-[10px] text-[#E5B5B5] leading-tight">Assayed Certicards</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full bg-[#2A1504] border border-[#C5A253]/50 flex items-center justify-center shrink-0">
+                  <RefreshCcw className="w-3.5 h-3.5 text-[#E7C878]" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold text-white leading-tight">0% Deduction</p>
+                  <p className="text-[10px] text-[#E5B5B5] leading-tight">Buyback Guarantee</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full bg-[#2A1504] border border-[#C5A253]/50 flex items-center justify-center shrink-0">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#E7C878]" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold text-white leading-tight">Tamper Proof</p>
+                  <p className="text-[10px] text-[#E5B5B5] leading-tight">Sealed Security</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full bg-[#2A1504] border border-[#C5A253]/50 flex items-center justify-center shrink-0">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#E7C878]" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold text-white leading-tight">Insured Transit</p>
+                  <p className="text-[10px] text-[#E5B5B5] leading-tight">Secure Doorstep</p>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="p-4 bg-white rounded-xl border border-[#E8DFC0] shadow-2xs flex items-center gap-3">
-            <ShieldCheck className="w-8 h-8 text-[#B38E46] shrink-0" />
-            <div>
-              <h4 className="text-xs font-bold text-[#241716]">Zero Making Charge Advantage</h4>
-              <p className="text-[11px] text-[#7A6E65]">Ideal for savings, weddings, and auspicious gifting.</p>
-            </div>
+
           </div>
         </div>
+      </section>
+
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-8">
 
         {/* Subcategory Pills Bar */}
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 pb-6 border-b border-[#DECDBB]">
@@ -225,82 +307,18 @@ export default function CoinsBarsPage({
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 my-8">
-            {sortedProducts.map((item) => {
-              const isWishlisted = wishlistItems.some(w => w.id === item.id);
-              return (
-                <div
-                  key={item.id}
-                  className="bg-[#FAF8F5] rounded-xl border border-[#E8DFC0] overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between group"
-                >
-                  <div className="relative aspect-4/3 overflow-hidden bg-[#EFE8DC]">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = '/images/product_gold_chain.jpg';
-                      }}
-                    />
-                    <div className="absolute top-3 left-3">
-                      <span className="inline-block px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-[#DCF0DF] text-[#1E5C2D] border border-[#C1E3C6]">
-                        {item.badge}
-                      </span>
-                    </div>
-
-                  <button
-                    onClick={() => onAddToWishlist(item)}
-                    className="absolute top-3 right-3 p-2 rounded-full bg-white/90 hover:bg-white text-[#581923] shadow-md transition-transform active:scale-95 cursor-pointer"
-                    title={isWishlisted ? "Item in Wishlist" : "Add to Wishlist"}
-                  >
-                    <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-[#D32F2F] text-[#D32F2F]' : ''}`} />
-                  </button>
-                </div>
-
-                <div className="p-4 flex-1 flex flex-col justify-between">
-                  <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C6D2D]">
-                      {item.purity || item.details}
-                    </span>
-                    <h3 className="text-sm font-bold text-[#241716] group-hover:text-[#581923] transition-colors line-clamp-2 mt-1">
-                      {item.name}
-                    </h3>
-                    <p className="text-[11px] text-[#63574F] line-clamp-2 mt-1">
-                      {item.description}
-                    </p>
-                  </div>
-
-                  <div className="mt-4 pt-3 border-t border-[#EAE2D5] flex items-center justify-between">
-                    <div>
-                      <span className="text-[10px] text-[#7A6E65] block">Spot Price</span>
-                      <span className="text-base font-bold text-[#48161E]">
-                        {item.price}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center gap-1.5">
-                      <button
-                        onClick={() => onViewProduct(item)}
-                        className="px-2.5 py-1.5 rounded-md border border-[#581923] text-[#581923] hover:bg-[#FAF0E1] text-[11px] font-semibold cursor-pointer"
-                      >
-                        Details
-                      </button>
-                      <button
-                        onClick={() => onAddToCart(item)}
-                        className="px-3 py-1.5 rounded-md bg-[#581923] hover:bg-[#431219] text-white text-[11px] font-semibold flex items-center gap-1 cursor-pointer"
-                      >
-                        <ShoppingBag className="w-3 h-3" />
-                        <span>Add</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+          <div id="bullion-catalog-grid" className="w-full max-w-[1440px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 lg:gap-8 my-8">
+            {sortedProducts.map((item) => (
+              <LuxuryProductCard
+                key={item.id}
+                item={item}
+                wishlistItems={wishlistItems}
+                onAddToCart={onAddToCart}
+                onAddToWishlist={onAddToWishlist}
+                onViewProduct={onViewProduct}
+              />
+            ))}
+          </div>
         )}
 
       </div>

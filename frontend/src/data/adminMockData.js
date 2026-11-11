@@ -18,7 +18,7 @@ export const INITIAL_PRODUCTS = [
     status: 'reserved', // 'available' | 'reserved' | 'sold' | 'unavailable'
     image: '/images/product_anklet.jpg',
     isSampleImage: true,
-    sampleImageNote: 'Sample reference photo — Handcrafted piece varies slightly in ghungroo engraving',
+    sampleImageNote: 'Sample reference photo - Handcrafted piece varies slightly in ghungroo engraving',
     description: 'Traditional heavy Chettinad silver payal with intricately sculpted peacock clasps and melodic chime ghungroos. Handcrafted by master silversmiths.',
     hallmarkDetails: '925 Fineness Stamped (Sample / Subject to lab verification)',
     stockQty: 1,
@@ -961,7 +961,7 @@ export const INITIAL_RETURNS_CASES = [
     orderId: '#ORD-2250',
     customerName: 'Deepa Ganesan',
     phone: '+91 99401 12345',
-    productName: 'Repoussé Silver Pooja Bowl',
+    productName: 'Repousse Silver Pooja Bowl',
     productSku: 'SB-778',
     productImage: '/images/product_silver_bowl.jpg',
     returnReason: 'Altar dimensions mismatch',
@@ -1032,7 +1032,7 @@ export const INITIAL_RETURNS_CASES = [
 
 export const INITIAL_SETTINGS = {
   returnWindow: '7 days from delivery',
-  inspectionPeriod: '2–3 business days',
+  inspectionPeriod: '2-3 business days',
   returnMethod: 'Courier / In-Store',
   refundMethod: 'Original payment method',
   returnEligibility: 'Only unused & undamaged items',
@@ -1055,7 +1055,7 @@ export const INITIAL_SETTINGS = {
     returnWindowDays: 7,
     silverDeductionRate: 'Zero deduction if tamper seal is intact',
     goldExchangeTerms: '100% value against current showroom gold rate upon hallmark verification',
-    policyDisclaimer: 'Demo setting — Pending final legal and accounting confirmation with showroom management.'
+    policyDisclaimer: 'Demo setting - Pending final legal and accounting confirmation with showroom management.'
   }
 };
 

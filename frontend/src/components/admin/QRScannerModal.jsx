@@ -174,7 +174,7 @@ export default function QRScannerModal({ isOpen, onClose, onScanSuccess }) {
     setParsedData(tagData);
     
     const targetCode = (tagData.product_code || tagData.sku || '').trim();
-    logDiag(`Parsed Tag: Format=${tagData.format}, Code="${targetCode}", Desc="${tagData.description || '—'}", Weight=${tagData.gross_weight || '—'}, Rate=${tagData.rate || '—'}, AC=${tagData.additional_charge || '—'}`);
+    logDiag(`Parsed Tag: Format=${tagData.format}, Code="${targetCode}", Desc="${tagData.description || ' - '}", Weight=${tagData.gross_weight || ' - '}, Rate=${tagData.rate || ' - '}, AC=${tagData.additional_charge || ' - '}`);
 
     if (!targetCode) {
       logDiag('Could not extract valid product code from tag.', 'error');
@@ -756,7 +756,7 @@ export default function QRScannerModal({ isOpen, onClose, onScanSuccess }) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[12px] min-w-0">
                   <div className="bg-white p-2.5 rounded-lg border border-[#EDE8E1] min-w-0">
                     <span className="text-[#736B63] block text-[10.5px] font-medium uppercase">Product Name</span>
-                    <strong className="text-[#292521] text-[13px] block truncate">{matchedProduct.name || '—'}</strong>
+                    <strong className="text-[#292521] text-[13px] block truncate">{matchedProduct.name || ' - '}</strong>
                   </div>
                   <div className="bg-white p-2.5 rounded-lg border border-[#EDE8E1] min-w-0">
                     <span className="text-[#736B63] block text-[10.5px] font-medium uppercase">Category</span>

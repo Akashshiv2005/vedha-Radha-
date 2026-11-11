@@ -388,7 +388,7 @@ export function AdminProvider({ children }) {
       orders: orderId ? prev.orders.map(o => o.id === orderId ? {
         ...o,
         status: 'cancelled',
-        nextAction: 'Hold released — stock restored to available',
+        nextAction: 'Hold released - stock restored to available',
         timeline: [
           { timestamp: `Today ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`, event: 'Staff released hold back to available showroom stock', user: 'Staff' },
           ...(o.timeline || [])
@@ -572,7 +572,7 @@ export function AdminProvider({ children }) {
       orders: prev.orders.map(o => o.id === orderId ? {
         ...o,
         holdExpiresAt: newExpiry,
-        nextAction: `Hold extended by ${hours}h — Follow up before new deadline`,
+        nextAction: `Hold extended by ${hours}h - Follow up before new deadline`,
         timeline: [
           { timestamp: `Today ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`, event: `Staff extended reservation hold by +${hours} hours (Demo setting)`, user: 'Staff' },
           ...(o.timeline || [])
@@ -593,7 +593,7 @@ export function AdminProvider({ children }) {
       orders: prev.orders.map(o => o.id === orderId ? {
         ...o,
         status: 'cancelled',
-        nextAction: 'Cancelled — Stock released to available',
+        nextAction: 'Cancelled - Stock released to available',
         notes: `${o.notes || ''} [REJECTED: ${reason}]`,
         timeline: [
           { timestamp: `Today ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`, event: `Reservation rejected: ${reason}`, user: 'Staff' },
@@ -690,7 +690,7 @@ export function AdminProvider({ children }) {
         return {
           ...o,
           status: 'dispatched',
-          nextAction: `In Transit via ${carrier} (${trackingId}) — Monitor scans`,
+          nextAction: `In Transit via ${carrier} (${trackingId}) - Monitor scans`,
           notes: notes ? `${o.notes || ''} [Tracking Note: ${notes}]` : o.notes,
           tracking: {
             ...o.tracking,
@@ -828,10 +828,10 @@ export function AdminProvider({ children }) {
     let productStatusChange = null;
 
     if (outcome === 'return_to_inventory') {
-      nextStatusText = 'Approved & Restocked — Item returned to Available stock';
+      nextStatusText = 'Approved & Restocked - Item returned to Available stock';
       productStatusChange = 'available';
     } else if (outcome === 'mark_damaged') {
-      nextStatusText = 'Rejected / Damaged — Sent to Refinery / Melting Safe';
+      nextStatusText = 'Rejected / Damaged - Sent to Refinery / Melting Safe';
       productStatusChange = 'unavailable';
     } else {
       nextStatusText = 'Escalated to Managing Director for Purity & Seal Resolution';

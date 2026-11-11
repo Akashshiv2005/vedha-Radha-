@@ -127,6 +127,23 @@ class Order(Base):
         nullable=False,
         default="Pending Payment",
     )
+    razorpay_order_id: Mapped[Optional[str]] = mapped_column(
+        String(100),
+        nullable=True,
+        default=None,
+        index=True,
+    )
+    razorpay_payment_id: Mapped[Optional[str]] = mapped_column(
+        String(100),
+        nullable=True,
+        default=None,
+        index=True,
+    )
+    razorpay_signature: Mapped[Optional[str]] = mapped_column(
+        String(255),
+        nullable=True,
+        default=None,
+    )
     city: Mapped[Optional[str]] = mapped_column(
         String(100),
         nullable=True,

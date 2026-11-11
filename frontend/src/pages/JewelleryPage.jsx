@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { storefrontClient } from '../api/storefrontProductsClient';
 import { ProductGridSkeleton } from '../components/common/ProductCardSkeleton';
+import LuxuryProductCard from '../components/common/LuxuryProductCard';
 import { Sparkles, Filter, ChevronRight, ShieldCheck, Heart, ShoppingBag, ArrowLeft } from 'lucide-react';
 
 export default function JewelleryPage({
@@ -114,24 +115,35 @@ export default function JewelleryPage({
           <span className="font-semibold text-[#581923]">Fine Jewellery Collection</span>
         </div>
 
-        {/* Page Header Banner */}
-        <div className="bg-gradient-to-r from-[#4A161E] via-[#5C1D27] to-[#3D0E15] text-[#FAF6EE] rounded-2xl p-6 sm:p-10 mb-8 border border-[#7A2A37] shadow-lg relative overflow-hidden">
-          <div className="relative z-10 max-w-2xl">
-            <span className="inline-block text-[11px] uppercase tracking-[0.25em] text-[#E6C37A] font-semibold mb-2">
+        {/* Page Header Banner with Opulent Jewellery Backdrop */}
+        <div className="relative min-h-[220px] sm:min-h-[260px] rounded-2xl overflow-hidden mb-8 border border-[#D4AF37]/40 shadow-xl bg-[#2D0A10] flex items-center">
+          <div className="absolute inset-0 pointer-events-none">
+            <img
+              src="/images/luxury_gold_necklace_bust_showcase.jpg"
+              alt="Authentic BIS Hallmarked Fine Jewellery"
+              className="w-full h-full object-cover object-[75%_center] md:object-right"
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = '/images/col_gold_2k.jpg';
+              }}
+            />
+            {/* Crisp Left-Only Fade: Leaves the entire right jewelry showcase 100% clear and luminous */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#240409] via-[#240409]/90 via-35% md:via-42% to-transparent to-60% md:to-58% pointer-events-none" />
+          </div>
+
+          <div className="relative z-10 px-6 sm:px-10 lg:px-12 py-8 max-w-xl lg:max-w-2xl text-left">
+            <span className="inline-block text-[10.5px] uppercase tracking-[0.25em] text-[#E6C37A] font-semibold mb-2">
               Authentic BIS Hallmarked Jewellery
             </span>
-            <h1 className="text-2xl sm:text-4xl font-bold text-white tracking-tight">
-              Fine Gold & 92.5 Silver Jewellery
+            <h1 
+              style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+              className="text-2xl sm:text-4xl font-bold text-white tracking-tight"
+            >
+              Fine Gold &amp; 92.5 Silver Jewellery
             </h1>
-            <p className="text-xs sm:text-sm text-[#E6D4D6] mt-2 leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#F0D5D8] mt-2 leading-relaxed">
               Explore our master-crafted South Indian bridal necklaces, antique temple kadas, filigree anklets, and divine sterling silver pooja articles. Every piece comes with lifetime purity assurance.
             </p>
-          </div>
-          {/* Decorative motif */}
-          <div className="absolute -right-10 -bottom-10 w-64 h-64 text-[#B8924B]/15 pointer-events-none">
-            <svg viewBox="0 0 100 100" fill="currentColor" className="w-full h-full">
-              <circle cx="50" cy="50" r="45" />
-            </svg>
           </div>
         </div>
 
@@ -205,86 +217,17 @@ export default function JewelleryPage({
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 my-8">
-            {sortedProducts.map((item) => {
-              const isWishlisted = wishlistItems.some(w => w.id === item.id);
-              return (
-                <div
-                  key={item.id}
-                  className="bg-[#FAF8F5] rounded-xl border border-[#E8DFC0] overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between group"
-                >
-                  {/* Thumbnail Image Container */}
-                  <div className="relative aspect-4/3 overflow-hidden bg-[#EFE8DC]">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = '/images/product_gold_chain.jpg';
-                      }}
-                    />
-                    <div className="absolute top-3 left-3">
-                      <span className={`inline-block px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold border ${getBadgeStyle(item.badgeType)}`}>
-                        {item.badge}
-                      </span>
-                    </div>
-
-                    {/* Wishlist Button Overlay */}
-                    <button
-                      onClick={() => onAddToWishlist(item)}
-                      className="absolute top-3 right-3 p-2 rounded-full bg-white/90 hover:bg-white text-[#581923] shadow-md transition-transform active:scale-95 cursor-pointer"
-                      title={isWishlisted ? "Item in Wishlist" : "Add to Wishlist"}
-                      aria-label="Add to Wishlist"
-                    >
-                      <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-[#D32F2F] text-[#D32F2F]' : ''}`} />
-                    </button>
-                  </div>
-
-                  {/* Card Content */}
-                  <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
-                    <div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C6D2D]">
-                        {item.purity || item.details}
-                      </span>
-                      <h3 className="text-base font-bold text-[#241716] group-hover:text-[#581923] transition-colors line-clamp-1 mt-1">
-                        {item.name}
-                      </h3>
-                      <p className="text-xs text-[#63574F] line-clamp-2 mt-1 leading-relaxed">
-                        {item.description}
-                      </p>
-                    </div>
-
-                    <div className="mt-4 pt-3 border-t border-[#EAE2D5] flex items-center justify-between">
-                      <div>
-                        <span className="text-[10px] text-[#7A6E65] block">Showroom Price</span>
-                        <span className="text-lg font-bold text-[#48161E]">
-                          {item.price}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => onViewProduct(item)}
-                          className="px-3 py-1.5 rounded-md border border-[#581923] text-[#581923] hover:bg-[#FAF0E1] text-xs font-semibold transition-colors cursor-pointer"
-                        >
-                          Details
-                        </button>
-                        <button
-                          onClick={() => onAddToCart(item)}
-                          className="px-3 py-1.5 rounded-md bg-[#581923] hover:bg-[#431219] text-white text-xs font-semibold flex items-center gap-1 transition-colors cursor-pointer"
-                        >
-                          <ShoppingBag className="w-3.5 h-3.5" />
-                          <span>Add</span>
-                        </button>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-              );
-            })}
+          <div className="w-full max-w-[1440px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 lg:gap-8 my-8">
+            {sortedProducts.map((item) => (
+              <LuxuryProductCard
+                key={item.id}
+                item={item}
+                wishlistItems={wishlistItems}
+                onAddToCart={onAddToCart}
+                onAddToWishlist={onAddToWishlist}
+                onViewProduct={onViewProduct}
+              />
+            ))}
           </div>
         )}
 
