@@ -36,6 +36,9 @@ scratch/
 *.sqlite
 *.sqlite3
 
+# Helper scripts
+push_to_github.bat
+
 # IDE & OS
 .idea/
 .vscode/
