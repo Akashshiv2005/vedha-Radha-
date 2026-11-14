@@ -73,13 +73,13 @@ minio server ~/minio/data --console-address ":9001"
 
 ## 4. Database Seeding (One Single Command — Zero Duplicates)
 
-To seed all **201 products** across Gold, Silver, Diamond, Coins & Bars, Temple Heritage, and Silver Pooja into PostgreSQL with **0 duplicates**, run this single command from `vedharadha-website`:
+To seed all **201 products** across Gold, Silver, Diamond, Coins & Bars, Temple Heritage, and Silver Pooja into PostgreSQL with **0 duplicates**, run this command from `vedharadha-website`:
 
 ```powershell
-.\backend\.venv\Scripts\python.exe seed_database.py
+.\backend\.venv\Scripts\python.exe backend/seed_database.py
 ```
 
-*(Or `python seed_database.py` if your virtual environment is activated)*
+*(Or from inside `backend/` with virtual environment activated: `python seed_database.py`)*
 
 ### Pre-Flight Deduplication & Quality Guarantees
 * **0 Duplicate IDs / SKUs**: Every product has a strictly unique identifier.

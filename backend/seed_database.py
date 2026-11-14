@@ -58,7 +58,8 @@ try:
 except ImportError as e:
     print(f"\n[ERROR] Failed to import backend modules: {e}")
     print(f"Please ensure you run this using the virtual environment:")
-    print(f"   .\\backend\\.venv\\Scripts\\python.exe seed_database.py\n")
+    print(f"   .\\.venv\\Scripts\\python.exe seed_database.py (from backend/)\n")
+    print(f"   or from root: .\\backend\\.venv\\Scripts\\python.exe backend/seed_database.py\n")
     sys.exit(1)
 
 
