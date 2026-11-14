@@ -25,7 +25,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/earrings/gold_studs_1-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-stud-2-peacock-green",
@@ -53,7 +54,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/earrings/gold_studs_2-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-stud-3-temple-lakshmi",
@@ -81,7 +83,8 @@
     "collection": "wedding",
     "images": [
       "/images/products/gold/earrings/gold_studs_3-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-hanging-6-floral-drops",
@@ -109,7 +112,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/earrings/gold_hangings_6-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-hanging-7-temple-sculpted",
@@ -137,7 +141,8 @@
     "collection": "wedding",
     "images": [
       "/images/products/gold/earrings/gold_hangings_7-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-hanging-8-kemp-floral",
@@ -165,7 +170,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/earrings/gold_hangings_8-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-drop-11-teardrop-ruby",
@@ -193,7 +199,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/earrings/gold_drops_11-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-drop-12-pearl-curved",
@@ -221,7 +228,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/earrings/gold_drops_12-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-drop-13-floral-leaf",
@@ -249,7 +257,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/earrings/gold_drops_13-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-jhumka-19-peacock-feather",
@@ -277,7 +286,8 @@
     "collection": "wedding",
     "images": [
       "/images/products/gold/earrings/gold_jhumkas_19-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-jhumka-20-petite-filigree",
@@ -305,7 +315,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/earrings/gold_jhumkas_20-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-hoops-21-classic-bali",
@@ -333,7 +344,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/earrings/gold_hoops_21-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-hoops-22-engraved-floral",
@@ -361,7 +373,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/earrings/gold_hoops_22-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-hoops-23-twisted-rope",
@@ -389,7 +402,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/earrings/gold_hoops_23-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-ring-26-solitaire-raised",
@@ -417,7 +431,8 @@
     "collection": "wedding",
     "images": [
       "/images/products/gold/rings/gold_engagement_rings_26-03.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-ring-27-princess-square",
@@ -445,7 +460,8 @@
     "collection": "wedding",
     "images": [
       "/images/products/gold/rings/gold_engagement_rings_27-03.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-ring-28-pave-round",
@@ -473,7 +489,8 @@
     "collection": "wedding",
     "images": [
       "/images/products/gold/rings/gold_engagement_rings_28-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-ring-33-open-leaf",
@@ -501,7 +518,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/rings/gold_casual_rings_33-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-ring-34-curved-modern",
@@ -529,7 +547,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/rings/gold_casual_rings_34-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-ring-35-engraved-flower",
@@ -557,7 +576,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/rings/casual ring 1.png"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-cuff-36-wide-floral",
@@ -585,7 +605,8 @@
     "collection": "wedding",
     "images": [
       "/images/products/gold/bangles/gold_cuff_bracelets_36-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-cuff-37-slim-sculptural",
@@ -613,7 +634,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/bangles/gold_cuff_bracelets_37-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-cuff-39-repeating-leaf",
@@ -641,7 +663,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/bangles/gold_cuff_bracelets_39-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-chain-brac-41-floral-charm",
@@ -669,7 +692,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/bangles/gold_chain_bracelets_41-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-chain-brac-42-alternating-links",
@@ -697,7 +721,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/bangles/gold_chain_bracelets_42-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-chain-brac-43-circular-motif",
@@ -725,7 +750,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/bangles/gold_chain_bracelets_43-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-chain-brac-44-beaded-chain",
@@ -753,7 +779,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/bangles/gold_chain_bracelets_44-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-bangle-46-slim-everyday",
@@ -781,7 +808,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/bangles/gold_bangle_bracelets_46-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-bangle-47-textured-engraved",
@@ -809,7 +837,8 @@
     "collection": "wedding",
     "images": [
       "/images/products/gold/bangles/gold_bangle_bracelets_47-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-bangle-48-spaced-floral",
@@ -837,7 +866,8 @@
     "collection": "wedding",
     "images": [
       "/images/products/gold/bangles/gold_bangle_bracelets_48-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-bangle-49-beaded-border",
@@ -865,7 +895,8 @@
     "collection": "wedding",
     "images": [
       "/images/products/gold/bangles/gold_bangle_bracelets_49-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-bangle-50-wide-decorative",
@@ -893,7 +924,8 @@
     "collection": "wedding",
     "images": [
       "/images/products/gold/bangles/gold_bangle_bracelets_50-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-neck-51-floral-matching",
@@ -921,7 +953,8 @@
     "collection": "wedding",
     "images": [
       "/images/products/gold/necklaces/gold_short_necklace_51-02.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-neck-52-temple-repeating",
@@ -949,7 +982,8 @@
     "collection": "wedding",
     "images": [
       "/images/products/gold/necklaces/gold_short_necklace_52-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-neck-54-kemp-stone-accents",
@@ -977,7 +1011,8 @@
     "collection": "wedding",
     "images": [
       "/images/products/gold/necklaces/gold_short_necklace_54-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-neck-55-layered-beaded",
@@ -1005,7 +1040,8 @@
     "collection": "wedding",
     "images": [
       "/images/products/gold/necklaces/gold_short_necklace_55-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-neck-59-peacock-green",
@@ -1033,7 +1069,8 @@
     "collection": "wedding",
     "images": [
       "/images/products/gold/necklaces/gold_long_necklace_59-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-neck-60-central-medallion",
@@ -1061,7 +1098,8 @@
     "collection": "wedding",
     "images": [
       "/images/products/gold/necklaces/gold_long_necklace_60-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-nosepin-61-floral-ruby",
@@ -1089,7 +1127,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/nosepin/gold_nosepin_61-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-nosepin-62-clear-solitaire",
@@ -1117,7 +1156,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/nosepin/gold_nosepin_62-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-nosepin-63-leaf-ornament",
@@ -1145,7 +1185,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/nosepin/gold_nosepin_63-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-nosepin-64-beaded-round",
@@ -1173,7 +1214,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/nosepin/gold_nosepin_64-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-nosepin-65-flower-dangling-bead",
@@ -1201,7 +1243,8 @@
     "collection": "wedding",
     "images": [
       "/images/products/gold/nosepin/gold_nosepin_65-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-chain-81-cable-link",
@@ -1229,7 +1272,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/chains/gold_chains_81-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-chain-83-curb-link",
@@ -1257,7 +1301,8 @@
     "collection": "mens-accessories",
     "images": [
       "/images/products/gold/chains/gold_chains_83-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-chain-85-traditional-decorative",
@@ -1285,7 +1330,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/chains/gold_chains_85-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-pendant-86-floral-ruby-chain",
@@ -1313,7 +1359,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/pendants/gold_pendants_86-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-pendant-89-modern-geometric",
@@ -1341,7 +1388,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/pendants/gold_pendants_89-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-pendant-90-medallion-beaded",
@@ -1369,7 +1417,8 @@
     "collection": "wedding",
     "images": [
       "/images/products/gold/pendants/gold_pendants_90-01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "baby-nazariya-set",
@@ -1382,7 +1431,7 @@
     "details": "22K Hallmarked Gold (Pair)",
     "price": "₹ 16,800",
     "numericPrice": 16800,
-    "image": "/images/product_bangles.jpg",
+    "image": "/images/collections/baby_nazariya_bracelets.jpg",
     "description": "Protective traditional black bead baby nazariya bracelets with 22K gold bell charms, crafted with smooth skin-safe hypoallergenic edges.",
     "weight": "4.2 grams (Pair)",
     "purity": "916 BIS Hallmarked 22 Karat Gold",
@@ -1393,9 +1442,10 @@
     "isNewArrival": true,
     "collection": "baby",
     "images": [
-      "/images/product_bangles.jpg"
+      "/images/collections/baby_nazariya_bracelets.jpg"
     ],
-    "subType": "baby"
+    "subType": "baby",
+    "product_type": "gold"
   },
   {
     "id": "mens-gold-kada",
@@ -1408,7 +1458,7 @@
     "details": "22K Solid Hallmarked Gold",
     "price": "₹ 1,65,000",
     "numericPrice": 165000,
-    "image": "/images/col_gold.jpg",
+    "image": "/images/generated/mens_royal_gold_kada.jpg",
     "description": "Heavy solid 22K gold kada featuring traditional fluted geometry, matte brushed finish, and sturdy screw pin mechanism.",
     "weight": "40.0 grams",
     "purity": "916 BIS Hallmarked 22 Karat Gold",
@@ -1419,9 +1469,10 @@
     "isNewArrival": false,
     "collection": "mens-accessories",
     "images": [
-      "/images/col_gold.jpg"
+      "/images/generated/mens_royal_gold_kada.jpg"
     ],
-    "subType": "mens-accessories"
+    "subType": "mens-accessories",
+    "product_type": "gold"
   },
   {
     "id": "collections-pooja-bell-lamp",
@@ -1434,7 +1485,7 @@
     "details": "92.5 Pure Sterling Silver",
     "price": "₹ 14,500",
     "numericPrice": 14500,
-    "image": "/images/col_silver.jpg",
+    "image": "/images/generated/collections_pooja_bell_aarti_set.jpg",
     "description": "Exquisite temple prayer ensemble comprising a resonant Nandi bell, five-wick camphor aarti stand, and incense holder in heavy 925 sterling silver.",
     "weight": "148.0 grams",
     "purity": "92.5 Sterling Silver",
@@ -1445,9 +1496,10 @@
     "isNewArrival": true,
     "collection": "pooja-items",
     "images": [
-      "/images/col_silver.jpg"
+      "/images/generated/collections_pooja_bell_aarti_set.jpg"
     ],
-    "subType": "pooja-items"
+    "subType": "pooja-items",
+    "product_type": "silver"
   },
   {
     "id": "silver-studs-floral-01",
@@ -1476,7 +1528,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "stud-floral"
+    "designType": "stud-floral",
+    "product_type": "silver"
   },
   {
     "id": "silver-studs-peacock-02",
@@ -1505,7 +1558,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "stud-peacock"
+    "designType": "stud-peacock",
+    "product_type": "silver"
   },
   {
     "id": "silver-studs-geometric-03",
@@ -1534,7 +1588,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "stud-geometric"
+    "designType": "stud-geometric",
+    "product_type": "silver"
   },
   {
     "id": "gold-toe-ring-91-floral-filigree",
@@ -1562,7 +1617,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/rings/gold_toe_rings_01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "gold-anklet-93-heritage-beaded-mani",
@@ -1590,7 +1646,8 @@
     "collection": "gold",
     "images": [
       "/images/products/gold/anklets/gold_anklets_01.jpg"
-    ]
+    ],
+    "product_type": "gold"
   },
   {
     "id": "silver-hangings-filigree-01",
@@ -1619,7 +1676,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "hangings-filigree"
+    "designType": "hangings-filigree",
+    "product_type": "silver"
   },
   {
     "id": "silver-hangings-ruby-02",
@@ -1648,7 +1706,8 @@
     "isBridal": true,
     "isNewArrival": false,
     "collection": "silver",
-    "designType": "hangings-ruby"
+    "designType": "hangings-ruby",
+    "product_type": "silver"
   },
   {
     "id": "silver-hangings-beads-03",
@@ -1677,7 +1736,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "hangings-tassel"
+    "designType": "hangings-tassel",
+    "product_type": "silver"
   },
   {
     "id": "silver-drops-teardrop-01",
@@ -1706,7 +1766,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "drops-emerald"
+    "designType": "drops-emerald",
+    "product_type": "silver"
   },
   {
     "id": "silver-drops-pearl-02",
@@ -1735,7 +1796,8 @@
     "isBridal": true,
     "isNewArrival": false,
     "collection": "silver",
-    "designType": "drops-pearl"
+    "designType": "drops-pearl",
+    "product_type": "silver"
   },
   {
     "id": "silver-drops-leaf-03",
@@ -1764,7 +1826,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "drops-leaf"
+    "designType": "drops-leaf",
+    "product_type": "silver"
   },
   {
     "id": "silver-jhumka-temple-01",
@@ -1793,7 +1856,8 @@
     "isBridal": true,
     "isNewArrival": false,
     "collection": "silver",
-    "designType": "jhumka-temple"
+    "designType": "jhumka-temple",
+    "product_type": "silver"
   },
   {
     "id": "silver-jhumka-peacock-02",
@@ -1822,7 +1886,8 @@
     "isBridal": true,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "jhumka-peacock"
+    "designType": "jhumka-peacock",
+    "product_type": "silver"
   },
   {
     "id": "silver-jhumka-oxidized-03",
@@ -1851,7 +1916,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "jhumka-petite"
+    "designType": "jhumka-petite",
+    "product_type": "silver"
   },
   {
     "id": "silver-hoops-twisted-01",
@@ -1880,7 +1946,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "hoops-twisted"
+    "designType": "hoops-twisted",
+    "product_type": "silver"
   },
   {
     "id": "silver-hoops-filigree-02",
@@ -1909,7 +1976,8 @@
     "isBridal": false,
     "isNewArrival": false,
     "collection": "silver",
-    "designType": "hoops-filigree"
+    "designType": "hoops-filigree",
+    "product_type": "silver"
   },
   {
     "id": "silver-hoops-cz-03",
@@ -1938,7 +2006,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "hoops-cz"
+    "designType": "hoops-cz",
+    "product_type": "silver"
   },
   {
     "id": "silver-rings-solitaire-01",
@@ -1967,7 +2036,8 @@
     "isBridal": true,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "ring-solitaire"
+    "designType": "ring-solitaire",
+    "product_type": "silver"
   },
   {
     "id": "silver-rings-eternity-02",
@@ -1996,7 +2066,8 @@
     "isBridal": true,
     "isNewArrival": false,
     "collection": "silver",
-    "designType": "ring-eternity"
+    "designType": "ring-eternity",
+    "product_type": "silver"
   },
   {
     "id": "silver-rings-filigree-03",
@@ -2025,7 +2096,8 @@
     "isBridal": true,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "ring-ruby-filigree"
+    "designType": "ring-ruby-filigree",
+    "product_type": "silver"
   },
   {
     "id": "silver-rings-metti-01",
@@ -2054,7 +2126,8 @@
     "isBridal": true,
     "isNewArrival": false,
     "collection": "silver",
-    "designType": "ring-metti"
+    "designType": "ring-metti",
+    "product_type": "silver"
   },
   {
     "id": "silver-cuffs-peacock-01",
@@ -2083,7 +2156,8 @@
     "isBridal": true,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "cuff-peacock"
+    "designType": "cuff-peacock",
+    "product_type": "silver"
   },
   {
     "id": "silver-cuffs-tribal-02",
@@ -2112,7 +2186,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "cuff-tribal"
+    "designType": "cuff-tribal",
+    "product_type": "silver"
   },
   {
     "id": "silver-cuffs-sleek-03",
@@ -2141,7 +2216,8 @@
     "isBridal": false,
     "isNewArrival": false,
     "collection": "silver",
-    "designType": "cuff-sleek"
+    "designType": "cuff-sleek",
+    "product_type": "silver"
   },
   {
     "id": "silver-anklets-payal-01",
@@ -2170,7 +2246,8 @@
     "isBridal": true,
     "isNewArrival": false,
     "collection": "silver",
-    "designType": "anklet-ghungroo"
+    "designType": "anklet-ghungroo",
+    "product_type": "silver"
   },
   {
     "id": "silver-bracelets-link-02",
@@ -2199,7 +2276,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "bracelet-curb"
+    "designType": "bracelet-curb",
+    "product_type": "silver"
   },
   {
     "id": "silver-bracelets-charm-03",
@@ -2228,7 +2306,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "bracelet-charm"
+    "designType": "bracelet-charm",
+    "product_type": "silver"
   },
   {
     "id": "silver-bangles-valayal-01",
@@ -2257,7 +2336,8 @@
     "isBridal": true,
     "isNewArrival": false,
     "collection": "silver",
-    "designType": "bangles-valayal"
+    "designType": "bangles-valayal",
+    "product_type": "silver"
   },
   {
     "id": "silver-bangles-hinged-02",
@@ -2286,7 +2366,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "bangles-hinged"
+    "designType": "bangles-hinged",
+    "product_type": "silver"
   },
   {
     "id": "silver-bangles-kasu-03",
@@ -2315,7 +2396,8 @@
     "isBridal": true,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "bangles-kasu"
+    "designType": "bangles-kasu",
+    "product_type": "silver"
   },
   {
     "id": "silver-necklaces-choker-01",
@@ -2344,7 +2426,8 @@
     "isBridal": true,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "necklace-choker"
+    "designType": "necklace-choker",
+    "product_type": "silver"
   },
   {
     "id": "silver-necklaces-hasli-02",
@@ -2373,7 +2456,8 @@
     "isBridal": false,
     "isNewArrival": false,
     "collection": "silver",
-    "designType": "necklace-hasli"
+    "designType": "necklace-hasli",
+    "product_type": "silver"
   },
   {
     "id": "silver-necklaces-cz-03",
@@ -2402,7 +2486,8 @@
     "isBridal": true,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "necklace-tennis"
+    "designType": "necklace-tennis",
+    "product_type": "silver"
   },
   {
     "id": "silver-harams-kasu-01",
@@ -2431,7 +2516,8 @@
     "isBridal": true,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "haram-kasu"
+    "designType": "haram-kasu",
+    "product_type": "silver"
   },
   {
     "id": "silver-harams-temple-02",
@@ -2460,7 +2546,8 @@
     "isBridal": true,
     "isNewArrival": false,
     "collection": "silver",
-    "designType": "haram-temple"
+    "designType": "haram-temple",
+    "product_type": "silver"
   },
   {
     "id": "silver-harams-beaded-03",
@@ -2489,7 +2576,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "haram-spinel"
+    "designType": "haram-spinel",
+    "product_type": "silver"
   },
   {
     "id": "silver-nosepins-single-01",
@@ -2518,7 +2606,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "nosepin-single"
+    "designType": "nosepin-single",
+    "product_type": "silver"
   },
   {
     "id": "silver-nosepins-floral-02",
@@ -2547,7 +2636,8 @@
     "isBridal": true,
     "isNewArrival": false,
     "collection": "silver",
-    "designType": "nosepin-floral"
+    "designType": "nosepin-floral",
+    "product_type": "silver"
   },
   {
     "id": "silver-nosepins-clipon-03",
@@ -2576,7 +2666,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "nosepin-clipon"
+    "designType": "nosepin-clipon",
+    "product_type": "silver"
   },
   {
     "id": "silver-chains-rope-01",
@@ -2605,7 +2696,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "chain-rope"
+    "designType": "chain-rope",
+    "product_type": "silver"
   },
   {
     "id": "silver-chains-figaro-03",
@@ -2634,7 +2726,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "chain-figaro"
+    "designType": "chain-figaro",
+    "product_type": "silver"
   },
   {
     "id": "silver-pendants-ganesha-01",
@@ -2663,7 +2756,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "pendant-ganesha"
+    "designType": "pendant-ganesha",
+    "product_type": "silver"
   },
   {
     "id": "silver-pendants-lakshmi-02",
@@ -2692,7 +2786,8 @@
     "isBridal": true,
     "isNewArrival": false,
     "collection": "silver",
-    "designType": "pendant-lakshmi"
+    "designType": "pendant-lakshmi",
+    "product_type": "silver"
   },
   {
     "id": "silver-pendants-peacock-03",
@@ -2721,7 +2816,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "pendant-peacock"
+    "designType": "pendant-peacock",
+    "product_type": "silver"
   },
   {
     "id": "silver-pooja-thali-01",
@@ -2750,7 +2846,8 @@
     "isBridal": true,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "pooja-thali"
+    "designType": "pooja-thali",
+    "product_type": "silver"
   },
   {
     "id": "silver-pooja-lamp-02",
@@ -2779,7 +2876,8 @@
     "isBridal": true,
     "isNewArrival": false,
     "collection": "silver",
-    "designType": "pooja-lamp"
+    "designType": "pooja-lamp",
+    "product_type": "silver"
   },
   {
     "id": "silver-pooja-bell-03",
@@ -2808,7 +2906,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "pooja-bell"
+    "designType": "pooja-bell",
+    "product_type": "silver"
   },
   {
     "id": "silver-idols-balaji-01",
@@ -2837,7 +2936,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "idol-balaji"
+    "designType": "idol-balaji",
+    "product_type": "silver"
   },
   {
     "id": "silver-idols-lakshmi-02",
@@ -2866,7 +2966,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "idol-lakshmi"
+    "designType": "idol-lakshmi",
+    "product_type": "silver"
   },
   {
     "id": "silver-idols-ganapathi-03",
@@ -2895,7 +2996,8 @@
     "isBridal": false,
     "isNewArrival": false,
     "collection": "silver",
-    "designType": "idol-ganapathi"
+    "designType": "idol-ganapathi",
+    "product_type": "silver"
   },
   {
     "id": "silver-coin-lotus-01",
@@ -2925,7 +3027,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "coin-lotus"
+    "designType": "coin-lotus",
+    "product_type": "silver"
   },
   {
     "id": "silver-coin-lakshmi-02",
@@ -2955,7 +3058,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "coin-lakshmi"
+    "designType": "coin-lakshmi",
+    "product_type": "silver"
   },
   {
     "id": "silver-occasion-casual-01",
@@ -2984,7 +3088,8 @@
     "isBridal": false,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "occasion-casual"
+    "designType": "occasion-casual",
+    "product_type": "silver"
   },
   {
     "id": "silver-occasion-traditional-03",
@@ -3013,7 +3118,8 @@
     "isBridal": true,
     "isNewArrival": false,
     "collection": "silver",
-    "designType": "occasion-traditional"
+    "designType": "occasion-traditional",
+    "product_type": "silver"
   },
   {
     "id": "gold-coin-lakshmi-01",
@@ -3043,7 +3149,8 @@
     "description": "Auspicious 24K pure gold coin sculpted with Goddess Lakshmi on the obverse and the Vedha Radha trust emblem on the reverse. Enclosed in a sealed tamper-proof blister certicard with 0% deduction buyback guarantee.",
     "isBridal": false,
     "isNewArrival": true,
-    "collection": "coins-bars"
+    "collection": "coins-bars",
+    "product_type": "coins_bars"
   },
   {
     "id": "gold-bar-10g-swiss-01",
@@ -3073,7 +3180,8 @@
     "description": "Investment-grade 10-gram minted gold bar produced to 999.9 parts per thousand fineness. Individually serialized and sealed in a security certipack with 100% lifetime buyback guarantee.",
     "isBridal": false,
     "isNewArrival": false,
-    "collection": "coins-bars"
+    "collection": "coins-bars",
+    "product_type": "coins_bars"
   },
   {
     "id": "silver-coin-lakshmi-ganesha-01",
@@ -3103,7 +3211,8 @@
     "description": "Auspicious 50g pure silver coin sculpted with Goddess Lakshmi and Lord Ganesha in high frosted relief on a mirror-polished silver field. Enclosed in a protective acrylic capsule with velvet presentation case.",
     "isBridal": false,
     "isNewArrival": true,
-    "collection": "coins-bars"
+    "collection": "coins-bars",
+    "product_type": "coins_bars"
   },
   {
     "id": "silver-bar-100g-investment-01",
@@ -3133,7 +3242,8 @@
     "description": "Solid 100g investment-grade pure silver bar sealed in an air-tight tamper-proof blister pack. Features laser-etched serial numbering, NABL assay seal, and 100% buyback guarantee.",
     "isBridal": false,
     "isNewArrival": false,
-    "collection": "coins-bars"
+    "collection": "coins-bars",
+    "product_type": "coins_bars"
   },
   {
     "id": "gold-new-arrival-kalyani-jhumka-01",
@@ -3164,7 +3274,8 @@
     "description": "An authentic three-tiered South Indian 22K gold jhumka featuring a floral ear-stud, filigree bell domes, and musical hanging gold drop beads with screw-back fastening.",
     "isBridal": true,
     "isNewArrival": true,
-    "collection": "gold"
+    "collection": "gold",
+    "product_type": "gold"
   },
   {
     "id": "gold-new-arrival-solitaire-crown-ring-01",
@@ -3195,7 +3306,8 @@
     "description": "An elevated 22K yellow gold engagement ring featuring a sparkling central solitaire nestled in an intricate cathedral crown with milgrain-engraved gold shoulders.",
     "isBridal": true,
     "isNewArrival": true,
-    "collection": "gold"
+    "collection": "gold",
+    "product_type": "gold"
   },
   {
     "id": "gold-new-arrival-ashtalakshmi-haram-01",
@@ -3226,7 +3338,8 @@
     "description": "Heirloom 26-inch 22K gold Kasu Mala comprising 54 individually struck Ashtalakshmi gold coins anchored by an elaborate temple Ganesha-Lakshmi repousse center pendant.",
     "isBridal": true,
     "isNewArrival": true,
-    "collection": "gold"
+    "collection": "gold",
+    "product_type": "gold"
   },
   {
     "id": "gold-new-arrival-mayil-kada-bangle-01",
@@ -3257,7 +3370,8 @@
     "description": "Regal solid 22K gold bangle kada featuring sculpted twin peacocks meeting at the center with natural emerald eye accents and a concealed precision screw mechanism.",
     "isBridal": true,
     "isNewArrival": true,
-    "collection": "gold"
+    "collection": "gold",
+    "product_type": "gold"
   },
   {
     "id": "gold-new-arrival-nawabi-rope-chain-01",
@@ -3288,7 +3402,8 @@
     "description": "Classic 24-inch 22K gold rope chain enhanced with a handcrafted South Indian floral side-mugappu, offering fluid flexibility and high-luster diamond-cut facets.",
     "isBridal": false,
     "isNewArrival": true,
-    "collection": "gold"
+    "collection": "gold",
+    "product_type": "gold"
   },
   {
     "id": "gold-new-arrival-kamakshi-locket-01",
@@ -3319,7 +3434,8 @@
     "description": "Sacred 22K gold devotional pendant depicting Goddess Kamakshi with a lighted Deepam motif in high relief, surrounded by a radiant halo and beaded gold perimeter.",
     "isBridal": false,
     "isNewArrival": true,
-    "collection": "gold"
+    "collection": "gold",
+    "product_type": "gold"
   },
   {
     "id": "gold-new-arrival-mookuthi-cluster-01",
@@ -3350,7 +3466,8 @@
     "description": "Traditional South Indian 7-stone floral star mookuthi in 22K yellow gold with high-clarity prong-set stones and a comfortable screw-back post for daily wear.",
     "isBridal": false,
     "isNewArrival": true,
-    "collection": "gold"
+    "collection": "gold",
+    "product_type": "gold"
   },
   {
     "id": "silver-new-arrival-salem-ghungroo-payal-01",
@@ -3381,7 +3498,8 @@
     "description": "Authentic Salem silversmith handcrafted pair of bridal payals in 92.5 sterling silver with double-layered chain links and melodic chiming silver ghungroo bells.",
     "isBridal": true,
     "isNewArrival": true,
-    "collection": "silver"
+    "collection": "silver",
+    "product_type": "silver"
   },
   {
     "id": "silver-anklets-beaded-03",
@@ -3410,7 +3528,8 @@
     "description": "Minimalist daily-wear pair of 92.5 sterling silver snake chain anklets featuring polished and faceted silver bead accents with adjustable spring-ring clasps.",
     "isBridal": false,
     "isNewArrival": true,
-    "collection": "silver"
+    "collection": "silver",
+    "product_type": "silver"
   },
   {
     "id": "silver-new-arrival-floral-metti-rings-01",
@@ -3439,7 +3558,8 @@
     "description": "Auspicious pair of traditional South Indian bridal metti (toe rings) crafted in 92.5 sterling silver with blooming sunflower motifs and flexible spiral comfort bands.",
     "isBridal": true,
     "isNewArrival": true,
-    "collection": "silver"
+    "collection": "silver",
+    "product_type": "silver"
   },
   {
     "id": "silver-rings-meenakari-metti-03",
@@ -3469,7 +3589,8 @@
     "isBridal": true,
     "isNewArrival": true,
     "collection": "silver",
-    "designType": "metti-meenakari"
+    "designType": "metti-meenakari",
+    "product_type": "silver"
   },
   {
     "id": "collections-new-arrival-bridal-peacock-vaddanam-01",
@@ -3500,7 +3621,8 @@
     "description": "Magnificent South Indian bridal waist belt (vaddanam) hand-forged in 22K antique gold with sculpted dancing peacocks, temple arch Gajalakshmi crest, natural rubies, and hanging pearl bells.",
     "isBridal": true,
     "isNewArrival": true,
-    "collection": "wedding"
+    "collection": "wedding",
+    "product_type": "gold"
   },
   {
     "id": "collections-wedding-exclusive-01",
@@ -3529,7 +3651,8 @@
     ],
     "altText": "Realistic exclusive 22K gold Royal Mayura Temple grand bridal haar necklace with rubies and emeralds",
     "isBridal": true,
-    "isNewArrival": false
+    "isNewArrival": false,
+    "product_type": "gold"
   },
   {
     "id": "collections-baby-exclusive-01",
@@ -3558,7 +3681,8 @@
     ],
     "altText": "Realistic exclusive child-safe 22K gold Swastik protective baby kada bracelet with rounded edges",
     "isBridal": false,
-    "isNewArrival": false
+    "isNewArrival": false,
+    "product_type": "gold"
   },
   {
     "id": "collections-mens-exclusive-01",
@@ -3587,7 +3711,8 @@
     ],
     "altText": "Realistic exclusive masculine 22K solid gold Veera Simha lion head fluted kada bangle for men",
     "isBridal": false,
-    "isNewArrival": false
+    "isNewArrival": false,
+    "product_type": "gold"
   },
   {
     "id": "collections-girls-exclusive-01",
@@ -3616,7 +3741,8 @@
     ],
     "altText": "Realistic exclusive dainty 22K gold butterfly charm bracelet for girls with pink sapphire accents",
     "isBridal": false,
-    "isNewArrival": false
+    "isNewArrival": false,
+    "product_type": "gold"
   },
   {
     "id": "collections-gift-01",
@@ -3645,7 +3771,8 @@
     ],
     "altText": "Handcrafted pure 925 sterling silver footed katori bowl and spoon on velvet pedestal",
     "isBridal": false,
-    "isNewArrival": false
+    "isNewArrival": false,
+    "product_type": "silver"
   },
   {
     "id": "collections-gift-03",
@@ -3673,7 +3800,8 @@
     ],
     "altText": "Heritage pure 925 silver grand gift ensemble with Ganesha murti, thali, tumblers, and chest",
     "isBridal": false,
-    "isNewArrival": false
+    "isNewArrival": false,
+    "product_type": "silver"
   },
   {
     "id": "new-arrival-exclusive-peacock-earrings-01",
@@ -3703,7 +3831,8 @@
     "isNewArrival": true,
     "isExclusiveNewArrival": true,
     "collection": "gold",
-    "subCategorySlug": "earrings"
+    "subCategorySlug": "earrings",
+    "product_type": "gold"
   },
   {
     "id": "new-arrival-exclusive-navratna-ring-02",
@@ -3733,7 +3862,8 @@
     "isNewArrival": true,
     "isExclusiveNewArrival": true,
     "collection": "gold",
-    "subCategorySlug": "rings"
+    "subCategorySlug": "rings",
+    "product_type": "gold"
   },
   {
     "id": "new-arrival-exclusive-gokhru-kada-03",
@@ -3763,7 +3893,8 @@
     "isNewArrival": true,
     "isExclusiveNewArrival": true,
     "collection": "gold",
-    "subCategorySlug": "bangles"
+    "subCategorySlug": "bangles",
+    "product_type": "gold"
   },
   {
     "id": "new-arrival-exclusive-temple-choker-04",
@@ -3793,7 +3924,8 @@
     "isNewArrival": true,
     "isExclusiveNewArrival": true,
     "collection": "gold",
-    "subCategorySlug": "necklaces"
+    "subCategorySlug": "necklaces",
+    "product_type": "gold"
   },
   {
     "id": "new-arrival-exclusive-wheat-chain-05",
@@ -3823,7 +3955,8 @@
     "isNewArrival": true,
     "isExclusiveNewArrival": true,
     "collection": "gold",
-    "subCategorySlug": "chains"
+    "subCategorySlug": "chains",
+    "product_type": "gold"
   },
   {
     "id": "new-arrival-exclusive-surya-pendant-06",
@@ -3853,7 +3986,8 @@
     "isNewArrival": true,
     "isExclusiveNewArrival": true,
     "collection": "gold",
-    "subCategorySlug": "pendants"
+    "subCategorySlug": "pendants",
+    "product_type": "gold"
   },
   {
     "id": "new-arrival-exclusive-moonstone-hasli-07",
@@ -3883,7 +4017,8 @@
     "isNewArrival": true,
     "isExclusiveNewArrival": true,
     "collection": "silver",
-    "subCategorySlug": "necklaces"
+    "subCategorySlug": "necklaces",
+    "product_type": "silver"
   },
   {
     "id": "new-arrival-exclusive-kamadhenu-coin-08",
@@ -3913,7 +4048,8 @@
     "isNewArrival": true,
     "isExclusiveNewArrival": true,
     "collection": "coins-bars",
-    "subCategorySlug": "gold-coins"
+    "subCategorySlug": "gold-coins",
+    "product_type": "coins_bars"
   },
   {
     "id": "new-arrival-exclusive-nakshi-vaddanam-09",
@@ -3943,7 +4079,8 @@
     "isNewArrival": true,
     "isExclusiveNewArrival": true,
     "collection": "wedding",
-    "subCategorySlug": "wedding"
+    "subCategorySlug": "wedding",
+    "product_type": "gold"
   },
   {
     "id": "silver-idol-04-sacred-lakshmi-ganesha",
@@ -3971,7 +4108,8 @@
     "certification": "925 BIS Silver Fineness Assay Certified",
     "isBridal": false,
     "isNewArrival": true,
-    "collection": "silver"
+    "collection": "silver",
+    "product_type": "silver"
   },
   {
     "id": "silver-anklet-01-handcrafted-payal",
@@ -3999,7 +4137,8 @@
     "certification": "925 BIS Silver Assay Certified",
     "isBridal": true,
     "isNewArrival": false,
-    "collection": "silver"
+    "collection": "silver",
+    "product_type": "silver"
   },
   {
     "id": "gold-chain-01-nawabi-rope",
@@ -4027,7 +4166,8 @@
     "certification": "BIS Hallmark with Laser Micro-Stamp",
     "isBridal": false,
     "isNewArrival": false,
-    "collection": "gold"
+    "collection": "gold",
+    "product_type": "gold"
   },
   {
     "id": "gold-earring-01-temple-jhumka",
@@ -4055,7 +4195,8 @@
     "certification": "BIS Hallmark & Certified Masterpiece Card",
     "isBridal": true,
     "isNewArrival": false,
-    "collection": "gold"
+    "collection": "gold",
+    "product_type": "gold"
   },
   {
     "id": "gold-necklace-01-ashtalakshmi-haram",
@@ -4083,7 +4224,8 @@
     "certification": "BIS Hallmark & Temple Jewellery Certificate",
     "isBridal": true,
     "isNewArrival": false,
-    "collection": "gold"
+    "collection": "gold",
+    "product_type": "gold"
   },
   {
     "id": "silver-pooja-01-ceremonial-kinnam",
@@ -4111,6 +4253,2293 @@
     "certification": "925 BIS Silver Assay Certified",
     "isBridal": false,
     "isNewArrival": false,
-    "collection": "silver"
+    "collection": "silver",
+    "product_type": "silver"
+  },
+  {
+    "id": "dia-solitaire-01",
+    "sku": "VR-DIA-RNG-01",
+    "code": "dia-solitaire-01",
+    "productCode": "dia-solitaire-01",
+    "name": "Celestial Solitaire 1.25 Carat Diamond Engagement Ring",
+    "title": "Celestial Solitaire 1.25 Carat Diamond Engagement Ring",
+    "category": "Diamond",
+    "subCategory": "Rings",
+    "subType": "Engagement Rings",
+    "department": "Diamond",
+    "carat": "1.25 Carat",
+    "colorClarity": "D-Color, VVS1 Clarity",
+    "metal": "Platinum 950 & 18K White Gold",
+    "purity": "Platinum 950 / 18K White Gold (750)",
+    "goldPurity": "18K Hallmarked White Gold",
+    "grossWeight": "4.6 grams",
+    "netWeight": "4.35 grams",
+    "weight": "4.6 grams",
+    "dimensions": "18 mm inner diameter • 6.8 mm crown height",
+    "price": "₹ 1,85,000",
+    "formattedPrice": "₹ 1,85,000*",
+    "numericPrice": 185000,
+    "originalPrice": "₹ 2,05,000",
+    "discount": "10% OFF",
+    "badge": "IGI Certified Natural",
+    "badgeType": "certified",
+    "certification": "IGI & GIA Laser Inscribed Certificate",
+    "cert": "IGI & GIA Certified Natural Diamond",
+    "craftsmanship": "Hearts & Arrows Symmetry • 6-Prong Platinum Crown Setting",
+    "description": "An extraordinary 1.25 carat natural diamond round brilliant solitaire set in an archival 6-prong platinum crown. Features mathematical Hearts & Arrows facet symmetry, radiating icy white fire, exceptional scintillation, and zero optical distortion.",
+    "image": "/images/generated/diamond_solitaire_luxe.jpg",
+    "images": [
+      "/images/generated/diamond_solitaire_luxe.jpg",
+      "/images/new-arrivals/new-arrival-royal-diamond-solitaire-luxe.jpg",
+      "/images/diamonds/diamond_trilogy_ring.jpg"
+    ],
+    "altText": "1.25 Carat round brilliant solitaire diamond engagement ring on platinum 950 mount",
+    "isNewArrival": true,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Ideal Round Brilliant (Hearts & Arrows)",
+      "color": "D (Flawless Colorless)",
+      "clarity": "VVS1 (Eye-Clean)",
+      "carat": "1.25 ct (Laser Inscribed)"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-necklace-02",
+    "sku": "VR-DIA-NCK-02",
+    "code": "dia-necklace-02",
+    "productCode": "dia-necklace-02",
+    "name": "Imperial Royal Diamond & Sapphire Cascade Choker Suite",
+    "title": "Imperial Royal Diamond & Sapphire Cascade Choker Suite",
+    "category": "Diamond",
+    "subCategory": "Necklaces",
+    "subType": "Chokers",
+    "department": "Diamond",
+    "carat": "6.50 Carat Total",
+    "colorClarity": "E-F Color, VVS Clarity",
+    "metal": "18K Two-Tone White & Rose Gold",
+    "purity": "18K Hallmarked Gold (750)",
+    "goldPurity": "18K Hallmarked (750)",
+    "grossWeight": "38.2 grams",
+    "netWeight": "36.9 grams",
+    "weight": "38.2 grams",
+    "dimensions": "380 mm circumference with adjustable gold extension links",
+    "price": "₹ 4,85,000",
+    "formattedPrice": "₹ 4,85,000*",
+    "numericPrice": 485000,
+    "originalPrice": "₹ 5,30,000",
+    "discount": "Festive Privilege",
+    "badge": "IGI Certified Natural",
+    "badgeType": "certified",
+    "certification": "IGI International Gemological Master Report",
+    "cert": "IGI Certified Natural Diamonds & Unheated Sapphires",
+    "craftsmanship": "Articulated Floral Spray Claw Setting • Flexible Link Drape",
+    "description": "A breathtaking royal high-jewellery collar suite set with over 320 hand-selected brilliant diamonds and royal blue oval sapphires. Ergonomically articulated to contour smoothly along the collarbone with royal brilliance.",
+    "image": "/images/plate_04_celestial_diamond_suite_pristine.jpg",
+    "images": [
+      "/images/plate_04_celestial_diamond_suite_pristine.jpg",
+      "/images/diamonds/diamond_bridal_necklace.jpg",
+      "/images/diamonds/diamond_hero_showcase.jpg"
+    ],
+    "altText": "Imperial certified natural diamond cascade choker necklace with sapphires",
+    "isNewArrival": false,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Marquise, Pear & Round Brilliant Cuts",
+      "color": "E-F (Colorless)",
+      "clarity": "VVS (Near Flawless)",
+      "carat": "6.50 ctw"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-bracelet-03",
+    "sku": "VR-DIA-BRC-03",
+    "code": "dia-bracelet-03",
+    "productCode": "dia-bracelet-03",
+    "name": "Celestial Infinity Diamond Tennis Bracelet",
+    "title": "Celestial Infinity Diamond Tennis Bracelet",
+    "category": "Diamond",
+    "subCategory": "Bracelets",
+    "subType": "Tennis Bracelets",
+    "department": "Diamond",
+    "carat": "3.50 Carat Total",
+    "colorClarity": "EF Color, VVS2 Clarity",
+    "metal": "18K White Gold & Platinum",
+    "purity": "18K Hallmarked Gold (750)",
+    "goldPurity": "18K White Gold (750)",
+    "grossWeight": "12.8 grams",
+    "netWeight": "12.1 grams",
+    "weight": "12.8 grams",
+    "dimensions": "180 mm length (7.0 inch) with concealed double-safety lock",
+    "price": "₹ 3,40,000",
+    "formattedPrice": "₹ 3,40,000*",
+    "numericPrice": 340000,
+    "originalPrice": "₹ 3,75,000",
+    "discount": "10% OFF",
+    "badge": "GIA & IGI Certified",
+    "badgeType": "certified",
+    "certification": "IGI Card & International Diamond Report",
+    "cert": "GIA & IGI Certified Natural Diamonds",
+    "craftsmanship": "Four-Prong Individual Basket Setting • Concealed Pressure Catch",
+    "description": "An iconic luxury continuous line tennis bracelet featuring 52 individually matched round brilliant diamonds in an S-curve cascade. Every diamond is calibrated to identical optical proportions for an uninterrupted stream of white fire.",
+    "image": "/images/diamonds/diamond_tennis_bracelet.jpg",
+    "images": [
+      "/images/diamonds/diamond_tennis_bracelet.jpg",
+      "/images/exclusive-collections-luxe/bento_diamond_full.jpg"
+    ],
+    "altText": "3.50 Carat natural diamond tennis bracelet in 18K white gold on navy velvet",
+    "isNewArrival": true,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Precision Calibrated Round Brilliant",
+      "color": "E-F (Colorless)",
+      "clarity": "VVS2 (Eye-Clean)",
+      "carat": "3.50 ctw (52 stones)"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-earrings-04",
+    "sku": "VR-DIA-EAR-04",
+    "code": "dia-earrings-04",
+    "productCode": "dia-earrings-04",
+    "name": "Royal Chandrika Diamond Halo Chandelier Earrings",
+    "title": "Royal Chandrika Diamond Halo Chandelier Earrings",
+    "category": "Diamond",
+    "subCategory": "Earrings",
+    "subType": "Chandelier Drops",
+    "department": "Diamond",
+    "carat": "2.40 Carat Total",
+    "colorClarity": "G-H Color, VVS Clarity",
+    "metal": "Platinum & 18K White Gold",
+    "purity": "18K Hallmarked Gold (750)",
+    "goldPurity": "18K Gold (750)",
+    "grossWeight": "14.5 grams",
+    "netWeight": "14.0 grams",
+    "weight": "14.5 grams",
+    "dimensions": "44 mm drop length • Bombay screw back with double safety",
+    "price": "₹ 2,15,000",
+    "formattedPrice": "₹ 2,15,000*",
+    "numericPrice": 215000,
+    "originalPrice": "₹ 2,38,000",
+    "discount": "10% OFF",
+    "badge": "IGI Certified Natural",
+    "badgeType": "certified",
+    "certification": "IGI Natural Diamond Verification",
+    "cert": "IGI Certified Natural Diamond",
+    "craftsmanship": "Articulated Chandelier Cascades • Open-Back Light Setting",
+    "description": "Cascading platinum and white gold diamond chandelier drop earrings encrusted with 148 brilliant-cut natural diamonds in articulated drops catching shimmering light with every turn.",
+    "image": "/images/diamonds/diamond_chandelier_earrings.jpg",
+    "images": [
+      "/images/diamonds/diamond_chandelier_earrings.jpg"
+    ],
+    "altText": "Natural diamond chandelier drop earrings in white gold on navy velvet",
+    "isNewArrival": false,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Marquise, Pear & Round Brilliant Cuts",
+      "color": "G-H (Near Colorless)",
+      "clarity": "VVS (High Purity)",
+      "carat": "2.40 ctw"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-ring-05",
+    "sku": "VR-DIA-RNG-05",
+    "code": "dia-ring-05",
+    "productCode": "dia-ring-05",
+    "name": "Eternal Brilliance Diamond Eternity Band",
+    "title": "Eternal Brilliance Diamond Eternity Band",
+    "category": "Diamond",
+    "subCategory": "Rings",
+    "subType": "Eternity Bands",
+    "department": "Diamond",
+    "carat": "1.10 Carat Total",
+    "colorClarity": "F-G Color, VVS2 Clarity",
+    "metal": "Platinum 950 & 18K White Gold",
+    "purity": "Platinum 950 / 18K White Gold (750)",
+    "goldPurity": "18K White Gold (750)",
+    "grossWeight": "3.8 grams",
+    "netWeight": "3.58 grams",
+    "weight": "3.8 grams",
+    "dimensions": "2.8 mm band width • Comfort Fit contoured interior",
+    "price": "₹ 98,000",
+    "formattedPrice": "₹ 98,000*",
+    "numericPrice": 98000,
+    "originalPrice": "₹ 1,12,000",
+    "discount": "12% OFF",
+    "badge": "100% Conflict-Free",
+    "badgeType": "certified",
+    "certification": "IGI Card & Kimberly Process Certified",
+    "cert": "100% Conflict-Free Diamond",
+    "craftsmanship": "U-Cut Micro Pavé Seamless Eternity Setting",
+    "description": "A continuous full-circle band of 26 sparkling round brilliant diamonds set in high-polish platinum with U-cut scalloped prongs, allowing light to flood through each facet from every angle.",
+    "image": "/images/diamonds/diamond_eternity_band.jpg",
+    "images": [
+      "/images/diamonds/diamond_eternity_band.jpg"
+    ],
+    "altText": "Full-circle diamond eternity band in platinum on navy velvet",
+    "isNewArrival": true,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Round Brilliant Scalloped Micro Pavé",
+      "color": "F-G (Colorless)",
+      "clarity": "VVS2",
+      "carat": "1.10 ctw"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-pendant-06",
+    "sku": "VR-DIA-PND-06",
+    "code": "dia-pendant-06",
+    "productCode": "dia-pendant-06",
+    "name": "Aura Floral Solitaire Diamond Halo Pendant",
+    "title": "Aura Floral Solitaire Diamond Halo Pendant",
+    "category": "Diamond",
+    "subCategory": "Pendants",
+    "subType": "Solitaire Pendants",
+    "department": "Diamond",
+    "carat": "1.45 Carat Total (1.05ct Center)",
+    "colorClarity": "D-Color, VVS1 Clarity",
+    "metal": "18K White Gold",
+    "purity": "18K Hallmarked Gold (750)",
+    "goldPurity": "18K White Gold (750)",
+    "grossWeight": "5.2 grams",
+    "netWeight": "4.9 grams",
+    "weight": "5.2 grams",
+    "dimensions": "16 mm medallion height • Includes 18-inch 18K wheat chain",
+    "price": "₹ 1,58,000",
+    "formattedPrice": "₹ 1,58,000*",
+    "numericPrice": 158000,
+    "originalPrice": "₹ 1,75,000",
+    "discount": "10% OFF",
+    "badge": "GIA Certified Solitaire",
+    "badgeType": "certified",
+    "certification": "GIA Dossier Report & IGI Hallmarking",
+    "cert": "GIA & IGI Certified Natural Diamond",
+    "craftsmanship": "Concealed Floating Bail • Micro-Bead Halo Pavé",
+    "description": "A show-stopping 1.05 carat GIA certified solitaire encased in a sparkling halo of 20 micro-brilliant diamonds. Suspended on a delicate 18K white gold wheat link chain resting flush against the neckline.",
+    "image": "/images/diamonds/diamond_halo_pendant.jpg",
+    "images": [
+      "/images/diamonds/diamond_halo_pendant.jpg"
+    ],
+    "altText": "1.05 Carat solitaire diamond halo pendant in 18K white gold on burgundy velvet",
+    "isNewArrival": false,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Hearts & Arrows Round Brilliant",
+      "color": "D (Pure Colorless)",
+      "clarity": "VVS1 (Flawless Appearance)",
+      "carat": "1.45 ctw"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-bangle-07",
+    "sku": "VR-DIA-BNG-07",
+    "code": "dia-bangle-07",
+    "productCode": "dia-bangle-07",
+    "name": "Regal Sovereign Openable Diamond Kada",
+    "title": "Regal Sovereign Openable Diamond Kada",
+    "category": "Diamond",
+    "subCategory": "Bangles",
+    "subType": "Diamond Kadas",
+    "department": "Diamond",
+    "carat": "4.20 Carat Total",
+    "colorClarity": "E-F Color, VVS Clarity",
+    "metal": "18K White Gold & Platinum",
+    "purity": "18K Hallmarked Gold (750)",
+    "goldPurity": "18K Gold (750)",
+    "grossWeight": "24.0 grams",
+    "netWeight": "23.16 grams",
+    "weight": "24.0 grams",
+    "dimensions": "Size 2.4 / 2.6 (Concealed Push-Button Clasp)",
+    "price": "₹ 3,95,000",
+    "formattedPrice": "₹ 3,95,000*",
+    "numericPrice": 395000,
+    "originalPrice": "₹ 4,30,000",
+    "discount": "Festive Privilege",
+    "badge": "IGI Certified Natural",
+    "badgeType": "certified",
+    "certification": "IGI Master Certificate of Purity",
+    "cert": "IGI Certified Natural Diamonds",
+    "craftsmanship": "Channel Set Baguettes & Hand-Set Round Brilliants",
+    "description": "An opulent openable diamond kada bangle combining baguette-cut and round brilliant diamonds in alternating geometric channels along an 18K white gold frame with concealed safety hinge.",
+    "image": "/images/diamonds/diamond_kada_bangle.jpg",
+    "images": [
+      "/images/diamonds/diamond_kada_bangle.jpg"
+    ],
+    "altText": "4.20 Carat diamond openable luxury kada bangle in white gold on navy velvet",
+    "isNewArrival": false,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Baguette & Round Brilliant Duo",
+      "color": "E-F (Colorless)",
+      "clarity": "VVS",
+      "carat": "4.20 ctw"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-necklace-08",
+    "sku": "VR-DIA-NCK-08",
+    "code": "dia-necklace-08",
+    "productCode": "dia-necklace-08",
+    "name": "Queen's Heritage Imperial Diamond Waterfall Haram",
+    "title": "Queen's Heritage Imperial Diamond Waterfall Haram",
+    "category": "Diamond",
+    "subCategory": "Necklaces",
+    "subType": "Bridal Harams",
+    "department": "Diamond",
+    "carat": "9.80 Carat Diamonds",
+    "colorClarity": "D-E Color, VVS Clarity",
+    "metal": "Platinum & 18K White Gold",
+    "purity": "Platinum 950 / 18K Gold (750)",
+    "goldPurity": "18K Gold (750)",
+    "grossWeight": "54.5 grams",
+    "netWeight": "52.54 grams",
+    "weight": "54.5 grams",
+    "dimensions": "520 mm length (20 inch) • Multi-Tier Waterfall Suspension",
+    "price": "₹ 7,50,000",
+    "formattedPrice": "₹ 7,50,000*",
+    "numericPrice": 750000,
+    "originalPrice": "₹ 8,20,000",
+    "discount": "Royal Wedding Privilege",
+    "badge": "GIA & IGI Certified",
+    "badgeType": "certified",
+    "certification": "Dual GIA & IGI Master Reports",
+    "cert": "GIA & IGI Certified Diamonds with Origin Certificate",
+    "craftsmanship": "Articulated Waterfall Cascades • Platinum Prong Settings",
+    "description": "The pinnacle of fine diamond high jewellery. A multi-tiered diamond waterfall bridal haram featuring cascading articulated pear, marquise, and round brilliant diamonds catching light with celestial fire.",
+    "image": "/images/diamonds/diamond_bridal_necklace.jpg",
+    "images": [
+      "/images/diamonds/diamond_bridal_necklace.jpg"
+    ],
+    "altText": "Imperial certified natural diamond waterfall bridal necklace on navy velvet",
+    "isNewArrival": true,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Pear, Marquise & Full-Cut Round Brilliants",
+      "color": "D-E (Finest White)",
+      "clarity": "VVS",
+      "carat": "9.80 ctw"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-09",
+    "sku": "VR-DIA-RNG-09",
+    "code": "dia-09",
+    "productCode": "dia-09",
+    "name": "Princess Empress 1.50 Carat Diamond Halo Ring",
+    "title": "Princess Empress 1.50 Carat Diamond Halo Ring",
+    "category": "Diamond",
+    "subCategory": "Rings",
+    "subType": "Engagement Rings",
+    "department": "Diamond",
+    "carat": "1.75 Carat Total (1.50ct Center)",
+    "colorClarity": "D-Color, VVS1 Clarity",
+    "metal": "Platinum 950",
+    "purity": "Platinum 950 (Pt950)",
+    "goldPurity": "Platinum 950",
+    "grossWeight": "5.1 grams",
+    "netWeight": "4.75 grams",
+    "weight": "5.1 grams",
+    "dimensions": "18 mm inner diameter • 7.2 mm crown height",
+    "price": "₹ 2,25,000",
+    "formattedPrice": "₹ 2,25,000*",
+    "numericPrice": 225000,
+    "originalPrice": "₹ 2,50,000",
+    "discount": "10% OFF",
+    "badge": "GIA & IGI Certified",
+    "badgeType": "certified",
+    "certification": "GIA Laser Inscription & IGI Dossier",
+    "cert": "GIA Certified Natural Diamond",
+    "craftsmanship": "Princess Cut Symmetry • Micro-Pavé Shank",
+    "description": "A commanding 1.50 carat square princess-cut diamond solitaire framed by a delicate micro-pavé halo on mirror-finished platinum 950.",
+    "image": "/images/diamonds/diamond_princess_ring.jpg",
+    "images": [
+      "/images/diamonds/diamond_princess_ring.jpg"
+    ],
+    "altText": "Princess-cut diamond halo engagement ring on navy velvet",
+    "isNewArrival": true,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Princess Brilliant",
+      "color": "D (Flawless)",
+      "clarity": "VVS1",
+      "carat": "1.75 ctw"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-10",
+    "sku": "VR-DIA-RNG-10",
+    "code": "dia-10",
+    "productCode": "dia-10",
+    "name": "Celestial Trilogy Three-Stone Diamond Ring",
+    "title": "Celestial Trilogy Three-Stone Diamond Ring",
+    "category": "Diamond",
+    "subCategory": "Rings",
+    "subType": "Trilogy Rings",
+    "department": "Diamond",
+    "carat": "1.80 Carat Total (3 Solitaires)",
+    "colorClarity": "E-Color, VVS Clarity",
+    "metal": "Platinum 950 & 18K White Gold",
+    "purity": "Platinum 950 / 18K White Gold (750)",
+    "goldPurity": "18K White Gold (750)",
+    "grossWeight": "4.8 grams",
+    "netWeight": "4.44 grams",
+    "weight": "4.8 grams",
+    "dimensions": "Comfort Fit size 14 (Adjustable)",
+    "price": "₹ 2,45,000",
+    "formattedPrice": "₹ 2,45,000*",
+    "numericPrice": 245000,
+    "originalPrice": "₹ 2,75,000",
+    "discount": "10% OFF",
+    "badge": "IGI Certified Natural",
+    "badgeType": "certified",
+    "certification": "IGI Triple Solitaire Grading Report",
+    "cert": "IGI Certified Natural Diamond",
+    "craftsmanship": "Four-Prong Archival Crown • Platinum Mirror Polish",
+    "description": "Three perfectly matched brilliant-cut diamonds representing past, present, and future, elevated in platinum basket settings with extraordinary white fire.",
+    "image": "/images/diamonds/diamond_trilogy_ring.jpg",
+    "images": [
+      "/images/diamonds/diamond_trilogy_ring.jpg"
+    ],
+    "altText": "Trilogy three stone diamond platinum ring on navy velvet",
+    "isNewArrival": true,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Round Brilliant Hearts & Arrows",
+      "color": "E (Colorless)",
+      "clarity": "VVS",
+      "carat": "1.80 ctw"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-11",
+    "sku": "VR-DIA-EAR-11",
+    "code": "dia-11",
+    "productCode": "dia-11",
+    "name": "Aura Floral Rosette Diamond Stud Earrings",
+    "title": "Aura Floral Rosette Diamond Stud Earrings",
+    "category": "Diamond",
+    "subCategory": "Earrings",
+    "subType": "Studs",
+    "department": "Diamond",
+    "carat": "1.20 Carat Total",
+    "colorClarity": "F-G Color, VVS Clarity",
+    "metal": "18K White Gold",
+    "purity": "18K Hallmarked Gold (750)",
+    "goldPurity": "18K White Gold (750)",
+    "grossWeight": "3.9 grams",
+    "netWeight": "3.66 grams",
+    "weight": "3.9 grams",
+    "dimensions": "10.5 mm floral cluster diameter • Secure screw backing",
+    "price": "₹ 1,12,000",
+    "formattedPrice": "₹ 1,12,000*",
+    "numericPrice": 112000,
+    "originalPrice": "₹ 1,28,000",
+    "discount": "12% OFF",
+    "badge": "IGI Certified Natural",
+    "badgeType": "certified",
+    "certification": "IGI Diamond Stud Certificate",
+    "cert": "IGI Certified Natural Diamond",
+    "craftsmanship": "7-Stone Floral Cluster Prong Setting",
+    "description": "Seven brilliant diamonds clustered in a blooming floral rosette pattern in 18K white gold, creating the optical look of a 2-carat solitaire with maximum brilliance.",
+    "image": "/images/diamonds/diamond_floral_studs.jpg",
+    "images": [
+      "/images/diamonds/diamond_floral_studs.jpg"
+    ],
+    "altText": "Floral cluster diamond stud earrings on navy velvet",
+    "isNewArrival": false,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Round Brilliant",
+      "color": "F-G (Colorless)",
+      "clarity": "VVS",
+      "carat": "1.20 ctw"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-12",
+    "sku": "VR-DIA-EAR-12",
+    "code": "dia-12",
+    "productCode": "dia-12",
+    "name": "Imperial Pear-Drop Articulated Diamond Earrings",
+    "title": "Imperial Pear-Drop Articulated Diamond Earrings",
+    "category": "Diamond",
+    "subCategory": "Earrings",
+    "subType": "Dangle Drops",
+    "department": "Diamond",
+    "carat": "2.60 Carat Total",
+    "colorClarity": "E-F Color, VVS Clarity",
+    "metal": "Platinum & 18K White Gold",
+    "purity": "Platinum 950 / 18K Gold (750)",
+    "goldPurity": "18K Gold (750)",
+    "grossWeight": "6.8 grams",
+    "netWeight": "6.28 grams",
+    "weight": "6.8 grams",
+    "dimensions": "36 mm drop length • Articulated knife-edge connection",
+    "price": "₹ 2,65,000",
+    "formattedPrice": "₹ 2,65,000*",
+    "numericPrice": 265000,
+    "originalPrice": "₹ 2,95,000",
+    "discount": "10% OFF",
+    "badge": "GIA & IGI Certified",
+    "badgeType": "certified",
+    "certification": "Dual GIA Pear Certification & IGI Card",
+    "cert": "GIA & IGI Certified Natural Diamond",
+    "craftsmanship": "Knife-Edge Suspension • Teardrop Halo Setting",
+    "description": "A pair of glamorous pear-cut teardrop solitaire diamonds suspended from articulated platinum knife-edge links, fluttering with prismatic rainbow light with every movement.",
+    "image": "/images/diamonds/diamond_pear_earrings.jpg",
+    "images": [
+      "/images/diamonds/diamond_pear_earrings.jpg"
+    ],
+    "altText": "Pear-cut diamond drop earrings on navy velvet",
+    "isNewArrival": true,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Pear Solitaires & Round Brilliants",
+      "color": "E-F (Colorless)",
+      "clarity": "VVS",
+      "carat": "2.60 ctw"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-13",
+    "sku": "VR-DIA-PND-13",
+    "code": "dia-13",
+    "productCode": "dia-13",
+    "name": "Auspicious Swarna Tanmaniya Diamond Mangalsutra Pendant",
+    "title": "Auspicious Swarna Tanmaniya Diamond Mangalsutra Pendant",
+    "category": "Diamond",
+    "subCategory": "Pendants",
+    "subType": "Mangalsutra Pendants",
+    "department": "Diamond",
+    "carat": "0.95 Carat Total",
+    "colorClarity": "F-G Color, VVS Clarity",
+    "metal": "18K Yellow & White Gold",
+    "purity": "18K Hallmarked Gold (750)",
+    "goldPurity": "18K Gold (750)",
+    "grossWeight": "4.5 grams",
+    "netWeight": "4.31 grams",
+    "weight": "4.5 grams",
+    "dimensions": "28 mm crescent width • Connects with double-strand black beads",
+    "price": "₹ 88,500",
+    "formattedPrice": "₹ 88,500*",
+    "numericPrice": 88500,
+    "originalPrice": "₹ 99,000",
+    "discount": "Festive Special",
+    "badge": "IGI Certified Natural",
+    "badgeType": "certified",
+    "certification": "IGI Auspicious Jewellery Certificate",
+    "cert": "IGI Certified Natural Diamond",
+    "craftsmanship": "Graduated Arc Pavé • Natural Black Onyx Accent Drops",
+    "description": "An auspicious South Indian tanmaniya mangalsutra pendant crafted with a graceful curved arc of graduated natural brilliant diamonds.",
+    "image": "/images/diamonds/diamond_tanmaniya_pendant.jpg",
+    "images": [
+      "/images/diamonds/diamond_tanmaniya_pendant.jpg"
+    ],
+    "altText": "Diamond tanmaniya mangalsutra pendant on navy velvet",
+    "isNewArrival": false,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Graduated Round Brilliants",
+      "color": "F-G",
+      "clarity": "VVS",
+      "carat": "0.95 ctw"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-14",
+    "sku": "VR-DIA-PND-14",
+    "code": "dia-14",
+    "productCode": "dia-14",
+    "name": "Vintage Marquise Navette Diamond Halo Pendant",
+    "title": "Vintage Marquise Navette Diamond Halo Pendant",
+    "category": "Diamond",
+    "subCategory": "Pendants",
+    "subType": "Halo Pendants",
+    "department": "Diamond",
+    "carat": "1.15 Carat Total",
+    "colorClarity": "E-Color, VVS2 Clarity",
+    "metal": "18K White Gold",
+    "purity": "18K Hallmarked Gold (750)",
+    "goldPurity": "18K White Gold (750)",
+    "grossWeight": "4.2 grams",
+    "netWeight": "3.97 grams",
+    "weight": "4.2 grams",
+    "dimensions": "22 mm height × 11 mm width • 18-inch 18K wheat chain",
+    "price": "₹ 1,35,000",
+    "formattedPrice": "₹ 1,35,000*",
+    "numericPrice": 135000,
+    "originalPrice": "₹ 1,50,000",
+    "discount": "10% OFF",
+    "badge": "IGI Certified Natural",
+    "badgeType": "certified",
+    "certification": "IGI Certificate of Authenticity",
+    "cert": "IGI Certified Natural Diamond",
+    "craftsmanship": "Double Navette Halo • Vintage Milgrain Border",
+    "description": "An elongated marquise-cut center diamond framed within a double halo of micro-pavé diamonds with delicate vintage milgrain beading in 18K white gold.",
+    "image": "/images/diamonds/diamond_marquise_pendant.jpg",
+    "images": [
+      "/images/diamonds/diamond_marquise_pendant.jpg"
+    ],
+    "altText": "Vintage marquise diamond halo pendant on navy velvet",
+    "isNewArrival": true,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Marquise & Round Brilliant Duo",
+      "color": "E (Colorless)",
+      "clarity": "VVS2",
+      "carat": "1.15 ctw"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-15",
+    "sku": "VR-DIA-BNG-15",
+    "code": "dia-15",
+    "productCode": "dia-15",
+    "name": "Opulent Dual-Row Micro-Pavé Diamond Bangle",
+    "title": "Opulent Dual-Row Micro-Pavé Diamond Bangle",
+    "category": "Diamond",
+    "subCategory": "Bangles",
+    "subType": "Diamond Bangles",
+    "department": "Diamond",
+    "carat": "3.80 Carat Total",
+    "colorClarity": "E-F Color, VVS Clarity",
+    "metal": "18K White Gold",
+    "purity": "18K Hallmarked Gold (750)",
+    "goldPurity": "18K White Gold (750)",
+    "grossWeight": "21.5 grams",
+    "netWeight": "20.74 grams",
+    "weight": "21.5 grams",
+    "dimensions": "Size 2.4 / 2.6 • Oval comfort wrist fit with side hinge",
+    "price": "₹ 3,60,000",
+    "formattedPrice": "₹ 3,60,000*",
+    "numericPrice": 360000,
+    "originalPrice": "₹ 3,95,000",
+    "discount": "Festive Privilege",
+    "badge": "GIA & IGI Certified",
+    "badgeType": "certified",
+    "certification": "IGI Master Purity Certificate",
+    "cert": "IGI Certified Natural Diamonds",
+    "craftsmanship": "Continuous Dual-Row Micro-Pavé • Pressure Tongue Lock",
+    "description": "Two parallel gleaming rows of micro-pavé set brilliant diamonds set along the upper half of an 18K polished white gold oval bangle with a seamless safety catch.",
+    "image": "/images/diamonds/diamond_pave_bangle.jpg",
+    "images": [
+      "/images/diamonds/diamond_pave_bangle.jpg"
+    ],
+    "altText": "Dual-row pavé diamond luxury bangle on navy velvet",
+    "isNewArrival": false,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Calibrated Round Brilliants",
+      "color": "E-F",
+      "clarity": "VVS",
+      "carat": "3.80 ctw"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-16",
+    "sku": "VR-DIA-BRC-16",
+    "code": "dia-16",
+    "productCode": "dia-16",
+    "name": "Modern Bezel-Set Infinite Diamond Tennis Bracelet",
+    "title": "Modern Bezel-Set Infinite Diamond Tennis Bracelet",
+    "category": "Diamond",
+    "subCategory": "Bracelets",
+    "subType": "Tennis Bracelets",
+    "department": "Diamond",
+    "carat": "4.10 Carat Total",
+    "colorClarity": "D-E Color, VVS Clarity",
+    "metal": "Platinum 950",
+    "purity": "Platinum 950 (Pt950)",
+    "goldPurity": "Platinum 950",
+    "grossWeight": "15.2 grams",
+    "netWeight": "14.38 grams",
+    "weight": "15.2 grams",
+    "dimensions": "185 mm length • Sleek circular bezel collets",
+    "price": "₹ 4,15,000",
+    "formattedPrice": "₹ 4,15,000*",
+    "numericPrice": 415000,
+    "originalPrice": "₹ 4,60,000",
+    "discount": "10% OFF",
+    "badge": "GIA & IGI Certified",
+    "badgeType": "certified",
+    "certification": "Dual GIA/IGI International Report",
+    "cert": "GIA & IGI Certified Natural Diamonds",
+    "craftsmanship": "Full Circular Bezel Mounting • Snag-Free Articulation",
+    "description": "A continuous articulated line of round brilliant cut certified natural diamonds, each encircled in a smooth sleek circular bezel frame of polished platinum.",
+    "image": "/images/generated/diamond_bezel_tennis_bracelet.jpg",
+    "images": [
+      "/images/generated/diamond_bezel_tennis_bracelet.jpg"
+    ],
+    "altText": "Bezel set diamond tennis bracelet on navy velvet",
+    "isNewArrival": true,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Ideal Cut Round Brilliants",
+      "color": "D-E",
+      "clarity": "VVS",
+      "carat": "4.10 ctw"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-17",
+    "sku": "VR-DIA-NCK-17",
+    "code": "dia-17",
+    "productCode": "dia-17",
+    "name": "Royal V-Collar Articulated Diamond Wedding Necklace",
+    "title": "Royal V-Collar Articulated Diamond Wedding Necklace",
+    "category": "Diamond",
+    "subCategory": "Necklaces",
+    "subType": "Bridal Harams",
+    "department": "Diamond",
+    "carat": "8.20 Carat Total",
+    "colorClarity": "D-E Color, VVS Clarity",
+    "metal": "18K White Gold & Platinum",
+    "purity": "18K Hallmarked Gold (750)",
+    "goldPurity": "18K Gold (750)",
+    "grossWeight": "48.0 grams",
+    "netWeight": "46.36 grams",
+    "weight": "48.0 grams",
+    "dimensions": "410 mm circumference with integrated safety clasp",
+    "price": "₹ 6,80,000",
+    "formattedPrice": "₹ 6,80,000*",
+    "numericPrice": 680000,
+    "originalPrice": "₹ 7,40,000",
+    "discount": "Royal Wedding Special",
+    "badge": "GIA & IGI Certified",
+    "badgeType": "certified",
+    "certification": "IGI Master Bridal Grading Report",
+    "cert": "GIA & IGI Certified Natural Diamonds",
+    "craftsmanship": "Articulated Floral Petals • Marquise Sprig Clusters",
+    "description": "An opulent diamond floral V-shaped collar necklace with cascading articulated petals composed of brilliant round diamonds and marquise cut diamond leaf sprigs.",
+    "image": "/images/generated/diamond_v_collar_wedding_necklace.jpg",
+    "images": [
+      "/images/generated/diamond_v_collar_wedding_necklace.jpg"
+    ],
+    "altText": "Royal V collar diamond wedding necklace on navy velvet",
+    "isNewArrival": false,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Marquise & Round Brilliants",
+      "color": "D-E",
+      "clarity": "VVS",
+      "carat": "8.20 ctw"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-18",
+    "sku": "VR-DIA-NOS-18",
+    "code": "dia-18",
+    "productCode": "dia-18",
+    "name": "Sacred 7-Stone Solitaire Diamond Nose Pin",
+    "title": "Sacred 7-Stone Solitaire Diamond Nose Pin",
+    "category": "Diamond",
+    "subCategory": "Nosepins",
+    "subType": "Nose Pins",
+    "department": "Diamond",
+    "carat": "0.35 Carat Total",
+    "colorClarity": "D-E Color, VVS1 Clarity",
+    "metal": "18K Yellow Gold & Platinum Prongs",
+    "purity": "18K Gold & Platinum 950",
+    "goldPurity": "18K Gold (750)",
+    "grossWeight": "0.95 grams",
+    "netWeight": "0.88 grams",
+    "weight": "0.95 grams",
+    "dimensions": "5.5 mm rosette diameter • Screw-twist wire",
+    "price": "₹ 32,500",
+    "formattedPrice": "₹ 32,500*",
+    "numericPrice": 32500,
+    "originalPrice": "₹ 36,000",
+    "discount": "10% OFF",
+    "badge": "IGI Certified Natural",
+    "badgeType": "certified",
+    "certification": "IGI Natural Diamond Nosepin Card",
+    "cert": "IGI Certified Natural Diamond",
+    "craftsmanship": "Micro-Prong South Indian Mookuthi Setting",
+    "description": "Traditional South Indian 7-stone diamond mookuthi nose pin featuring a center solitaire encircled by 6 radiant brilliant diamonds.",
+    "image": "/images/generated/diamond_seven_stone_nosepin.jpg",
+    "images": [
+      "/images/generated/diamond_seven_stone_nosepin.jpg"
+    ],
+    "altText": "7 stone natural diamond nose pin on navy velvet",
+    "isNewArrival": true,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Hearts & Arrows Round Brilliants",
+      "color": "D-E",
+      "clarity": "VVS1",
+      "carat": "0.35 ctw"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-19",
+    "sku": "VR-DIA-RNG-19",
+    "code": "dia-19",
+    "productCode": "dia-19",
+    "name": "Luminous Emerald-Cut Diamond Solitaire Ring",
+    "title": "Luminous Emerald-Cut Diamond Solitaire Ring",
+    "category": "Diamond",
+    "subCategory": "Rings",
+    "subType": "Engagement Rings",
+    "department": "Diamond",
+    "carat": "2.00 Carat (Center)",
+    "colorClarity": "D-Color, VVS1 Clarity",
+    "metal": "Platinum 950",
+    "purity": "Platinum 950 (Pt950)",
+    "goldPurity": "Platinum 950",
+    "grossWeight": "5.4 grams",
+    "netWeight": "5.0 grams",
+    "weight": "5.4 grams",
+    "dimensions": "Size 14 • 8.5 mm × 6.5 mm step-cut table",
+    "price": "₹ 3,20,000",
+    "formattedPrice": "₹ 3,20,000*",
+    "numericPrice": 320000,
+    "originalPrice": "₹ 3,60,000",
+    "discount": "11% OFF",
+    "badge": "GIA Certified Solitaire",
+    "badgeType": "certified",
+    "certification": "GIA Laser Inscription Master Dossier",
+    "cert": "GIA Certified Natural Diamond",
+    "craftsmanship": "Double Corner Claws • Cathedral Shank",
+    "description": "A breathtaking 2.00 carat emerald step-cut diamond solitaire with hall-of-mirrors optical transparency on a sleek tapered platinum cathedral band.",
+    "image": "/images/generated/diamond_emerald_cut_solitaire_ring.jpg",
+    "images": [
+      "/images/generated/diamond_emerald_cut_solitaire_ring.jpg"
+    ],
+    "altText": "Emerald-cut natural diamond engagement ring on navy velvet",
+    "isNewArrival": false,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Emerald Step Cut",
+      "color": "D (Colorless)",
+      "clarity": "VVS1",
+      "carat": "2.00 ct"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-20",
+    "sku": "VR-DIA-RNG-20",
+    "code": "dia-20",
+    "productCode": "dia-20",
+    "name": "Celestial Radiant-Cut Diamond Cocktail Ring",
+    "title": "Celestial Radiant-Cut Diamond Cocktail Ring",
+    "category": "Diamond",
+    "subCategory": "Rings",
+    "subType": "Cocktail Rings",
+    "department": "Diamond",
+    "carat": "2.50 Carat Total",
+    "colorClarity": "E-Color, VVS Clarity",
+    "metal": "18K Two-Tone Gold & Platinum",
+    "purity": "Platinum 950 & 18K Gold (750)",
+    "goldPurity": "18K Gold (750)",
+    "grossWeight": "6.2 grams",
+    "netWeight": "5.7 grams",
+    "weight": "6.2 grams",
+    "dimensions": "Size 15 • 10 mm statement crown",
+    "price": "₹ 2,85,000",
+    "formattedPrice": "₹ 2,85,000*",
+    "numericPrice": 285000,
+    "originalPrice": "₹ 3,15,000",
+    "discount": "10% OFF",
+    "badge": "IGI Certified Natural",
+    "badgeType": "certified",
+    "certification": "IGI Certificate of Purity",
+    "cert": "IGI Certified Natural Diamond",
+    "craftsmanship": "Radiant Facet Cutting • Split Pavé Shank",
+    "description": "An eye-catching 2.50 ctw cocktail statement ring featuring a radiant-cut central diamond surrounded by trapeze-cut side diamonds.",
+    "image": "/images/generated/diamond_radiant_cut_cocktail_ring.jpg",
+    "images": [
+      "/images/generated/diamond_radiant_cut_cocktail_ring.jpg"
+    ],
+    "altText": "Radiant-cut diamond cocktail ring on navy velvet",
+    "isNewArrival": true,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Radiant Brilliant",
+      "color": "E",
+      "clarity": "VVS",
+      "carat": "2.50 ctw"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-21",
+    "sku": "VR-DIA-EAR-21",
+    "code": "dia-21",
+    "productCode": "dia-21",
+    "name": "Imperial Diamond Waterfall Chandelier Earrings",
+    "title": "Imperial Diamond Waterfall Chandelier Earrings",
+    "category": "Diamond",
+    "subCategory": "Earrings",
+    "subType": "Chandelier Drops",
+    "department": "Diamond",
+    "carat": "3.20 Carat Total",
+    "colorClarity": "D-E Color, VVS Clarity",
+    "metal": "18K White Gold",
+    "purity": "18K Hallmarked Gold (750)",
+    "goldPurity": "18K White Gold (750)",
+    "grossWeight": "16.2 grams",
+    "netWeight": "15.56 grams",
+    "weight": "16.2 grams",
+    "dimensions": "52 mm drop length • Double screw backing",
+    "price": "₹ 2,95,000",
+    "formattedPrice": "₹ 2,95,000*",
+    "numericPrice": 295000,
+    "originalPrice": "₹ 3,30,000",
+    "discount": "Festive Special",
+    "badge": "GIA & IGI Certified",
+    "badgeType": "certified",
+    "certification": "IGI Master Chandelier Certification",
+    "cert": "GIA & IGI Certified Natural Diamonds",
+    "craftsmanship": "Articulated Tassel Links • Micro-Prong Cluster",
+    "description": "Grand articulated waterfall chandelier earrings featuring three cascading tiers of glistening round brilliant and marquise diamonds.",
+    "image": "/images/generated/diamond_waterfall_chandelier_earrings.jpg",
+    "images": [
+      "/images/generated/diamond_waterfall_chandelier_earrings.jpg"
+    ],
+    "altText": "Articulated waterfall diamond chandelier earrings on navy velvet",
+    "isNewArrival": false,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Round & Marquise Brilliants",
+      "color": "D-E",
+      "clarity": "VVS",
+      "carat": "3.20 ctw"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-22",
+    "sku": "VR-DIA-EAR-22",
+    "code": "dia-22",
+    "productCode": "dia-22",
+    "name": "Classic 4-Prong Diamond Solitaire Studs",
+    "title": "Classic 4-Prong Diamond Solitaire Studs (Pair)",
+    "category": "Diamond",
+    "subCategory": "Earrings",
+    "subType": "Studs",
+    "department": "Diamond",
+    "carat": "1.50 Carat Pair (0.75ct each)",
+    "colorClarity": "D-Color, VVS1 Clarity",
+    "metal": "Platinum 950",
+    "purity": "Platinum 950 (Pt950)",
+    "goldPurity": "Platinum 950",
+    "grossWeight": "3.2 grams",
+    "netWeight": "2.9 grams",
+    "weight": "3.2 grams",
+    "dimensions": "5.8 mm solitaire diameter • Screw posts",
+    "price": "₹ 1,75,000",
+    "formattedPrice": "₹ 1,75,000*",
+    "numericPrice": 175000,
+    "originalPrice": "₹ 1,95,000",
+    "discount": "10% OFF",
+    "badge": "GIA Certified Solitaires",
+    "badgeType": "certified",
+    "certification": "Dual GIA Dossiers with Laser Inscription",
+    "cert": "GIA Certified Natural Diamonds",
+    "craftsmanship": "Four-Prong Low Profile Basket • Threaded Posts",
+    "description": "The quintessential diamond studs. A pair of matching 0.75 carat GIA certified round brilliant solitaires in low-profile platinum 950 baskets.",
+    "image": "/images/generated/diamond_solitaire_stud_earrings.jpg",
+    "images": [
+      "/images/generated/diamond_solitaire_stud_earrings.jpg"
+    ],
+    "altText": "Pair of solitaire round diamond stud earrings on navy velvet",
+    "isNewArrival": true,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Hearts & Arrows Ideal Cut",
+      "color": "D (Colorless)",
+      "clarity": "VVS1",
+      "carat": "1.50 ctw"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-23",
+    "sku": "VR-DIA-PND-23",
+    "code": "dia-23",
+    "productCode": "dia-23",
+    "name": "Diamond Constellation Teardrop Halo Pendant",
+    "title": "Diamond Constellation Teardrop Halo Pendant",
+    "category": "Diamond",
+    "subCategory": "Pendants",
+    "subType": "Solitaire Pendants",
+    "department": "Diamond",
+    "carat": "1.30 Carat Total",
+    "colorClarity": "E-Color, VVS Clarity",
+    "metal": "18K White Gold",
+    "purity": "18K Hallmarked Gold (750)",
+    "goldPurity": "18K White Gold (750)",
+    "grossWeight": "4.6 grams",
+    "netWeight": "4.34 grams",
+    "weight": "4.6 grams",
+    "dimensions": "18 mm drop • Includes 18K white gold wheat chain",
+    "price": "₹ 1,48,000",
+    "formattedPrice": "₹ 1,48,000*",
+    "numericPrice": 148000,
+    "originalPrice": "₹ 1,65,000",
+    "discount": "10% OFF",
+    "badge": "IGI Certified Natural",
+    "badgeType": "certified",
+    "certification": "IGI Pendant Verification",
+    "cert": "IGI Certified Natural Diamond",
+    "craftsmanship": "Teardrop Halo Setting • Concealed Bail",
+    "description": "A scintillating pear-shaped solitaire diamond cradled within a constellation of pavé-set round diamonds.",
+    "image": "/images/generated/diamond_teardrop_halo_pendant.jpg",
+    "images": [
+      "/images/generated/diamond_teardrop_halo_pendant.jpg"
+    ],
+    "altText": "Teardrop diamond halo pendant on navy velvet",
+    "isNewArrival": false,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Pear Solitaire & Round Pavé",
+      "color": "E",
+      "clarity": "VVS",
+      "carat": "1.30 ctw"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-24",
+    "sku": "VR-DIA-PND-24",
+    "code": "dia-24",
+    "productCode": "dia-24",
+    "name": "Infinity Knot Diamond Heart Pendant with Chain",
+    "title": "Infinity Knot Diamond Heart Pendant with Chain",
+    "category": "Diamond",
+    "subCategory": "Pendants",
+    "subType": "Heart Pendants",
+    "department": "Diamond",
+    "carat": "0.85 Carat Total",
+    "colorClarity": "F-Color, VVS Clarity",
+    "metal": "18K Rose & White Gold",
+    "purity": "18K Two-Tone Gold (750)",
+    "goldPurity": "18K Gold (750)",
+    "grossWeight": "4.0 grams",
+    "netWeight": "3.83 grams",
+    "weight": "4.0 grams",
+    "dimensions": "16 mm × 15 mm • Includes 16-inch 18K chain",
+    "price": "₹ 78,000",
+    "formattedPrice": "₹ 78,000*",
+    "numericPrice": 78000,
+    "originalPrice": "₹ 89,000",
+    "discount": "12% OFF",
+    "badge": "IGI Certified Natural",
+    "badgeType": "certified",
+    "certification": "IGI Card & BIS Hallmark",
+    "cert": "IGI Certified Natural Diamond",
+    "craftsmanship": "Dual-Tone Interlocking Cast • Micro-Pavé",
+    "description": "A romantic interlocking infinity heart motif paved with round brilliant diamonds in high-polish 18K rose and white gold.",
+    "image": "/images/generated/diamond_infinity_heart_pendant.jpg",
+    "images": [
+      "/images/generated/diamond_infinity_heart_pendant.jpg"
+    ],
+    "altText": "Infinity heart diamond pendant on navy velvet",
+    "isNewArrival": true,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Round Brilliant",
+      "color": "F",
+      "clarity": "VVS",
+      "carat": "0.85 ctw"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-25",
+    "sku": "VR-DIA-BNG-25",
+    "code": "dia-25",
+    "productCode": "dia-25",
+    "name": "Imperial Oval Diamond Statement Bangle",
+    "title": "Imperial Oval Diamond Statement Bangle",
+    "category": "Diamond",
+    "subCategory": "Bangles",
+    "subType": "Diamond Bangles",
+    "department": "Diamond",
+    "carat": "5.00 Carat Total",
+    "colorClarity": "E-F Color, VVS Clarity",
+    "metal": "18K White Gold",
+    "purity": "18K Hallmarked Gold (750)",
+    "goldPurity": "18K White Gold (750)",
+    "grossWeight": "26.0 grams",
+    "netWeight": "25.0 grams",
+    "weight": "26.0 grams",
+    "dimensions": "Size 2.6 • Oval wrist profile • Double tongue safety",
+    "price": "₹ 4,75,000",
+    "formattedPrice": "₹ 4,75,000*",
+    "numericPrice": 475000,
+    "originalPrice": "₹ 5,20,000",
+    "discount": "Festive Privilege",
+    "badge": "GIA & IGI Certified",
+    "badgeType": "certified",
+    "certification": "IGI Master Bangle Report",
+    "cert": "GIA & IGI Certified Natural Diamonds",
+    "craftsmanship": "Triple Row Graduated Prong Setting",
+    "description": "A regal 5-carat diamond statement bangle featuring three rows of graduated brilliant-cut diamonds across the wrist.",
+    "image": "/images/generated/diamond_oval_statement_bangle.jpg",
+    "images": [
+      "/images/generated/diamond_oval_statement_bangle.jpg"
+    ],
+    "altText": "Imperial statement diamond bangle on navy velvet",
+    "isNewArrival": false,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Round Brilliant Ideal Cuts",
+      "color": "E-F",
+      "clarity": "VVS",
+      "carat": "5.00 ctw"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-26",
+    "sku": "VR-DIA-BNG-26",
+    "code": "dia-26",
+    "productCode": "dia-26",
+    "name": "Diamond Heritage Bypass Open Kada",
+    "title": "Diamond Heritage Bypass Open Kada",
+    "category": "Diamond",
+    "subCategory": "Bangles",
+    "subType": "Diamond Kadas",
+    "department": "Diamond",
+    "carat": "3.40 Carat Total",
+    "colorClarity": "F-G Color, VVS Clarity",
+    "metal": "Platinum & 18K Yellow Gold",
+    "purity": "Platinum 950 / 18K Gold (750)",
+    "goldPurity": "18K Gold (750)",
+    "grossWeight": "22.5 grams",
+    "netWeight": "21.82 grams",
+    "weight": "22.5 grams",
+    "dimensions": "Free size flexible bypass band with spring core",
+    "price": "₹ 3,45,000",
+    "formattedPrice": "₹ 3,45,000*",
+    "numericPrice": 345000,
+    "originalPrice": "₹ 3,80,000",
+    "discount": "10% OFF",
+    "badge": "IGI Certified Natural",
+    "badgeType": "certified",
+    "certification": "IGI Purity Certificate",
+    "cert": "IGI Certified Natural Diamond",
+    "craftsmanship": "Flexible Internal Titanium Spring • Pavé Finials",
+    "description": "An open bypass kada bangle with cluster diamond finials and a flexible internal spring for comfortable slipping over the hand.",
+    "image": "/images/generated/diamond_bypass_open_kada.jpg",
+    "images": [
+      "/images/generated/diamond_bypass_open_kada.jpg"
+    ],
+    "altText": "Bypass diamond open kada on navy velvet",
+    "isNewArrival": true,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Round Brilliant",
+      "color": "F-G",
+      "clarity": "VVS",
+      "carat": "3.40 ctw"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-27",
+    "sku": "VR-DIA-NCK-27",
+    "code": "dia-27",
+    "productCode": "dia-27",
+    "name": "Crown Princess Multi-Layer Diamond Collar",
+    "title": "Crown Princess Multi-Layer Diamond Collar",
+    "category": "Diamond",
+    "subCategory": "Necklaces",
+    "subType": "Bridal Harams",
+    "department": "Diamond",
+    "carat": "11.50 Carat Total",
+    "colorClarity": "D-E Color, Flawless VVS",
+    "metal": "Platinum 950 & 18K White Gold",
+    "purity": "Platinum 950 / 18K Gold (750)",
+    "goldPurity": "18K Gold (750)",
+    "grossWeight": "62.0 grams",
+    "netWeight": "59.7 grams",
+    "weight": "62.0 grams",
+    "dimensions": "Multi-tier articulated 3-row collar • 440 mm drape",
+    "price": "₹ 9,80,000",
+    "formattedPrice": "₹ 9,80,000*",
+    "numericPrice": 980000,
+    "originalPrice": "₹ 10,80,000",
+    "discount": "Imperial Royal Vault",
+    "badge": "Dual GIA & IGI Certified",
+    "badgeType": "certified",
+    "certification": "Dual GIA & IGI Master Diamond Suite Reports",
+    "cert": "GIA & IGI Certified Natural Diamonds",
+    "craftsmanship": "Three-Tier Articulated Cage Mounting • Platinum Claws",
+    "description": "Over 500 hand-set brilliant cut diamonds configured into three articulated tiers that contour like liquid light along the bride's décolletage.",
+    "image": "/images/generated/diamond_multi_layer_collar.jpg",
+    "images": [
+      "/images/generated/diamond_multi_layer_collar.jpg"
+    ],
+    "altText": "Multi-tier crown princess diamond collar on navy velvet",
+    "isNewArrival": true,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Hearts & Arrows Round Brilliants",
+      "color": "D-E",
+      "clarity": "VVS1",
+      "carat": "11.50 ctw"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "dia-28",
+    "sku": "VR-DIA-NCK-28",
+    "code": "dia-28",
+    "productCode": "dia-28",
+    "name": "Grand Peacock Diamond Muhurtham Choker",
+    "title": "Grand Peacock Diamond Muhurtham Choker",
+    "category": "Diamond",
+    "subCategory": "Necklaces",
+    "subType": "Chokers",
+    "department": "Diamond",
+    "carat": "7.80 Carat Total",
+    "colorClarity": "E-Color, VVS Clarity",
+    "metal": "18K White Gold & Platinum",
+    "purity": "18K Hallmarked Gold (750)",
+    "goldPurity": "18K White Gold (750)",
+    "grossWeight": "44.0 grams",
+    "netWeight": "42.44 grams",
+    "weight": "44.0 grams",
+    "dimensions": "370 mm neck fit with adjustable white gold back loops",
+    "price": "₹ 5,90,000",
+    "formattedPrice": "₹ 5,90,000*",
+    "numericPrice": 590000,
+    "originalPrice": "₹ 6,50,000",
+    "discount": "Festive Special",
+    "badge": "IGI Certified Natural",
+    "badgeType": "certified",
+    "certification": "IGI Master Choker Verification",
+    "cert": "IGI Certified Natural Diamonds",
+    "craftsmanship": "Peacock Plumage Articulation • Invisible Setting",
+    "description": "An auspicious South Indian bridal choker reinterpreted in fine diamonds, featuring stylized dancing peacock plumes set with marquise and round diamonds.",
+    "image": "/images/hero_slide_diamond_sapphire.png",
+    "images": [
+      "/images/hero_slide_diamond_sapphire.png"
+    ],
+    "altText": "Grand peacock diamond muhurtham choker on navy velvet",
+    "isNewArrival": false,
+    "isDiamond": true,
+    "collection": "diamonds",
+    "fourCs": {
+      "cut": "Marquise & Round Brilliants",
+      "color": "E",
+      "clarity": "VVS",
+      "carat": "7.80 ctw"
+    },
+    "product_type": "diamond"
+  },
+  {
+    "id": "temple-p-1",
+    "sku": "VR-TEMPLE-HRM-01",
+    "code": "temple-p-1",
+    "productCode": "VR-TEMPLE-HRM-01",
+    "name": "Antique Ashtalakshmi Grand Haram",
+    "title": "Antique Ashtalakshmi Grand Haram",
+    "category": "Temple Heritage",
+    "subCategory": "Harams & Necklaces",
+    "subType": "Grand Haram",
+    "department": "Gold",
+    "weight": "64.5g",
+    "grossWeight": "64.5 grams",
+    "netWeight": "62.8 grams",
+    "price": "₹ 4,85,000",
+    "formattedPrice": "₹ 4,85,000*",
+    "numericPrice": 485000,
+    "originalPrice": "₹ 5,10,000",
+    "discount": "5% OFF",
+    "image": "/images/plate_08_antique_temple_grand_haram_pristine.jpg",
+    "images": [
+      "/images/plate_08_antique_temple_grand_haram_pristine.jpg",
+      "/images/plate_01_temple_kasu_haram_pristine.jpg",
+      "/images/plate_03_antique_lakshmi_choker_pristine.jpg"
+    ],
+    "karat": "22K (916 Pure Gold)",
+    "purity": "22K (916 Pure Gold)",
+    "goldPurity": "22K BIS 916",
+    "badge": "BIS 916 Hallmarked",
+    "badgeType": "hallmarked",
+    "certification": "BIS 916 Laser Inscribed Hallmark Assay Certificate",
+    "craftsmanship": "Eight Forms of Lakshmi Repousse & Antique Red Patina",
+    "description": "Eight forms of Goddess Lakshmi hand-chased in antique finish 22K gold with ruby accents, finished with traditional Dravidian temple arches and dangling gold melon beads.",
+    "collection": "temple",
+    "product_type": "gold"
+  },
+  {
+    "id": "temple-p-2",
+    "sku": "VR-TEMPLE-PDT-02",
+    "code": "temple-p-2",
+    "productCode": "VR-TEMPLE-PDT-02",
+    "name": "Lord Ganesha Nakshi Work Pendant",
+    "title": "Lord Ganesha Nakshi Work Pendant",
+    "category": "Temple Heritage",
+    "subCategory": "Pendants",
+    "subType": "Nakshi Pendant",
+    "department": "Gold",
+    "weight": "12.8g",
+    "grossWeight": "12.8 grams",
+    "netWeight": "12.5 grams",
+    "price": "₹ 92,300",
+    "formattedPrice": "₹ 92,300*",
+    "numericPrice": 92300,
+    "originalPrice": "₹ 98,000",
+    "discount": "Special Rate",
+    "image": "/images/generated/temple_ganesha_art.jpg",
+    "images": [
+      "/images/generated/temple_ganesha_art.jpg",
+      "/images/new-arrivals/new-arrival-temple-lakshmi-pendant-luxe.jpg"
+    ],
+    "karat": "22K (916 Pure Gold)",
+    "purity": "22K (916 Pure Gold)",
+    "goldPurity": "22K BIS 916",
+    "badge": "BIS 916 Hallmarked",
+    "badgeType": "hallmarked",
+    "certification": "BIS 916 Laser Inscribed Hallmark Assay Certificate",
+    "craftsmanship": "Nakshi Prabhavali Carving & Pure Gold Chasing",
+    "description": "Intricately carved seated Ganesha with prabhavali aura and antique patina finish, hand-sculpted in pure 22K gold with sacred temple motifs.",
+    "collection": "temple",
+    "product_type": "gold"
+  },
+  {
+    "id": "temple-p-3",
+    "sku": "VR-TEMPLE-KASU-03",
+    "code": "temple-p-3",
+    "productCode": "VR-TEMPLE-KASU-03",
+    "name": "Royal Heritage Kasu Mala (108 Coins)",
+    "title": "Royal Heritage Kasu Mala (108 Coins)",
+    "category": "Temple Heritage",
+    "subCategory": "Kasu Malas",
+    "subType": "Coin Garland",
+    "department": "Gold",
+    "weight": "48.2g",
+    "grossWeight": "48.2 grams",
+    "netWeight": "47.5 grams",
+    "price": "₹ 3,62,000",
+    "formattedPrice": "₹ 3,62,000*",
+    "numericPrice": 362000,
+    "originalPrice": "₹ 3,85,000",
+    "discount": "6% OFF",
+    "image": "/images/plate_01_temple_kasu_haram_pristine.jpg",
+    "images": [
+      "/images/plate_01_temple_kasu_haram_pristine.jpg",
+      "/images/plate_08_antique_temple_grand_haram_pristine.jpg"
+    ],
+    "karat": "22K (916 Pure Gold)",
+    "purity": "22K (916 Pure Gold)",
+    "goldPurity": "22K BIS 916",
+    "badge": "24K 999 Purity",
+    "badgeType": "hallmarked",
+    "certification": "BIS 916 Laser Inscribed Hallmark Assay Certificate",
+    "craftsmanship": "108 Die-Stamped Auspicious Lakshmi Kasu Coins",
+    "description": "Auspicious Lakshmi kasu coins linked in continuous traditional double-chain garland with Burma cabochon ruby accents and adjustable back rope.",
+    "collection": "temple",
+    "product_type": "gold"
+  },
+  {
+    "id": "temple-p-4",
+    "sku": "VR-TEMPLE-VDN-04",
+    "code": "temple-p-4",
+    "productCode": "VR-TEMPLE-VDN-04",
+    "name": "Peacock Nakshi Vaddanam (Waistbelt)",
+    "title": "Peacock Nakshi Vaddanam (Waistbelt)",
+    "category": "Temple Heritage",
+    "subCategory": "Bridal Vaddanams",
+    "subType": "Waistbelt",
+    "department": "Gold",
+    "weight": "82.0g",
+    "grossWeight": "82.0 grams",
+    "netWeight": "80.5 grams",
+    "price": "₹ 6,15,000",
+    "formattedPrice": "₹ 6,15,000*",
+    "numericPrice": 615000,
+    "originalPrice": "₹ 6,45,000",
+    "discount": "Curated Heritage",
+    "image": "/images/new-arrivals/new-arrival-exclusive-nakshi-vaddanam-02.jpg",
+    "images": [
+      "/images/new-arrivals/new-arrival-exclusive-nakshi-vaddanam-02.jpg",
+      "/images/plate_06_royal_nakshi_vaddanam_pristine.jpg"
+    ],
+    "karat": "22K (916 Pure Gold)",
+    "purity": "22K (916 Pure Gold)",
+    "goldPurity": "22K BIS 916",
+    "badge": "BIS 916 Hallmarked",
+    "badgeType": "hallmarked",
+    "certification": "BIS 916 Laser Inscribed Hallmark Assay Certificate",
+    "craftsmanship": "Chettinad Nakshi Repousse & Dancing Peacocks",
+    "description": "Grand South Indian bridal waist ornament with dancing peacock motifs, Gajalakshmi central crest, and dangling gold beads with ruby droplets.",
+    "collection": "temple",
+    "product_type": "gold"
+  },
+  {
+    "id": "temple-p-5",
+    "sku": "VR-TEMPLE-JHM-05",
+    "code": "temple-p-5",
+    "productCode": "VR-TEMPLE-JHM-05",
+    "name": "Heritage Ruby Temple Jhumkas",
+    "title": "Heritage Ruby Temple Jhumkas",
+    "category": "Temple Heritage",
+    "subCategory": "Temple Earrings",
+    "subType": "Jhumkas",
+    "department": "Gold",
+    "weight": "18.4g",
+    "grossWeight": "18.4 grams",
+    "netWeight": "17.9 grams",
+    "price": "₹ 1,38,000",
+    "formattedPrice": "₹ 1,38,000*",
+    "numericPrice": 138000,
+    "originalPrice": "₹ 1,48,000",
+    "discount": "7% OFF",
+    "image": "/images/plate_09_chettinad_peacock_jhumkas_pristine.jpg",
+    "images": [
+      "/images/plate_09_chettinad_peacock_jhumkas_pristine.jpg",
+      "/images/new-arrivals/new-arrival-chettinad-bell-jhumkas-luxe.jpg"
+    ],
+    "karat": "22K (916 Pure Gold)",
+    "purity": "22K (916 Pure Gold)",
+    "goldPurity": "22K BIS 916",
+    "badge": "BIS 916 Hallmarked",
+    "badgeType": "hallmarked",
+    "certification": "BIS 916 Laser Inscribed Hallmark Assay Certificate",
+    "craftsmanship": "Bell-Shaped Filigree with Freshwater Seed Pearls",
+    "description": "Bell-shaped jhumkas with Goddess motif studs, hand-set natural cabochon rubies, and delicate suspended freshwater seed pearl droplets.",
+    "collection": "temple",
+    "product_type": "gold"
+  },
+  {
+    "id": "temple-p-6",
+    "sku": "VR-TEMPLE-KDA-06",
+    "code": "temple-p-6",
+    "productCode": "VR-TEMPLE-KDA-06",
+    "name": "Antique Gokhru Temple Kada Pair",
+    "title": "Antique Gokhru Temple Kada Pair",
+    "category": "Temple Heritage",
+    "subCategory": "Bangles & Kadas",
+    "subType": "Gokhru Kada",
+    "department": "Gold",
+    "weight": "56.0g",
+    "grossWeight": "56.0 grams",
+    "netWeight": "55.2 grams",
+    "price": "₹ 4,20,000",
+    "formattedPrice": "₹ 4,20,000*",
+    "numericPrice": 420000,
+    "originalPrice": "₹ 4,45,000",
+    "discount": "Masterpiece",
+    "image": "/images/new-arrivals/new-arrival-exclusive-gokhru-kada-02.jpg",
+    "images": [
+      "/images/new-arrivals/new-arrival-exclusive-gokhru-kada-02.jpg",
+      "/images/plate_07_royal_antique_kadas_pristine.jpg"
+    ],
+    "karat": "22K (916 Pure Gold)",
+    "purity": "22K (916 Pure Gold)",
+    "goldPurity": "22K BIS 916",
+    "badge": "BIS 916 Hallmarked",
+    "badgeType": "hallmarked",
+    "certification": "BIS 916 Laser Inscribed Hallmark Assay Certificate",
+    "craftsmanship": "Traditional Fluted Gokhru Spikes with Screw Hinge",
+    "description": "Spiked textured traditional temple bangle pair with screw hinge mechanism, hand-cast in pure 22K gold with deep antique red wax patina.",
+    "collection": "temple",
+    "product_type": "gold"
+  },
+  {
+    "id": "pooja-1",
+    "sku": "VR-SLV-KLSH-01",
+    "code": "pooja-1",
+    "productCode": "VR-SLV-KLSH-01",
+    "name": "Ashtalakshmi Pure Silver Kalash",
+    "title": "Ashtalakshmi Pure Silver Kalash",
+    "category": "Silver Pooja",
+    "subCategory": "Pooja Vessels",
+    "subType": "Ritual Kalash",
+    "department": "Silver",
+    "weight": "340g",
+    "grossWeight": "340 grams",
+    "netWeight": "340 grams",
+    "price": "₹ 38,500",
+    "formattedPrice": "₹ 38,500*",
+    "numericPrice": 38500,
+    "originalPrice": "₹ 42,000",
+    "discount": "Pooja Special",
+    "image": "/images/generated/silver_pooja_kalash.jpg",
+    "images": [
+      "/images/generated/silver_pooja_kalash.jpg",
+      "/images/generated/royal_silver_pooja_thali_set.jpg"
+    ],
+    "purity": "92.5% Fine Silver",
+    "silverPurity": "925 Sterling Silver",
+    "isSilver": true,
+    "badge": "925 Sacred Silver",
+    "badgeType": "hallmarked",
+    "certification": "925 Silver Assay Hallmark Certificate",
+    "craftsmanship": "Ashtalakshmi Embossed Repousse & Sacred Coconut Rim",
+    "description": "Auspicious ritual kalash embossed with the eight manifestations of Goddess Lakshmi, handcrafted in 92.5% pure silver with sacred auspicious engravings.",
+    "collection": "silver-pooja",
+    "product_type": "silver"
+  },
+  {
+    "id": "pooja-2",
+    "sku": "VR-SLV-VLK-02",
+    "code": "pooja-2",
+    "productCode": "VR-SLV-VLK-02",
+    "name": "Peacock Kuthu Vilakku (Traditional Pair)",
+    "title": "Peacock Kuthu Vilakku (Traditional Pair)",
+    "category": "Silver Pooja",
+    "subCategory": "Deepam & Lamps",
+    "subType": "Kuthu Vilakku Pair",
+    "department": "Silver",
+    "weight": "620g (Pair)",
+    "grossWeight": "620 grams",
+    "netWeight": "620 grams",
+    "price": "₹ 72,000",
+    "formattedPrice": "₹ 72,000*",
+    "numericPrice": 72000,
+    "originalPrice": "₹ 78,000",
+    "discount": "Pair Offer",
+    "image": "/images/exclusive-collections-luxe/silver_pooja_photo.jpg",
+    "images": [
+      "/images/exclusive-collections-luxe/silver_pooja_photo.jpg",
+      "/images/collections/collections-pooja-exclusive-01.jpg"
+    ],
+    "purity": "92.5% Fine Silver",
+    "silverPurity": "925 Sterling Silver",
+    "isSilver": true,
+    "badge": "925 Sacred Silver",
+    "badgeType": "hallmarked",
+    "certification": "925 Silver Assay Hallmark Certificate",
+    "craftsmanship": "Five-Wick Cast Brass-Core Silver Clad Lamp with Dancing Peacock Crest",
+    "description": "Five-wick traditional standing pooja lamp crowned with hand-carved dancing peacocks, balanced weighted base, and deep oil wells.",
+    "collection": "silver-pooja",
+    "product_type": "silver"
+  },
+  {
+    "id": "pooja-3",
+    "sku": "VR-SLV-THL-03",
+    "code": "pooja-3",
+    "productCode": "VR-SLV-THL-03",
+    "name": "Royal Silver Pooja Thali Set (8 Pieces)",
+    "title": "Royal Silver Pooja Thali Set (8 Pieces)",
+    "category": "Silver Pooja",
+    "subCategory": "Pooja Sets",
+    "subType": "Thali Set",
+    "department": "Silver",
+    "weight": "480g Set",
+    "grossWeight": "480 grams",
+    "netWeight": "480 grams",
+    "price": "₹ 54,000",
+    "formattedPrice": "₹ 54,000*",
+    "numericPrice": 54000,
+    "originalPrice": "₹ 59,000",
+    "discount": "Complete 8-Pc Set",
+    "image": "/images/generated/royal_silver_pooja_thali_set.jpg",
+    "images": [
+      "/images/generated/royal_silver_pooja_thali_set.jpg",
+      "/images/generated/silver_pooja_kalash.jpg"
+    ],
+    "purity": "92.5% Fine Silver",
+    "silverPurity": "925 Sterling Silver",
+    "isSilver": true,
+    "badge": "925 Sacred Silver",
+    "badgeType": "hallmarked",
+    "certification": "925 Silver Assay Hallmark Certificate",
+    "craftsmanship": "Hand-Engraved Gayatri Mantra & Floral Border Thali with 7 Sacred Utensils",
+    "description": "Complete pooja set including engraved thali plate, bell with Nandi finial, diya, agarbatti stand, panchamrutham spoon, and chandan cups.",
+    "collection": "silver-pooja",
+    "product_type": "silver"
+  },
+  {
+    "id": "pooja-4",
+    "sku": "VR-SLV-IDL-04",
+    "code": "pooja-4",
+    "productCode": "VR-SLV-IDL-04",
+    "name": "Divine Mahalakshmi Silver Idol",
+    "title": "Divine Mahalakshmi Silver Idol",
+    "category": "Silver Pooja",
+    "subCategory": "Silver Idols",
+    "subType": "Deity Idol",
+    "department": "Silver",
+    "weight": "185g",
+    "grossWeight": "185 grams",
+    "netWeight": "185 grams",
+    "price": "₹ 24,500",
+    "formattedPrice": "₹ 24,500*",
+    "numericPrice": 24500,
+    "originalPrice": "₹ 27,000",
+    "discount": "Temple Grade",
+    "image": "/images/collections/collections-silver-idol-exclusive-02.jpg",
+    "images": [
+      "/images/collections/collections-silver-idol-exclusive-02.jpg",
+      "/images/collections/collections-silver-idol-exclusive-01.jpg"
+    ],
+    "purity": "999 Fine Silver",
+    "silverPurity": "999 Pure Silver",
+    "isSilver": true,
+    "badge": "999 Fine Silver",
+    "badgeType": "hallmarked",
+    "certification": "999 Pure Silver Assay Hallmark Certificate",
+    "craftsmanship": "Lost-Wax Cast with Antique Oxidised Detail & Lotus Base",
+    "description": "Cast in 99.9% fine silver with antique oxidised details and lotus base pedestal, depicting Goddess Lakshmi in Varada and Abhaya mudra.",
+    "collection": "silver-pooja",
+    "product_type": "silver"
+  },
+  {
+    "id": "prod-arr-1",
+    "sku": "VR-G-NCK-142",
+    "code": "prod-arr-1",
+    "productCode": "VR-G-NCK-142",
+    "name": "Antique Temple Lakshmi Floral Choker",
+    "title": "Antique Temple Lakshmi Floral Choker",
+    "category": "Gold",
+    "subCategory": "Necklaces",
+    "subType": "Chokers",
+    "department": "Gold",
+    "price": "₹ 1,42,500",
+    "formattedPrice": "₹ 1,42,500*",
+    "numericPrice": 142500,
+    "originalPrice": "₹ 1,58,000",
+    "discount": "10% OFF",
+    "image": "/images/new-arrivals/new-arrival-antique-temple-necklace-luxe.jpg",
+    "images": [
+      "/images/new-arrivals/new-arrival-antique-temple-necklace-luxe.jpg",
+      "/images/plate_03_antique_lakshmi_choker_pristine.jpg",
+      "/images/plate_01_temple_kasu_haram_pristine.jpg"
+    ],
+    "purity": "22K 916 BIS Hallmarked Gold",
+    "goldPurity": "22K BIS 916",
+    "weight": "32.4 grams",
+    "grossWeight": "32.4 grams",
+    "netWeight": "31.2 grams",
+    "dimensions": "360 mm neck contour • 34 mm central medallion height",
+    "craftsmanship": "Chettinad Peacock Repousse & Natural Ruby Accents",
+    "certification": "BIS 916 Laser Inscribed Hallmark Assay Certificate",
+    "badge": "BIS 916 Hallmarked",
+    "badgeType": "hallmarked",
+    "description": "An auspicious handcrafted 22K antique gold choker featuring a central seated Goddess Lakshmi motif surrounded by repousse blooming lotus creepers and delicate suspended seed pearl tassels.",
+    "isNewArrival": true,
+    "collection": "new-arrivals",
+    "altText": "Handcrafted 22K antique gold Lakshmi floral choker on deep red velvet",
+    "product_type": "gold"
+  },
+  {
+    "id": "prod-arr-2",
+    "sku": "VR-G-EAR-489",
+    "code": "prod-arr-2",
+    "productCode": "VR-G-EAR-489",
+    "name": "Heritage Chettinad Royal Bell Jhumkas",
+    "title": "Heritage Chettinad Royal Bell Jhumkas",
+    "category": "Gold",
+    "subCategory": "Earrings",
+    "subType": "Jhumkas",
+    "department": "Gold",
+    "price": "₹ 48,900",
+    "formattedPrice": "₹ 48,900*",
+    "numericPrice": 48900,
+    "originalPrice": "₹ 54,000",
+    "discount": "10% OFF",
+    "image": "/images/new-arrivals/new-arrival-chettinad-bell-jhumkas-luxe.jpg",
+    "images": [
+      "/images/new-arrivals/new-arrival-chettinad-bell-jhumkas-luxe.jpg",
+      "/images/plate_09_chettinad_peacock_jhumkas_pristine.jpg",
+      "/images/products/gold/gold-new-arrival-kalyani-jhumka-01.jpg"
+    ],
+    "purity": "22K 916 BIS Hallmarked Gold",
+    "goldPurity": "22K BIS 916",
+    "weight": "9.2 grams",
+    "grossWeight": "9.2 grams",
+    "netWeight": "8.85 grams",
+    "dimensions": "42 mm drop length • 18 mm bell diameter",
+    "craftsmanship": "Traditional Bell Die-Punching & Seed Pearl Chimes",
+    "certification": "BIS 916 Hallmarked Assay Certificate",
+    "badge": "BIS 916 Hallmarked",
+    "badgeType": "hallmarked",
+    "description": "Multi-tiered heritage Chettinad jhumkas crowned with embossed dancing peacocks and completed with acoustic micro seed pearls that chime gently with every movement.",
+    "isNewArrival": true,
+    "collection": "new-arrivals",
+    "altText": "Chettinad royal 22K gold bell drop jhumkas on burgundy display",
+    "product_type": "gold"
+  },
+  {
+    "id": "prod-arr-3",
+    "sku": "VR-D-RNG-762",
+    "code": "prod-arr-3",
+    "productCode": "VR-D-RNG-762",
+    "name": "Solitaire Diamond Engagement Ring",
+    "title": "Solitaire Diamond Engagement Ring",
+    "category": "Diamond",
+    "subCategory": "Rings",
+    "subType": "Solitaire",
+    "department": "Diamond",
+    "price": "₹ 76,200",
+    "formattedPrice": "₹ 76,200*",
+    "numericPrice": 76200,
+    "originalPrice": "₹ 85,000",
+    "discount": "10% OFF",
+    "image": "/images/new-arrivals/new-arrival-royal-diamond-solitaire-luxe.jpg",
+    "images": [
+      "/images/new-arrivals/new-arrival-royal-diamond-solitaire-luxe.jpg",
+      "/images/generated/diamond_solitaire_luxe.jpg",
+      "/images/diamonds/diamond_trilogy_ring.jpg"
+    ],
+    "purity": "18K White Gold & Natural Diamond",
+    "goldPurity": "18K White Gold (750)",
+    "weight": "3.8 grams",
+    "grossWeight": "3.8 grams",
+    "netWeight": "3.65 grams",
+    "dimensions": "Size 14 (Adjustable) • 6.2 mm crown setting",
+    "carat": "0.75 Carat Natural Diamond",
+    "colorClarity": "E-Color, VVS1 Clarity",
+    "craftsmanship": "6-Prong Platinum Crown & Micro-Pavé Shank",
+    "certification": "IGI International Gemological Certificate",
+    "badge": "IGI Certified Diamond",
+    "badgeType": "certified",
+    "description": "An elegant solitaire ring featuring a 0.75-carat round brilliant cut diamond set in 18K white gold with a diamond-dusted micro-pavé band.",
+    "isNewArrival": true,
+    "collection": "new-arrivals",
+    "altText": "Solitaire round brilliant diamond engagement ring on navy velvet",
+    "product_type": "diamond",
+    "isDiamond": true
+  },
+  {
+    "id": "prod-arr-4",
+    "sku": "VR-G-BNG-218",
+    "code": "prod-arr-4",
+    "productCode": "VR-G-BNG-218",
+    "name": "Royal Heritage 22K Solid Gold Kadas",
+    "title": "Royal Heritage 22K Solid Gold Kadas (Pair)",
+    "category": "Gold",
+    "subCategory": "Bangles",
+    "subType": "Kadas",
+    "department": "Gold",
+    "price": "₹ 2,18,000",
+    "formattedPrice": "₹ 2,18,000*",
+    "numericPrice": 218000,
+    "originalPrice": "₹ 2,40,000",
+    "discount": "Festive Privilege",
+    "image": "/images/new-arrivals/new-arrival-solid-antique-gold-kadas-luxe.jpg",
+    "images": [
+      "/images/new-arrivals/new-arrival-solid-antique-gold-kadas-luxe.jpg",
+      "/images/plate_07_royal_antique_kadas_pristine.jpg",
+      "/images/products/gold/gold-new-arrival-mayil-kada-bangle-01.jpg"
+    ],
+    "purity": "22K 916 BIS Laser Inscribed Gold",
+    "goldPurity": "22K BIS 916",
+    "weight": "46.0 grams (Pair)",
+    "grossWeight": "46.0 grams",
+    "netWeight": "46.0 grams",
+    "dimensions": "Size 2.6 • 12 mm band thickness",
+    "craftsmanship": "Solid Core Die Casting & Simha Lion Head Finials",
+    "certification": "BIS 916 Laser Hallmarked Assay Certificate",
+    "badge": "BIS 916 Laser Inscribed",
+    "badgeType": "hallmarked",
+    "description": "A commanding pair of heavy 22K antique gold bangles terminating in twin royal lion (simha) finials, engraved with continuous South Indian temple friezes.",
+    "isNewArrival": true,
+    "collection": "new-arrivals",
+    "altText": "Pair of solid 22K antique gold heritage lion kadas on red velvet",
+    "product_type": "gold"
+  },
+  {
+    "id": "prod-arr-5",
+    "sku": "VR-G-PND-923",
+    "code": "prod-arr-5",
+    "productCode": "VR-G-PND-923",
+    "name": "Goddess Lakshmi Sacred Temple Gold Pendant",
+    "title": "Goddess Lakshmi Sacred Temple Gold Pendant",
+    "category": "Gold",
+    "subCategory": "Pendants",
+    "subType": "Temple Pendants",
+    "department": "Gold",
+    "price": "₹ 92,300",
+    "formattedPrice": "₹ 92,300*",
+    "numericPrice": 92300,
+    "originalPrice": "₹ 1,02,000",
+    "discount": "10% OFF",
+    "image": "/images/new-arrivals/new-arrival-temple-lakshmi-pendant-luxe.jpg",
+    "images": [
+      "/images/new-arrivals/new-arrival-temple-lakshmi-pendant-luxe.jpg",
+      "/images/products/gold/gold-new-arrival-kamakshi-locket-01.jpg",
+      "/images/generated/temple_ganesha_art.jpg"
+    ],
+    "purity": "22K 916 BIS Hallmarked Gold",
+    "goldPurity": "22K BIS 916",
+    "weight": "18.5 grams",
+    "grossWeight": "18.5 grams",
+    "netWeight": "17.8 grams",
+    "dimensions": "48 mm length × 36 mm width with heavy gold bail",
+    "craftsmanship": "Gajalakshmi Nakshi Repousse & Kemp Ruby Perimeter",
+    "certification": "BIS 916 Hallmarked Assay Certificate",
+    "badge": "BIS 916 Hallmarked",
+    "badgeType": "hallmarked",
+    "description": "Consecrated temple medallion depicting Gajalakshmi flanked by celestial white elephants, bordered by 36 cabochon kemp rubies and finished with natural pearl hangings.",
+    "isNewArrival": true,
+    "collection": "new-arrivals",
+    "altText": "Sacred 22K antique gold Lakshmi temple pendant with kemp stones",
+    "product_type": "gold"
+  },
+  {
+    "id": "VR-COLL-WED-02",
+    "sku": "VR-COLL-WED-02",
+    "name": "Gajalakshmi Nakshi Handcrafted 22K Gold Bridal Vaddanam",
+    "subtitle": "22K Antique Temple Waistbelt",
+    "description": "Masterpiece 22K gold bridal waistbelt embossed with Ashtalakshmi central icon, surrounded by dancing peacocks and uncut cabochon rubies.",
+    "product_type": "gold",
+    "category": "Collections",
+    "subCategory": "Wedding Collections",
+    "subCategorySlug": "wedding-collections",
+    "subType": "vaddanam",
+    "occasion": "wedding",
+    "price": "₹ 520,000",
+    "numericPrice": 520000,
+    "image": "/images/plate_06_royal_nakshi_vaddanam_pristine.jpg",
+    "images": [
+      "/images/plate_06_royal_nakshi_vaddanam_pristine.jpg"
+    ],
+    "altText": "Gajalakshmi Nakshi Handcrafted 22K Gold Bridal Vaddanam",
+    "purity": "22K BIS 916 Hallmarked",
+    "weight": "76.0 grams",
+    "grossWeight": "76.0 grams",
+    "netWeight": "72.5 grams",
+    "badge": "22K BIS 916 Hallmarked",
+    "badgeType": "in-stock",
+    "hallmarkDetails": "BIS 916 Laser Inscribed",
+    "collection": "curated"
+  },
+  {
+    "id": "VR-COLL-WED-03",
+    "sku": "VR-COLL-WED-03",
+    "name": "Imperial Peacock Antique Gold Vanki (Armlet Pair)",
+    "subtitle": "Traditional South Indian Bridal Bajuband",
+    "description": "Pair of antique 22K gold temple vankis with hand-carved peacock finials, suspended with seed pearls and ruby drops.",
+    "product_type": "gold",
+    "category": "Collections",
+    "subCategory": "Wedding Collections",
+    "subCategorySlug": "wedding-collections",
+    "subType": "vanki",
+    "occasion": "wedding",
+    "price": "₹ 215,000",
+    "numericPrice": 215000,
+    "image": "/images/plate_07_royal_antique_kadas_pristine.jpg",
+    "images": [
+      "/images/plate_07_royal_antique_kadas_pristine.jpg"
+    ],
+    "altText": "Imperial Peacock Antique Gold Vanki (Armlet Pair)",
+    "purity": "22K BIS 916 Hallmarked",
+    "weight": "34.5 grams",
+    "grossWeight": "34.5 grams",
+    "netWeight": "32.0 grams",
+    "badge": "22K BIS 916 Hallmarked",
+    "badgeType": "in-stock",
+    "hallmarkDetails": "BIS 916 Hallmarked",
+    "collection": "curated"
+  },
+  {
+    "id": "VR-COLL-WED-04",
+    "sku": "VR-COLL-WED-04",
+    "name": "Grand Chettinad 22K Solid Gold Bridal Kasu Mala",
+    "subtitle": "Consecrated Temple Coin Garland",
+    "description": "Traditional 22K gold Kasu Mala featuring 108 embossed Lakshmi coins with cabochon rubies and Basra pearls.",
+    "product_type": "gold",
+    "category": "Collections",
+    "subCategory": "Wedding Collections",
+    "subCategorySlug": "wedding-collections",
+    "subType": "kasu-mala",
+    "occasion": "wedding",
+    "price": "₹ 365,000",
+    "numericPrice": 365000,
+    "image": "/images/plate_02_muhurtham_kasu_haram_pristine.jpg",
+    "images": [
+      "/images/plate_02_muhurtham_kasu_haram_pristine.jpg"
+    ],
+    "altText": "Grand Chettinad 22K Solid Gold Bridal Kasu Mala",
+    "purity": "22K BIS 916 Hallmarked",
+    "weight": "52.0 grams",
+    "grossWeight": "52.0 grams",
+    "netWeight": "50.5 grams",
+    "badge": "22K BIS 916 Hallmarked",
+    "badgeType": "in-stock",
+    "hallmarkDetails": "BIS Hallmark & Vedha Radha Heritage Seal",
+    "collection": "curated"
+  },
+  {
+    "id": "VR-COLL-BABY-03",
+    "sku": "VR-COLL-BABY-03",
+    "name": "Chiming 92.5 Sterling Silver Baby Payal (Anklet Pair)",
+    "subtitle": "Soft Chiming Ghungroo Bells",
+    "description": "Pure 925 sterling silver baby anklets crafted with delicate chiming silver bells and child-friendly smooth links.",
+    "product_type": "silver",
+    "category": "Collections",
+    "subCategory": "Baby Collections",
+    "subCategorySlug": "baby-collections",
+    "subType": "silver-payal",
+    "occasion": "daily",
+    "price": "₹ 8,900",
+    "numericPrice": 8900,
+    "image": "/images/collections/baby_silver_payal_anklets.jpg",
+    "images": [
+      "/images/collections/baby_silver_payal_anklets.jpg"
+    ],
+    "altText": "Chiming 92.5 Sterling Silver Baby Payal (Anklet Pair)",
+    "purity": "92.5 Sterling Silver",
+    "weight": "16.0 grams",
+    "grossWeight": "16.0 grams",
+    "netWeight": "16.0 grams",
+    "badge": "92.5 Sterling Silver",
+    "badgeType": "in-stock",
+    "hallmarkDetails": "925 Silver Hallmarked",
+    "collection": "curated"
+  },
+  {
+    "id": "VR-COLL-BABY-04",
+    "sku": "VR-COLL-BABY-04",
+    "name": "Little Ganesha 22K Gold Auspicious Baby Locket",
+    "subtitle": "Blessing & Protection Pendant",
+    "description": "Dainty 22K pure yellow gold medallion pendant embossed with infant Ganesha seated on a lotus, featuring rounded edges safe for tender skin.",
+    "product_type": "gold",
+    "category": "Collections",
+    "subCategory": "Baby Collections",
+    "subCategorySlug": "baby-collections",
+    "subType": "baby-pendant",
+    "occasion": "gift",
+    "price": "₹ 18,500",
+    "numericPrice": 18500,
+    "image": "/images/collections/baby_gold_ganesha_locket.jpg",
+    "images": [
+      "/images/collections/baby_gold_ganesha_locket.jpg"
+    ],
+    "altText": "Little Ganesha 22K Gold Auspicious Baby Locket",
+    "purity": "22K BIS 916 Hallmarked",
+    "weight": "3.1 grams",
+    "grossWeight": "3.1 grams",
+    "netWeight": "3.1 grams",
+    "badge": "22K BIS 916 Hallmarked",
+    "badgeType": "in-stock",
+    "hallmarkDetails": "BIS 916 Hallmarked",
+    "collection": "curated"
+  },
+  {
+    "id": "VR-COLL-MENS-02",
+    "sku": "VR-COLL-MENS-02",
+    "name": "Executive 22K Solid Gold Engraved Cufflinks Set",
+    "subtitle": "Bespoke Royal Monogram Cufflinks",
+    "description": "Pair of solid 22K yellow gold cufflinks featuring engine-turned guilloche engraving and secure swivel closures.",
+    "product_type": "gold",
+    "category": "Collections",
+    "subCategory": "Men's Accessories",
+    "subCategorySlug": "men's-accessories",
+    "subType": "cufflinks",
+    "occasion": "formal",
+    "price": "₹ 88,500",
+    "numericPrice": 88500,
+    "image": "/images/collections/collections-mens-exclusive-02.jpg",
+    "images": [
+      "/images/collections/collections-mens-exclusive-02.jpg"
+    ],
+    "altText": "Executive 22K Solid Gold Engraved Cufflinks Set",
+    "purity": "22K BIS 916 Hallmarked",
+    "weight": "14.0 grams",
+    "grossWeight": "14.0 grams",
+    "netWeight": "14.0 grams",
+    "badge": "22K BIS 916 Hallmarked",
+    "badgeType": "in-stock",
+    "hallmarkDetails": "BIS 916 Hallmarked",
+    "collection": "curated"
+  },
+  {
+    "id": "VR-COLL-MENS-03",
+    "sku": "VR-COLL-MENS-03",
+    "name": "Heavy 925 Sterling Silver Byzantine Chain (75g)",
+    "subtitle": "Solid Handcrafted Interlocking Links",
+    "description": "Substantial 75-gram solid 92.5 pure silver Byzantine weave neck chain with heavy-duty lobster clasp.",
+    "product_type": "silver",
+    "category": "Collections",
+    "subCategory": "Men's Accessories",
+    "subCategorySlug": "men's-accessories",
+    "subType": "silver-chain",
+    "occasion": "daily",
+    "price": "₹ 28,500",
+    "numericPrice": 28500,
+    "image": "/images/collections/mens_silver_byzantine_chain.jpg",
+    "images": [
+      "/images/collections/mens_silver_byzantine_chain.jpg"
+    ],
+    "altText": "Heavy 925 Sterling Silver Byzantine Chain (75g)",
+    "purity": "92.5 Sterling Silver",
+    "weight": "75.0 grams",
+    "grossWeight": "75.0 grams",
+    "netWeight": "75.0 grams",
+    "badge": "92.5 Sterling Silver",
+    "badgeType": "in-stock",
+    "hallmarkDetails": "925 Pure Silver Hallmarked",
+    "collection": "curated"
+  },
+  {
+    "id": "VR-COLL-MENS-04",
+    "sku": "VR-COLL-MENS-04",
+    "name": "Solid 22K Gold Royal Elephant Signet Ring",
+    "subtitle": "Antique Regal Crest Ring",
+    "description": "Solid cast 22K gold signet ring embossed with the majestic royal elephant motif and brushed border detailing.",
+    "product_type": "gold",
+    "category": "Collections",
+    "subCategory": "Men's Accessories",
+    "subCategorySlug": "men's-accessories",
+    "subType": "mens-ring",
+    "occasion": "festive",
+    "price": "₹ 68,000",
+    "numericPrice": 68000,
+    "image": "/images/products/gold/rings/Luxe Geometric Gold Signet Ring (1).png",
+    "images": [
+      "/images/products/gold/rings/Luxe Geometric Gold Signet Ring (1).png"
+    ],
+    "altText": "Solid 22K Gold Royal Elephant Signet Ring",
+    "purity": "22K BIS 916 Hallmarked",
+    "weight": "11.2 grams",
+    "grossWeight": "11.2 grams",
+    "netWeight": "11.2 grams",
+    "badge": "22K BIS 916 Hallmarked",
+    "badgeType": "in-stock",
+    "hallmarkDetails": "BIS 916 Hallmarked",
+    "collection": "curated"
+  },
+  {
+    "id": "VR-COLL-GIRLS-02",
+    "sku": "VR-COLL-GIRLS-02",
+    "name": "Chiming Silver Floral Payal Pair with Pink Enamel Bells",
+    "subtitle": "Artisanal Pure 925 Payal Pair",
+    "description": "Pair of delicate 925 sterling silver anklets adorned with miniature cherry blossom petals, pink meenakari enamel, and soft chiming silver bells.",
+    "product_type": "silver",
+    "category": "Collections",
+    "subCategory": "Girls' Accessories",
+    "subCategorySlug": "girls'-accessories",
+    "subType": "girls-payal",
+    "occasion": "festive",
+    "price": "₹ 9,500",
+    "numericPrice": 9500,
+    "image": "/images/collections/collections-girls-exclusive-02.jpg",
+    "images": [
+      "/images/collections/collections-girls-exclusive-02.jpg"
+    ],
+    "altText": "Chiming Silver Floral Payal Pair with Pink Enamel Bells",
+    "purity": "92.5 Sterling Silver",
+    "weight": "18.5 grams",
+    "grossWeight": "18.5 grams",
+    "netWeight": "18.5 grams",
+    "badge": "92.5 Sterling Silver",
+    "badgeType": "in-stock",
+    "hallmarkDetails": "925 Pure Silver Hallmarked",
+    "collection": "curated"
+  },
+  {
+    "id": "VR-COLL-GIRLS-03",
+    "sku": "VR-COLL-GIRLS-03",
+    "name": "Lightweight 22K Gold Floral Jhumki Drops for Teens",
+    "subtitle": "Festive South Indian Jhumkis",
+    "description": "Miniature handcrafted 22K gold jhumkis with floral studs and dangling ruby beads, designed for lightweight festive elegance.",
+    "product_type": "gold",
+    "category": "Collections",
+    "subCategory": "Girls' Accessories",
+    "subCategorySlug": "girls'-accessories",
+    "subType": "girls-earrings",
+    "occasion": "festive",
+    "price": "₹ 29,800",
+    "numericPrice": 29800,
+    "image": "/images/collections/collections-girls-exclusive-03.jpg",
+    "images": [
+      "/images/collections/collections-girls-exclusive-03.jpg"
+    ],
+    "altText": "Lightweight 22K Gold Floral Jhumki Drops for Teens",
+    "purity": "22K BIS 916 Hallmarked",
+    "weight": "5.0 grams",
+    "grossWeight": "5.0 grams",
+    "netWeight": "4.8 grams",
+    "badge": "22K BIS 916 Hallmarked",
+    "badgeType": "in-stock",
+    "hallmarkDetails": "BIS 916 Hallmarked",
+    "collection": "curated"
+  },
+  {
+    "id": "VR-COLL-GIRLS-04",
+    "sku": "VR-COLL-GIRLS-04",
+    "name": "Dainty Dancing Peacock 22K Gold Pendant & Chain",
+    "subtitle": "Fine Italian Box Chain Included",
+    "description": "A delightful 22K gold peacock pendant with emerald eye and diamond accent, strung on a slender hallmarked gold chain.",
+    "product_type": "gold",
+    "category": "Collections",
+    "subCategory": "Girls' Accessories",
+    "subCategorySlug": "girls'-accessories",
+    "subType": "girls-pendant",
+    "occasion": "casual",
+    "price": "₹ 24,200",
+    "numericPrice": 24200,
+    "image": "/images/products/gold/pendants/gold_pendants_88-01.jpg",
+    "images": [
+      "/images/products/gold/pendants/gold_pendants_88-01.jpg"
+    ],
+    "altText": "Dainty Dancing Peacock 22K Gold Pendant & Chain",
+    "purity": "22K BIS 916 Hallmarked",
+    "weight": "4.1 grams",
+    "grossWeight": "4.1 grams",
+    "netWeight": "4.1 grams",
+    "badge": "22K BIS 916 Hallmarked",
+    "badgeType": "in-stock",
+    "hallmarkDetails": "BIS 916 Hallmarked",
+    "collection": "curated"
+  },
+  {
+    "id": "VR-COLL-POOJA-01",
+    "sku": "VR-COLL-POOJA-01",
+    "name": "Swamimalai Sacred Five-Tier Peacock Silver Deepam Pair",
+    "subtitle": "Traditional Chased Aarti Lamps",
+    "description": "A grand five-tier ceremonial oil lamp (deepam) hand-forged in 92.5 pure sterling silver, crowned with an ornamental peacock finial, floral oil wells, and Ashtalakshmi pedestal base.",
+    "product_type": "silver",
+    "category": "Collections",
+    "subCategory": "Pooja Items",
+    "subCategorySlug": "pooja-items",
+    "subType": "deepam",
+    "occasion": "pooja",
+    "price": "₹ 85,000",
+    "numericPrice": 85000,
+    "image": "/images/collections/collections-pooja-exclusive-01.jpg",
+    "images": [
+      "/images/collections/collections-pooja-exclusive-01.jpg"
+    ],
+    "altText": "Swamimalai Sacred Five-Tier Peacock Silver Deepam Pair",
+    "purity": "92.5 Sterling Silver",
+    "weight": "320.0 grams",
+    "grossWeight": "320.0 grams",
+    "netWeight": "320.0 grams",
+    "badge": "92.5 Sterling Silver",
+    "badgeType": "in-stock",
+    "hallmarkDetails": "Swamimalai Temple Silversmith Guild & 925 Hallmark",
+    "collection": "curated"
+  },
+  {
+    "id": "VR-COLL-POOJA-02",
+    "sku": "VR-COLL-POOJA-02",
+    "name": "Kamadhenu Ashtalakshmi Pure Silver Pooja Kalash",
+    "subtitle": "Consecrated Auspicious Sacred Pot",
+    "description": "Hand-hammered 925 sterling silver Kalash embossed with the eight forms of Goddess Lakshmi (Ashtalakshmi) and Kamadhenu motifs.",
+    "product_type": "silver",
+    "category": "Collections",
+    "subCategory": "Pooja Items",
+    "subCategorySlug": "pooja-items",
+    "subType": "kalash",
+    "occasion": "pooja",
+    "price": "₹ 48,000",
+    "numericPrice": 48000,
+    "image": "/images/products/silver/pooja-items/silver-new-arrival-ashtalakshmi-kalash-01.jpg",
+    "images": [
+      "/images/products/silver/pooja-items/silver-new-arrival-ashtalakshmi-kalash-01.jpg"
+    ],
+    "altText": "Kamadhenu Ashtalakshmi Pure Silver Pooja Kalash",
+    "purity": "92.5 Sterling Silver",
+    "weight": "180.0 grams",
+    "grossWeight": "180.0 grams",
+    "netWeight": "180.0 grams",
+    "badge": "92.5 Sterling Silver",
+    "badgeType": "in-stock",
+    "hallmarkDetails": "925 Pure Silver Hallmarked",
+    "collection": "curated"
+  },
+  {
+    "id": "VR-COLL-IDOL-01",
+    "sku": "VR-COLL-IDOL-01",
+    "name": "Lord Veera Anjaneya Sacred Solid Silver Murti",
+    "subtitle": "Hand-Cast Lost Wax Pure 925 Silver",
+    "description": "A majestic solid 92.5 pure silver idol of Lord Veera Anjaneya Hanuman standing in Abhaya blessing posture on an inverted double-lotus pedestal, holding the sacred Sanjeevani mountain and Gada mace.",
+    "product_type": "silver",
+    "category": "Collections",
+    "subCategory": "Silver Idol",
+    "subCategorySlug": "silver-idol",
+    "subType": "murti",
+    "occasion": "pooja",
+    "price": "₹ 82,000",
+    "numericPrice": 82000,
+    "image": "/images/collections/collections-silver-idol-exclusive-01.jpg",
+    "images": [
+      "/images/collections/collections-silver-idol-exclusive-01.jpg"
+    ],
+    "altText": "Lord Veera Anjaneya Sacred Solid Silver Murti",
+    "purity": "92.5 Pure Silver",
+    "weight": "350.0 grams",
+    "grossWeight": "350.0 grams",
+    "netWeight": "350.0 grams",
+    "badge": "92.5 Pure Silver",
+    "badgeType": "in-stock",
+    "hallmarkDetails": "Devalaya Iconographic Sculptors & 925 Hallmark",
+    "collection": "curated"
+  },
+  {
+    "id": "VR-COLL-GIFT-03",
+    "sku": "VR-COLL-GIFT-03",
+    "name": "Pure 925 Silver Royal Peacock Dry Fruit Presentation Box",
+    "subtitle": "Luxury Hand-Chased Serving Box",
+    "description": "Exquisite handcrafted pure 925 sterling silver dual-compartment dry fruit box with a sculpted peacock handle and floral filigree repoussé work.",
+    "product_type": "silver",
+    "category": "Collections",
+    "subCategory": "Gift Collection",
+    "subCategorySlug": "gift-collection",
+    "subType": "silver-box",
+    "occasion": "gift",
+    "price": "₹ 46,000",
+    "numericPrice": 46000,
+    "image": "/images/collections/collections-gift-02.jpg",
+    "images": [
+      "/images/collections/collections-gift-02.jpg"
+    ],
+    "altText": "Pure 925 Silver Royal Peacock Dry Fruit Presentation Box",
+    "purity": "92.5 Sterling Silver",
+    "weight": "165.0 grams",
+    "grossWeight": "165.0 grams",
+    "netWeight": "165.0 grams",
+    "badge": "92.5 Sterling Silver",
+    "badgeType": "in-stock",
+    "hallmarkDetails": "925 Pure Silver Hallmarked",
+    "collection": "curated",
+    "suitableFor": "Festive & Celebration Gifts"
   }
 ]

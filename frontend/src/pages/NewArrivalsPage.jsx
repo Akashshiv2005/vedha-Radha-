@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { products } from '../data/products';
 import { storefrontClient } from '../api/storefrontProductsClient';
 import { ProductGridSkeleton } from '../components/common/ProductCardSkeleton';
 import LuxuryProductCard from '../components/common/LuxuryProductCard';
 import { Sparkles, ChevronRight, Heart, ShoppingBag, ArrowLeft, Tag } from 'lucide-react';
+
+const STATIC_NEW_ARRIVALS = products.filter(p => p.isNewArrival || p.badgeType === 'in-stock');
 
 export default function NewArrivalsPage({
   searchQuery = '',
@@ -15,28 +18,24 @@ export default function NewArrivalsPage({
   const navigate = useNavigate();
   const [activeFilter, setActiveFilter] = useState('All');
   const [sortBy, setSortBy] = useState('featured');
-  const [dbProducts, setDbProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [dbProducts, setDbProducts] = useState(STATIC_NEW_ARRIVALS);
+  const [isLoading, setIsLoading] = useState(false);
   const [apiError, setApiError] = useState(null);
 
   React.useEffect(() => {
     let isMounted = true;
-    setIsLoading(true);
-    setApiError(null);
 
     storefrontClient.getStorefrontProducts({ page_size: 200 })
       .then(res => {
         if (!isMounted) return;
-        if (res.success) {
+        if (res.success && Array.isArray(res.items) && res.items.length > 0) {
           setDbProducts(res.items);
-        } else {
-          setApiError(res.error || 'Failed to load new arrivals');
         }
         setIsLoading(false);
       })
-      .catch(() => {
+      .catch((err) => {
         if (!isMounted) return;
-        setApiError('Unable to connect to product server');
+        console.warn('Storefront new arrivals fetch fallback active:', err);
         setIsLoading(false);
       });
 

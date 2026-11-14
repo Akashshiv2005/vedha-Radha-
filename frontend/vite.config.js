@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     server: {
-      port: 5173,
+      port: 5174,
       host: true,
       proxy: {
         // Universal proxy for all backend /api endpoints routed strictly to FastAPI

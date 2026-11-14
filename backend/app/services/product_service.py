@@ -404,7 +404,27 @@ def get_products(
     if product_type and product_type.lower() != "all":
         pt_clean = normalize_product_type(product_type)
         if pt_clean:
-            query = query.filter(Product.product_type == pt_clean)
+            if pt_clean == "gold":
+                # Strictly isolate Gold products: zero silver name, image, or purity
+                query = query.filter(
+                    and_(
+                        Product.product_type == "gold",
+                        ~func.lower(Product.name).like("%silver%"),
+                        ~func.lower(func.coalesce(Product.image_url, "")).like("%silver%"),
+                        ~func.lower(func.coalesce(Product.purity, "")).like("%silver%"),
+                        ~func.lower(func.coalesce(Product.purity, "")).like("%925%"),
+                    )
+                )
+            elif pt_clean == "silver":
+                # Strictly isolate Silver products: zero gold image
+                query = query.filter(
+                    and_(
+                        Product.product_type == "silver",
+                        ~func.lower(func.coalesce(Product.image_url, "")).like("%gold%"),
+                    )
+                )
+            else:
+                query = query.filter(Product.product_type == pt_clean)
 
     # 2. Category Filter
     if category and category.lower() != "all":
@@ -449,6 +469,9 @@ def get_products(
                     Product.product_type != "silver",
                     ~func.lower(Product.category).like("%silver%"),
                     ~func.lower(Product.name).like("%silver%"),
+                    ~func.lower(func.coalesce(Product.image_url, "")).like("%silver%"),
+                    ~func.lower(func.coalesce(Product.purity, "")).like("%silver%"),
+                    ~func.lower(func.coalesce(Product.purity, "")).like("%925%"),
                 )
             )
         elif cat_lower in ("silver", "silver_jewellery"):
@@ -486,8 +509,41 @@ def get_products(
                     ),
                 )
             )
-        elif cat_lower == "temple":
-            query = query.filter(func.lower(Product.category).like("%temple%"))
+        elif cat_lower in ("diamond", "diamonds"):
+            query = query.filter(
+                or_(
+                    Product.product_type == "diamond",
+                    func.lower(Product.category).like("%diamond%"),
+                )
+            )
+        elif cat_lower in ("temple", "temple heritage", "temple jewellery"):
+            query = query.filter(
+                or_(
+                    func.lower(Product.category).like("%temple%"),
+                    func.lower(func.coalesce(Product.sub_category, "")).like("%temple%"),
+                    func.lower(Product.name).like("%temple%"),
+                )
+            )
+        elif cat_lower in ("silver_pooja", "silver pooja", "pooja", "pooja items"):
+            query = query.filter(
+                and_(
+                    or_(
+                        func.lower(Product.category).like("%pooja%"),
+                        func.lower(func.coalesce(Product.sub_category, "")).like("%pooja%"),
+                        func.lower(Product.name).like("%pooja%"),
+                        func.lower(func.coalesce(Product.sub_category, "")).like("%idol%"),
+                        func.lower(Product.name).like("%murti%"),
+                        func.lower(Product.name).like("%vilakku%"),
+                        func.lower(Product.name).like("%kalash%"),
+                        func.lower(Product.name).like("%deepam%"),
+                        func.lower(Product.name).like("%thali%"),
+                        func.lower(Product.name).like("%aarti%"),
+                    ),
+                    Product.product_type != "gold",
+                    ~func.lower(Product.category).like("%gold%"),
+                    ~func.lower(Product.name).like("%gold%"),
+                )
+            )
         elif cat_lower == "bridal":
             query = query.filter(func.lower(Product.category).like("%bridal%"))
         elif cat_lower in ("coins", "coins-bars", "coins_bars"):

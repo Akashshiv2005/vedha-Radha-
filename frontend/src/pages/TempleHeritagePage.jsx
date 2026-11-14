@@ -1,11 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import LuxuryProductCard from '../components/common/LuxuryProductCard';
-import { Sparkles, ShieldCheck, Heart, Eye, ArrowRight, Award, Compass, MapPin, Calendar, ChevronRight, CheckCircle2 } from 'lucide-react';
+import { Sparkles, ShieldCheck, Heart, Eye, ArrowRight, Award, Compass, MapPin, Calendar, ChevronRight, CheckCircle2, Loader2 } from 'lucide-react';
 import { TEMPLE_PRODUCTS } from '../data/templeProducts';
+import { storefrontClient } from '../api/storefrontProductsClient';
 
 export default function TempleHeritagePage({ onViewProduct, onAddToCart, onAddToWishlist, wishlistItems = [] }) {
   const navigate = useNavigate();
+  const [templeList, setTempleList] = useState(TEMPLE_PRODUCTS);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    let isMounted = true;
+    async function loadDynamicTemple() {
+      setLoading(true);
+      try {
+        const res = await storefrontClient.getStorefrontProducts({
+          category: 'Temple Heritage',
+          page_size: 100
+        });
+        if (isMounted && res.success && Array.isArray(res.items) && res.items.length > 0) {
+          setTempleList(res.items);
+        }
+      } catch (err) {
+        console.warn('Dynamic temple fetch error; using fallback cache:', err);
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    }
+    loadDynamicTemple();
+    return () => { isMounted = false; };
+  }, []);
 
   return (
     <div className="bg-[#FAF7F2] min-h-screen select-none font-sans">
@@ -186,7 +211,7 @@ export default function TempleHeritagePage({ onViewProduct, onAddToCart, onAddTo
         </div>
 
         <div className="w-full max-w-[1440px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 lg:gap-8 my-8">
-          {TEMPLE_PRODUCTS.map((prod) => (
+          {templeList.map((prod) => (
             <LuxuryProductCard
               key={prod.id}
               item={prod}

@@ -1,11 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LuxuryProductCard from '../components/common/LuxuryProductCard';
-import { Sparkles, ShieldCheck, Heart, Eye, ArrowRight, Award, Compass, ChevronRight, CheckCircle2 } from 'lucide-react';
+import { Sparkles, ShieldCheck, Heart, Eye, ArrowRight, Award, Compass, ChevronRight, CheckCircle2, Loader2 } from 'lucide-react';
 import { POOJA_PRODUCTS } from '../data/poojaProducts';
+import { storefrontClient } from '../api/storefrontProductsClient';
 
 export default function SilverPoojaPage({ onViewProduct, onAddToCart, onAddToWishlist, wishlistItems = [] }) {
   const navigate = useNavigate();
+  const [poojaList, setPoojaList] = useState(POOJA_PRODUCTS);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    let isMounted = true;
+    async function loadDynamicPooja() {
+      setLoading(true);
+      try {
+        const res = await storefrontClient.getStorefrontProducts({
+          category: 'Silver Pooja',
+          page_size: 100
+        });
+        if (isMounted && res.success && Array.isArray(res.items) && res.items.length > 0) {
+          setPoojaList(res.items);
+        }
+      } catch (err) {
+        console.warn('Dynamic silver pooja fetch error; using fallback cache:', err);
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    }
+    loadDynamicPooja();
+    return () => { isMounted = false; };
+  }, []);
 
   return (
     <div className="bg-[#FAF7F2] min-h-screen select-none font-sans">
@@ -177,7 +202,7 @@ export default function SilverPoojaPage({ onViewProduct, onAddToCart, onAddToWis
         </div>
 
         <div className="w-full max-w-[1440px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 lg:gap-8 my-8">
-          {POOJA_PRODUCTS.map((prod) => (
+          {poojaList.map((prod) => (
             <LuxuryProductCard
               key={prod.id}
               item={prod}

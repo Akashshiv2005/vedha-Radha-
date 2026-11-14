@@ -450,9 +450,16 @@ export default function SilverPage({
   const filteredProducts = dbProducts.filter(item => {
     const catLower = (item.category || '').toLowerCase();
     const prodTypeLower = (item.productType || item.product_type || '').toLowerCase();
+    const nameLower = (item.name || '').toLowerCase();
+    const imgLower = (item.image || item.imageUrl || item.image_url || '').toLowerCase();
 
     // 1. Strictly exclude gold products from Silver Page
-    if (prodTypeLower === 'gold' || catLower.includes('gold')) {
+    if (
+      prodTypeLower === 'gold' ||
+      catLower.includes('gold') ||
+      imgLower.includes('/gold/') ||
+      (nameLower.includes('gold') && !nameLower.includes('silver') && !nameLower.includes('plated'))
+    ) {
       return false;
     }
 
@@ -476,6 +483,22 @@ export default function SilverPage({
     // Category match
     let matchesCategory = false;
     if (activeKey === 'all') {
+      // Keep pure Silver Jewellery in the default view; sacred pooja articles & murtis belong to /silver-pooja
+      const subCat = (item.subCategory || item.subCategorySlug || '').toLowerCase();
+      const cat = (item.category || '').toLowerCase();
+      const nameL = (item.name || '').toLowerCase();
+      if (
+        subCat === 'pooja-items' ||
+        subCat === 'silver-idols' ||
+        subCat === 'pooja utensils' ||
+        cat === 'silver pooja' ||
+        nameL.includes('pooja thali') ||
+        nameL.includes('vilakku') ||
+        nameL.includes('kalash') ||
+        nameL.includes('presentation box')
+      ) {
+        return false;
+      }
       matchesCategory = true;
     } else if (isSubStyleView) {
       // Direct subcategory / style view (e.g., /silver/earrings/studs, /silver/rings/engagement-rings, /silver/bangles/bangles, /silver/occasion/casual-wear)

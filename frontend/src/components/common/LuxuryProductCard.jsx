@@ -166,7 +166,10 @@ export default function LuxuryProductCard({
   }
 
   return (
-    <div className={`${
+    <div 
+      id={item.id ? `product-card-${item.id}` : undefined}
+      data-product-id={item.id}
+      className={`${
       isSilverOrDiamond
         ? 'bg-white rounded-[24px] sm:rounded-[26px] border-[2px] border-[#CBD5E1] shadow-[0_18px_40px_-8px_rgba(148,163,184,0.32),0_8px_18px_-4px_rgba(15,23,42,0.1)] ring-1 ring-[#E2E8F0] hover:border-[#94A3B8] hover:shadow-[0_26px_50px_-6px_rgba(148,163,184,0.48)]'
         : 'bg-[#FFF9F0] rounded-[24px] sm:rounded-[26px] border-[2px] border-[#C99A38] shadow-[0_18px_40px_-8px_rgba(180,135,50,0.32),0_8px_18px_-4px_rgba(74,16,25,0.16)] ring-1 ring-[#FFE8AA]/70 hover:shadow-[0_26px_50px_-6px_rgba(201,154,56,0.42)]'

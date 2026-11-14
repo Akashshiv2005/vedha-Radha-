@@ -1,3 +1,14 @@
+import os
+pg_bin = r"C:\Program Files\PostgreSQL\17\bin"
+if os.path.exists(pg_bin):
+    os.environ["PATH"] = pg_bin + ";" + os.environ.get("PATH", "")
+    if hasattr(os, "add_dll_directory"):
+        try:
+            os.add_dll_directory(pg_bin)
+        except Exception:
+            pass
+os.environ.setdefault("PSYCOPG_IMPL", "python")
+
 from typing import Generator, Tuple
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker, Session

@@ -159,7 +159,7 @@ export default function FourPillarsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="font-cormorant italic text-2xl sm:text-3xl lg:text-[42px] text-[#2C2420] font-normal tracking-wide leading-tight my-0.5"
+          className="w-full text-center font-cormorant italic text-2xl sm:text-3xl lg:text-[42px] text-[#2C2420] font-normal tracking-wide leading-tight my-0.5"
         >
           The Four Pillars of <span className="text-[#6B0F21] font-semibold">Vedha Radha</span>
         </motion.h2>
@@ -170,7 +170,7 @@ export default function FourPillarsSection() {
           whileInView={{ scaleX: 1, opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex items-center justify-center gap-2 mt-1"
+          className="w-full flex items-center justify-center gap-2 mt-1"
         >
           <div className="h-[1px] w-10 sm:w-14 bg-[#D4AF37]/60" />
           <div className="w-1.5 h-1.5 rotate-45 bg-[#D4AF37] border border-[#FFE8A3]" />
@@ -192,31 +192,33 @@ export default function FourPillarsSection() {
               transition={{ duration: 0.6, delay: 0.12 * index, ease: [0.16, 1, 0.3, 1] }}
               className="relative flex flex-col pt-10 sm:pt-11 group z-10"
             >
-              {/* TOP CIRCULAR DEEP MAROON MEDALLION (Floating Over Top Border) */}
-              <motion.div 
-                initial={{ scale: 0.6, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.12 * index + 0.15, type: 'spring', stiffness: 220, damping: 18 }}
-                className="absolute top-0 left-1/2 -translate-x-1/2 z-20"
-              >
-                <div 
-                  className="relative w-[70px] h-[70px] sm:w-[76px] sm:h-[76px] rounded-full p-[2.5px] border-2 border-[#D4AF37] shadow-[0_8px_20px_rgba(45,3,10,0.45),0_0_12px_rgba(212,175,55,0.35)] transition-transform duration-300 group-hover:scale-105"
-                  style={{
-                    background: 'linear-gradient(135deg, #FFE8A3 0%, #D4AF37 50%, #8C6D2D 100%)'
-                  }}
+              {/* TOP CIRCULAR DEEP MAROON MEDALLION (Guaranteed True Center via Flex Container) */}
+              <div className="absolute top-0 inset-x-0 flex justify-center z-20 pointer-events-none">
+                <motion.div 
+                  initial={{ scale: 0.6, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.12 * index + 0.15, type: 'spring', stiffness: 220, damping: 18 }}
+                  className="pointer-events-auto"
                 >
-                  {/* Inner Deep Maroon / Ruby Jewel Enamel Disc */}
                   <div 
-                    className="w-full h-full rounded-full flex items-center justify-center border border-[#FFEAA7]/50 shadow-[inset_0_2px_6px_rgba(0,0,0,0.75)]"
+                    className="relative w-[70px] h-[70px] sm:w-[76px] sm:h-[76px] rounded-full p-[2.5px] border-2 border-[#D4AF37] shadow-[0_8px_20px_rgba(45,3,10,0.45),0_0_12px_rgba(212,175,55,0.35)] transition-transform duration-300 group-hover:scale-105"
                     style={{
-                      background: 'radial-gradient(circle at 35% 35%, #8B1226 0%, #540A18 55%, #260208 100%)'
+                      background: 'linear-gradient(135deg, #FFE8A3 0%, #D4AF37 50%, #8C6D2D 100%)'
                     }}
                   >
-                    {pillar.renderIcon()}
+                    {/* Inner Deep Maroon / Ruby Jewel Enamel Disc */}
+                    <div 
+                      className="w-full h-full rounded-full flex items-center justify-center border border-[#FFEAA7]/50 shadow-[inset_0_2px_6px_rgba(0,0,0,0.75)]"
+                      style={{
+                        background: 'radial-gradient(circle at 35% 35%, #8B1226 0%, #540A18 55%, #260208 100%)'
+                      }}
+                    >
+                      {pillar.renderIcon()}
+                    </div>
                   </div>
-                </div>
-              </motion.div>
+                </motion.div>
+              </div>
 
               {/* CARD BODY CONTAINER (Slightly Increased Size, Generous Breathing Room) */}
               <div className="relative flex-1 rounded-[22px] bg-gradient-to-b from-[#FFFDF9] via-[#FAF4EA] to-[#F3E7D3] border-2 border-[#DBC6A3] p-5 sm:p-6 pt-14 sm:pt-16 pb-8 sm:pb-9 text-center min-h-[290px] sm:min-h-[315px] shadow-[0_12px_28px_rgba(70,40,15,0.08)] transition-all duration-300 group-hover:-translate-y-2 group-hover:shadow-[0_20px_42px_rgba(70,40,15,0.18)] group-hover:border-[#C5A059] flex flex-col justify-between overflow-hidden">

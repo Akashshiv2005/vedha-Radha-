@@ -239,10 +239,16 @@ export default function NewArrivalsSection({ onViewProduct, onAddToCart, onAddTo
   const navigate = useNavigate();
   const [wishlist, setWishlist] = useState({});
   const [isPaused, setIsPaused] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const [activeDot, setActiveDot] = useState(0);
 
+  const sectionRef = useRef(null);
   const scrollRef = useRef(null);
   const manualPauseTimerRef = useRef(null);
+  const windowScrollTimerRef = useRef(null);
+  const singleSetWidthRef = useRef(0);
+  const lastActiveDotRef = useRef(0);
+  const isWindowScrollingRef = useRef(false);
 
   const toggleWishlist = (product) => {
     setWishlist((prev) => ({ ...prev, [product.id]: !prev[product.id] }));
@@ -266,22 +272,65 @@ export default function NewArrivalsSection({ onViewProduct, onAddToCart, onAddTo
     }, 2500);
   };
 
+  // Only run animations when section is visible in viewport
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { rootMargin: '120px' }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  // Measure singleSetWidth once and on window resize, preventing forced reflow on every rAF frame
+  const updateCachedWidth = () => {
+    const el = scrollRef.current;
+    if (el) {
+      singleSetWidthRef.current = el.scrollWidth / 3;
+    }
+  };
+
   // Initialize scroll position to the middle set for seamless bidirectional scrolling
   useEffect(() => {
     const el = scrollRef.current;
     if (el) {
-      const singleSetWidth = el.scrollWidth / 3;
-      if (singleSetWidth > 0 && el.scrollLeft === 0) {
-        el.scrollLeft = singleSetWidth;
+      updateCachedWidth();
+      if (singleSetWidthRef.current > 0 && el.scrollLeft === 0) {
+        el.scrollLeft = singleSetWidthRef.current;
       }
     }
+    window.addEventListener('resize', updateCachedWidth);
+    return () => window.removeEventListener('resize', updateCachedWidth);
   }, []);
 
-  // Buttery-smooth continuous flow using requestAnimationFrame
+  // Pause horizontal ticker while the user is actively scrolling vertically
+  useEffect(() => {
+    const onWindowScroll = () => {
+      isWindowScrollingRef.current = true;
+      if (windowScrollTimerRef.current) clearTimeout(windowScrollTimerRef.current);
+      windowScrollTimerRef.current = setTimeout(() => {
+        isWindowScrollingRef.current = false;
+      }, 150);
+    };
+
+    window.addEventListener('scroll', onWindowScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onWindowScroll);
+      if (windowScrollTimerRef.current) clearTimeout(windowScrollTimerRef.current);
+    };
+  }, []);
+
+  // Buttery-smooth continuous flow using requestAnimationFrame (runs only when visible)
   useEffect(() => {
     let animId;
     const el = scrollRef.current;
-    if (!el) return;
+    if (!el || !isVisible) return;
 
     let lastTime = performance.now();
 
@@ -289,19 +338,23 @@ export default function NewArrivalsSection({ onViewProduct, onAddToCart, onAddTo
       const delta = (time - lastTime) / 1000;
       lastTime = time;
 
-      if (!isPaused && el) {
+      if (!isPaused && !isWindowScrollingRef.current && el) {
         el.scrollLeft += 36 * Math.min(delta, 0.1); // Continuous smooth glide (~36px/sec)
         
-        // Seamless infinite wrap: maintain position within middle set
-        const singleSetWidth = el.scrollWidth / 3;
+        // Seamless infinite wrap: maintain position within middle set using cached width
+        const singleSetWidth = singleSetWidthRef.current || (el.scrollWidth / 3);
         if (singleSetWidth > 0 && el.scrollLeft >= singleSetWidth * 2) {
           el.scrollLeft -= singleSetWidth;
         }
 
-        // Update active dot (0 to 3)
+        // Update active dot (0 to 3) without unnecessary React re-renders
         if (singleSetWidth > 0) {
           const progress = (((el.scrollLeft - singleSetWidth) % singleSetWidth + singleSetWidth) % singleSetWidth) / singleSetWidth;
-          setActiveDot(Math.min(3, Math.floor(progress * 4)));
+          const newDot = Math.min(3, Math.floor(progress * 4));
+          if (newDot !== lastActiveDotRef.current) {
+            lastActiveDotRef.current = newDot;
+            setActiveDot(newDot);
+          }
         }
       }
       animId = requestAnimationFrame(step);
@@ -312,7 +365,7 @@ export default function NewArrivalsSection({ onViewProduct, onAddToCart, onAddTo
       cancelAnimationFrame(animId);
       if (manualPauseTimerRef.current) clearTimeout(manualPauseTimerRef.current);
     };
-  }, [isPaused]);
+  }, [isPaused, isVisible]);
 
   // Smooth Navigation Buttons
   const handlePrev = () => {
@@ -357,6 +410,7 @@ export default function NewArrivalsSection({ onViewProduct, onAddToCart, onAddTo
 
   return (
     <section 
+      ref={sectionRef}
       className="relative bg-gradient-to-b from-[#35030C] via-[#240107] to-[#180104] pt-12 sm:pt-14 pb-14 sm:pb-16 select-none overflow-hidden border-y border-[#D4AF37]/35"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
@@ -462,7 +516,9 @@ export default function NewArrivalsSection({ onViewProduct, onAddToCart, onAddTo
             style={{ 
               scrollbarWidth: 'none', 
               msOverflowStyle: 'none',
-              WebkitOverflowScrolling: 'touch'
+              WebkitOverflowScrolling: 'touch',
+              transform: 'translateZ(0)',
+              willChange: 'scroll-position'
             }}
           >
             {FLOW_ITEMS.map((item, idx) => {

@@ -50,6 +50,30 @@ const COLLECTIONS_MAP = {
   'gift': { 
     title: 'Artisanal Pure Silver Gift Collection', 
     desc: "Cherished pure 92.5 hallmarked silver bowl sets, royal dinnerware, and auspicious presentation gifts tailored for life's grand celebrations." 
+  },
+  'mens accessories': {
+    title: "Men's Fine Accessories",
+    desc: 'Solid 22K gold Veera Simha kadas, certified gemstone signet rings, heavy silver chains, and executive gold cufflinks.'
+  },
+  'baby collections': {
+    title: 'Baby Collections (First Jewels)',
+    desc: 'Auspicious black bead nazariya bracelets, child-safe rounded bangles, silver anklets, and protective charms crafted with smooth skin-safe hypoallergenic finishes.'
+  },
+  'wedding collections': {
+    title: 'Wedding & Bridal Collections',
+    desc: 'Grand Muhurtham trousseau sets, temple Mayura harams, antique vankis, and royal wedding ornaments handcrafted in 22K hallmarked gold.'
+  },
+  'pooja items': {
+    title: 'Sacred Temple Pooja Collections',
+    desc: 'Mayur Stambh five-tier aarti deepams, Ashtalakshmi prayer ensembles, hand-chased silver deepams, and puja thalis crafted for spiritual sanctity.'
+  },
+  'silver idols': {
+    title: 'Artisanal Pure Silver Idols (Murtis)',
+    desc: 'Sacred cast 92.5 solid silver murtis of Lord Siddhi Anjaneya, Ganesha, Goddess Lakshmi, and Balaji on double-lotus pedestals.'
+  },
+  'gift collection': {
+    title: 'Artisanal Pure Silver Gift Collection',
+    desc: "Cherished pure 92.5 hallmarked silver bowl sets, royal dinnerware, and auspicious presentation gifts tailored for life's grand celebrations."
   }
 };
 
@@ -94,105 +118,154 @@ function matchesCollectionSlug(item, slug) {
   const sku = (item.sku || '').toLowerCase();
   const id = String(item.id || '').toLowerCase();
 
-  if (!slug || slug === 'all') {
-    return (
-      cat === 'collections' ||
-      coll.includes('collection') ||
-      sku.includes('coll') ||
-      matchesCollectionSlug(item, 'wedding') ||
-      matchesCollectionSlug(item, 'baby') ||
-      matchesCollectionSlug(item, 'mens-accessories') ||
-      matchesCollectionSlug(item, 'girls-accessories') ||
-      matchesCollectionSlug(item, 'pooja-items') ||
-      matchesCollectionSlug(item, 'silver-idols') ||
-      matchesCollectionSlug(item, 'gift-collection')
-    );
-  }
+  const isCuratedItem =
+    cat === 'collections' ||
+    coll.includes('curated') ||
+    sku.includes('coll') ||
+    id.includes('coll') ||
+    sku.startsWith('vr-coll-') ||
+    id.startsWith('vr-coll-') ||
+    id === 'mens-gold-kada' ||
+    id === 'baby-nazariya-set' ||
+    sku.startsWith('silver-idols-') ||
+    id.startsWith('silver-idols-') ||
+    id === 'silver-idol-04-sacred-lakshmi-ganesha';
 
-  const s = slug.toLowerCase().trim();
+  const rawSlug = (slug || 'all').toLowerCase().trim();
+  const s = rawSlug.replace(/[\s_]+/g, '-');
+
+  if (s === 'all') {
+    return isCuratedItem;
+  }
 
   if (s === 'wedding' || s === 'wedding-collections' || s === 'bridal') {
     return (
-      item.isBridal === true ||
-      coll.includes('wedding') || coll.includes('bridal') ||
-      sub.includes('wedding') || sub.includes('bridal') ||
-      subSlug.includes('wedding') || subSlug.includes('bridal') ||
-      sku.includes('wed') || id.includes('wedding') ||
-      name.includes('wedding') || name.includes('bridal') || name.includes('muhurtham') ||
-      name.includes('haar') || name.includes('vaddanam') || name.includes('vanki') || name.includes('kasu')
+      (isCuratedItem || item.isBridal === true) &&
+      (sub.includes('wedding') ||
+        subSlug.includes('wedding') ||
+        sub.includes('bridal') ||
+        sku.includes('wed') ||
+        id.includes('wed') ||
+        coll.includes('wedding') ||
+        (isCuratedItem &&
+          (name.includes('vaddanam') ||
+            name.includes('bridal') ||
+            name.includes('haar') ||
+            name.includes('kasu mala'))))
     );
   }
 
   if (s === 'baby' || s === 'baby-collections') {
     return (
-      coll.includes('baby') || coll.includes('kids') ||
-      sub.includes('baby') || sub.includes('kids') ||
-      subSlug.includes('baby') || subSlug.includes('kids') ||
-      sku.includes('baby') || id.includes('baby') ||
-      name.includes('baby') || name.includes('nazariya') || name.includes('kids') || name.includes('child') ||
-      desc.includes('baby') || desc.includes('infant')
+      isCuratedItem &&
+      (sub.includes('baby') ||
+        subSlug.includes('baby') ||
+        sku.includes('baby') ||
+        id.includes('baby') ||
+        name.includes('baby') ||
+        name.includes('nazariya'))
     );
   }
 
   if (s === 'mens-accessories' || s === 'mens' || s === 'men') {
+    // Strictly masculine jewellery: Kada, Cufflinks, Mens Chain, Signet Ring
+    if (
+      id.includes('baby') ||
+      name.includes('baby') ||
+      id.includes('dia-') ||
+      id.startsWith('dia') ||
+      cat === 'diamond' ||
+      cat.includes('diamond') ||
+      item.isDiamond ||
+      item.department?.toLowerCase() === 'diamond' ||
+      name.includes('women') ||
+      name.includes('girl') ||
+      name.includes('bridal') ||
+      name.includes('vaddanam') ||
+      name.includes('choker') ||
+      name.includes('necklace') ||
+      name.includes('haram')
+    ) {
+      return false;
+    }
     return (
-      coll.includes('men') ||
       sub.includes('men') ||
       subSlug.includes('men') ||
-      sku.includes('mens') || sku.includes('men') || id.includes('mens') ||
-      name.includes("men's") || name.includes('mens') || name.includes('kada') || name.includes('simha') || name.includes('cufflink') ||
-      desc.includes("men's") || desc.includes('masculine')
+      sku.includes('mens') ||
+      id.includes('mens') ||
+      id === 'mens-gold-kada' ||
+      name.includes("men's") ||
+      name.includes('mens ') ||
+      (isCuratedItem &&
+        (sku.includes('mens') ||
+          id.includes('mens') ||
+          name.includes('veera simha') ||
+          name.includes('cufflinks')))
     );
   }
 
   if (s === 'girls-accessories' || s === 'girls' || s === 'girl') {
     return (
-      coll.includes('girl') || coll.includes('teen') ||
-      sub.includes('girl') || sub.includes('teen') ||
-      subSlug.includes('girl') || subSlug.includes('teen') ||
-      sku.includes('girls') || sku.includes('girl') || id.includes('girls') ||
-      name.includes('girl') || name.includes('butterfly') || name.includes('charm') || name.includes('dainty') ||
-      desc.includes('girl') || desc.includes('teen')
+      isCuratedItem &&
+      (sub.includes('girl') ||
+        subSlug.includes('girl') ||
+        sku.includes('girl') ||
+        id.includes('girl') ||
+        name.includes('girl') ||
+        name.includes('teens'))
     );
   }
 
   if (s === 'pooja-items' || s === 'pooja' || s === 'pooja-collection') {
     return (
-      coll.includes('pooja') || coll.includes('puja') ||
-      sub.includes('pooja') || sub.includes('puja') ||
-      subSlug.includes('pooja') || subSlug.includes('puja') ||
-      sku.includes('pooja') || id.includes('pooja') ||
-      name.includes('pooja') || name.includes('puja') || name.includes('deepam') ||
-      name.includes('kalash') || name.includes('thali') || name.includes('diya') || name.includes('bell') ||
-      desc.includes('pooja') || desc.includes('temple lamp')
+      isCuratedItem &&
+      (sub.includes('pooja') ||
+        subSlug.includes('pooja') ||
+        sku.includes('pooja') ||
+        id.includes('pooja') ||
+        name.includes('pooja') ||
+        name.includes('deepam') ||
+        name.includes('kalash') ||
+        name.includes('thali') ||
+        id === 'collections-pooja-bell-lamp')
     );
   }
 
   if (s === 'silver-idols' || s === 'silver-idol') {
     return (
-      coll.includes('idol') || coll.includes('murti') ||
-      sub.includes('idol') || sub.includes('murti') ||
-      subSlug.includes('idol') || subSlug.includes('murti') ||
-      sku.includes('idol') || id.includes('idol') ||
-      name.includes('idol') || name.includes('murti') || name.includes('balaji') ||
-      name.includes('vinayagar') || name.includes('anjaneya') || name.includes('hanuman') ||
-      desc.includes('murti') || desc.includes('idol')
+      (isCuratedItem || cat === 'silver pooja' || cat === 'silver') &&
+      (sub.includes('idol') ||
+        subSlug.includes('idol') ||
+        sku.includes('idol') ||
+        id.includes('idol') ||
+        name.includes('murti') ||
+        name.includes('idol') ||
+        name.includes('balaji') ||
+        name.includes('lakshmi ganesha'))
     );
   }
 
   if (s === 'gift-collection' || s === 'gift') {
     return (
-      coll.includes('gift') ||
-      sub.includes('gift') ||
-      subSlug.includes('gift') ||
-      sku.includes('gift') || id.includes('gift') ||
-      name.includes('gift') || name.includes('katori') || name.includes('spoon') || name.includes('ensemble') || name.includes('bowl') ||
-      desc.includes('gift')
+      isCuratedItem &&
+      (sub.includes('gift') ||
+        subSlug.includes('gift') ||
+        sku.includes('gift') ||
+        id.includes('gift') ||
+        name.includes('gift') ||
+        name.includes('katori') ||
+        name.includes('presentation box'))
     );
   }
 
   return (
-    cat.includes(s) || sub.includes(s) || subSlug.includes(s) || coll.includes(s) || name.includes(s) || sku.includes(s)
+    isCuratedItem &&
+    (cat.includes(s) ||
+      sub.includes(s) ||
+      subSlug.includes(s) ||
+      coll.includes(s) ||
+      name.includes(s) ||
+      sku.includes(s))
   );
 }
 
@@ -234,8 +307,9 @@ export default function CollectionsCatalogPage({
     return () => { isMounted = false; };
   }, [subCategory]);
 
-  const activeSlug = subCategory ? subCategory.toLowerCase() : 'all';
-  const categoryInfo = COLLECTIONS_MAP[activeSlug] || {
+  const normalizedSubCategory = subCategory ? subCategory.toLowerCase().trim().replace(/[\s_]+/g, '-') : 'all';
+  const activeSlug = normalizedSubCategory;
+  const categoryInfo = COLLECTIONS_MAP[activeSlug] || COLLECTIONS_MAP[subCategory?.toLowerCase()?.trim()] || {
     title: 'Curated Signature Collections',
     desc: "Discover bespoke jewelry lines tailored for auspicious family milestones, weddings, baby ceremonies, men's heirlooms, and sacred temple rituals."
   };

@@ -47,21 +47,22 @@ export default function Header({
   const [isAppointmentOpen, setIsAppointmentOpen] = useState(false);
   const [isTrackOrderOpen, setIsTrackOrderOpen] = useState(false);
   const [isGoldRateModalOpen, setIsGoldRateModalOpen] = useState(false);
+  const [isContactInView, setIsContactInView] = useState(false);
 
   const dropdownRef = useRef(null);
   const hoverTimeoutRef = useRef(null);
   const searchInputRef = useRef(null);
 
   const currentPath = location.pathname;
-  const isHome = currentPath === '/';
+  const isContact = currentPath === '/contact' || (currentPath === '/' && isContactInView);
+  const isHome = currentPath === '/' && !isContact;
   const isBridal = currentPath === '/bridal' || currentPath.startsWith('/bridal');
   const isDiamonds = currentPath === '/diamonds' || currentPath === '/diamond';
   const isCollections = currentPath.startsWith('/collections');
-  const isSilverPooja = currentPath === '/silver' || currentPath.startsWith('/silver');
-  const isJewellery = (currentPath.startsWith('/gold') || currentPath.startsWith('/jewellery') || currentPath === '/coins-bars') && !isSilverPooja;
+  const isSilverPooja = currentPath === '/silver-pooja' || currentPath.startsWith('/silver-pooja');
+  const isJewellery = (currentPath.startsWith('/gold') || currentPath.startsWith('/jewellery') || currentPath === '/coins-bars' || (currentPath.startsWith('/silver') && !isSilverPooja));
   const isOffers = currentPath === '/offers' || currentPath.startsWith('/offers');
   const isAbout = currentPath === '/about' || currentPath === '/jewellery-care' || currentPath === '/temple-heritage';
-  const isContact = currentPath === '/contact' || location.hash === '#contact-concierge';
 
   const scrollToContactSection = () => {
     const el = document.getElementById('contact-concierge');
@@ -78,18 +79,89 @@ export default function Header({
   };
 
   const handleContactClick = (e) => {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
     if (mobileMenuOpen) setMobileMenuOpen(false);
+
+    setIsContactInView(true);
 
     if (location.pathname === '/') {
       scrollToContactSection();
       if (window.location.hash !== '#contact-concierge') {
-        window.history.pushState(null, '', '/#contact-concierge');
+        navigate('/#contact-concierge', { replace: true });
       }
     } else {
       navigate('/#contact-concierge');
     }
   };
+
+  const handleHomeClick = (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    if (mobileMenuOpen) setMobileMenuOpen(false);
+
+    setIsContactInView(false);
+
+    if (location.pathname === '/') {
+      if (window.location.hash) {
+        navigate('/', { replace: true });
+      }
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    } else {
+      navigate('/');
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  // High-performance IntersectionObserver to detect Contact section in view without scroll listener reflows
+  useEffect(() => {
+    if (location.pathname !== '/') {
+      setIsContactInView(false);
+      return;
+    }
+
+    const el = document.getElementById('contact-concierge');
+    if (!el) {
+      setIsContactInView(false);
+      return;
+    }
+
+    if (location.hash === '#contact-concierge') {
+      setIsContactInView(true);
+      setTimeout(() => {
+        scrollToContactSection();
+      }, 100);
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const inView = entry.isIntersecting;
+        setIsContactInView(inView);
+        if (inView) {
+          if (window.location.hash !== '#contact-concierge') {
+            window.history.replaceState(null, '', '/#contact-concierge');
+          }
+        } else {
+          if (window.location.hash === '#contact-concierge') {
+            window.history.replaceState(null, '', window.location.pathname);
+          }
+        }
+      },
+      {
+        rootMargin: '-90px 0px -40% 0px',
+        threshold: 0.05
+      }
+    );
+
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+    };
+  }, [location.pathname, location.hash]);
 
   const getNavLinkClass = (isActive) =>
     `px-3.5 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
@@ -296,7 +368,7 @@ export default function Header({
               </button>
 
               {/* Official Brand Logo (Sleek Compact Size) */}
-              <Link to="/" className="flex items-center gap-2 group cursor-pointer py-0.5">
+              <Link to="/" onClick={handleHomeClick} className="flex items-center gap-2 group cursor-pointer py-0.5">
                 <img 
                   src="/images/vedha_radha_official_logo.png" 
                   alt="Vedha Radha Thangha Maalighai" 
@@ -318,6 +390,7 @@ export default function Header({
               <div className="relative inline-flex items-center">
                 <Link
                   to="/"
+                  onClick={handleHomeClick}
                   className={getNavLinkClass(isHome)}
                 >
                   Home
@@ -476,7 +549,7 @@ export default function Header({
               {/* Silver Pooja */}
               <div className="relative inline-flex items-center">
                 <Link
-                  to="/silver"
+                  to="/silver-pooja"
                   className={getNavLinkClass(isSilverPooja)}
                 >
                   <span>Silver Pooja</span>
@@ -666,7 +739,7 @@ export default function Header({
               <div className="p-4 space-y-1 text-xs font-medium text-[#2C1D18]">
                 <Link
                   to="/"
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={handleHomeClick}
                   className={`block px-3 py-2.5 rounded-lg transition-colors ${
                     isHome ? 'bg-[#540B16] text-[#FAF5EE] font-semibold' : 'hover:bg-white'
                   }`}
@@ -711,7 +784,7 @@ export default function Header({
                   Bridal
                 </Link>
                 <Link
-                  to="/silver"
+                  to="/silver-pooja"
                   onClick={() => setMobileMenuOpen(false)}
                   className={`block px-3 py-2.5 rounded-lg transition-colors ${
                     isSilverPooja ? 'bg-[#540B16] text-[#FAF5EE] font-semibold' : 'hover:bg-white'

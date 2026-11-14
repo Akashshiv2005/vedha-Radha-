@@ -37,12 +37,15 @@ export function adaptStorefrontProduct(raw) {
 
   const rawProductType = String(raw.productType || raw.product_type || '').toLowerCase();
   const rawCategory = String(raw.category || '').toLowerCase();
-  const isGoldItem = rawProductType === 'gold' || rawCategory.includes('gold');
-  const isSilverItem = rawProductType === 'silver' || rawCategory.includes('silver');
+  const isDiamondItem = rawProductType === 'diamond' || rawCategory.includes('diamond') || Boolean(raw.isDiamond);
+  const isGoldItem = !isDiamondItem && (rawProductType === 'gold' || rawCategory.includes('gold'));
+  const isSilverItem = rawProductType === 'silver' || rawCategory.includes('silver') || rawCategory.includes('pooja');
   const isCoinOrBar = rawProductType === 'coins_bars' || rawCategory.includes('coin') || rawCategory.includes('bar');
 
   let defaultPurityOrDetails = '22K BIS 916';
-  if (isSilverItem) {
+  if (isDiamondItem) {
+    defaultPurityOrDetails = 'IGI & GIA Certified Natural';
+  } else if (isSilverItem) {
     defaultPurityOrDetails = '92.5 Silver';
   } else if (isCoinOrBar) {
     defaultPurityOrDetails = '24K 999 Pure Gold';
@@ -54,6 +57,8 @@ export function adaptStorefrontProduct(raw) {
   if (!badge) {
     if (isSold) {
       badge = 'Sold';
+    } else if (isDiamondItem) {
+      badge = 'IGI Certified Natural';
     } else if (raw.hallmark_details) {
       badge = raw.hallmark_details;
     } else if (raw.purity) {
@@ -69,7 +74,7 @@ export function adaptStorefrontProduct(raw) {
     }
   }
 
-  const badgeType = raw.badgeType || (isSold ? 'out-of-stock' : (raw.item_type === 'unique' ? 'one-piece' : 'in-stock'));
+  const badgeType = raw.badgeType || (isSold ? 'out-of-stock' : (isDiamondItem ? 'certified' : (raw.item_type === 'unique' ? 'one-piece' : 'in-stock')));
 
   const details = raw.details || raw.hallmark_details || raw.purity || defaultPurityOrDetails;
 
@@ -79,8 +84,8 @@ export function adaptStorefrontProduct(raw) {
     name: raw.name || '',
     subtitle: raw.subtitle || '',
     description: raw.description || '',
-    productType: raw.productType || raw.product_type || '',
-    product_type: raw.product_type || raw.productType || '',
+    productType: isDiamondItem ? 'Diamond' : (raw.productType || raw.product_type || ''),
+    product_type: isDiamondItem ? 'diamond' : (raw.product_type || raw.productType || ''),
     category: raw.category || '',
     subCategory: subCat,
     subCategorySlug: subCatSlug,
@@ -100,11 +105,16 @@ export function adaptStorefrontProduct(raw) {
     netWeight: raw.net_weight || raw.netWeight || '',
     dimensions: raw.dimensions || '',
     craftsmanship: raw.craftsmanship || '',
-    certification: raw.certification || raw.hallmark_details || 'BIS Hallmarked',
+    certification: raw.certification || raw.hallmark_details || (isDiamondItem ? 'IGI & GIA Certified' : 'BIS Hallmarked'),
     status: stat,
     isUnique: raw.item_type === 'unique' || !!raw.isUnique,
     isBridal: raw.isBridal ?? (String(raw.category).toLowerCase().includes('bridal') || false),
+    isDiamond: isDiamondItem,
     isNewArrival: raw.isNewArrival ?? false,
+    carat: raw.carat || '',
+    colorClarity: raw.colorClarity || raw.color_clarity || '',
+    metal: raw.metal || '',
+    fourCs: raw.fourCs || null,
     stockQty: raw.stock_quantity ?? raw.stockQty ?? 1,
     availability: availability
   };

@@ -34,7 +34,7 @@ import { getProductUrl } from './utils/productSlug';
 
 // Scroll to top or anchor on route change with progressive layout stabilization
 function ScrollToTop() {
-  const { pathname, search, hash } = useLocation();
+  const { pathname, search, hash, state } = useLocation();
   const prevPathRef = React.useRef(pathname);
 
   useEffect(() => {
@@ -76,6 +76,50 @@ function ScrollToTop() {
       };
     }
 
+    // Check if returning from a product detail view to restore scroll to the clicked card
+    let backInfo = null;
+    try {
+      const raw = sessionStorage.getItem('lastProductBackInfo');
+      if (raw) backInfo = JSON.parse(raw);
+    } catch {}
+
+    const targetProductId = state?.targetProductId || (backInfo && backInfo.fromPath === (pathname + search) ? backInfo.productId : null);
+    const targetScrollY = state?.restoreScrollY != null ? state.restoreScrollY : (backInfo && backInfo.fromPath === (pathname + search) ? backInfo.scrollY : null);
+
+    if (targetProductId || targetScrollY != null) {
+      let attempts = 0;
+      let timeoutId = null;
+
+      const restoreScroll = () => {
+        let found = false;
+        if (targetProductId) {
+          const cardEl = document.getElementById(`product-card-${targetProductId}`);
+          if (cardEl) {
+            cardEl.scrollIntoView({ block: 'center', behavior: 'auto' });
+            found = true;
+          }
+        }
+        if (!found && targetScrollY != null) {
+          window.scrollTo({ top: targetScrollY, behavior: 'auto' });
+        }
+
+        attempts++;
+        if (attempts < 15 && !found) {
+          timeoutId = setTimeout(restoreScroll, 100);
+        } else if (found) {
+          setTimeout(() => {
+            try { sessionStorage.removeItem('lastProductBackInfo'); } catch {}
+          }, 600);
+        }
+      };
+
+      restoreScroll();
+      prevPathRef.current = pathname;
+      return () => {
+        if (timeoutId) clearTimeout(timeoutId);
+      };
+    }
+
     const isGoldSubNavigation = pathname.startsWith('/gold') && prevPathRef.current.startsWith('/gold');
     const isSilverSubNavigation = pathname.startsWith('/silver') && prevPathRef.current.startsWith('/silver');
 
@@ -83,7 +127,7 @@ function ScrollToTop() {
       window.scrollTo(0, 0);
     }
     prevPathRef.current = pathname;
-  }, [pathname, search, hash]);
+  }, [pathname, search, hash, state]);
 
   return null;
 }
@@ -96,7 +140,29 @@ export default function App() {
     if (!product) return;
     const url = getProductUrl(product);
     if (url) {
-      navigate(url, { state: { product } });
+      const scrollY = window.scrollY || window.pageYOffset || 0;
+      const fromPath = location.pathname + location.search;
+
+      try {
+        sessionStorage.setItem('lastProductBackInfo', JSON.stringify({
+          fromPath,
+          scrollY,
+          productId: product.id,
+          slug: getProductIdentifier(product),
+          timestamp: Date.now()
+        }));
+      } catch (err) {
+        console.warn('SessionStorage write error:', err);
+      }
+
+      navigate(url, { 
+        state: { 
+          product, 
+          fromPath, 
+          scrollY, 
+          targetProductId: product.id 
+        } 
+      });
     } else {
       setSelectedProduct(product);
     }
@@ -439,7 +505,31 @@ export default function App() {
             } 
           />
           <Route 
+            path="/new-arrivals/:subCategory" 
+            element={
+              <NewArrivalsPage 
+                searchQuery={searchQuery}
+                onViewProduct={handleViewProduct}
+                onAddToCart={handleAddToCart}
+                onAddToWishlist={handleAddToWishlist}
+                wishlistItems={wishlistItems}
+              />
+            } 
+          />
+          <Route 
             path="/new_arrivals" 
+            element={
+              <NewArrivalsPage 
+                searchQuery={searchQuery}
+                onViewProduct={handleViewProduct}
+                onAddToCart={handleAddToCart}
+                onAddToWishlist={handleAddToWishlist}
+                wishlistItems={wishlistItems}
+              />
+            } 
+          />
+          <Route 
+            path="/new_arrivals/:subCategory" 
             element={
               <NewArrivalsPage 
                 searchQuery={searchQuery}
@@ -491,7 +581,29 @@ export default function App() {
             } 
           />
           <Route 
+            path="/temple-heritage/:subCategory" 
+            element={
+              <TempleHeritagePage 
+                onViewProduct={handleViewProduct}
+                onAddToCart={handleAddToCart}
+                onAddToWishlist={handleAddToWishlist}
+                wishlistItems={wishlistItems}
+              />
+            } 
+          />
+          <Route 
             path="/temple" 
+            element={
+              <TempleHeritagePage 
+                onViewProduct={handleViewProduct}
+                onAddToCart={handleAddToCart}
+                onAddToWishlist={handleAddToWishlist}
+                wishlistItems={wishlistItems}
+              />
+            } 
+          />
+          <Route 
+            path="/temple/:subCategory" 
             element={
               <TempleHeritagePage 
                 onViewProduct={handleViewProduct}
@@ -515,7 +627,29 @@ export default function App() {
             } 
           />
           <Route 
+            path="/diamonds/:subCategory" 
+            element={
+              <DiamondPage 
+                onViewProduct={handleViewProduct}
+                onAddToCart={handleAddToCart}
+                onAddToWishlist={handleAddToWishlist}
+                wishlistItems={wishlistItems}
+              />
+            } 
+          />
+          <Route 
             path="/diamond" 
+            element={
+              <DiamondPage 
+                onViewProduct={handleViewProduct}
+                onAddToCart={handleAddToCart}
+                onAddToWishlist={handleAddToWishlist}
+                wishlistItems={wishlistItems}
+              />
+            } 
+          />
+          <Route 
+            path="/diamond/:subCategory" 
             element={
               <DiamondPage 
                 onViewProduct={handleViewProduct}
@@ -538,6 +672,19 @@ export default function App() {
               />
             } 
           />
+          <Route 
+            path="/silver-pooja/:subCategory" 
+            element={
+              <SilverPoojaPage 
+                onViewProduct={handleViewProduct}
+                onAddToCart={handleAddToCart}
+                onAddToWishlist={handleAddToWishlist}
+                wishlistItems={wishlistItems}
+              />
+            } 
+          />
+          <Route path="/silver_pooja" element={<Navigate to="/silver-pooja" replace />} />
+          <Route path="/pooja" element={<Navigate to="/silver-pooja" replace />} />
 
           {/* Jewellery Care & Purity Guide */}
           <Route 
@@ -547,6 +694,17 @@ export default function App() {
 
           <Route 
             path="/bridal" 
+            element={
+              <BridalPage 
+                onViewProduct={handleViewProduct}
+                onAddToCart={handleAddToCart}
+                onAddToWishlist={handleAddToWishlist}
+                wishlistItems={wishlistItems}
+              />
+            } 
+          />
+          <Route 
+            path="/bridal/:subCategory" 
             element={
               <BridalPage 
                 onViewProduct={handleViewProduct}

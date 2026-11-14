@@ -99,7 +99,7 @@ export const newArrivalsHighlightProducts = [
     images: [
       "/images/new-arrivals/new-arrival-royal-diamond-solitaire-luxe.jpg",
       "/images/generated/diamond_solitaire_luxe.jpg",
-      "/images/exclusive-collections-luxe/enhanced_diamond_ring_photo.jpg"
+      "/images/diamonds/diamond_trilogy_ring.jpg"
     ],
     purity: "18K White Gold & Natural Diamond",
     goldPurity: "18K White Gold (750)",
@@ -175,7 +175,7 @@ export const newArrivalsHighlightProducts = [
     images: [
       "/images/new-arrivals/new-arrival-temple-lakshmi-pendant-luxe.jpg",
       "/images/products/gold/gold-new-arrival-kamakshi-locket-01.jpg",
-      "/images/col_gold_2k.jpg"
+      "/images/generated/temple_ganesha_art.jpg"
     ],
     purity: "22K 916 BIS Hallmarked Gold",
     goldPurity: "22K BIS 916",

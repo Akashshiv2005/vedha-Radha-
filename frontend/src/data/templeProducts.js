@@ -24,11 +24,11 @@ export const templeProducts = [
     numericPrice: 485000,
     originalPrice: '₹ 5,10,000',
     discount: '5% OFF',
-    image: '/images/product_necklace.jpg',
+    image: '/images/plate_08_antique_temple_grand_haram_pristine.jpg',
     images: [
-      '/images/product_necklace.jpg',
+      '/images/plate_08_antique_temple_grand_haram_pristine.jpg',
       '/images/plate_01_temple_kasu_haram_pristine.jpg',
-      '/images/col_wedding.jpg'
+      '/images/plate_03_antique_lakshmi_choker_pristine.jpg'
     ],
     karat: '22K (916 Pure Gold)',
     purity: '22K (916 Pure Gold)',
@@ -93,10 +93,10 @@ export const templeProducts = [
     numericPrice: 362000,
     originalPrice: '₹ 3,85,000',
     discount: '6% OFF',
-    image: '/images/col_wedding.jpg',
+    image: '/images/plate_01_temple_kasu_haram_pristine.jpg',
     images: [
-      '/images/col_wedding.jpg',
-      '/images/plate_01_temple_kasu_haram_pristine.jpg'
+      '/images/plate_01_temple_kasu_haram_pristine.jpg',
+      '/images/plate_08_antique_temple_grand_haram_pristine.jpg'
     ],
     karat: '22K (916 Pure Gold)',
     purity: '22K (916 Pure Gold)',
@@ -127,10 +127,10 @@ export const templeProducts = [
     numericPrice: 615000,
     originalPrice: '₹ 6,45,000',
     discount: 'Curated Heritage',
-    image: '/images/new-arrivals/new-arrival-exclusive-nakshi-vaddanam-01.jpg',
+    image: '/images/new-arrivals/new-arrival-exclusive-nakshi-vaddanam-02.jpg',
     images: [
-      '/images/new-arrivals/new-arrival-exclusive-nakshi-vaddanam-01.jpg',
-      '/images/plate_06_bridal_nakshi_vaddanam_pristine.jpg'
+      '/images/new-arrivals/new-arrival-exclusive-nakshi-vaddanam-02.jpg',
+      '/images/plate_06_royal_nakshi_vaddanam_pristine.jpg'
     ],
     karat: '22K (916 Pure Gold)',
     purity: '22K (916 Pure Gold)',
@@ -161,9 +161,9 @@ export const templeProducts = [
     numericPrice: 138000,
     originalPrice: '₹ 1,48,000',
     discount: '7% OFF',
-    image: '/images/product_gold_earrings.jpg',
+    image: '/images/plate_09_chettinad_peacock_jhumkas_pristine.jpg',
     images: [
-      '/images/product_gold_earrings.jpg',
+      '/images/plate_09_chettinad_peacock_jhumkas_pristine.jpg',
       '/images/new-arrivals/new-arrival-chettinad-bell-jhumkas-luxe.jpg'
     ],
     karat: '22K (916 Pure Gold)',
@@ -195,10 +195,10 @@ export const templeProducts = [
     numericPrice: 420000,
     originalPrice: '₹ 4,45,000',
     discount: 'Masterpiece',
-    image: '/images/product_bangles.jpg',
+    image: '/images/new-arrivals/new-arrival-exclusive-gokhru-kada-02.jpg',
     images: [
-      '/images/product_bangles.jpg',
-      '/images/new-arrivals/new-arrival-exclusive-gokhru-kada-01.jpg'
+      '/images/new-arrivals/new-arrival-exclusive-gokhru-kada-02.jpg',
+      '/images/plate_07_royal_antique_kadas_pristine.jpg'
     ],
     karat: '22K (916 Pure Gold)',
     purity: '22K (916 Pure Gold)',

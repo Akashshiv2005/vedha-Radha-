@@ -7,11 +7,11 @@ from pydantic import BaseModel, ConfigDict, Field, computed_field, field_validat
 
 STOREFRONT_CATEGORY_MAP = {
     "earrings": ["studs", "hangings", "drops", "jhumkas", "hoops & bali", "earrings & jhumkas"],
-    "rings": ["engagement rings", "casual rings"],
-    "bangle & bracelets": ["bangles", "cuff bracelets", "chain bracelets", "bangles & kadas"],
+    "rings": ["engagement rings", "casual rings", "solitaire & bands"],
+    "bangle & bracelets": ["bangles", "cuff bracelets", "chain bracelets", "bangles & kadas", "tennis bracelets & kadas"],
     "bangles": ["bangles", "cuff bracelets", "chain bracelets", "bangles & kadas"],
-    "necklace": ["short necklace", "long necklace", "chains & neckwear"],
-    "necklaces": ["short necklace", "long necklace", "chains & neckwear"],
+    "necklace": ["short necklace", "long necklace", "chains & neckwear", "necklaces & harams"],
+    "necklaces": ["short necklace", "long necklace", "chains & neckwear", "necklaces & harams"],
     "nosepin": [],
     "occasion": ["casual wear", "party wear", "traditional wear"],
     "chains": [],
@@ -27,7 +27,11 @@ STOREFRONT_CATEGORY_MAP = {
     "silver jewellery": ["anklets & kolusu", "toe rings & metti", "silver chains & pendants", "silver bangles & kadas", "anklets", "toe rings"],
     "silver articles": ["pooja articles", "pooja utensils", "silver lamps & deepams", "silver bowls & dinnerware", "silver idols & murti"],
     "temple jewellery": ["temple harams", "long harams", "deity ornaments", "nagapadam sets"],
+    "temple heritage": ["harams & necklaces", "temple pendants", "kasu malas", "nakshi vaddanam", "temple jhumkas", "temple kadas", "long harams"],
     "bridal jewellery": ["muhurtham sets", "bridal chokers", "chokers", "kasu malas", "vaddanam"],
+    "silver pooja": ["pooja vessels", "lamps & vilakku", "pooja thali", "silver idols", "pooja utensils"],
+    "diamond": ["rings", "necklaces", "bracelets", "bangles", "earrings", "pendants", "nosepins", "chokers", "sets", "solitaire & bands", "necklaces & harams", "tennis bracelets & kadas", "halo drops & jhumkas", "solitaire pendants", "diamond nose pins"],
+    "diamonds": ["rings", "necklaces", "bracelets", "bangles", "earrings", "pendants", "nosepins", "chokers", "sets", "solitaire & bands", "necklaces & harams", "tennis bracelets & kadas", "halo drops & jhumkas", "solitaire pendants", "diamond nose pins"],
     "coins & bars": ["gold coins", "gold bars", "silver coins", "silver bars"],
 }
 
@@ -35,12 +39,16 @@ PRODUCT_TYPE_CATEGORY_MAP = {
     "gold": [
         "earrings", "rings", "bangles & bracelets", "bangles", "necklace", "necklaces",
         "nosepin", "occasion", "chains", "pendant", "pendants", "anklets", "toe rings",
-        "gold jewellery", "temple jewellery", "bridal jewellery"
+        "gold jewellery", "temple jewellery", "temple heritage", "bridal jewellery", "collections"
     ],
     "silver": [
         "earrings", "rings", "bangles & bracelets", "bangles", "necklace", "necklaces",
         "nosepin", "occasion", "chains", "pendant", "pendants", "anklets", "toe rings",
-        "silver jewellery", "silver articles"
+        "silver jewellery", "silver articles", "silver pooja", "pooja items", "silver idol"
+    ],
+    "diamond": [
+        "diamond", "diamonds", "rings", "necklaces", "bracelets", "bangles", "earrings",
+        "pendants", "nosepins", "chokers", "sets", "solitaire & bands", "collections"
     ],
     "coins_bars": [
         "gold coins", "gold bars", "silver coins", "silver bars", "coins & bars", "coins", "bars"
@@ -56,6 +64,8 @@ def normalize_product_type(v: Optional[str]) -> Optional[str]:
         return "gold"
     if val == "silver":
         return "silver"
+    if "diamond" in val:
+        return "diamond"
     if "coin" in val or "bar" in val:
         return "coins_bars"
     return val
@@ -63,6 +73,8 @@ def normalize_product_type(v: Optional[str]) -> Optional[str]:
 
 def infer_product_type(category: str) -> str:
     cat = (category or "").strip().lower()
+    if "diamond" in cat:
+        return "diamond"
     if "coin" in cat or "bar" in cat:
         return "coins_bars"
     if "silver" in cat or "pooja" in cat or "article" in cat or "utensil" in cat:
@@ -416,13 +428,21 @@ class ProductPublic(BaseModel):
                 return "Gold"
             if pt == "silver":
                 return "Silver"
+            if pt == "diamond":
+                return "Diamond"
             if "coin" in pt or "bar" in pt:
                 return "Coins & Bars"
-            return self.product_type
+            return self.product_type.capitalize()
         pt_inf = infer_product_type(self.category)
         if pt_inf == "coins_bars":
             return "Coins & Bars"
+        if pt_inf == "diamond":
+            return "Diamond"
         return pt_inf.capitalize()
+
+    @computed_field
+    def isDiamond(self) -> bool:
+        return (self.product_type or "").lower() == "diamond" or "diamond" in self.category.lower()
 
     @computed_field
     def isUnique(self) -> bool:
@@ -499,9 +519,11 @@ class ProductPublic(BaseModel):
             return "Sold"
         if self.hallmark_details:
             return self.hallmark_details
+        if "diamond" in (self.product_type or "").lower() or "diamond" in self.category.lower():
+            return "IGI Certified Natural"
         if "gold" in self.category.lower():
             return "22K BIS 916"
-        if "silver" in self.category.lower():
+        if "silver" in self.category.lower() or "pooja" in self.category.lower():
             return "92.5 Silver"
         return "In stock"
 
@@ -509,13 +531,23 @@ class ProductPublic(BaseModel):
     def badgeType(self) -> str:
         if "sold" in self.status.lower() or self.stock_quantity <= 0:
             return "out-of-stock"
+        if "diamond" in (self.product_type or "").lower() or "diamond" in self.category.lower():
+            return "certified"
         if self.item_type == "unique":
             return "one-piece"
         return "in-stock"
 
     @computed_field
     def details(self) -> str:
-        return self.hallmark_details or self.purity or ("22K BIS 916" if "gold" in self.category.lower() else "92.5 Silver")
+        if self.hallmark_details:
+            return self.hallmark_details
+        if self.purity:
+            return self.purity
+        if "diamond" in (self.product_type or "").lower() or "diamond" in self.category.lower():
+            return "IGI Certified Natural Diamond"
+        if "gold" in self.category.lower():
+            return "22K BIS 916"
+        return "92.5 Silver"
 
     @computed_field
     def weight(self) -> Optional[str]:

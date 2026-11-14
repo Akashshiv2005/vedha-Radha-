@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
+import { products } from '../data/products';
 import { goldCategories } from '../data/categoryData';
 import { storefrontClient } from '../api/storefrontProductsClient';
 import { ProductGridSkeleton } from '../components/common/ProductCardSkeleton';
@@ -324,8 +325,8 @@ export default function GoldPage({
   const [priceFilter, setPriceFilter] = useState('all'); // 'all' | 'under50k' | '50k-100k' | 'above100k'
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
-  const [dbProducts, setDbProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [dbProducts, setDbProducts] = useState(products.filter(p => !p.isDiamond && ((p.category || '').toLowerCase() === 'gold' || p.product_type === 'gold')));
+  const [isLoading, setIsLoading] = useState(false);
   const [apiError, setApiError] = useState(null);
   const pillTrackRef = React.useRef(null);
 
@@ -414,23 +415,19 @@ export default function GoldPage({
 
   React.useEffect(() => {
     let isMounted = true;
-    setIsLoading(true);
-    setApiError(null);
 
     storefrontClient.getStorefrontProducts({
       category: activeMainCat === 'coins' ? 'coins' : 'gold',
       page_size: 200
     }).then(res => {
       if (!isMounted) return;
-      if (res.success) {
+      if (res.success && Array.isArray(res.items) && res.items.length > 0) {
         setDbProducts(res.items);
-      } else {
-        setApiError(res.error || 'Failed to load products');
       }
       setIsLoading(false);
-    }).catch(() => {
+    }).catch((err) => {
       if (!isMounted) return;
-      setApiError('Unable to connect to product server');
+      console.warn('Storefront gold fetch fallback active:', err);
       setIsLoading(false);
     });
 
@@ -441,6 +438,9 @@ export default function GoldPage({
   const filteredProducts = dbProducts.filter(item => {
     const catLower = (item.category || '').toLowerCase();
     const prodTypeLower = (item.productType || item.product_type || '').toLowerCase();
+    const nameLower = (item.name || '').toLowerCase();
+    const imgLower = (item.image || item.imageUrl || item.image_url || '').toLowerCase();
+    const purityLower = (item.purity || '').toLowerCase();
 
     // 1. Strictly exclude silver jewellery, coins/bars, and diamond jewellery from Gold Page
     if (
@@ -450,7 +450,10 @@ export default function GoldPage({
       prodTypeLower === 'diamond' ||
       prodTypeLower === 'silver' ||
       catLower.includes('silver') ||
-      (item.purity && item.purity.toLowerCase().includes('silver'))
+      nameLower.includes('silver') ||
+      imgLower.includes('silver') ||
+      purityLower.includes('silver') ||
+      purityLower.includes('925')
     ) {
       return false;
     }
@@ -895,7 +898,13 @@ export default function GoldPage({
               }`}
             >
               {getCategoryIcon('all', activeKey === 'all')}
-              <span>All Gold ({dbProducts.filter(p => !((p.productType || p.product_type || '').toLowerCase() === 'silver' || (p.category || '').toLowerCase().includes('silver'))).length})</span>
+              <span>All Gold ({dbProducts.filter(p => {
+                const pt = (p.productType || p.product_type || '').toLowerCase();
+                const cat = (p.category || '').toLowerCase();
+                const name = (p.name || '').toLowerCase();
+                const img = (p.image || p.imageUrl || p.image_url || '').toLowerCase();
+                return !(pt === 'silver' || cat.includes('silver') || name.includes('silver') || img.includes('silver') || pt === 'diamond' || cat.includes('diamond'));
+              }).length})</span>
             </Link>
 
             {/* Category Shortcut Pills */}

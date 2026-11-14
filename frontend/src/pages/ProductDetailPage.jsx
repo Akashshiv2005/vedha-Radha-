@@ -171,23 +171,73 @@ export default function ProductDetailPage({ onAddToCart, onAddToWishlist, wishli
       if (canonicalSlug) {
         const canonicalPath = `/product/${encodeURIComponent(canonicalSlug)}`;
         if (window.location.pathname !== canonicalPath) {
-          window.history.replaceState({ isProductView: true, productId: canonicalSlug, product }, '', canonicalPath);
+          window.history.replaceState({ 
+            ...(location.state || {}),
+            isProductView: true, 
+            productId: canonicalSlug, 
+            product 
+          }, '', canonicalPath);
         }
       }
     }
-  }, [product]);
+  }, [product, location.state]);
 
   const handleBack = () => {
+    let backInfo = null;
+    try {
+      const raw = sessionStorage.getItem('lastProductBackInfo');
+      if (raw) backInfo = JSON.parse(raw);
+    } catch {}
+
+    const fromPath = location.state?.fromPath || backInfo?.fromPath;
+    const scrollY = location.state?.scrollY ?? backInfo?.scrollY;
+    const targetProductId = product?.id || backInfo?.productId;
+
+    // 1. If we have a recorded internal catalog fromPath, navigate back with scroll restoration:
+    if (
+      fromPath && 
+      !fromPath.startsWith('/product/')
+    ) {
+      navigate(fromPath, { state: { restoreScrollY: scrollY, targetProductId } });
+      return;
+    }
+
+    // 2. If browser history exists:
     if (window.history.length > 1) {
       navigate(-1);
+      return;
+    }
+
+    // 3. Fallback to the dedicated catalog route for this specific product:
+    const cat = (product?.category || '').toLowerCase();
+    const sub = (product?.subCategory || product?.sub_category || product?.subType || '').toLowerCase().trim();
+    
+    if (product?.isDiamond || cat.includes('diamond')) {
+      if (sub.includes('ring')) navigate('/diamonds?category=rings');
+      else if (sub.includes('necklace') || sub.includes('choker') || sub.includes('haram')) navigate('/diamonds?category=necklaces');
+      else if (sub.includes('bracelet') || sub.includes('bangle') || sub.includes('kada')) navigate('/diamonds?category=bracelets');
+      else if (sub.includes('earring') || sub.includes('stud') || sub.includes('jhumka')) navigate('/diamonds?category=earrings');
+      else if (sub.includes('pendant')) navigate('/diamonds?category=pendants');
+      else if (sub.includes('nose')) navigate('/diamonds?category=nosepins');
+      else navigate('/diamonds');
+    } else if (product?.isSilverPooja || cat.includes('pooja') || sub.includes('pooja')) {
+      navigate('/silver-pooja');
+    } else if (cat.includes('coin') || cat.includes('bar') || sub.includes('coin') || sub.includes('bar')) {
+      navigate('/coins-bars');
+    } else if (product?.isTemple || cat.includes('temple')) {
+      navigate('/temple-heritage');
+    } else if (product?.isBridal || cat.includes('bridal')) {
+      navigate('/bridal');
+    } else if (product?.isNewArrival || cat.includes('new')) {
+      navigate('/new-arrivals');
+    } else if (cat.includes('collection')) {
+      navigate('/collections');
+    } else if (product?.isSilver || cat.includes('silver')) {
+      if (sub) navigate(`/silver/${encodeURIComponent(sub)}`);
+      else navigate('/silver');
     } else {
-      const cat = (product?.category || '').toLowerCase();
-      if (cat.includes('silver')) navigate('/silver');
-      else if (cat.includes('coin') || cat.includes('bar')) navigate('/coins-bars');
-      else if (cat.includes('new') || product?.isNewArrival) navigate('/new-arrivals');
-      else if (cat.includes('temple')) navigate('/temple-heritage');
-      else if (cat.includes('diamond')) navigate('/diamonds');
-      else if (cat.includes('collection')) navigate('/collections');
+      // Gold default
+      if (sub) navigate(`/gold/${encodeURIComponent(sub)}`);
       else navigate('/gold');
     }
   };

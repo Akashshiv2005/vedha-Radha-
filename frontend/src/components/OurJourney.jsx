@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Calendar, 
-  Users, 
-  Store, 
-  Award, 
-  CheckCircle2 
+import {
+  Calendar,
+  Users,
+  Store,
+  Award,
+  CheckCircle2
 } from 'lucide-react';
 import './OurJourney.css';
 
@@ -102,7 +102,7 @@ export const JOURNEY_STATS = [
   },
   {
     id: 'stat-4',
-    value: '50,000+',
+    value: '5000+',
     label: 'Happy Customers',
     icon: Award
   },
@@ -197,9 +197,9 @@ function MilestoneVectorIcon({ type, isBurgundy }) {
 // Laurel Wreath branches for the 2026 card
 function LaurelWreath({ isRight }) {
   return (
-    <svg 
-      viewBox="0 0 16 24" 
-      fill="currentColor" 
+    <svg
+      viewBox="0 0 16 24"
+      fill="currentColor"
       className={`w-3.5 h-5 text-[#F8E7B2] ${isRight ? '-scale-x-100' : ''}`}
     >
       <path d="M12 2C10 6 7 10 5 16C4 19 4 21 5 22C4 20 4 18 5 15C7 10 10 5 12 2Z" />
@@ -213,31 +213,30 @@ function LaurelWreath({ isRight }) {
 // =============================================================================
 // 3. REUSABLE MILESTONE CARD COMPONENT (Used for all 5 Milestones)
 // =============================================================================
-export function MilestoneCard({ 
-  milestone, 
-  index, 
-  isSelected, 
-  isHovered, 
-  onSelect, 
-  onHover, 
-  onLeave, 
-  isMobile 
+export function MilestoneCard({
+  milestone,
+  index,
+  isSelected,
+  isHovered,
+  onSelect,
+  onHover,
+  onLeave,
+  isMobile
 }) {
   const m = milestone;
 
   // Mobile layout card (Movable with horizontal spring drag)
   if (isMobile) {
     return (
-      <motion.div 
+      <motion.div
         drag="x"
         dragSnapToOrigin={true}
         dragElastic={0.2}
         whileDrag={{ scale: 1.03 }}
-        className={`relative p-4 sm:p-5 text-center rounded-3xl border-2 shadow-lg transition-transform cursor-grab active:cursor-grabbing select-none ${
-          m.isBurgundy 
-            ? 'bg-gradient-to-b from-[#780C1D] via-[#480813] to-[#280309] border-[#E5C78A] text-[#FFF5E6]' 
+        className={`relative p-4 sm:p-5 text-center rounded-3xl border-2 shadow-lg transition-transform cursor-grab active:cursor-grabbing select-none ${m.isBurgundy
+            ? 'bg-gradient-to-b from-[#780C1D] via-[#480813] to-[#280309] border-[#E5C78A] text-[#FFF5E6]'
             : 'bg-[#FFFDF8] border-[#D4AF37] text-[#4A0813]'
-        } ${isSelected ? 'ring-2 ring-[#D4AF37]' : ''}`}
+          } ${isSelected ? 'ring-2 ring-[#D4AF37]' : ''}`}
         onClick={onSelect}
       >
         {/* Top Vector Icon */}
@@ -248,11 +247,10 @@ export function MilestoneCard({
         {/* Year */}
         <div className="flex items-center justify-center gap-1.5 my-1">
           {m.isBurgundy && <LaurelWreath isRight={false} />}
-          <h3 
+          <h3
             style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-            className={`text-xl sm:text-2xl font-bold tracking-tight leading-none ${
-              m.isBurgundy ? 'text-[#FFF2D0]' : 'text-[#4A0813]'
-            }`}
+            className={`text-xl sm:text-2xl font-bold tracking-tight leading-none ${m.isBurgundy ? 'text-[#FFF2D0]' : 'text-[#4A0813]'
+              }`}
           >
             {m.year}
           </h3>
@@ -262,9 +260,8 @@ export function MilestoneCard({
         {/* Ribbon Title Banner */}
         <div className="my-1.5 flex justify-center">
           <div className={`temple-ribbon-tag ${m.isBurgundy ? 'temple-ribbon-tag-gold' : ''}`}>
-            <span className={`font-serif text-xs font-semibold tracking-wide whitespace-nowrap ${
-              m.isBurgundy ? 'text-[#3D060F]' : 'text-[#FFF8EE]'
-            }`}>
+            <span className={`font-serif text-xs font-semibold tracking-wide whitespace-nowrap ${m.isBurgundy ? 'text-[#3D060F]' : 'text-[#FFF8EE]'
+              }`}>
               {m.title}
             </span>
           </div>
@@ -280,9 +277,8 @@ export function MilestoneCard({
         )}
 
         {/* Milestone Description (Rendered Only Once) */}
-        <p className={`text-xs font-sans leading-relaxed px-2 font-medium mt-2 ${
-          m.isBurgundy ? 'text-[#FCECD7]' : 'text-[#4A3B32]'
-        }`}>
+        <p className={`text-xs font-sans leading-relaxed px-2 font-medium mt-2 ${m.isBurgundy ? 'text-[#FCECD7]' : 'text-[#4A3B32]'
+          }`}>
           {m.description}
         </p>
       </motion.div>
@@ -293,8 +289,8 @@ export function MilestoneCard({
   return (
     <div
       className="absolute -translate-x-1/2 pointer-events-auto"
-      style={{ 
-        left: m.nodeLeft, 
+      style={{
+        left: m.nodeLeft,
         bottom: `calc(100% - ${m.nodeTop} - 6px)`,
         width: m.desktopWidth,
         maxWidth: m.maxWidth,
@@ -319,8 +315,8 @@ export function MilestoneCard({
         onMouseLeave={onLeave}
       >
         {/* SVG Temple Arch Frame Container with Sharp Top and Sharp Bottom (Ratio: 1.25) */}
-        <svg 
-          viewBox="0 0 240 300" 
+        <svg
+          viewBox="0 0 240 300"
           className="w-full h-auto block filter drop-shadow-[0_12px_24px_rgba(50,20,5,0.22)]"
         >
           <defs>
@@ -345,7 +341,7 @@ export function MilestoneCard({
           </defs>
 
           {/* Outer Temple Arch Contour with Sharp Top and Sharp Bottom Cusp */}
-          <path 
+          <path
             d="
               M 120,6
               C 114,16 96,28 70,34
@@ -359,14 +355,14 @@ export function MilestoneCard({
               C 224,54 198,40 170,34
               C 144,28 126,16 120,6
               Z
-            " 
+            "
             fill={m.isBurgundy ? `url(#burgundyFill-${m.id})` : `url(#ivoryFill-${m.id})`}
             stroke={`url(#goldBorderGrad-${m.id})`}
             strokeWidth="2.5"
           />
 
           {/* Inner Fine Gold Hairline Inlay with Sharp Top and Sharp Bottom */}
-          <path 
+          <path
             d="
               M 120,12
               C 114,20 98,32 73,38
@@ -380,21 +376,21 @@ export function MilestoneCard({
               C 218,56 194,44 167,38
               C 142,32 126,20 120,12
               Z
-            " 
-            fill="none" 
-            stroke={m.isBurgundy ? '#FDEAA8' : '#D4AF37'} 
-            strokeWidth="1.2" 
+            "
+            fill="none"
+            stroke={m.isBurgundy ? '#FDEAA8' : '#D4AF37'}
+            strokeWidth="1.2"
             strokeOpacity={m.isBurgundy ? 0.8 : 0.5}
           />
         </svg>
 
         {/* Card Content Overlay Layer - Strict Safe Zone Inside Inner Hairline */}
         <div className="absolute top-[6%] bottom-[16%] left-[6%] right-[6%] flex flex-col items-center justify-between text-center select-none pointer-events-none overflow-hidden px-1 py-0.5">
-          
+
           {/* Top Section: Arch Peak Icon & Year */}
           <div className="w-full flex flex-col items-center">
             {/* Vector Icon */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: -4 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -407,28 +403,27 @@ export function MilestoneCard({
             {/* Year with Glow and Laurels */}
             <div className="flex items-center justify-center gap-1.5 my-0">
               {m.isBurgundy && (
-                <motion.div 
+                <motion.div
                   animate={{ rotate: isHovered ? [0, -3, 3, 0] : 0 }}
                   transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
                 >
                   <LaurelWreath isRight={false} />
                 </motion.div>
               )}
-              <motion.h3 
+              <motion.h3
                 style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
                 initial={{ opacity: 0, scale: 0.88, y: 4 }}
                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.08 * index + 0.05 }}
                 whileHover={{ scale: 1.06 }}
-                className={`text-lg sm:text-xl lg:text-2xl font-bold tracking-tight leading-none journey-year-glow transition-transform duration-300 ${
-                  m.isBurgundy ? 'text-[#FFF2D0]' : 'text-[#4A0813]'
-                }`}
+                className={`text-lg sm:text-xl lg:text-2xl font-bold tracking-tight leading-none journey-year-glow transition-transform duration-300 ${m.isBurgundy ? 'text-[#FFF2D0]' : 'text-[#4A0813]'
+                  }`}
               >
                 {m.year}
               </motion.h3>
               {m.isBurgundy && (
-                <motion.div 
+                <motion.div
                   animate={{ rotate: isHovered ? [0, 3, -3, 0] : 0 }}
                   transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
                 >
@@ -438,7 +433,7 @@ export function MilestoneCard({
             </div>
 
             {/* Notched Ribbon Banner */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
@@ -446,9 +441,8 @@ export function MilestoneCard({
               className="mt-0.5 w-full flex items-center justify-center"
             >
               <div className={`temple-ribbon-tag ${m.isBurgundy ? 'temple-ribbon-tag-gold' : ''}`}>
-                <span className={`font-serif text-[9px] sm:text-[10px] lg:text-[10.5px] font-semibold tracking-wide whitespace-nowrap ${
-                  m.isBurgundy ? 'text-[#3D060F]' : 'text-[#FFF8EE]'
-                }`}>
+                <span className={`font-serif text-[9px] sm:text-[10px] lg:text-[10.5px] font-semibold tracking-wide whitespace-nowrap ${m.isBurgundy ? 'text-[#3D060F]' : 'text-[#FFF8EE]'
+                  }`}>
                   {m.title}
                 </span>
               </div>
@@ -477,14 +471,13 @@ export function MilestoneCard({
           )}
 
           {/* Bottom Section: Milestone Description */}
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 5 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.08 * index + 0.15 }}
-            className={`w-full px-1 text-[7.5px] sm:text-[8.5px] lg:text-[9px] xl:text-[9.5px] font-sans leading-tight text-center font-medium break-words overflow-hidden ${
-              m.isBurgundy ? 'text-[#FCECD7]' : 'text-[#4A3B32]'
-            }`}
+            className={`w-full px-1 text-[7.5px] sm:text-[8.5px] lg:text-[9px] xl:text-[9.5px] font-sans leading-tight text-center font-medium break-words overflow-hidden ${m.isBurgundy ? 'text-[#FCECD7]' : 'text-[#4A3B32]'
+              }`}
           >
             {m.description}
           </motion.p>
@@ -504,25 +497,25 @@ export default function OurJourney() {
 
   return (
     <section className="journey-section py-0 select-none">
-      
+
       {/* ===================================================================== */}
       {/* DESKTOP PANORAMIC SHOWCASE (lg:block) - Matches Target Reference      */}
       {/* ===================================================================== */}
       <div className="hidden lg:block w-full">
         <div className="relative w-full overflow-hidden border-y-2 border-[#D8C7A5] shadow-xl">
-          
+
           {/* Strict 2:1 Aspect Ratio Canvas (Zero Zoom/Crop Distortion) */}
           <div className="relative w-full aspect-[2/1] min-h-[580px] overflow-hidden bg-[#FAF3E5]">
-            
+
             {/* Background Canvas: Golden Temple Sunrise Drapery Backdrop (z-0) */}
-            <img 
-              src="/images/journey/golden_temple_sunrise_drapery.png" 
+            <img
+              src="/images/journey/golden_temple_sunrise_drapery.png"
               alt="Vedha Radha Elegant Heritage Temple Silk Backdrop"
               className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none z-0"
             />
 
             {/* TOP EDITORIAL SECTION HEADER (z-[25]) */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: -12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -533,21 +526,21 @@ export default function OurJourney() {
               <div className="flex items-center justify-center gap-3 mb-0.5">
                 <div className="h-[1.5px] w-12 sm:w-16 bg-gradient-to-r from-transparent via-[#D4AF37] to-[#D4AF37]" />
                 <svg viewBox="0 0 40 24" fill="none" className="w-7 h-4 sm:w-8 sm:h-4.5 text-[#8C6D2D]">
-                  <path 
-                    d="M20 2C20 2 23 8 23 13C23 17.5 21 21 20 22C19 21 17 17.5 17 13C17 8 20 2 20 2Z" 
-                    fill="#D4AF37" 
+                  <path
+                    d="M20 2C20 2 23 8 23 13C23 17.5 21 21 20 22C19 21 17 17.5 17 13C17 8 20 2 20 2Z"
+                    fill="#D4AF37"
                     opacity="0.95"
                   />
-                  <path 
-                    d="M20 12C23 7 28 6 31 8C33 9.5 33.5 13 32 16C30.5 19 25 21 20 22C25 21 30.5 19 32 16" 
-                    stroke="#8C6D2D" 
-                    strokeWidth="1.2" 
+                  <path
+                    d="M20 12C23 7 28 6 31 8C33 9.5 33.5 13 32 16C30.5 19 25 21 20 22C25 21 30.5 19 32 16"
+                    stroke="#8C6D2D"
+                    strokeWidth="1.2"
                     strokeLinecap="round"
                   />
-                  <path 
-                    d="M20 12C17 7 12 6 9 8C7 9.5 6.5 13 8 16C9.5 19 15 21 20 22C15 21 9.5 19 8 16" 
-                    stroke="#8C6D2D" 
-                    strokeWidth="1.2" 
+                  <path
+                    d="M20 12C17 7 12 6 9 8C7 9.5 6.5 13 8 16C9.5 19 15 21 20 22C15 21 9.5 19 8 16"
+                    stroke="#8C6D2D"
+                    strokeWidth="1.2"
                     strokeLinecap="round"
                   />
                   <circle cx="20" cy="22" r="1.5" fill="#8C6D2D" />
@@ -563,7 +556,7 @@ export default function OurJourney() {
               </div>
 
               {/* Main Heading */}
-              <h2 
+              <h2
                 style={{ fontFamily: "'Playfair Display', 'Cormorant Garamond', Georgia, serif" }}
                 className="text-xl sm:text-3xl lg:text-[38px] font-bold text-[#420812] tracking-tight leading-tight mb-0.5 drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]"
               >
@@ -577,8 +570,8 @@ export default function OurJourney() {
             </motion.div>
 
             {/* SINGLE SVG BEZIER CURVE FOR THE ENTIRE GOLDEN TIMELINE (z-[10] - Behind Cards) */}
-            <svg 
-              viewBox="0 0 1000 500" 
+            <svg
+              viewBox="0 0 1000 500"
               className="absolute inset-0 w-full h-full pointer-events-none z-[10]"
               preserveAspectRatio="none"
             >
@@ -603,7 +596,7 @@ export default function OurJourney() {
               </defs>
 
               {/* Underlying Soft Tube with Shadow */}
-              <path 
+              <path
                 d="M 0,360 C 52,368 103,393 155,395 C 216,397 277,381 338,373 C 399,365 459,357 520,348 C 581,339 641,329 702,318 C 763,307 824,296 885,280 C 923,270 962,255 1000,242"
                 fill="none"
                 stroke="url(#goldenTimelineGrad)"
@@ -613,7 +606,7 @@ export default function OurJourney() {
               />
 
               {/* Scroll-Triggered Animated Specular Line */}
-              <motion.path 
+              <motion.path
                 d="M 0,359 C 52,367 103,392 155,394 C 216,396 277,380 338,372 C 399,364 459,356 520,347 C 581,338 641,328 702,317 C 763,306 824,295 885,279 C 923,269 962,254 1000,241"
                 fill="none"
                 stroke="url(#goldenTimelineHighlight)"
@@ -645,9 +638,9 @@ export default function OurJourney() {
                   >
                     {/* Glowing Pulse Aura */}
                     <div className="temple-orb-pulse" />
-                    
+
                     {/* 3D Sphere Orb Sitting on Path */}
-                    <motion.div 
+                    <motion.div
                       animate={{ scale: [1, 1.12, 1] }}
                       transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
                       className={`temple-orb-sphere ${isSelected ? 'scale-125 ring-2 ring-[#FFF5D0]' : ''}`}
@@ -676,7 +669,7 @@ export default function OurJourney() {
             </div>
 
             {/* FLOATING STATS SUMMARY BANNER BAR (z-[30] - Grid of 5 Columns, Perfectly Centered) */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -689,11 +682,10 @@ export default function OurJourney() {
                   const isLast = idx === JOURNEY_STATS.length - 1;
 
                   return (
-                    <div 
+                    <div
                       key={stat.id}
-                      className={`flex items-center justify-center gap-1.5 sm:gap-2.5 px-1 sm:px-2 ${
-                        !isLast ? 'border-r border-[#D4AF37]/40' : ''
-                      }`}
+                      className={`flex items-center justify-center gap-1.5 sm:gap-2.5 px-1 sm:px-2 ${!isLast ? 'border-r border-[#D4AF37]/40' : ''
+                        }`}
                     >
                       {/* Stat Icon */}
                       <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-[#FAF3E5] to-[#F1E0B8] border border-[#D4AF37]/50 flex items-center justify-center shadow-sm flex-shrink-0">
@@ -702,7 +694,7 @@ export default function OurJourney() {
 
                       {/* Stat Text */}
                       <div className="text-left min-w-0">
-                        <p 
+                        <p
                           style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
                           className="text-sm sm:text-lg lg:text-xl font-bold text-[#420812] leading-none tracking-tight truncate"
                         >
@@ -727,13 +719,13 @@ export default function OurJourney() {
       {/* MOBILE & TABLET RESPONSIVE FLOWING TIMELINE (lg:hidden)               */}
       {/* ===================================================================== */}
       <div className="lg:hidden max-w-xl mx-auto px-4 mt-4">
-        
+
         {/* Mobile Section Header */}
         <div className="text-center mb-5">
           <p className="font-sans text-[11px] uppercase tracking-[0.25em] text-[#8C6512] font-bold mb-1">
             OUR JOURNEY
           </p>
-          <h2 
+          <h2
             style={{ fontFamily: "'Playfair Display', 'Cormorant Garamond', Georgia, serif" }}
             className="text-2xl sm:text-3xl text-[#420812] font-bold leading-tight"
           >
@@ -786,7 +778,7 @@ export default function OurJourney() {
                   <Icon className="w-3.5 h-3.5 text-[#8C6512]" />
                 </div>
                 <div>
-                  <p 
+                  <p
                     style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
                     className="text-base sm:text-lg font-bold text-[#420812] leading-none"
                   >

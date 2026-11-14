@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -79,15 +79,30 @@ export default function HeroBanner({ onExploreClick }) {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const bannerRef = useRef(null);
   const SLIDE_DURATION_MS = 7500;
 
   useEffect(() => {
-    if (isPaused) return;
+    const el = bannerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (isPaused || !isVisible) return;
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
     }, SLIDE_DURATION_MS);
     return () => clearInterval(timer);
-  }, [isPaused]);
+  }, [isPaused, isVisible]);
 
   const slide = HERO_SLIDES[currentSlide];
 
@@ -110,6 +125,7 @@ export default function HeroBanner({ onExploreClick }) {
 
   return (
     <section 
+      ref={bannerRef}
       className="relative w-full overflow-hidden bg-[#24070A] select-none text-white border-b border-[#D4AF37]/30"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}

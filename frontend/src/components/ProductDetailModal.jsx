@@ -681,8 +681,12 @@ export default function ProductDetailModal({
               if (catLower.includes('diamond') || product.isDiamond) {
                 mainPath = '/diamonds';
                 mainLabel = 'Diamonds';
+              } else if (catLower.includes('silver-pooja') || catLower.includes('pooja') || product.isSilverPooja) {
+                mainPath = '/silver-pooja';
+                mainLabel = 'Silver Pooja';
               } else if (catLower.includes('silver')) {
                 mainPath = '/silver';
+                mainLabel = 'Silver';
               } else if (catLower.includes('coin') || catLower.includes('bar')) {
                 mainPath = '/coins-bars';
                 mainLabel = 'Coins & Bars';
@@ -692,6 +696,9 @@ export default function ProductDetailModal({
               } else if (catLower.includes('collection')) {
                 mainPath = '/collections';
                 mainLabel = 'Collections';
+              } else if (catLower.includes('temple') || product.isTemple) {
+                mainPath = '/temple-heritage';
+                mainLabel = 'Temple Heritage';
               } else if (catLower.includes('bridal') || product.isBridal) {
                 mainPath = '/bridal';
                 mainLabel = 'Bridal Collection';
@@ -706,7 +713,7 @@ export default function ProductDetailModal({
                   {subSlug && (
                     <>
                       <span className="text-[#C4B5A5]">/</span>
-                      <Link to={`${mainPath}/${subSlug}`} className="capitalize hover:text-white text-[#E8DFC0] transition-colors cursor-pointer">
+                      <Link to={`${mainPath}/${encodeURIComponent(subSlug.toLowerCase().trim())}`} className="capitalize hover:text-white text-[#E8DFC0] transition-colors cursor-pointer">
                         {subLabel}
                       </Link>
                     </>

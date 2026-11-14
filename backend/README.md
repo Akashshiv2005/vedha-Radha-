@@ -33,8 +33,12 @@ backend/
 │   │   ├── base.py              # Declarative Base
 │   │   └── session.py           # Engine, SessionLocal, get_db, check_db_connection
 │   ├── models/
-│   │   ├── admin_user.py        # admin_users PostgreSQL table model
-│   │   ├── product.py           # products PostgreSQL table model
+│   │   ├── admin_user.py        # admin_users table model
+│   │   ├── product.py           # products table model
+│   │   ├── order.py             # orders, order_items, payments table models
+│   │   ├── customer.py          # customers, customer_otps table models
+│   │   ├── cart.py              # shopping_carts, shopping_cart_items table models
+│   │   ├── coupon.py            # coupons table model
 │   │   └── product_import_job.py # product_import_jobs batch audit model
 │   ├── schemas/
 │   │   ├── auth.py              # LoginRequest, LoginSuccessResponse, etc.
@@ -229,3 +233,59 @@ MINIO_PRESIGNED_EXPIRY_SECONDS=86400
 ```bash
 python -m pytest tests/ -v
 ```
+
+---
+
+## 8. Database Seeding Guide (New Clone Setup)
+
+When cloning this project on a new system or setting up a fresh database, follow these steps to seed all 201 authentic jewellery products into PostgreSQL with **zero duplicates**.
+
+### Primary Seed Files
+* **Master Unified Seed Data**: [`frontend/src/data/products.json`](../frontend/src/data/products.json) — Contains all 201 products across Gold, Silver, Diamond, Coins & Bars, Temple Heritage, and Silver Pooja.
+* **JavaScript Catalog Mirror**: [`frontend/src/data/products.js`](../frontend/src/data/products.js)
+* **Specialized Collections**:
+  * [`frontend/src/data/diamondProducts.js`](../frontend/src/data/diamondProducts.js) (28 certified natural diamond items with 4Cs)
+  * [`frontend/src/data/templeProducts.js`](../frontend/src/data/templeProducts.js) (Authentic 22K antique temple jewelry)
+  * [`frontend/src/data/poojaProducts.js`](../frontend/src/data/poojaProducts.js) (Sacred 92.5 & 999 silver puja articles & idols)
+
+### Seed Execution Command
+
+To seed all 201 products into PostgreSQL with zero duplicates, run:
+
+```bash
+python seed_database.py
+```
+
+### Pre-Flight Deduplication & Quality Guarantees
+* **0 Duplicate IDs / SKUs**: Every product has a strictly unique identifier.
+* **0 Duplicate Product Names**: Case-insensitive name checking prevents repeated titles.
+* **0 Duplicate Primary Images**: Guarantees no two distinct products share the same photo.
+* **Strict Metal Purity**: Gold products are isolated with zero silver images or purity; silver products contain zero gold references.
+* **100% On-Disk Asset Integrity**: Checks every single image path against physical files in `frontend/public/images/`.
+
+### Breakdown of Seeded Products (201 Total)
+* **Gold (93 items)**: Chains, Bangles, Kadas, Harams, Necklaces, Earrings, Rings, Nose Pins, Pendants, Wedding & Men's Gold.
+* **Silver (74 items)**: 92.5 Fine Jewellery (Payals, Metti, Bangles) + Sacred Silver Pooja (Vilakkus, Kalashes, Thalis, Idols/Murtis).
+* **Diamond (29 items)**: Solitaires, Waterfall Chandelier Earrings, Tennis Bracelets, Chokers, Rings, Nose Pins.
+* **Coins & Bars (5 items)**: 24K 999 Pure Gold & 999 Silver bullion coins & bars.
+
+---
+
+## 9. Structured Database Schema & Table Specifications
+
+The PostgreSQL database (`vedharadha_db`) contains 10 primary business tables:
+
+| Table Name | Description | Key Indexes / Constraints |
+| :--- | :--- | :--- |
+| **`products`** | Master inventory for Gold, Silver, Diamond, and Coins & Bars | `id` (PK, UUID), `sku` (Unique), `product_type`, `category`, `price`, `status`, `is_active`, `images` (JSONB) |
+| **`orders`** | Customer orders across online checkout and showroom walk-ins | `id` (PK, UUID), `order_number` (Unique), `customer_id` (FK), `phone`, `total_amount`, `order_status` |
+| **`order_items`** | Immutable line-item snapshots of ordered jewellery pieces | `id` (PK, UUID), `order_id` (FK), `product_id` (FK), `unit_price`, `quantity`, `subtotal`, `purity`, `weight_grams` |
+| **`customers`** | Registered customer profiles & addresses | `id` (PK, UUID), `mobile_number` (Unique), `customer_name`, `full_address`, `pin_code`, `is_verified` |
+| **`customer_otps`** | Passwordless login & verification SMS OTP tokens | `id` (PK, UUID), `mobile_number`, `otp_code_hash`, `expires_at`, `is_used` |
+| **`shopping_carts`** | Persistent guest & customer cart sessions | `id` (PK, UUID), `cart_token_hash` (Unique), `status`, `expires_at`, `applied_coupon_code` |
+| **`shopping_cart_items`** | Cart contents linked to products with price snapshots | `id` (PK, UUID), `cart_id` (FK), `product_id` (FK), `quantity`, `unit_price_snapshot` |
+| **`payments`** | Multi-channel payment gateway transactions & refund records | `id` (PK, UUID), `order_id` (FK), `provider`, `provider_payment_id`, `amount`, `payment_status` |
+| **`coupons`** | Promotional campaign discount rules | `id` (PK, UUID), `code` (Unique), `discount_type`, `discount_value`, `min_order_amount`, `is_active` |
+| **`admin_users`** | Staff authentication & role-based showroom access control | `id` (PK, UUID), `username` (Unique), `email` (Unique), `password_hash`, `is_active`, `is_superuser` |
+| **`product_import_jobs`** | Batch CSV / Excel catalog import job audit logs | `id` (PK, UUID), `admin_id` (FK), `filename`, `total_rows`, `created_count`, `status` |
+

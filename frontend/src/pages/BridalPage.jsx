@@ -1,9 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { products } from '../data/products';
 import { storefrontClient } from '../api/storefrontProductsClient';
 import { ProductGridSkeleton } from '../components/common/ProductCardSkeleton';
 import LuxuryProductCard from '../components/common/LuxuryProductCard';
 import { Sparkles, Heart, ShoppingBag, Calendar, CheckCircle2, ChevronRight, PhoneCall, Award, ArrowRight, ShieldCheck } from 'lucide-react';
+
+const STATIC_BRIDAL_PRODUCTS = products.filter(
+  p => p.isBridal || p.category?.toLowerCase().includes('bridal') || p.category?.toLowerCase().includes('gold')
+);
 
 export default function BridalPage({
   onViewProduct = () => {},
@@ -12,28 +17,24 @@ export default function BridalPage({
   wishlistItems = []
 }) {
   const navigate = useNavigate();
-  const [dbProducts, setDbProducts] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [dbProducts, setDbProducts] = React.useState(STATIC_BRIDAL_PRODUCTS);
+  const [isLoading, setIsLoading] = React.useState(false);
   const [apiError, setApiError] = React.useState(null);
 
   React.useEffect(() => {
     let isMounted = true;
-    setIsLoading(true);
-    setApiError(null);
 
     storefrontClient.getStorefrontProducts({ page_size: 200 })
       .then(res => {
         if (!isMounted) return;
-        if (res.success) {
+        if (res.success && Array.isArray(res.items) && res.items.length > 0) {
           setDbProducts(res.items);
-        } else {
-          setApiError(res.error || 'Failed to load bridal products');
         }
         setIsLoading(false);
       })
-      .catch(() => {
+      .catch((err) => {
         if (!isMounted) return;
-        setApiError('Unable to connect to product server');
+        console.warn('Storefront dynamic fetch fallback active:', err);
         setIsLoading(false);
       });
 

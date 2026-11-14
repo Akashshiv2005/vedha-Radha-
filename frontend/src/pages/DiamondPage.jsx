@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import LuxuryProductCard from '../components/common/LuxuryProductCard';
 import { diamondProducts } from '../data/diamondProducts';
-import { Sparkles, ArrowRight, Gem, ChevronRight, ShieldCheck, Award } from 'lucide-react';
+import { storefrontClient } from '../api/storefrontProductsClient';
+import { Sparkles, ArrowRight, Gem, ChevronRight, ShieldCheck, Award, Loader2 } from 'lucide-react';
 import { getProductUrl } from '../utils/productSlug';
 
 const DIAMOND_CATEGORIES = [
@@ -17,16 +18,61 @@ const DIAMOND_CATEGORIES = [
 
 export default function DiamondPage({ onViewProduct, onAddToCart, onAddToWishlist, wishlistItems = [] }) {
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const { subCategory } = useParams();
+  const [searchParams] = useSearchParams();
 
-  const filteredProducts = diamondProducts.filter(item => {
+  const activeCategoryFromRoute = useMemo(() => {
+    const raw = (subCategory || searchParams.get('category') || '').toLowerCase().trim();
+    if (!raw) return 'all';
+    if (raw.includes('ring') || raw.includes('solitaire') || raw.includes('band')) return 'rings';
+    if (raw.includes('necklace') || raw.includes('choker') || raw.includes('haram')) return 'necklaces';
+    if (raw.includes('bracelet') || raw.includes('bangle') || raw.includes('kada')) return 'bracelets';
+    if (raw.includes('earring') || raw.includes('stud') || raw.includes('jhumka') || raw.includes('halo')) return 'earrings';
+    if (raw.includes('pendant') || raw.includes('tanmaniya')) return 'pendants';
+    if (raw.includes('nose') || raw.includes('mookuthi')) return 'nosepins';
+    return 'all';
+  }, [subCategory, searchParams]);
+
+  const [selectedCategory, setSelectedCategory] = useState(activeCategoryFromRoute);
+  const [diamondList, setDiamondList] = useState(diamondProducts);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setSelectedCategory(activeCategoryFromRoute);
+  }, [activeCategoryFromRoute]);
+
+  useEffect(() => {
+    let isMounted = true;
+    async function loadDynamicDiamonds() {
+      setLoading(true);
+      try {
+        const res = await storefrontClient.getStorefrontProducts({
+          product_type: 'diamond',
+          page_size: 100
+        });
+        if (isMounted && res.success && Array.isArray(res.items) && res.items.length > 0) {
+          setDiamondList(res.items);
+        }
+      } catch (err) {
+        console.warn('Dynamic diamond fetch error; retaining resilient cache:', err);
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    }
+    loadDynamicDiamonds();
+    return () => { isMounted = false; };
+  }, []);
+
+  const filteredProducts = diamondList.filter(item => {
     if (selectedCategory === 'all') return true;
-    if (selectedCategory === 'rings') return item.subCategory?.toLowerCase() === 'rings';
-    if (selectedCategory === 'necklaces') return item.subCategory?.toLowerCase() === 'necklaces';
-    if (selectedCategory === 'bracelets') return item.subCategory?.toLowerCase() === 'bracelets' || item.subCategory?.toLowerCase() === 'bangles';
-    if (selectedCategory === 'earrings') return item.subCategory?.toLowerCase() === 'earrings';
-    if (selectedCategory === 'pendants') return item.subCategory?.toLowerCase() === 'pendants';
-    if (selectedCategory === 'nosepins') return item.subCategory?.toLowerCase() === 'nosepins';
+    const sub = (item.subCategory || item.sub_category || '').toLowerCase();
+    const cat = (item.category || '').toLowerCase();
+    if (selectedCategory === 'rings') return sub.includes('ring') || cat.includes('ring');
+    if (selectedCategory === 'necklaces') return sub.includes('necklace') || sub.includes('choker') || sub.includes('haram');
+    if (selectedCategory === 'bracelets') return sub.includes('bracelet') || sub.includes('bangle') || sub.includes('kada');
+    if (selectedCategory === 'earrings') return sub.includes('earring') || sub.includes('stud') || sub.includes('jhumka') || sub.includes('chandelier');
+    if (selectedCategory === 'pendants') return sub.includes('pendant') || sub.includes('tanmaniya');
+    if (selectedCategory === 'nosepins') return sub.includes('nose') || sub.includes('mookuthi');
     return true;
   });
 
@@ -187,8 +233,9 @@ export default function DiamondPage({ onViewProduct, onAddToCart, onAddToWishlis
             >
               Signature Diamond Masterpieces
             </h2>
-            <p className="text-xs text-[#64748B] mt-1">
-              Showing {filteredProducts.length} certified diamond creations in stock.
+            <p className="text-xs text-[#64748B] mt-1 flex items-center gap-1.5">
+              <span>Showing {filteredProducts.length} certified diamond creations in stock.</span>
+              {loading && <Loader2 className="w-3.5 h-3.5 animate-spin text-[#C5A253]" />}
             </p>
           </div>
 

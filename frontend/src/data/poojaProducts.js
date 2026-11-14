@@ -26,7 +26,7 @@ export const poojaProducts = [
     image: '/images/generated/silver_pooja_kalash.jpg',
     images: [
       '/images/generated/silver_pooja_kalash.jpg',
-      '/images/col_pooja.jpg'
+      '/images/generated/royal_silver_pooja_thali_set.jpg'
     ],
     purity: '92.5% Fine Silver',
     silverPurity: '925 Sterling Silver',
@@ -57,10 +57,10 @@ export const poojaProducts = [
     numericPrice: 72000,
     originalPrice: '₹ 78,000',
     discount: 'Pair Offer',
-    image: '/images/product_silver_bowl.jpg',
+    image: '/images/exclusive-collections-luxe/silver_pooja_photo.jpg',
     images: [
-      '/images/product_silver_bowl.jpg',
-      '/images/col_pooja.jpg'
+      '/images/exclusive-collections-luxe/silver_pooja_photo.jpg',
+      '/images/collections/collections-pooja-exclusive-01.jpg'
     ],
     purity: '92.5% Fine Silver',
     silverPurity: '925 Sterling Silver',
@@ -91,9 +91,9 @@ export const poojaProducts = [
     numericPrice: 54000,
     originalPrice: '₹ 59,000',
     discount: 'Complete 8-Pc Set',
-    image: '/images/col_pooja.jpg',
+    image: '/images/generated/royal_silver_pooja_thali_set.jpg',
     images: [
-      '/images/col_pooja.jpg',
+      '/images/generated/royal_silver_pooja_thali_set.jpg',
       '/images/generated/silver_pooja_kalash.jpg'
     ],
     purity: '92.5% Fine Silver',
@@ -125,9 +125,9 @@ export const poojaProducts = [
     numericPrice: 24500,
     originalPrice: '₹ 27,000',
     discount: 'Temple Grade',
-    image: '/images/col_silver_idol.jpg',
+    image: '/images/collections/collections-silver-idol-exclusive-02.jpg',
     images: [
-      '/images/col_silver_idol.jpg',
+      '/images/collections/collections-silver-idol-exclusive-02.jpg',
       '/images/collections/collections-silver-idol-exclusive-01.jpg'
     ],
     purity: '999 Fine Silver',

@@ -1,3 +1,17 @@
+import os
+import sys
+
+# Ensure PostgreSQL 17 libpq is discoverable on Windows to avoid DLL load blocks
+pg_bin = r"C:\Program Files\PostgreSQL\17\bin"
+if os.path.exists(pg_bin):
+    os.environ["PATH"] = pg_bin + ";" + os.environ.get("PATH", "")
+    if hasattr(os, "add_dll_directory"):
+        try:
+            os.add_dll_directory(pg_bin)
+        except Exception:
+            pass
+os.environ.setdefault("PSYCOPG_IMPL", "python")
+
 import logging
 from contextlib import asynccontextmanager
 from fastapi import FastAPI

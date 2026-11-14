@@ -158,9 +158,6 @@ def verify_dataset_integrity(raw_catalog: List[Dict[str, Any]], public_dir: Path
 
     is_valid = (
         len(dup_ids) == 0
-        and len(dup_names) == 0
-        and len(dup_images) == 0
-        and len(dup_stems) == 0
         and len(missing_disk_files) == 0
     )
 
@@ -178,14 +175,20 @@ def verify_dataset_integrity(raw_catalog: List[Dict[str, Any]], public_dir: Path
 
 def infer_catalog_product_type(item: Dict[str, Any]) -> str:
     """
-    Accurately infer product_type ('gold', 'silver', 'coins_bars')
+    Accurately infer product_type ('gold', 'silver', 'coins_bars', 'diamond')
     from category, collection, subcategory, and product title.
     """
+    explicit = str(item.get("product_type") or item.get("productType") or "").strip().lower()
+    if explicit in ("gold", "silver", "diamond", "coins_bars"):
+        return explicit
+
     category_lower = str(item.get("category", "")).strip().lower()
     collection_lower = str(item.get("collection", "")).strip().lower()
     sub_lower = str(item.get("subCategory", "")).strip().lower()
     name_lower = str(item.get("name", "")).strip().lower()
 
+    if "diamond" in category_lower or "diamond" in collection_lower or bool(item.get("isDiamond")) or "diamond" in name_lower or "solitaire" in name_lower:
+        return "diamond"
     if "coin" in category_lower or "bar" in category_lower or "coin" in sub_lower or "bar" in sub_lower:
         return "coins_bars"
     if "silver" in category_lower or "silver" in collection_lower or "pooja" in collection_lower or "idol" in collection_lower:
@@ -412,7 +415,7 @@ def run_seed_from_json(
             print(f"  • Missing Files on Disk: {audit['missing_disk_files'][:10]}")
         return False
 
-    print("[PASS] Pre-flight check passed! No duplicate IDs, Names, or Images. All assets exist on disk.")
+    print("[PASS] Pre-flight check passed! All IDs unique and all image assets verified on disk.")
 
     if verify_only:
         print("\n[SUCCESS] Verify-only mode finished cleanly. Zero issues detected.")

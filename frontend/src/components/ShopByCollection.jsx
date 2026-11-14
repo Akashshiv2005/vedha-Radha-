@@ -190,6 +190,9 @@ export default function ShopByCollection({ onSelectCategory, onSelectCollection 
   const scrollRef = useRef(null);
   const sectionRef = useRef(null);
   const manualPauseTimerRef = useRef(null);
+  const windowScrollTimerRef = useRef(null);
+  const singleSetWidthRef = useRef(0);
+  const isWindowScrollingRef = useRef(false);
   const [isPaused, setIsPaused] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -218,15 +221,42 @@ export default function ShopByCollection({ onSelectCategory, onSelectCollection 
     return () => observer.disconnect();
   }, []);
 
+  // Measure singleSetWidth once and on window resize, preventing forced reflow on every rAF frame
+  const updateCachedWidth = () => {
+    const el = scrollRef.current;
+    if (el) {
+      singleSetWidthRef.current = el.scrollWidth / 3;
+    }
+  };
+
   // Initialize scroll position to the middle set for seamless bidirectional scrolling
   useEffect(() => {
     const el = scrollRef.current;
     if (el) {
-      const singleSetWidth = el.scrollWidth / 3;
-      if (singleSetWidth > 0 && el.scrollLeft === 0) {
-        el.scrollLeft = singleSetWidth;
+      updateCachedWidth();
+      if (singleSetWidthRef.current > 0 && el.scrollLeft === 0) {
+        el.scrollLeft = singleSetWidthRef.current;
       }
     }
+    window.addEventListener('resize', updateCachedWidth);
+    return () => window.removeEventListener('resize', updateCachedWidth);
+  }, []);
+
+  // Pause horizontal ticker while the user is actively scrolling vertically
+  useEffect(() => {
+    const onWindowScroll = () => {
+      isWindowScrollingRef.current = true;
+      if (windowScrollTimerRef.current) clearTimeout(windowScrollTimerRef.current);
+      windowScrollTimerRef.current = setTimeout(() => {
+        isWindowScrollingRef.current = false;
+      }, 150);
+    };
+
+    window.addEventListener('scroll', onWindowScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onWindowScroll);
+      if (windowScrollTimerRef.current) clearTimeout(windowScrollTimerRef.current);
+    };
   }, []);
 
   // Smooth continuous slow-movement auto-scroll ticker (runs only when visible and not paused)
@@ -241,12 +271,12 @@ export default function ShopByCollection({ onSelectCategory, onSelectCollection 
       const delta = (time - lastTime) / 1000;
       lastTime = time;
 
-      if (!isPaused && el) {
+      if (!isPaused && !isWindowScrollingRef.current && el) {
         // Regal slow gliding speed (~32px per second)
         el.scrollLeft += 32 * Math.min(delta, 0.1);
 
-        // Infinite wrap: maintain scroll position within middle set
-        const singleSetWidth = el.scrollWidth / 3;
+        // Infinite wrap: maintain scroll position within middle set using cached width
+        const singleSetWidth = singleSetWidthRef.current || (el.scrollWidth / 3);
         if (singleSetWidth > 0 && el.scrollLeft >= singleSetWidth * 2) {
           el.scrollLeft -= singleSetWidth;
         }
@@ -472,7 +502,13 @@ export default function ShopByCollection({ onSelectCategory, onSelectCollection 
             <div
               ref={scrollRef}
               className="flex gap-4 sm:gap-5 lg:gap-6 overflow-x-auto no-scrollbar select-none py-3 px-3 sm:px-5"
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              style={{ 
+                scrollbarWidth: 'none', 
+                msOverflowStyle: 'none',
+                WebkitOverflowScrolling: 'touch',
+                transform: 'translateZ(0)',
+                willChange: 'scroll-position'
+              }}
             >
               {/* Duplicated array (3 sets) for seamless bidirectional looping */}
               {[...CATEGORIES, ...CATEGORIES, ...CATEGORIES].map((cat, idx) => {

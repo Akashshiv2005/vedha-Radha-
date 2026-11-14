@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Star, MapPin, Check, ChevronLeft, ChevronRight, Users, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -509,6 +509,8 @@ function StoryCard({ item, idx }) {
 export default function CustomerReviews() {
   const [startIndex, setStartIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
 
   // 5 cards shown simultaneously on desktop (3 on top row, 2 centered below)
   // Stepping by VISIBLE_COUNT (5) ensures fresh reviews every cycle without repetition
@@ -517,12 +519,25 @@ export default function CustomerReviews() {
   const currentPage = Math.floor(startIndex / VISIBLE_COUNT);
 
   useEffect(() => {
-    if (isPaused) return;
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { rootMargin: '100px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (isPaused || !isVisible) return;
     const timer = setInterval(() => {
       setStartIndex((prev) => (prev + VISIBLE_COUNT >= STORIES.length ? 0 : prev + VISIBLE_COUNT));
     }, 6000);
     return () => clearInterval(timer);
-  }, [isPaused]);
+  }, [isPaused, isVisible]);
 
   const handlePrev = () => {
     setStartIndex((prev) => (prev - VISIBLE_COUNT < 0 ? (totalPages - 1) * VISIBLE_COUNT : prev - VISIBLE_COUNT));
@@ -537,6 +552,7 @@ export default function CustomerReviews() {
 
   return (
     <section 
+      ref={sectionRef}
       className="relative bg-gradient-to-b from-[#FAF4EB] via-[#F6ECE0] to-[#EFE2D2] text-[#2C1810] pt-6 sm:pt-8 pb-7 sm:pb-9 select-none w-full overflow-hidden border-t border-[#D4AF37]/40"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
